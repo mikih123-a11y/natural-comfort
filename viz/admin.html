@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>מספרים · Natural Comfort</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBFAF8;--panel:#EFEBE4;--champagne:#A79A88;--ink:#211F1D;--ink-soft:#56514B;--ink-mute:#8A837A;--line:#E2DCD2;--oak:#B8894E;--red:#B4432E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Assistant,sans-serif;font-weight:300;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+h1{font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:34px;letter-spacing:-.02em}
+.sub{color:var(--ink-mute);font-size:14px;margin-top:4px}
+.rail{height:2px;background:var(--champagne);opacity:.55;margin:28px 0}
+.gate{display:flex;gap:10px;margin:24px 0}
+.gate input{flex:1;border:1px solid var(--line);padding:12px 14px;font-family:inherit;font-size:15px;background:#fff}
+.gate button{background:var(--ink);color:var(--paper);border:0;padding:12px 26px;font-family:inherit;font-weight:600;cursor:pointer}
+.err{background:#FAEDEA;border-inline-start:2px solid var(--red);color:#8C3323;padding:11px 14px;font-size:14px;margin-bottom:16px;display:none}
+.err.on{display:block}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+@media(max-width:700px){.four{grid-template-columns:1fr 1fr}}
+.n{background:#fff;border:1px solid var(--line);padding:22px 20px}
+.n b{display:block;font-family:"Frank Ruhl Libre",serif;font-size:38px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.n small{display:block;font-size:12.5px;color:var(--ink-mute);margin-top:8px}
+.n i{display:block;font-style:normal;font-size:12px;color:var(--champagne);font-weight:600;margin-top:5px}
+.steps{background:#fff;border:1px solid var(--line);padding:24px}
+.step{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .lbl{width:130px;flex:none;font-size:14px;font-weight:600}
+.bar{flex:1;height:24px;background:var(--panel);position:relative;overflow:hidden}
+.bar span{position:absolute;inset-inline-start:0;top:0;bottom:0;background:var(--champagne);transition:width .5s}
+.step .v{width:110px;flex:none;text-align:end;font-size:14px;color:var(--ink-soft)}
+.step .v em{font-style:normal;color:var(--ink);font-weight:600}
+.drop{margin-top:20px;background:var(--panel);padding:18px 20px;border-inline-start:2px solid var(--red)}
+.drop b{font-size:15px}
+.drop p{font-size:13.5px;color:var(--ink-soft);margin-top:4px}
+h2{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:20px;margin:34px 0 14px}
+.hint{font-size:13px;color:var(--ink-mute);margin-top:14px}
+code{font-family:ui-monospace,monospace;background:var(--panel);padding:2px 6px;font-size:12.5px}
+#app{display:none}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>ארבעת המספרים</h1>
+<p class="sub">כמה העלו · כמה סיימו · כמה השאירו טלפון · כמה קנו. כל השאר רעש.</p>
+<div class="rail"></div>
+
+<div class="err" id="err"></div>
+
+<div class="gate" id="gate">
+  <input id="tok" type="password" placeholder="STATS_TOKEN" autocomplete="off">
+  <button id="load">כניסה</button>
+</div>
+
+<div id="app">
+  <div class="four">
+    <div class="n"><b id="n1">—</b><small>העלו תמונה</small></div>
+    <div class="n"><b id="n2">—</b><small>סיימו הדמיה</small><i id="r1"></i></div>
+    <div class="n"><b id="n3">—</b><small>השאירו טלפון</small><i id="r2"></i></div>
+    <div class="n"><b id="n4">—</b><small>קנו</small><i id="r3"></i></div>
+  </div>
+
+  <div class="steps" id="steps"></div>
+
+  <div class="drop" id="drop"></div>
+
+  <h2>איך לקרוא את זה</h2>
+  <p class="hint">
+    <b>העלו → סיימו</b> נמוך? המודל נכשל או שזה איטי מדי.<br>
+    <b>סיימו → טלפון</b> נמוך? ההדמיה לא שכנעה, או שהשער דורש יותר מדי.<br>
+    <b>טלפון → קנו</b> נמוך? הבעיה לא באתר. היא בשיחה או במחיר.
+  </p>
+
+  <h2>מכירה שנסגרה</h2>
+  <p class="hint">הסגירה בטלפון, אז זה ידני. אחרי כל מכירה:<br>
+  <code>curl -X POST /api/won -H "x-stats-token: …"</code></p>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const err = m => { $('#err').textContent = m; $('#err').classList.add('on'); };
+
+const STEPS = [
+  ['upload','העלו תמונה'], ['generate_start','לחצו צור'], ['generate_done','הדמיה מוכנה'],
+  ['gate_view','ראו את השער'], ['otp_sent','ביקשו קוד'], ['otp_verified','אימתו קוד'], ['lead','ליד נשמר'],
+];
+
+async function load(){
+  const t = $('#tok').value.trim();
+  if(!t) return err('צריך טוקן.');
+  $('#err').classList.remove('on');
+  try{
+    const r = await fetch(`/api/stats?token=${encodeURIComponent(t)}&days=30`);
+    const d = await r.json();
+    if(!r.ok) throw new Error(d.error || 'הטעינה נכשלה');
+    sessionStorage.setItem('nc_tok', t);
+    render(d);
+  }catch(e){ err(e.message); }
+}
+
+function render(d){
+  const f = d.funnel;
+  $('#gate').style.display = 'none';
+  $('#app').style.display = 'block';
+  $('#n1').textContent = f.uploaded;
+  $('#n2').textContent = f.completed;
+  $('#n3').textContent = f.leads;
+  $('#n4').textContent = f.won;
+  $('#r1').textContent = f.rate_upload_to_done + '% מההעלאות';
+  $('#r2').textContent = f.rate_done_to_lead + '% מההדמיות';
+  $('#r3').textContent = f.rate_lead_to_won + '% מהלידים';
+
+  const max = Math.max(1, d.total.upload);
+  $('#steps').innerHTML = STEPS.map(([k,l]) => {
+    const v = d.total[k] || 0;
+    return `<div class="step"><div class="lbl">${l}</div>
+      <div class="bar"><span style="width:${(v/max*100).toFixed(1)}%"></span></div>
+      <div class="v"><em>${v}</em> · ${(v/max*100).toFixed(0)}%</div></div>`;
+  }).join('');
+
+  const lost = f.abandoned_at_gate;
+  $('#drop').innerHTML = `<b>${lost} אנשים ראו הדמיה מוכנה ולא השאירו טלפון.</b>
+    <p>זו הנקודה היקרה ביותר — שילמת על הג'נרציה וקיבלת אפס. אם המספר גבוה, השער דורש יותר מדי.</p>`;
+}
+
+$('#load').onclick = load;
+$('#tok').onkeydown = e => e.key === 'Enter' && load();
+const saved = sessionStorage.getItem('nc_tok');
+if(saved){ $('#tok').value = saved; load(); }
+</script>
+</div></body></html>

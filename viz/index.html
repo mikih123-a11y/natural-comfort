@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>איך הארון ייראה אצלך בחדר · Natural Comfort</title>
+<meta name="description" content="צלמו את הקיר, בחרו ארון, וראו איך הוא יושב אצלכם בבית. הדמיה מדויקת לפי המידות שלכם.">
+<meta property="og:title" content="הארון הזה. בחדר שלך.">
+<meta property="og:description" content="צלמו קיר. בחרו ארון. תראו איך זה יושב אצלכם.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4; --panel-2:#E4DED3;
+  --champagne:#A79A88; --champagne-lt:#C9BFAE;
+  --ink:#211F1D; --ink-soft:#56514B; --ink-mute:#8A837A;
+  --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input{font-family:inherit;font-size:16px}
+:focus-visible{outline:2px solid var(--oak);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ── header ── */
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.92);backdrop-filter:blur(8px);z-index:50}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+.brand span{color:var(--champagne);font-weight:400}
+.top a{color:var(--ink-soft);text-decoration:none;font-size:14px}
+.top a:hover{color:var(--ink)}
+
+/* ── hero ── */
+.hero{padding:72px 0 40px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--champagne);font-weight:600;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,7vw,68px);line-height:1.06;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--champagne)}
+.hero p{margin:20px auto 0;max-width:440px;font-size:17px;color:var(--ink-soft);font-weight:300}
+
+/* ── steps ── */
+.steps{display:grid;gap:20px;grid-template-columns:1fr 1fr;margin:44px 0 0}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:2px;padding:24px}
+.card h2{font-family:var(--display);font-size:19px;font-weight:500;margin-bottom:4px}
+.card h2 b{color:var(--champagne);font-weight:400;margin-left:8px;font-size:15px}
+.card .hint{font-size:13px;color:var(--ink-mute);margin-bottom:18px;font-weight:300}
+
+/* upload */
+.drop{border:1px dashed var(--champagne-lt);background:var(--paper);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:.2s var(--ease);position:relative;overflow:hidden}
+.drop:hover,.drop.over{border-color:var(--champagne);background:var(--panel)}
+.drop svg{stroke:var(--champagne);fill:none;stroke-width:1.2}
+.drop small{color:var(--ink-mute);font-size:13px;font-weight:300}
+.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.drop .redo{position:absolute;bottom:10px;inset-inline-start:10px;background:rgba(33,31,29,.82);color:#fff;font-size:12px;padding:5px 12px;border-radius:2px;backdrop-filter:blur(4px)}
+
+/* picker */
+.picker{display:grid;gap:22px}
+.grp{display:grid;gap:10px}
+.grp-h{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);padding-bottom:6px;border-bottom:1px solid var(--line)}
+.pick{display:flex;gap:14px;align-items:center;border:1px solid var(--line);background:var(--paper);padding:10px;text-align:start;transition:.15s var(--ease)}
+.pick:hover{border-color:var(--champagne-lt)}
+.pick[aria-pressed=true]{border-color:var(--ink);background:#fff}
+.pick img{width:76px;height:60px;object-fit:contain;background:#fff;flex:none}
+.pick b{display:block;font-size:14px;font-weight:600}
+.pick small{font-size:12px;color:var(--ink-mute);font-weight:300}
+.pick .dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--champagne-lt);margin-inline-start:auto;flex:none}
+.pick[aria-pressed=true] .dot{background:var(--ink);border-color:var(--ink)}
+
+/* cta */
+.go{display:block;width:100%;margin:32px 0 0;background:var(--ink);color:var(--paper);font-size:16px;font-weight:600;padding:18px;letter-spacing:.01em;transition:.2s var(--ease)}
+.go:hover:not(:disabled){background:#000}
+.go:disabled{background:var(--panel-2);color:var(--ink-mute);cursor:not-allowed}
+.golegal{text-align:center;font-size:12px;color:var(--ink-mute);margin-top:12px;font-weight:300}
+
+/* ── the door: signature ── */
+.stage{margin:56px 0 80px;display:none}
+.stage.on{display:block}
+.doorbox{position:relative;aspect-ratio:4/3;background:var(--ink);overflow:hidden;border:1px solid var(--line)}
+.result{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.badge{position:absolute;top:12px;inset-inline-start:12px;z-index:5;background:rgba(33,31,29,.78);color:#EFEBE4;font-size:11.5px;font-weight:600;letter-spacing:.04em;padding:6px 12px;backdrop-filter:blur(6px);opacity:0;transition:opacity .5s .8s}
+.doorbox.open .badge{opacity:1}
+.door{position:absolute;top:0;bottom:0;width:50.4%;background:var(--panel);transition:transform 1.5s var(--ease);z-index:3;
+  background-image:linear-gradient(var(--champagne-lt) 1px,transparent 1px);background-size:100% 33.33%}
+.door.l{inset-inline-start:0;border-inline-end:2px solid var(--champagne)}
+.door.r{inset-inline-end:0}
+.doorbox.open .door.l{transform:translateX(102%)}
+.doorbox.open .door.r{transform:translateX(-102%)}
+.doorlabel{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;transition:opacity .4s}
+.doorbox.open .doorlabel{opacity:0;pointer-events:none}
+.doorlabel h3{font-family:var(--display);font-size:clamp(22px,4vw,32px);font-weight:500}
+.doorlabel p{font-size:14px;color:var(--ink-soft);font-weight:300;max-width:280px}
+.spin{width:26px;height:26px;border:1.5px solid var(--champagne-lt);border-top-color:var(--ink);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.door{transition:none}.spin{animation:none}}
+
+/* ── gate form ── */
+.gate{max-width:440px;margin:36px auto 0;display:none}
+.gate.on{display:block}
+.gate h3{font-family:var(--display);font-size:24px;font-weight:500;text-align:center}
+.gate .sub{text-align:center;font-size:14px;color:var(--ink-soft);margin:6px 0 24px;font-weight:300}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;color:var(--ink-soft);margin-bottom:5px;font-weight:600}
+.field input{width:100%;border:1px solid var(--line);background:#fff;padding:13px 14px;border-radius:2px;transition:.15s}
+.field input:focus{border-color:var(--champagne);outline:none}
+.field input.bad{border-color:#B4432E}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:18px 0;font-size:12.5px;color:var(--ink-soft);line-height:1.5;font-weight:300}
+.consent input{margin-top:3px;accent-color:var(--ink);flex:none;width:15px;height:15px}
+.err{background:#FAEDEA;border-inline-start:2px solid #B4432E;color:#8C3323;padding:10px 12px;font-size:13px;margin-bottom:14px;display:none}
+.err.on{display:block}
+.otpwrap{display:none}.otpwrap.on{display:block}
+.otpin{letter-spacing:.5em;text-align:center;font-size:22px !important;font-weight:600}
+.back{display:block;margin:14px auto 0;font-size:13px;color:var(--ink-mute);text-decoration:underline}
+
+/* ── after reveal ── */
+.after{display:none;margin-top:24px;text-align:center}
+.after.on{display:block}
+.after .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn2{border:1px solid var(--ink);padding:12px 24px;font-size:14px;font-weight:600;transition:.15s}
+.btn2:hover{background:var(--ink);color:var(--paper)}
+.btn2.solid{background:var(--ink);color:var(--paper)}
+.btn2.solid:hover{background:#000}
+.disc{font-size:12px;color:var(--ink-mute);margin-top:18px;font-weight:300;max-width:420px;margin-inline:auto}
+
+/* ── footer ── */
+footer{border-top:1px solid var(--line);margin-top:80px;padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--ink-soft);text-decoration:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brand">Natural<span>Comfort</span></div>
+  <a href="https://wa.me/972524400030">דברו איתנו · 052-4400030</a>
+</div></header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">הדמיה מיידית</div>
+    <h1>הארון הזה.<br><em>בחדר שלך.</em></h1>
+    <p>צלמו את הקיר בטלפון, בחרו ארון מהקטלוג, וראו איך הוא באמת יושב אצלכם — לפני שהזמנתם.</p>
+  </section>
+
+  <div class="steps">
+    <div class="card">
+      <h2>הקיר שלכם <b>01</b></h2>
+      <p class="hint">צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.</p>
+      <div class="drop" id="drop" role="button" tabindex="0" aria-label="העלאת תמונת הקיר">
+        <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <small>גררו תמונה או לחצו לבחירה</small>
+        <img id="preview" alt="" hidden>
+        <button class="redo" id="redo" hidden type="button">החלפת תמונה</button>
+      </div>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+
+    <div class="card">
+      <h2>הארון <b>02</b></h2>
+      <p class="hint">אופל · 2 דלתות הזזה · חלון מסך משולב</p>
+      <div class="picker" id="picker"></div>
+    </div>
+  </div>
+
+  <button class="go" id="go" disabled>צרו את ההדמיה</button>
+  <p class="golegal">בלי תשלום. ההדמיה מוכנה תוך כ-30 שניות.</p>
+
+  <section class="stage" id="stage">
+    <div class="doorbox" id="doorbox">
+      <img class="result" id="result" alt="הארון בחדר שלכם" hidden>
+      <div class="badge" id="badge" hidden>הדמיה · לא מידה סופית</div>
+      <div class="door l"></div><div class="door r"></div>
+      <div class="doorlabel" id="doorlabel">
+        <div class="spin" id="spin"></div>
+        <h3 id="dl-title">מייצרים את ההדמיה</h3>
+        <p id="dl-sub">מתאימים את הארון לקיר, לתאורה ולפרופורציות של החדר שלכם.</p>
+      </div>
+    </div>
+
+    <div class="gate" id="gate">
+      <div class="err" id="err"></div>
+
+      <div id="step-details">
+        <h3>ההדמיה מוכנה</h3>
+        <p class="sub">השאירו פרטים והיא נפתחת מיד.</p>
+        <div class="field"><label for="f-name">שם מלא</label><input id="f-name" autocomplete="name"></div>
+        <div class="field"><label for="f-phone">טלפון נייד</label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000"></div>
+        <div class="field"><label for="f-email">אימייל</label><input id="f-email" type="email" inputmode="email" autocomplete="email"></div>
+        <label class="consent"><input type="checkbox" id="f-consent">
+          <span>אני מאשר/ת יצירת קשר בנוגע להדמיה ולמוצרי החברה, ושמירת תמונת החדר לצורך הפקת ההדמיה בלבד. התמונה נמחקת אוטומטית תוך 30 יום. ניתן להסיר בכל עת.</span></label>
+        <button class="go" id="send-otp">שליחת קוד לוואטסאפ</button>
+      </div>
+
+      <div class="otpwrap" id="step-otp">
+        <h3>הקוד נשלח</h3>
+        <p class="sub" id="otp-sub">הזינו את 6 הספרות שקיבלתם בוואטסאפ.</p>
+        <div class="field"><input class="otpin" id="f-otp" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="······"></div>
+        <button class="go" id="verify-otp">פתחו את ההדמיה</button>
+        <button class="back" id="otp-back">שינוי מספר טלפון</button>
+      </div>
+    </div>
+
+    <div class="after" id="after">
+      <div class="row">
+        <a class="btn2 solid" id="wa" href="#">רוצה הצעת מחיר לארון הזה</a>
+        <button class="btn2" id="dl">שמירת התמונה</button>
+        <button class="btn2" id="again">הדמיה נוספת</button>
+      </div>
+      <p class="disc"><b>הדמיה.</b> נועדה להמחיש את הדגם, הגוון והפרופורציות בחדר שלכם. המוצר מיוצר בדיוק לפי המידות שיימדדו אצלכם בבית.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · נטורל קומפורט בע"מ</div>
+  <div><a href="/privacy.html">פרטיות ומחיקת מידע</a></div>
+</div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+// ארבעת המספרים. לא חוסם, לא זורק.
+const track = (stage, productId) => { try{
+  fetch('/api/track',{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({stage, productId}), keepalive:true}).catch(()=>{});
+}catch(e){} };
+const S = { room:null, product:null, jobId:null, session:crypto.randomUUID(), phone:null, catalog:[] };
+
+/* ---------- catalog ---------- */
+fetch('catalog.json').then(r=>r.json()).then(d=>{
+  S.catalog = d.products;
+
+  // קיבוץ לפי קו — 26 מוצרים ברשימה שטוחה זה קיר
+  const lines = [...new Set(d.products.map(p=>p.line))];
+  $('#picker').innerHTML = lines.map(ln=>`
+    <div class="grp">
+      <div class="grp-h">${ln}</div>
+      ${d.products.filter(p=>p.line===ln).map(p=>`
+        <button class="pick" data-id="${p.id}" aria-pressed="false" type="button">
+          <img src="${p.thumb}" alt="" loading="lazy">
+          <span><b>${p.name}</b><small>${p.dims.w}×${p.dims.h}×${p.dims.d} ס"מ</small></span>
+          <span class="dot"></span>
+        </button>`).join('')}
+    </div>`).join('');
+
+  const choose = b => {
+    document.querySelectorAll('.pick').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); S.product = b.dataset.id; ready();
+  };
+  $('#picker').onclick = e => {
+    const b = e.target.closest('.pick'); if(b) choose(b);
+  };
+
+  // הגיע מדף מוצר עם דגם וגימור — בוחרים אוטומטית
+  const q = new URLSearchParams(location.search);
+  const model = q.get('model'), finish = q.get('finish');
+  if(model){
+    let hit = d.products.find(p=>p.model===model && (!finish || p.finish_id===finish))
+           || d.products.find(p=>p.model===model);
+    if(hit){
+      const b = document.querySelector(`.pick[data-id="${hit.id}"]`);
+      if(b){ choose(b); b.scrollIntoView({block:'center'}); }
+    }
+  }
+});
+
+/* ---------- upload ---------- */
+const drop = $('#drop'), file = $('#file');
+drop.onclick = e => { if(e.target.id!=='redo') file.click(); };
+drop.onkeydown = e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click();} };
+$('#redo').onclick = e => { e.stopPropagation(); file.click(); };
+['dragenter','dragover'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(t=>drop.addEventListener(t,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop', e => e.dataTransfer.files[0] && load(e.dataTransfer.files[0]));
+file.onchange = () => file.files[0] && load(file.files[0]);
+
+function load(f){
+  if(!f.type.startsWith('image/')) return fail('צריך קובץ תמונה — JPG או PNG.');
+  if(f.size > 12e6) return fail('התמונה גדולה מ-12MB. צלמו שוב או הקטינו.');
+  const img = new Image();
+  img.onload = () => {
+    // downscale client-side: 1536px long edge keeps detail, cuts upload time
+    const m = 1536, sc = Math.min(1, m/Math.max(img.width,img.height));
+    const c = document.createElement('canvas');
+    c.width = img.width*sc|0; c.height = img.height*sc|0;
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    S.room = c.toDataURL('image/jpeg',.88);
+    S.aspect = c.width / c.height;   // נועל את המסגור בשרת
+    track('upload');
+    // המסגרת מקבלת את היחס של התמונה עצמה. 4/3 קבוע חתך צילום טלפון לגובה.
+    $('#drop').style.aspectRatio = S.aspect;
+    $('#doorbox').style.aspectRatio = S.aspect;
+    $('#preview').src = S.room; $('#preview').hidden = false; $('#redo').hidden = false;
+    ready();
+  };
+  img.onerror = () => fail('לא הצלחנו לקרוא את התמונה. נסו קובץ אחר.');
+  img.src = URL.createObjectURL(f);
+}
+const ready = () => $('#go').disabled = !(S.room && S.product);
+
+/* ---------- generate ---------- */
+$('#go').onclick = async () => {
+  $('#stage').classList.add('on');
+  $('#stage').scrollIntoView({block:'center'});
+  $('#go').disabled = true;
+  track('generate_start', S.product);
+  try{
+    const r = await fetch('/api/generate',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({room:S.room, productId:S.product, session:S.session, aspect:S.aspect})});
+    const d = await r.json();
+    if(!r.ok) throw new Error(d.error || 'הייצור נכשל');
+    S.jobId = d.jobId;
+    track('generate_done', S.product);
+    $('#spin').style.display='none';
+    $('#dl-title').textContent = 'ההדמיה מוכנה';
+    $('#dl-sub').textContent = 'הדלתות נפתחות ברגע שנדע למי לשלוח.';
+    $('#gate').classList.add('on');
+    track('gate_view', S.product);
+    $('#gate').scrollIntoView({block:'center',behavior:'smooth'});
+  }catch(e){
+    track('generate_fail', S.product);
+    $('#spin').style.display='none';
+    $('#dl-title').textContent = 'משהו נתקע';
+    $('#dl-sub').textContent = e.message + ' — נסו שוב בעוד רגע.';
+    $('#go').disabled = false;
+  }
+};
+
+/* ---------- gate ---------- */
+const err = m => { $('#err').textContent = m; $('#err').classList.add('on'); };
+const clr = () => $('#err').classList.remove('on');
+const fail = m => { alert(m); };
+const validPhone = p => /^0(5\d|7[2-9])\d{7}$/.test(p.replace(/[-\s]/g,''));
+const validMail  = m => /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(m);
+
+$('#send-otp').onclick = async () => {
+  clr();
+  const name=$('#f-name').value.trim(), phone=$('#f-phone').value.trim(), email=$('#f-email').value.trim();
+  ['f-name','f-phone','f-email'].forEach(i=>$('#'+i).classList.remove('bad'));
+  if(name.length<2){ $('#f-name').classList.add('bad'); return err('צריך שם מלא.'); }
+  if(!validPhone(phone)){ $('#f-phone').classList.add('bad'); return err('מספר נייד ישראלי לא תקין. לדוגמה 0501234567.'); }
+  if(!validMail(email)){ $('#f-email').classList.add('bad'); return err('כתובת אימייל לא תקינה.'); }
+  if(!$('#f-consent').checked) return err('צריך לאשר את התיבה כדי להמשיך.');
+
+  const b = $('#send-otp'); b.disabled=true; b.textContent='שולחים…';
+  try{
+    const r = await fetch('/api/otp-send',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({phone, session:S.session})});
+    const d = await r.json();
+    if(!r.ok) throw new Error(d.error||'שליחת הקוד נכשלה');
+    S.phone = phone;
+    track('otp_sent');
+    $('#step-details').style.display='none'; $('#step-otp').classList.add('on');
+    $('#otp-sub').textContent = `שלחנו 6 ספרות ל-${phone} בוואטסאפ.`;
+    if(d.devCode) $('#otp-sub').textContent += ` [מצב פיתוח: ${d.devCode}]`;
+    $('#f-otp').focus();
+  }catch(e){ err(e.message); }
+  b.disabled=false; b.textContent='שליחת קוד לוואטסאפ';
+};
+
+$('#otp-back').onclick = () => { clr(); $('#step-otp').classList.remove('on'); $('#step-details').style.display=''; };
+
+$('#verify-otp').onclick = async () => {
+  clr();
+  const code = $('#f-otp').value.trim();
+  if(!/^\d{6}$/.test(code)) return err('הקוד הוא 6 ספרות.');
+  const b=$('#verify-otp'); b.disabled=true; b.textContent='בודקים…';
+  try{
+    const v = await fetch('/api/otp-verify',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({phone:S.phone, code, session:S.session})});
+    const vd = await v.json();
+    if(!v.ok) throw new Error(vd.error||'קוד שגוי');
+    track('otp_verified');
+
+    await fetch('/api/lead',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({ name:$('#f-name').value.trim(), phone:S.phone, email:$('#f-email').value.trim(),
+        productId:S.product, jobId:S.jobId, session:S.session, consent:true })});
+    track('lead', S.product);
+
+    const rv = await fetch(`/api/reveal?jobId=${S.jobId}&session=${S.session}`);
+    const rd = await rv.json();
+    if(!rv.ok) throw new Error(rd.error||'הפתיחה נכשלה');
+
+    $('#result').src = rd.url; $('#result').hidden = false; $('#badge').hidden = false;
+    $('#result').onload = () => {
+      $('#doorbox').classList.add('open');
+      track('reveal', S.product);
+      $('#gate').classList.remove('on');
+      setTimeout(()=>{ $('#after').classList.add('on'); $('#doorbox').scrollIntoView({block:'center',behavior:'smooth'}); }, 900);
+    };
+    const p = S.catalog.find(x=>x.id===S.product);
+    $('#wa').href = `https://wa.me/972524400030?text=${encodeURIComponent(`היי, עשיתי הדמיה של ${p.name} בסלון שלי ואשמח להצעת מחיר.`)}`;
+    $('#dl').onclick = () => { const a=document.createElement('a'); a.href=rd.url; a.download='natural-comfort-הדמיה.jpg'; a.click(); };
+    $('#again').onclick = () => location.reload();
+  }catch(e){ err(e.message); }
+  b.disabled=false; b.textContent='פתחו את ההדמיה';
+};
+</script>
+</body>
+</html>

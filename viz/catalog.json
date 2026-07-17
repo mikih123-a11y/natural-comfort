@@ -1,0 +1,845 @@
+{
+ "_note": "כל מוצר מגדיר את משימת ההשמה שלו. buildPrompt קורא מכאן.\nplacement: against_wall | floor_center | on_bed_frame | in_niche\nreplaces: הקטגוריה שהמוצר מחליף בחדר. null = הוספה בלבד.\nidentity: חייב להיות מדויק. שדה שגוי = המודל ימציא פיצ'ר שלא קיים.",
+ "products": [
+  {
+   "id": "opal-2dl-cream",
+   "name": "אופל 2 דלתות · שמנת",
+   "line": "אופל",
+   "image": "/viz/img/opal-2dl-cream.jpg",
+   "thumb": "/viz/img/thumbs/opal-2dl-cream.jpg",
+   "finish": "שמנת מט",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה",
+    "מסגרת אלומיניום שמפניה"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": false
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "model": "opal-2dl-160",
+   "finish_id": "shamenet",
+   "profile_id": "shampa"
+  },
+  {
+   "id": "opal-2dl-oak",
+   "name": "אופל 2 דלתות · אלון",
+   "line": "אופל",
+   "image": "/viz/img/opal-2dl-oak.jpg",
+   "thumb": "/viz/img/thumbs/opal-2dl-oak.jpg",
+   "finish": "אלון טבעי",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה",
+    "מסגרת אלומיניום שמפניה"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": false
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "model": "opal-2dl-160",
+   "finish_id": "alon",
+   "profile_id": "shampa"
+  },
+  {
+   "id": "opal-2dl-marble",
+   "name": "אופל 2 דלתות · שיש שחור",
+   "line": "אופל",
+   "image": "/viz/img/opal-2dl-marble.jpg",
+   "thumb": "/viz/img/thumbs/opal-2dl-marble.jpg",
+   "finish": "שיש שחור",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה",
+    "מסגרת אלומיניום שמפניה"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": false
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "model": "opal-2dl-160",
+   "finish_id": "shish",
+   "profile_id": "shampa"
+  },
+  {
+   "id": "opal-2dl-tv-160--shamenet",
+   "model": "opal-2dl-tv-160",
+   "finish_id": "shamenet",
+   "profile_id": "shampa",
+   "name": "אופל TV · 2 דלתות הזזה · שמנת",
+   "line": "אופל",
+   "image": "/products/opal-2dl-tv-shamenet.jpg",
+   "thumb": "/products/thumbs/opal-2dl-tv-shamenet.jpg",
+   "finish": "שמנת",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה על מסילת אלומיניום",
+    "נישת מסך משולבת",
+    "מנגנון טריקה שקטה",
+    "מוט תלייה לכל הרוחב"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": true,
+    "tv_niche_position": "right door, middle band"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "opal-2dl-tv-160--alon",
+   "model": "opal-2dl-tv-160",
+   "finish_id": "alon",
+   "profile_id": "shampa",
+   "name": "אופל TV · 2 דלתות הזזה · אלון",
+   "line": "אופל",
+   "image": "/products/opal-2dl-tv-alon.jpg",
+   "thumb": "/products/thumbs/opal-2dl-tv-alon.jpg",
+   "finish": "אלון",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה על מסילת אלומיניום",
+    "נישת מסך משולבת",
+    "מנגנון טריקה שקטה",
+    "מוט תלייה לכל הרוחב"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": true,
+    "tv_niche_position": "right door, middle band"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "opal-2dl-tv-160--shahor",
+   "model": "opal-2dl-tv-160",
+   "finish_id": "shahor",
+   "profile_id": "shampa",
+   "name": "אופל TV · 2 דלתות הזזה · שחור",
+   "line": "אופל",
+   "image": "/products/opal-2dl-tv-shahor.jpg",
+   "thumb": "/products/thumbs/opal-2dl-tv-shahor.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה על מסילת אלומיניום",
+    "נישת מסך משולבת",
+    "מנגנון טריקה שקטה",
+    "מוט תלייה לכל הרוחב"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": true,
+    "tv_niche_position": "right door, middle band"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "opal-2dl-tv-160--shish",
+   "model": "opal-2dl-tv-160",
+   "finish_id": "shish",
+   "profile_id": "shampa",
+   "name": "אופל TV · 2 דלתות הזזה · שיש שחור",
+   "line": "אופל",
+   "image": "/products/opal-2dl-tv-shish.jpg",
+   "thumb": "/products/thumbs/opal-2dl-tv-shish.jpg",
+   "finish": "שיש שחור",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "2 דלתות הזזה על מסילת אלומיניום",
+    "נישת מסך משולבת",
+    "מנגנון טריקה שקטה",
+    "מוט תלייה לכל הרוחב"
+   ],
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": true,
+    "tv_niche_position": "right door, middle band"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "kodesh-3dl-a--5180",
+   "model": "kodesh-3dl-a",
+   "finish_id": "5180",
+   "profile_id": null,
+   "name": "ספריית קודש 3 דלתות · דגם A · וונגה",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-3dl-a-5180.jpg",
+   "thumb": "/products/thumbs/kodesh-3dl-a-5180.jpg",
+   "finish": "וונגה",
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס תחתון · 3 דלתות",
+    "רגליות אלומיניום"
+   ],
+   "identity": {
+    "door_count": 6,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-3dl-a--7903",
+   "model": "kodesh-3dl-a",
+   "finish_id": "7903",
+   "profile_id": null,
+   "name": "ספריית קודש 3 דלתות · דגם A · בטון מולבן",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-3dl-a-7903.jpg",
+   "thumb": "/products/thumbs/kodesh-3dl-a-7903.jpg",
+   "finish": "בטון מולבן",
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס תחתון · 3 דלתות",
+    "רגליות אלומיניום"
+   ],
+   "identity": {
+    "door_count": 6,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-3dl-a--7904",
+   "model": "kodesh-3dl-a",
+   "finish_id": "7904",
+   "profile_id": null,
+   "name": "ספריית קודש 3 דלתות · דגם A · בטון אפור",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-3dl-a-7904.jpg",
+   "thumb": "/products/thumbs/kodesh-3dl-a-7904.jpg",
+   "finish": "בטון אפור",
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס תחתון · 3 דלתות",
+    "רגליות אלומיניום"
+   ],
+   "identity": {
+    "door_count": 6,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-3dl-a--mevuka",
+   "model": "kodesh-3dl-a",
+   "finish_id": "mevuka",
+   "profile_id": null,
+   "name": "ספריית קודש 3 דלתות · דגם A · אלון מבוקע",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-3dl-a-mevuka.jpg",
+   "thumb": "/products/thumbs/kodesh-3dl-a-mevuka.jpg",
+   "finish": "אלון מבוקע",
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס תחתון · 3 דלתות",
+    "רגליות אלומיניום"
+   ],
+   "identity": {
+    "door_count": 6,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-3dl-b--shamenet",
+   "model": "kodesh-3dl-b",
+   "finish_id": "shamenet",
+   "profile_id": null,
+   "name": "ספריית קודש 3 דלתות + מגירות · דגם B · שמנת",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-3dl-b-3207.jpg",
+   "thumb": "/products/thumbs/kodesh-3dl-b-3207.jpg",
+   "finish": "שמנת",
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס · 2 דלתות + 3 מגירות",
+    "רגליות אלומיניום"
+   ],
+   "identity": {
+    "door_count": 5,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית · בסיס 2 דלתות + 3 מגירות מרכזיות"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-4dl-open--shamenet",
+   "model": "kodesh-4dl-open",
+   "finish_id": "shamenet",
+   "profile_id": null,
+   "name": "ספריית קודש 4 דלתות · מדפים פתוחים · שמנת",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-4dl-open-shamenet.jpg",
+   "thumb": "/products/thumbs/kodesh-4dl-open-shamenet.jpg",
+   "finish": "שמנת",
+   "dims": {
+    "w": 160,
+    "h": 220,
+    "d": 40
+   },
+   "features": [
+    "מדפים פתוחים · גישה מיידית",
+    "בסיס סגור · 4 דלתות",
+    "ידיות מוט",
+    "קרניז תחתון"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": false,
+    "_desc": "מדפים פתוחים מעל · בסיס סגור 4 דלתות · ידיות מוט"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "kodesh-4dl-open--shahor",
+   "model": "kodesh-4dl-open",
+   "finish_id": "shahor",
+   "profile_id": null,
+   "name": "ספריית קודש 4 דלתות · מדפים פתוחים · שחור",
+   "line": "ספריות קודש",
+   "image": "/products/kodesh-4dl-open-shahor.jpg",
+   "thumb": "/products/thumbs/kodesh-4dl-open-shahor.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 160,
+    "h": 220,
+    "d": 40
+   },
+   "features": [
+    "מדפים פתוחים · גישה מיידית",
+    "בסיס סגור · 4 דלתות",
+    "ידיות מוט",
+    "קרניז תחתון"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": false,
+    "_desc": "מדפים פתוחים מעל · בסיס סגור 4 דלתות · ידיות מוט"
+   },
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null
+  },
+  {
+   "id": "desk-160--shamenet--shampa",
+   "model": "desk-160",
+   "finish_id": "shamenet",
+   "profile_id": "shampa",
+   "name": "ארון שולחן · 160 · שמנת · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/desk-160-shamenet.jpg",
+   "thumb": "/products/thumbs/desk-160-shamenet.jpg",
+   "finish": "שמנת",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "שולחן משולב עם מגירה",
+    "נישת מדפים פתוחה",
+    "ארונות עליונים",
+    "נבנה לנישה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "champagne aluminium",
+    "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
+   },
+   "category": "wardrobe",
+   "placement": "in_niche",
+   "replaces": null
+  },
+  {
+   "id": "desk-160--7903--shampa",
+   "model": "desk-160",
+   "finish_id": "7903",
+   "profile_id": "shampa",
+   "name": "ארון שולחן · 160 · בטון מולבן · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/desk-160-7903.jpg",
+   "thumb": "/products/thumbs/desk-160-7903.jpg",
+   "finish": "בטון מולבן",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "שולחן משולב עם מגירה",
+    "נישת מדפים פתוחה",
+    "ארונות עליונים",
+    "נבנה לנישה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "champagne aluminium",
+    "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
+   },
+   "category": "wardrobe",
+   "placement": "in_niche",
+   "replaces": null
+  },
+  {
+   "id": "desk-160--shahor--lavan",
+   "model": "desk-160",
+   "finish_id": "shahor",
+   "profile_id": "lavan",
+   "name": "ארון שולחן · 160 · שחור · מסגרת לבן",
+   "line": "ארונות הזזה",
+   "image": "/products/desk-160-shahor-w.jpg",
+   "thumb": "/products/thumbs/desk-160-shahor-w.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "שולחן משולב עם מגירה",
+    "נישת מדפים פתוחה",
+    "ארונות עליונים",
+    "נבנה לנישה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "white aluminium",
+    "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
+   },
+   "category": "wardrobe",
+   "placement": "in_niche",
+   "replaces": null
+  },
+  {
+   "id": "desk-160--7904--lavan",
+   "model": "desk-160",
+   "finish_id": "7904",
+   "profile_id": "lavan",
+   "name": "ארון שולחן · 160 · בטון אפור · מסגרת לבן",
+   "line": "ארונות הזזה",
+   "image": "/products/desk-160-7904-mirror.jpg",
+   "thumb": "/products/thumbs/desk-160-7904-mirror.jpg",
+   "finish": "בטון אפור",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "שולחן משולב עם מגירה",
+    "נישת מדפים פתוחה",
+    "ארונות עליונים",
+    "נבנה לנישה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "white aluminium",
+    "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
+   },
+   "category": "wardrobe",
+   "placement": "in_niche",
+   "replaces": null
+  },
+  {
+   "id": "simple3-240--464--shampa",
+   "model": "simple3-240",
+   "finish_id": "464",
+   "profile_id": "shampa",
+   "name": "סימפל · 3 דלתות הזזה + מראה · פשתן · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/simple3-240-464.jpg",
+   "thumb": "/products/thumbs/simple3-240-464.jpg",
+   "finish": "פשתן",
+   "dims": {
+    "w": 240,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "3 דלתות הזזה",
+    "מראה מלאה במרכז",
+    "מסילת אלומיניום",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 3,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_mirror": true,
+    "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple3-240--lavan--shampa",
+   "model": "simple3-240",
+   "finish_id": "lavan",
+   "profile_id": "shampa",
+   "name": "סימפל · 3 דלתות הזזה + מראה · לבן מט · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/simple3-240-lavan.jpg",
+   "thumb": "/products/thumbs/simple3-240-lavan.jpg",
+   "finish": "לבן מט",
+   "dims": {
+    "w": 240,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "3 דלתות הזזה",
+    "מראה מלאה במרכז",
+    "מסילת אלומיניום",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 3,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_mirror": true,
+    "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple3-240--shahor--shahor",
+   "model": "simple3-240",
+   "finish_id": "shahor",
+   "profile_id": "shahor",
+   "name": "סימפל · 3 דלתות הזזה + מראה · שחור · מסגרת שחור",
+   "line": "ארונות הזזה",
+   "image": "/products/simple3-240-shahor.jpg",
+   "thumb": "/products/thumbs/simple3-240-shahor.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 240,
+    "h": 240,
+    "d": 60
+   },
+   "features": [
+    "3 דלתות הזזה",
+    "מראה מלאה במרכז",
+    "מסילת אלומיניום",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 3,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "black aluminium",
+    "has_mirror": true,
+    "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple4-320--lavan--shampa",
+   "model": "simple4-320",
+   "finish_id": "lavan",
+   "profile_id": "shampa",
+   "name": "סימפל · 4 דלתות הזזה · לבן מט · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/simple4-320-lavan.jpg",
+   "thumb": "/products/thumbs/simple4-320-lavan.jpg",
+   "finish": "לבן מט",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple4-320--shahor--shampa",
+   "model": "simple4-320",
+   "finish_id": "shahor",
+   "profile_id": "shampa",
+   "name": "סימפל · 4 דלתות הזזה · שחור · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/simple4-320-shahor.jpg",
+   "thumb": "/products/thumbs/simple4-320-shahor.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple4-320--shahor--shahor",
+   "model": "simple4-320",
+   "finish_id": "shahor",
+   "profile_id": "shahor",
+   "name": "סימפל · 4 דלתות הזזה · שחור · מסגרת שחור",
+   "line": "ארונות הזזה",
+   "image": "/products/simple4-320-shahor-bp.jpg",
+   "thumb": "/products/thumbs/simple4-320-shahor-bp.jpg",
+   "finish": "שחור",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "black aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple4-320--8003--shampa",
+   "model": "simple4-320",
+   "finish_id": "8003",
+   "profile_id": "shampa",
+   "name": "סימפל · 4 דלתות הזזה · שיש לבן · מסגרת שמפניה",
+   "line": "ארונות הזזה",
+   "image": "/products/simple4-320-8003.jpg",
+   "thumb": "/products/thumbs/simple4-320-8003.jpg",
+   "finish": "שיש לבן",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  },
+  {
+   "id": "simple4-320--8005--shahor",
+   "model": "simple4-320",
+   "finish_id": "8005",
+   "profile_id": "shahor",
+   "name": "סימפל · 4 דלתות הזזה · שיש שחור · מסגרת שחור",
+   "line": "ארונות הזזה",
+   "image": "/products/simple4-320-8005-bp.jpg",
+   "thumb": "/products/thumbs/simple4-320-8005-bp.jpg",
+   "finish": "שיש שחור",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "black aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet"
+  }
+ ]
+}

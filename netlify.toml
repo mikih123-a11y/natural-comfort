@@ -1,0 +1,41 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@netlify/blobs"]
+  included_files = ["viz/catalog.json"]
+
+[functions.generate]
+  timeout = 120
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/products/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/viz/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# סודות לעולם לא עולים לאוויר
+[[redirects]]
+  from = "/key.txt"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.env"
+  to = "/404.html"
+  status = 404
+  force = true

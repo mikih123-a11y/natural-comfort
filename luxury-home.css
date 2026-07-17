@@ -1,0 +1,13 @@
+:root{--forest:#28231f;--forest2:#171513;--cream:#f2eee7;--sand:#c9b89f;--ink:#211e1a;--muted:#746d65;--line:#ddd5ca;--serif:"Frank Ruhl Libre",Georgia,serif}
+body{background:#fbfaf7}
+.notice{background:#171513;color:#e7ded1;letter-spacing:.02em}
+.header{background:rgba(251,250,247,.95);border-color:#e4ddd3}
+.logo{color:#1c1916}.logo small{color:#9b8870}
+.icon{border-color:#ded6cc;color:#29231e}
+.hero{background-image:linear-gradient(270deg,rgba(25,21,18,.97) 0 43%,rgba(25,21,18,.58) 62%,rgba(25,21,18,.08)),url('img/room-desk.jpg');background-position:center;background-size:cover}
+.hero .kicker,.visual .kicker{color:#d1bfa6}.btn.light{color:#211d19}.proof b{color:#2d2823}
+.cat:after{background:linear-gradient(transparent,rgba(24,19,15,.92))}
+.filter.on,.badge{background:#29231f}.swatch.on{box-shadow:0 0 0 2px #29231f}
+.visual{background:#211e1a}.visual h2{color:#f9f6f0}.visual-tag{color:#241f1b}
+.footer{background:#151311}.float{background:#29231f}.mobilebar a:first-child{background:#29231f}
+@media(max-width:560px){.hero{background-image:linear-gradient(0deg,rgba(25,21,18,.96),rgba(25,21,18,.27)),url('img/room-desk.jpg')}}

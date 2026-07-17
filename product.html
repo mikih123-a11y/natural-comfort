@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>אופל · 2 דלתות הזזה · Natural Comfort</title>
+<meta name="description" content="ארון הזזה אופל, 2 דלתות, 160×240 ס״מ. שמנת, אלון או שיש שחור. נבנה למידות הקיר שלכם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/premium-inner.css">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4; --panel-2:#E4DED3;
+  --champagne:#A79A88; --champagne-lt:#C9BFAE;
+  --ink:#211F1D; --ink-soft:#56514B; --ink-mute:#8A837A;
+  --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--oak);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+.top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
+.brand span{color:var(--champagne);font-weight:400}
+.nav{display:flex;gap:28px;font-size:14.5px;color:var(--ink-soft)}
+.nav a{position:relative;padding:4px 0}
+.nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
+.nav a:hover{color:var(--ink)}.nav a:hover::after{width:100%}
+.tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
+.tel:hover{background:#000}
+.tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
+@media(max-width:900px){.nav{display:none}}
+
+.crumb{font-size:13px;color:var(--ink-mute);font-weight:300;padding:22px 0 0}
+.crumb a:hover{color:var(--ink)}
+.crumb i{font-style:normal;margin:0 8px;color:var(--champagne-lt)}
+
+.pd{display:grid;grid-template-columns:1.15fr 1fr;gap:60px;padding:28px 0 80px;align-items:start}
+@media(max-width:900px){.pd{grid-template-columns:1fr;gap:32px}}
+
+/* גלריה */
+.shot{position:relative;background:#fff;border:1px solid var(--line);aspect-ratio:1400/1097;overflow:hidden}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s var(--ease)}
+.shot img.on{opacity:1}
+.tag{position:absolute;top:14px;inset-inline-start:14px;background:var(--panel);color:var(--ink-soft);font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 11px;z-index:2}
+.thumbs{display:flex;gap:10px;margin-top:12px}
+.tb{width:76px;height:60px;border:1px solid var(--line);background:#fff;padding:3px;transition:.15s}
+.tb img{width:100%;height:100%;object-fit:contain}
+.tb[aria-pressed=true]{border-color:var(--ink)}
+
+/* פרטים */
+.line{font-size:11.5px;letter-spacing:.16em;color:var(--champagne);font-weight:600}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);line-height:1.1;letter-spacing:-.022em;margin:10px 0 0}
+.dims{font-size:15px;color:var(--ink-soft);font-weight:300;margin-top:8px}
+.price{font-family:var(--display);font-size:32px;font-weight:500;margin:22px 0 2px;letter-spacing:-.02em}
+.price small{font-size:13px;color:var(--ink-mute);font-weight:400;font-family:var(--body);margin-inline-start:8px}
+.made{font-size:13px;color:var(--ink-mute);font-weight:300}
+
+/* בורר גימור — המסילה מהמוצר */
+.opt{margin-top:32px}
+.opt h2{font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:12px}
+.opt h2 em{font-style:normal;color:var(--ink);font-weight:600;margin-inline-start:6px}
+.track{position:relative;height:2px;background:var(--line);margin-bottom:16px}
+.slider{position:absolute;top:-1px;height:4px;background:var(--champagne);transition:all .35s var(--ease);inset-inline-start:0}
+.sws{display:flex;gap:14px}
+.sw{display:flex;flex-direction:column;align-items:center;gap:8px;transition:.2s}
+.sw i{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:block;transition:.25s var(--ease)}
+.sw span{font-size:12px;color:var(--ink-mute);font-weight:300;transition:.2s;white-space:nowrap}
+.sw[aria-pressed=true] i{transform:scale(1.14);border-color:var(--champagne)}
+.sw[aria-pressed=true] span{color:var(--ink);font-weight:600}
+.sw:hover i{transform:scale(1.07)}
+.code{font-size:11px;color:var(--champagne-lt);font-weight:300}
+.lays{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.lay{border:1px solid var(--line);background:#fff;padding:6px;text-align:center;transition:.18s var(--ease)}
+.lay img{width:100%;aspect-ratio:4/3;object-fit:contain}
+.lay b{display:block;font-size:12.5px;font-weight:600;margin-top:5px}
+.lay small{display:block;font-size:11px;color:var(--ink-mute);font-weight:300;line-height:1.4}
+.lay[aria-pressed=true]{border-color:var(--ink)}
+.lay:hover{border-color:var(--champagne-lt)}
+
+/* פעולות — אין סל. הטלפון הוא הקנייה. */
+.acts{margin-top:36px;display:grid;gap:10px}
+.b1{display:flex;align-items:center;justify-content:center;gap:11px;background:var(--ink);color:var(--paper);padding:17px;font-size:16px;font-weight:600;transition:.2s var(--ease)}
+.b1:hover{background:#000;gap:16px}
+.b2{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--ink);padding:16px;font-size:15px;font-weight:600;transition:.15s}
+.b2:hover{background:var(--ink);color:var(--paper)}
+.b1 svg,.b2 svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none;transition:transform .2s var(--ease)}
+.hint{font-size:12.5px;color:var(--ink-mute);font-weight:300;text-align:center;margin-top:4px}
+
+.spec{margin-top:38px;border-top:1px solid var(--line)}
+.spec h2{font-family:var(--display);font-size:17px;font-weight:500;margin:22px 0 10px}
+.spec ul{list-style:none;display:grid;gap:1px}
+.spec li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px;font-weight:300;color:var(--ink-soft)}
+.spec li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--champagne);margin-top:9px;flex:none}
+.rows{display:grid;gap:1px;margin-top:6px}
+.row{display:flex;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.row b{width:110px;flex:none;font-weight:600}
+.row span{color:var(--ink-soft);font-weight:300}
+
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fl{display:flex;gap:20px;flex-wrap:wrap}
+footer a:hover{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a href="/" class="brand">Natural<span>Comfort</span></a>
+  <nav class="nav" id="nav"></nav>
+  <a class="tel" href="tel:079-6622666">
+    <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    079-6622666
+  </a>
+</div></header>
+
+<main class="wrap">
+  <div class="crumb"><a href="/">בית</a><i>·</i><a id="crumb-cat" href="#">—</a><i>·</i><span id="crumb-name">—</span></div>
+
+  <div class="pd">
+    <div>
+      <div class="shot" id="shot"><div class="tag">הדמיה</div></div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <div>
+      <div class="line" id="line">—</div>
+      <h1 id="name">—</h1>
+      <p class="dims" id="dims">—</p>
+
+      <div class="price" id="price">—<small>כולל מע״מ</small></div>
+      <p class="made" id="made">—</p>
+
+      <div class="opt">
+        <h2>גימור דלתות<em id="fname">—</em></h2>
+        <div class="track"><div class="slider" id="slider"></div></div>
+        <div class="sws" id="sws"></div>
+      </div>
+
+      <div class="opt" id="prof-wrap" style="display:none">
+        <h2>צבע פרופיל<em id="pname">—</em></h2>
+        <div class="track"><div class="slider" id="pslider"></div></div>
+        <div class="sws" id="profs"></div>
+      </div>
+
+      <div class="opt" id="lay-wrap">
+        <h2>סידור פנים<em id="lname">—</em></h2>
+        <div class="track"><div class="slider" id="lslider"></div></div>
+        <div class="lays" id="lays"></div>
+      </div>
+
+      <div class="acts">
+        <a class="b1" id="see" href="/viz/">
+          ראו אותו בחדר שלכם
+          <svg width="17" height="17" viewBox="0 0 24 24"><path d="M19 12H5m0 0l7-7m-7 7l7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="b2" id="wa" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.5 8.5 8.5 0 01-4-1L3 21l2-4.9A8.4 8.4 0 014 11.5a8.5 8.5 0 0117 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          שאלה בוואטסאפ
+        </a>
+        <p class="hint">מגיעים למדוד אצלכם. המחיר הסופי נקבע אחרי מדידה.</p>
+      </div>
+
+      <div class="spec">
+        <h2>מה כלול</h2>
+        <ul id="feats"></ul>
+        <h2>מפרט</h2>
+        <div class="rows" id="rows"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div class="fl"><a href="/אודות/">אודות</a><a href="/תקנון/">תקנון</a><a href="/privacy.html">פרטיות</a><a href="/נגישות/">נגישות</a></div>
+</div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const nis = n => '₪' + n.toLocaleString('he-IL');
+
+fetch('/products/catalog.json').then(r => r.json()).then(d => {
+  // ?id=... בוחר דגם. ברירת מחדל: הראשון.
+  const want = new URLSearchParams(location.search).get('id');
+  const m = d.models.find(x => x.id === want) || d.models[0];
+  const fin = id => d.finishes.find(f => f.id === id);
+  $('#nav').innerHTML = Object.entries(d.lines).filter(([k]) => !k.startsWith('_')).map(([k,l]) => `<a href="/category.html?line=${k}">${l.name}</a>`).join('');
+
+  $('#crumb-name').textContent = m.name;
+  $('#line').textContent = m.line;
+  $('#name').textContent = m.name;
+  $('#dims').textContent = `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ`;
+  $('#price').innerHTML = nis(m.price) + '<small>כולל מע״מ</small>';
+  $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
+  $('#feats').innerHTML = m.features.map(f => `<li>${f}</li>`).join('');
+  const slide = m.identity.door_type === 'sliding';
+  $('#rows').innerHTML = [
+    ['מידות', `רוחב ${m.dims.w} · גובה ${m.dims.h} · עומק ${m.dims.d} ס״מ`],
+    ['דלתות', `${m.identity.door_count} דלתות ${slide ? 'הזזה' : 'פתיחה'}`],
+    slide ? ['מסילה', 'אלומיניום שמפניה'] : null,
+    m.identity.glass_doors ? ['זכוכית', 'דלתות ויטרינה עליונות'] : null,
+    m.handles ? ['ידיות', 'לבחירה מתוך 11 דגמים'] : null,
+    ['התאמה', 'נבנה למידות הקיר שלכם'],
+  ].filter(Boolean).map(([k, v]) => `<div class="row"><b>${k}</b><span>${v}</span></div>`).join('');
+
+  // תמונה לכל גימור. מוצר אחד, N וריאציות — בדיוק כמו ב-Woo.
+  $('#shot').insertAdjacentHTML('beforeend', m.renders.map((r, i) =>
+    `<img id="v${i}" class="${i ? '' : 'on'}" src="${r.image}" alt="${m.name} בגימור ${fin(r.finish).name}" ${i ? 'loading="lazy"' : ''}>`).join(''));
+
+  $('#thumbs').innerHTML = m.renders.map((r, i) =>
+    `<button class="tb" data-i="${i}" aria-pressed="${!i}" aria-label="${fin(r.finish).name}"><img src="${r.thumb}" alt=""></button>`).join('');
+
+  $('#sws').innerHTML = m.renders.map((r, i) => {
+    const f = fin(r.finish);
+    return `<button class="sw" data-i="${i}" aria-pressed="${!i}">
+      <i style="background:${f.swatch}"></i><span>${f.name}</span>${f.code && f.code !== '—' ? `<span class="code">${f.code}</span>` : ''}</button>`;
+  }).join('');
+
+  // מודדים את הכפתור עצמו. חישוב אחוזים ידני נשבר ב-RTL.
+  const moveRail = (track, wrap, btn) => {
+    if (!btn) return;
+    const t = wrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
+    track.style.width = b.width + 'px';
+    track.style.insetInlineStart = (document.dir === 'rtl' ? t.right - b.right : b.left - t.left) + 'px';
+  };
+
+  // ציר הפרופיל. מופיע רק אם לדגם יש יותר מפרופיל אחד.
+  const profs = [...new Set(m.renders.map(r => r.profile))].filter(x => x && x !== '—');
+  if (profs.length > 1) {
+    $('#prof-wrap').style.display = '';
+    $('#profs').innerHTML = profs.map((id, i) => {
+      const pr = (d.profiles || []).find(x => x.id === id) || { name: id, swatch: '#ccc' };
+      return `<button class="sw" data-p="${i}" aria-pressed="${!i}">
+        <i style="background:${pr.swatch}"></i><span>${pr.name}</span></button>`;
+    }).join('');
+  }
+
+  const pickProf = i => {
+    document.querySelectorAll('.sw[data-p]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.p === i));
+    moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-p="${i}"]`));
+    const pr = (d.profiles || []).find(x => x.id === profs[i]);
+    $('#pname').textContent = pr ? pr.name : profs[i];
+    // הרנדר הראשון עם הפרופיל הזה
+    const n = m.renders.findIndex(r => r.profile === profs[i]);
+    if (n > -1) pick(n);
+  };
+
+  // סידור פנים: ציר שלישי. גיאומטריה, לא צבע — לכן תמונה נפרדת ולא וריאציה.
+  const lays = (m.layouts || []).map(id => d.layouts.options.find(o => o.id === id)).filter(Boolean);
+  const N = m.renders.length;
+  if (lays.length) {
+    $('#shot').insertAdjacentHTML('beforeend', lays.map((l, i) =>
+      `<img id="v${N + i}" src="${l.image}" alt="${l.name}" loading="lazy">`).join(''));
+    $('#lays').innerHTML = lays.map((l, i) =>
+      `<button class="lay" data-l="${i}" aria-pressed="${!i}">
+         <img src="${l.thumb}" alt=""><b>${l.name}</b><small>${l.desc}</small></button>`).join('');
+
+  } else { $('#lay-wrap').style.display = 'none'; }
+
+  const showOnly = i => document.querySelectorAll('.shot img').forEach((im, n) => im.classList.toggle('on', n === i));
+
+  const pickLay = i => {
+    document.querySelectorAll('.lay').forEach(b => b.setAttribute('aria-pressed', +b.dataset.l === i));
+    moveRail($('#lslider'), $('#lays'), document.querySelector(`.lay[data-l="${i}"]`));
+    $('#lname').textContent = lays[i].name;
+    showOnly(N + i);
+  };
+
+  const pick = i => {
+    const f = fin(m.renders[i].finish);
+    showOnly(i);
+    document.querySelectorAll('.sw, .tb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+    moveRail($('#slider'), $('#sws'), document.querySelector(`.sw[data-i="${i}"]`));
+    $('#fname').textContent = f.name;
+    $('#see').href = `/viz/?model=${m.id}&finish=${f.id}`;
+    $('#crumb-cat').textContent = m.line;
+    $('#crumb-cat').href = `/category.html?line=${m.line_id}`;
+    $('#wa').href = `https://wa.me/972524400030?text=` +
+      encodeURIComponent(`היי, מתעניין ב${m.name} בגימור ${f.name} (${f.code}). אפשר פרטים?`);
+    if (profs.length > 1) {
+      const pi = profs.indexOf(m.renders[i].profile);
+      if (pi > -1) {
+        document.querySelectorAll('.sw[data-p]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.p === pi));
+        moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-p="${pi}"]`));
+        const pr = (d.profiles || []).find(x => x.id === profs[pi]);
+        $('#pname').textContent = pr ? pr.name : profs[pi];
+      }
+    }
+    history.replaceState(null, '', `?id=${m.id}&finish=${f.id}`);
+  };
+
+  document.addEventListener('click', e => {
+    const pb = e.target.closest('.sw[data-p]');
+    if (pb) return pickProf(+pb.dataset.p);
+    const b = e.target.closest('.sw[data-i], .tb');
+    if (b) return pick(+b.dataset.i);
+    const l = e.target.closest('.lay');
+    if (l) pickLay(+l.dataset.l);
+  });
+  if (lays.length) $('#lname').textContent = lays[0].name;
+
+  // גימור מה-URL — קישור ישיר לצבע ספציפי
+  addEventListener('resize', () => {
+    moveRail($('#slider'), $('#sws'), document.querySelector('.sw[data-i][aria-pressed="true"]'));
+    if (lays.length) moveRail($('#lslider'), $('#lays'), document.querySelector('.lay[aria-pressed="true"]'));
+    if (profs.length > 1) moveRail($('#pslider'), $('#profs'), document.querySelector('.sw[data-p][aria-pressed="true"]'));
+  });
+
+  const wf = new URLSearchParams(location.search).get('finish');
+  pick(Math.max(0, m.renders.findIndex(r => r.finish === wf)));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ספריות קודש · Natural Comfort</title>
+<meta name="description" content="ספריות קודש בהתאמה אישית — 2 עד 8 דלתות. נבנות למידות הקיר שלכם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/premium-inner.css">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4; --champagne:#A79A88; --champagne-lt:#C9BFAE;
+  --ink:#211F1D; --ink-soft:#56514B; --ink-mute:#8A837A; --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif; --body:"Assistant",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--oak);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+.top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
+.brand span{color:var(--champagne);font-weight:400}
+.nav{display:flex;gap:28px;font-size:14.5px;color:var(--ink-soft)}
+.nav a{position:relative;padding:4px 0}
+.nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
+.nav a:hover,.nav a[aria-current]{color:var(--ink)}
+.nav a:hover::after,.nav a[aria-current]::after{width:100%}
+.tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
+.tel:hover{background:#000}
+.tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
+@media(max-width:900px){.nav{display:none}}
+
+.crumb{font-size:13px;color:var(--ink-mute);font-weight:300;padding:22px 0 0}
+.crumb a:hover{color:var(--ink)}
+.crumb i{font-style:normal;margin:0 8px;color:var(--champagne-lt)}
+
+.head{padding:24px 0 8px;max-width:560px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.024em}
+.head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:300}
+
+/* מסנן גודל — ציר הגודל של הקו. על המסילה, כמו כל בורר באתר. */
+.filt{margin:36px 0 40px}
+.filt h2{font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:12px}
+.track{position:relative;height:2px;background:var(--line);margin-bottom:16px}
+.slider{position:absolute;top:-1px;height:4px;background:var(--champagne);transition:all .35s var(--ease);inset-inline-start:0}
+.sizes{display:flex;gap:8px;flex-wrap:wrap}
+.sz{padding:9px 20px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;transition:.15s var(--ease);white-space:nowrap}
+.sz:hover{border-color:var(--champagne-lt)}
+.sz[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sz[disabled]{opacity:.32;cursor:not-allowed;font-weight:300}
+.sz[disabled]:hover{border-color:var(--line)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:80px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);background:#fff;overflow:hidden;transition:.25s var(--ease);display:block}
+.card:hover{border-color:var(--champagne-lt);transform:translateY(-3px)}
+.card .ph{aspect-ratio:1/1;background:#fff;position:relative;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:contain;transition:transform .5s var(--ease)}
+.card:hover .ph img{transform:scale(1.03)}
+.card .sz-tag{position:absolute;top:12px;inset-inline-start:12px;background:var(--panel);color:var(--ink-soft);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 10px}
+.card .b{padding:18px 20px 20px;border-top:1px solid var(--line)}
+.card h3{font-family:var(--display);font-size:18px;font-weight:500;line-height:1.25}
+.card .dm{font-size:12.5px;color:var(--ink-mute);font-weight:300;margin-top:3px}
+.card .pr{font-family:var(--display);font-size:21px;font-weight:500;margin-top:10px;letter-spacing:-.02em}
+.dots{display:flex;gap:5px;margin-top:12px}
+.dots i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line);display:block}
+.dots span{font-size:11px;color:var(--ink-mute);font-weight:300;margin-inline-start:4px;align-self:center}
+.empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--ink-mute)}
+.empty b{font-family:var(--display);font-size:20px;font-weight:500;color:var(--ink);display:block;margin-bottom:8px}
+.empty a{color:var(--oak);text-decoration:underline}
+
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fl{display:flex;gap:20px;flex-wrap:wrap}
+footer a:hover{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a href="/" class="brand">Natural<span>Comfort</span></a>
+  <nav class="nav" id="nav"></nav>
+  <a class="tel" href="tel:079-6622666">
+    <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    079-6622666
+  </a>
+</div></header>
+
+<main class="wrap">
+  <div class="crumb"><a href="/">בית</a><i>·</i><span id="crumb">—</span></div>
+  <div class="head"><h1 id="title">—</h1><p id="sub">—</p></div>
+
+  <div class="filt">
+    <h2 id="flabel">—</h2>
+    <div class="track"><div class="slider" id="slider"></div></div>
+    <div class="sizes" id="sizes"></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div class="fl"><a href="/אודות/">אודות</a><a href="/תקנון/">תקנון</a><a href="/privacy.html">פרטיות</a><a href="/נגישות/">נגישות</a></div>
+</div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const nis = n => '₪' + n.toLocaleString('he-IL');
+
+fetch('/products/catalog.json').then(r => r.json()).then(d => {
+  const q = new URLSearchParams(location.search);
+  const lineId = q.get('line') || 'kodesh';
+  const line = d.lines[lineId];
+  const fin = id => d.finishes.find(f => f.id === id);
+
+  // ניווט מהקווים — לא קשיח
+  $('#nav').innerHTML = Object.entries(d.lines).filter(([k]) => !k.startsWith('_'))
+    .map(([k, l]) => `<a href="?line=${k}"${k === lineId ? ' aria-current="page"' : ''}>${l.name}</a>`).join('');
+
+  $('#crumb').textContent = line.name;
+  $('#title').textContent = line.name;
+  document.title = `${line.name} · Natural Comfort`;
+
+  const mine = d.models.filter(m => m.line_id === lineId);
+  $('#sub').textContent = line.size_axis === 'doors'
+    ? 'נבנות למידות הקיר שלכם. בחרו מספר דלתות ומשם מדברים.'
+    : 'נבנים למידות הקיר שלכם. בחרו רוחב ומשם מדברים.';
+  $('#flabel').textContent = line.size_axis === 'doors' ? 'מספר דלתות' : 'רוחב';
+
+  // ציר הגודל של הקו — לא מספר גלובלי
+  const opts = ['all', ...line.sizes];
+  const label = s => s === 'all' ? 'הכל' : line.size_label.replace('{n}', s);
+  const has = s => s === 'all' || mine.some(m => m.size === s);
+
+  $('#sizes').innerHTML = opts.map((s, i) =>
+    `<button class="sz" data-i="${i}" data-s="${s}" aria-pressed="${!i}" ${has(s) ? '' : 'disabled'}>${label(s)}</button>`).join('');
+  $('#slider').style.width = (100 / opts.length) + '%';
+
+  const card = m => {
+    const dots = (m.finishes || []).slice(0, 6).map(id => {
+      const f = fin(id); return f ? `<i style="background:${f.swatch}"></i>` : '';
+    }).join('');
+    const extra = (m.finishes || []).length > 6 ? `<span>+${m.finishes.length - 6}</span>` : '';
+    return `<a class="card" href="/product.html?id=${m.id}">
+      <div class="ph"><span class="sz-tag">${label(m.size)}</span>
+        <img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy"></div>
+      <div class="b">
+        <h3>${m.name}</h3>
+        <div class="dm">${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ</div>
+        <div class="pr">${nis(m.price)}</div>
+        <div class="dots">${dots}${extra}</div>
+      </div></a>`;
+  };
+
+  const show = i => {
+    const s = opts[i];
+    document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+    $('#slider').style.insetInlineStart = (i * 100 / opts.length) + '%';
+    const list = s === 'all' ? mine : mine.filter(m => m.size === s);
+    $('#grid').innerHTML = list.length
+      ? list.map(card).join('')
+      : `<div class="empty"><b>אין עדיין דגם ב${label(s)}</b>
+           אנחנו בונים למידה. <a href="https://wa.me/972524400030">דברו איתנו</a> ונתאים.</div>`;
+    history.replaceState(null, '', `?line=${lineId}${s === 'all' ? '' : '&size=' + s}`);
+  };
+
+  $('#sizes').onclick = e => {
+    const b = e.target.closest('.sz');
+    if (b && !b.disabled) show(+b.dataset.i);
+  };
+
+  const ws = q.get('size');
+  show(Math.max(0, opts.findIndex(s => String(s) === ws)));
+});
+</script>
+</body>
+</html>

@@ -110,7 +110,7 @@ footer a:hover{color:var(--ink)}
 </main>
 
 <footer><div class="wrap">
-  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div>© 2026 Natural Comfort</div>
   <div class="fl"><a href="/אודות/">אודות</a><a href="/תקנון/">תקנון</a><a href="/privacy.html">פרטיות</a><a href="/נגישות/">נגישות</a></div>
 </div></footer>
 
@@ -120,28 +120,44 @@ const nis = n => '₪' + n.toLocaleString('he-IL');
 
 fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const q = new URLSearchParams(location.search);
-  const lineId = q.get('line') || 'kodesh';
-  const line = d.lines[lineId];
+  let groupId = q.get('group');
+  let lineId  = q.get('line');
+  if (!groupId && !lineId) groupId = 'kodesh';
+  if (!groupId && lineId)  groupId = (d.lines[lineId] || {}).group;
+  const group = (d.groups || []).find(g => g.id === groupId);
+  // תתי-קטגוריות שיש בהן משהו
+  const subs  = group ? group.lines.filter(l => d.models.some(m => m.line_id === l)) : [];
+  if (!lineId && subs.length === 1) lineId = subs[0];
+  const line = d.lines[lineId] || d.lines[subs[0]] || {};
   const fin = id => d.finishes.find(f => f.id === id);
 
-  // ניווט מהקווים — לא קשיח
-  $('#nav').innerHTML = Object.entries(d.lines).filter(([k]) => !k.startsWith('_'))
-    .map(([k, l]) => `<a href="?line=${k}"${k === lineId ? ' aria-current="page"' : ''}>${l.name}</a>`).join('');
+  // ניווט מהעולמות — ריקים לא מוצגים
+  const groupOf = m => d.lines[m.line_id] && d.lines[m.line_id].group;
+  const alive   = g => d.models.some(m => groupOf(m) === g.id);
+  $('#nav').innerHTML = (d.groups || []).filter(alive)
+    .map(g => `<a href="?group=${g.id}"${g.id === groupId ? ' aria-current="page"' : ''}>${g.name}</a>`).join('');
 
-  $('#crumb').textContent = line.name;
-  $('#title').textContent = line.name;
-  document.title = `${line.name} · Natural Comfort`;
+  const heading = (group && subs.length > 1 && !q.get('line')) ? group.name : (line.name || group.name);
+  $('#crumb').textContent = heading;
+  $('#title').textContent = heading;
+  document.title = `${heading} · Natural Comfort`;
 
-  const mine = d.models.filter(m => m.line_id === lineId);
+  const mine = q.get('line')
+    ? d.models.filter(m => m.line_id === lineId)
+    : d.models.filter(m => groupOf(m) === groupId);
   $('#sub').textContent = line.size_axis === 'doors'
     ? 'נבנות למידות הקיר שלכם. בחרו מספר דלתות ומשם מדברים.'
     : 'נבנים למידות הקיר שלכם. בחרו רוחב ומשם מדברים.';
   $('#flabel').textContent = line.size_axis === 'doors' ? 'מספר דלתות' : 'רוחב';
 
-  // ציר הגודל של הקו — לא מספר גלובלי
-  const opts = ['all', ...line.sizes];
-  const label = s => s === 'all' ? 'הכל' : line.size_label.replace('{n}', s);
-  const has = s => s === 'all' || mine.some(m => m.size === s);
+  // כמה סוגים בעולם → מסננים לפי סוג. סוג אחד → מסננים לפי מידה.
+  const byType = subs.length > 1 && !q.get('line');
+  $('#flabel').textContent = byType ? 'סוג' : ($('#flabel').textContent);
+  const opts  = byType ? ['all', ...subs] : ['all', ...(line.sizes || [])];
+  const label = s => s === 'all' ? 'הכל'
+                   : byType ? d.lines[s].name
+                   : (line.size_label || '{n}').replace('{n}', s);
+  const has   = s => s === 'all' || (byType ? true : mine.some(m => m.size === s));
 
   $('#sizes').innerHTML = opts.map((s, i) =>
     `<button class="sz" data-i="${i}" data-s="${s}" aria-pressed="${!i}" ${has(s) ? '' : 'disabled'}>${label(s)}</button>`).join('');
@@ -153,7 +169,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     }).join('');
     const extra = (m.finishes || []).length > 6 ? `<span>+${m.finishes.length - 6}</span>` : '';
     return `<a class="card" href="/product.html?id=${m.id}">
-      <div class="ph"><span class="sz-tag">${label(m.size)}</span>
+      <div class="ph"><span class="sz-tag">${byType ? d.lines[m.line_id].name : label(m.size)}</span>
         <img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy"></div>
       <div class="b">
         <h3>${m.name}</h3>
@@ -167,12 +183,16 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const s = opts[i];
     document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
     $('#slider').style.insetInlineStart = (i * 100 / opts.length) + '%';
-    const list = s === 'all' ? mine : mine.filter(m => m.size === s);
+    const list = s === 'all' ? mine
+               : byType ? mine.filter(m => m.line_id === s)
+               : mine.filter(m => m.size === s);
     $('#grid').innerHTML = list.length
       ? list.map(card).join('')
       : `<div class="empty"><b>אין עדיין דגם ב${label(s)}</b>
            אנחנו בונים למידה. <a href="https://wa.me/972524400030">דברו איתנו</a> ונתאים.</div>`;
-    history.replaceState(null, '', `?line=${lineId}${s === 'all' ? '' : '&size=' + s}`);
+    history.replaceState(null, '', byType
+      ? `?group=${groupId}${s === 'all' ? '' : '&line=' + s}`
+      : `?line=${lineId}${s === 'all' ? '' : '&size=' + s}`);
   };
 
   $('#sizes').onclick = e => {

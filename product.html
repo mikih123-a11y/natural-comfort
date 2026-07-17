@@ -142,7 +142,7 @@ footer a:hover{color:var(--ink)}
       <p class="made" id="made">—</p>
 
       <div class="opt">
-        <h2>גימור דלתות<em id="fname">—</em></h2>
+        <h2><span id="flbl">גימור דלתות</span><em id="fname">—</em></h2>
         <div class="track"><div class="slider" id="slider"></div></div>
         <div class="sws" id="sws"></div>
       </div>
@@ -188,6 +188,8 @@ footer a:hover{color:var(--ink)}
 
 <script>
 const $ = s => document.querySelector(s);
+const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : 'מידות לפי התאמה אישית';
+
 const nis = n => '₪' + n.toLocaleString('he-IL');
 
 fetch('/products/catalog.json').then(r => r.json()).then(d => {
@@ -200,8 +202,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#crumb-name').textContent = m.name;
   $('#line').textContent = m.line;
   $('#name').textContent = m.name;
-  $('#dims').textContent = `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ`;
-  $('#price').innerHTML = nis(m.price) + '<small>כולל מע״מ</small>';
+  $('#dims').textContent = `${dm(m)}`;
+  $('#price').innerHTML = m.price ? nis(m.price) + '<small>כולל מע״מ</small>' : '<span style="font-size:.62em">מחיר לפי התאמה</span><small>דברו איתנו</small>';
   $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
   $('#feats').innerHTML = m.features.map(f => `<li>${f}</li>`).join('');
   const slide = m.identity.door_type === 'sliding';
@@ -283,11 +285,14 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     document.querySelectorAll('.sw, .tb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
     moveRail($('#slider'), $('#sws'), document.querySelector(`.sw[data-i="${i}"]`));
     $('#fname').textContent = f.name;
+    $('#flbl').textContent = m.category === 'bed' ? 'חזית ראש המיטה'
+                           : m.category === 'mattress' ? 'דגם'
+                           : (m.identity && m.identity.door_count) ? 'גימור דלתות' : 'גימור';
     $('#see').href = `/viz/?model=${m.id}&finish=${f.id}`;
     $('#crumb-cat').textContent = m.line;
     $('#crumb-cat').href = `/category.html?line=${m.line_id}`;
     $('#wa').href = `https://wa.me/972524400030?text=` +
-      encodeURIComponent(`היי, מתעניין ב${m.name} בגימור ${f.name} (${f.code}). אפשר פרטים?`);
+      encodeURIComponent(`היי, מתעניין ב${m.name} · ${f.name}${f.code ? ` (${f.code})` : ''}. אפשר פרטים?`);
     if (profs.length > 1) {
       const pi = profs.indexOf(m.renders[i].profile);
       if (pi > -1) {

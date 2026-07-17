@@ -116,6 +116,7 @@ footer a:hover{color:var(--ink)}
 
 <script>
 const $ = s => document.querySelector(s);
+const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : 'מידות לפי התאמה אישית';
 const nis = n => '₪' + n.toLocaleString('he-IL');
 
 fetch('/products/catalog.json').then(r => r.json()).then(d => {
@@ -173,8 +174,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
         <img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy"></div>
       <div class="b">
         <h3>${m.name}</h3>
-        <div class="dm">${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ</div>
-        <div class="pr">${nis(m.price)}</div>
+        <div class="dm">${dm(m)}</div>
+        <div class="pr">${m.price ? nis(m.price) : 'מחיר לפי התאמה'}</div>
         <div class="dots">${dots}${extra}</div>
       </div></a>`;
   };

@@ -1,699 +1,2029 @@
 {
-  "_note": "דגם אחד · N גימורים. זה בדיוק Variable Product + Attributes ב-Woo.",
-  "_model": "MODEL = מוצר. FINISH = תכונה. RENDER = וריאציה + תמונה. LAYOUT = ציר שלישי.\nחשוב: הפלטה היא לפי קו מוצר, לא גלובלית. כל דגם מצהיר ב-finishes אילו גימורים זמינים לו.",
-  "_todo": "מחירים הם placeholder. קודי לוח לאמת מול הספק.",
-  "finishes": [
-    {
-      "id": "alon",
-      "name": "אלון",
-      "swatch": "#D2AC6C",
-      "tier": 0,
-      "code": "5550"
-    },
-    {
-      "id": "lavan",
-      "name": "לבן מט",
-      "swatch": "#F7F8F3",
-      "tier": 0
-    },
-    {
-      "id": "mulban",
-      "name": "מולבן",
-      "swatch": "#DCD7CC",
-      "tier": 0
-    },
-    {
-      "id": "shamenet",
-      "name": "שמנת",
-      "swatch": "#EEE9C4",
-      "tier": 0,
-      "code": "3207"
-    },
-    {
-      "id": "shahor",
-      "name": "שחור",
-      "swatch": "#0E1115",
-      "tier": 0,
-      "code": "3199"
-    },
-    {
-      "id": "sahara",
-      "name": "סהרה",
-      "swatch": "#C6A67B",
-      "tier": 0
-    },
-    {
-      "id": "shish",
-      "name": "שיש שחור",
-      "swatch": "#2A2726",
-      "code": "—",
-      "tier": 1,
-      "_note": "לא בסרגל הסטנדרטי. גימור נוסף."
-    },
-    {
-      "id": "5180",
-      "name": "וונגה",
-      "swatch": "#2B221D",
-      "code": "5180",
-      "tier": 0,
-      "line": "קודש"
-    },
-    {
-      "id": "7903",
-      "name": "בטון מולבן",
-      "swatch": "#CEC7C1",
-      "code": "7903",
-      "tier": 0,
-      "line": "קודש"
-    },
-    {
-      "id": "7904",
-      "name": "בטון אפור",
-      "swatch": "#726E6D",
-      "code": "7904",
-      "tier": 0,
-      "line": "קודש"
-    },
-    {
-      "id": "mevuka",
-      "name": "אלון מבוקע",
-      "swatch": "#92754E",
-      "code": "—",
-      "tier": 0,
-      "line": "קודש"
-    },
-    {
-      "id": "8003",
-      "name": "שיש לבן",
-      "swatch": "#C5C5C5",
-      "code": "8003",
-      "tier": 1,
-      "line": "הזזה"
-    },
-    {
-      "id": "8005",
-      "name": "שיש שחור",
-      "swatch": "#111111",
-      "code": "8005",
-      "tier": 1,
-      "line": "הזזה"
-    },
-    {
-      "id": "464",
-      "name": "פשתן",
-      "swatch": "#E2DBD0",
-      "code": "464",
-      "tier": 0,
-      "line": "הזזה"
-    }
-  ],
-  "profiles": [
-    {
-      "id": "shampa",
-      "name": "שמפניה",
-      "swatch": "#A79A88"
-    },
-    {
-      "id": "shahor",
-      "name": "שחור",
-      "swatch": "#1F1D1C"
-    },
-    {
-      "id": "lavan",
-      "name": "לבן",
-      "swatch": "#F2F0EC"
-    }
-  ],
-  "models": [
-    {
-      "id": "opal-2dl-tv-160",
-      "name": "אופל TV · 2 דלתות הזזה",
-      "line": "אופל",
-      "price": 3990,
-      "price_note": "placeholder — למלא",
-      "dims": {
-        "w": 160,
-        "h": 240,
-        "d": 60
-      },
-      "lead_time_days": 21,
-      "category": "wardrobe",
-      "placement": "against_wall",
-      "replaces": "wardrobe or cabinet",
-      "handles": false,
-      "identity": {
-        "door_count": 2,
-        "door_type": "sliding",
-        "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
-        "has_tv_niche": true,
-        "tv_niche_position": "right door, middle band"
-      },
-      "features": [
-        "2 דלתות הזזה על מסילת אלומיניום",
-        "נישת מסך משולבת",
-        "מנגנון טריקה שקטה",
-        "מוט תלייה לכל הרוחב"
-      ],
-      "renders": [
-        {
-          "finish": "shamenet",
-          "profile": "shampa",
-          "image": "/products/opal-2dl-tv-shamenet.jpg",
-          "thumb": "/products/thumbs/opal-2dl-tv-shamenet.jpg"
-        },
-        {
-          "finish": "alon",
-          "profile": "shampa",
-          "image": "/products/opal-2dl-tv-alon.jpg",
-          "thumb": "/products/thumbs/opal-2dl-tv-alon.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "shampa",
-          "image": "/products/opal-2dl-tv-shahor.jpg",
-          "thumb": "/products/thumbs/opal-2dl-tv-shahor.jpg"
-        },
-        {
-          "finish": "shish",
-          "profile": "shampa",
-          "image": "/products/opal-2dl-tv-shish.jpg",
-          "thumb": "/products/thumbs/opal-2dl-tv-shish.jpg"
-        }
-      ],
-      "layouts": [
-        "L2A",
-        "L2B"
-      ],
-      "finishes": [
-        "shamenet",
-        "alon",
-        "lavan",
-        "mulban",
-        "shahor",
-        "sahara",
-        "shish",
-        "8003",
-        "8005",
-        "464"
-      ],
-      "line_id": "hazaza",
-      "size": 1.6
-    },
-    {
-      "line": "ספריות קודש",
-      "category": "bookshelf",
-      "placement": "against_wall",
-      "replaces": null,
-      "handles": true,
-      "dims": {
-        "w": 120,
-        "h": 220,
-        "d": 45
-      },
-      "_todo_dims": "מידות אמיתיות",
-      "lead_time_days": 21,
-      "identity": {
-        "door_count": 6,
-        "door_type": "hinged",
-        "panel_seams_per_door": 0,
-        "frame_color": "none",
-        "glass_doors": true,
-        "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
-      },
-      "id": "kodesh-3dl-a",
-      "name": "ספריית קודש 3 דלתות · דגם A",
-      "price": 3499,
-      "price_note": "placeholder — למלא",
-      "finishes": [
-        "5180",
-        "7903",
-        "7904",
-        "mevuka"
-      ],
-      "features": [
-        "ויטרינה עליונה · 3 דלתות זכוכית",
-        "קרניז מוגבה",
-        "בסיס תחתון · 3 דלתות",
-        "רגליות אלומיניום"
-      ],
-      "renders": [
-        {
-          "finish": "5180",
-          "profile": "—",
-          "image": "/products/kodesh-3dl-a-5180.jpg",
-          "thumb": "/products/thumbs/kodesh-3dl-a-5180.jpg"
-        },
-        {
-          "finish": "7903",
-          "profile": "—",
-          "image": "/products/kodesh-3dl-a-7903.jpg",
-          "thumb": "/products/thumbs/kodesh-3dl-a-7903.jpg"
-        },
-        {
-          "finish": "7904",
-          "profile": "—",
-          "image": "/products/kodesh-3dl-a-7904.jpg",
-          "thumb": "/products/thumbs/kodesh-3dl-a-7904.jpg"
-        },
-        {
-          "finish": "mevuka",
-          "profile": "—",
-          "image": "/products/kodesh-3dl-a-mevuka.jpg",
-          "thumb": "/products/thumbs/kodesh-3dl-a-mevuka.jpg"
-        }
-      ],
-      "line_id": "kodesh",
-      "size": 3
-    },
-    {
-      "line": "ספריות קודש",
-      "category": "bookshelf",
-      "placement": "against_wall",
-      "replaces": null,
-      "handles": true,
-      "dims": {
-        "w": 120,
-        "h": 220,
-        "d": 45
-      },
-      "_todo_dims": "מידות אמיתיות",
-      "lead_time_days": 21,
-      "identity": {
-        "door_count": 5,
-        "door_type": "hinged",
-        "panel_seams_per_door": 0,
-        "frame_color": "none",
-        "glass_doors": true,
-        "_desc": "ויטרינה עליונה 3 דלתות זכוכית · בסיס 2 דלתות + 3 מגירות מרכזיות"
-      },
-      "id": "kodesh-3dl-b",
-      "name": "ספריית קודש 3 דלתות + מגירות · דגם B",
-      "price": 3799,
-      "price_note": "placeholder — למלא",
-      "finishes": [
-        "shamenet",
-        "5180",
-        "7903",
-        "7904",
-        "mevuka"
-      ],
-      "features": [
-        "ויטרינה עליונה · 3 דלתות זכוכית",
-        "קרניז מוגבה",
-        "בסיס · 2 דלתות + 3 מגירות",
-        "רגליות אלומיניום"
-      ],
-      "renders": [
-        {
-          "finish": "shamenet",
-          "profile": "—",
-          "image": "/products/kodesh-3dl-b-3207.jpg",
-          "thumb": "/products/thumbs/kodesh-3dl-b-3207.jpg"
-        }
-      ],
-      "line_id": "kodesh",
-      "size": 3
-    },
-    {
-      "id": "kodesh-4dl-open",
-      "name": "ספריית קודש 4 דלתות · מדפים פתוחים",
-      "line": "ספריות קודש",
-      "line_id": "kodesh",
-      "size": 4,
-      "price": 2999,
-      "price_note": "placeholder — למלא",
-      "dims": {
-        "w": 160,
-        "h": 220,
-        "d": 40
-      },
-      "_todo_dims": "מידות אמיתיות",
-      "lead_time_days": 21,
-      "category": "bookshelf",
-      "placement": "against_wall",
-      "replaces": null,
-      "handles": true,
-      "finishes": [
-        "shamenet",
-        "shahor",
-        "5180",
-        "7903",
-        "7904",
-        "mevuka"
-      ],
-      "identity": {
-        "door_count": 4,
-        "door_type": "hinged",
-        "panel_seams_per_door": 0,
-        "frame_color": "none",
-        "glass_doors": false,
-        "_desc": "מדפים פתוחים מעל · בסיס סגור 4 דלתות · ידיות מוט"
-      },
-      "features": [
-        "מדפים פתוחים · גישה מיידית",
-        "בסיס סגור · 4 דלתות",
-        "ידיות מוט",
-        "קרניז תחתון"
-      ],
-      "renders": [
-        {
-          "finish": "shamenet",
-          "profile": "—",
-          "image": "/products/kodesh-4dl-open-shamenet.jpg",
-          "thumb": "/products/thumbs/kodesh-4dl-open-shamenet.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "—",
-          "image": "/products/kodesh-4dl-open-shahor.jpg",
-          "thumb": "/products/thumbs/kodesh-4dl-open-shahor.jpg"
-        }
-      ]
-    },
-    {
-      "id": "desk-160",
-      "name": "ארון שולחן · 160",
-      "line": "ארונות הזזה",
-      "line_id": "hazaza",
-      "size": 1.6,
-      "price": 4990,
-      "price_note": "placeholder",
-      "dims": {
-        "w": 160,
-        "h": 240,
-        "d": 60
-      },
-      "lead_time_days": 21,
-      "category": "wardrobe",
-      "placement": "in_niche",
-      "replaces": null,
-      "handles": true,
-      "finishes": [
-        "shamenet",
-        "7903",
-        "7904",
-        "shahor"
-      ],
-      "_note": "רנדר של סצנה שלמה — לקטלוג בלבד, לא להדמיה בחדר.",
-      "identity": {
-        "door_count": 4,
-        "door_type": "hinged",
-        "panel_seams_per_door": 0,
-        "frame_color": "none",
-        "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
-      },
-      "features": [
-        "שולחן משולב עם מגירה",
-        "נישת מדפים פתוחה",
-        "ארונות עליונים",
-        "נבנה לנישה"
-      ],
-      "renders": [
-        {
-          "finish": "shamenet",
-          "profile": "shampa",
-          "image": "/products/desk-160-shamenet.jpg",
-          "thumb": "/products/thumbs/desk-160-shamenet.jpg"
-        },
-        {
-          "finish": "7903",
-          "profile": "shampa",
-          "image": "/products/desk-160-7903.jpg",
-          "thumb": "/products/thumbs/desk-160-7903.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "lavan",
-          "image": "/products/desk-160-shahor-w.jpg",
-          "thumb": "/products/thumbs/desk-160-shahor-w.jpg"
-        },
-        {
-          "finish": "7904",
-          "profile": "lavan",
-          "image": "/products/desk-160-7904-mirror.jpg",
-          "thumb": "/products/thumbs/desk-160-7904-mirror.jpg"
-        }
-      ]
-    },
-    {
-      "id": "simple3-240",
-      "name": "סימפל · 3 דלתות הזזה + מראה",
-      "line": "ארונות הזזה",
-      "line_id": "hazaza",
-      "size": 2.4,
-      "price": 4290,
-      "price_note": "placeholder",
-      "dims": {
-        "w": 240,
-        "h": 240,
-        "d": 60
-      },
-      "lead_time_days": 21,
-      "category": "wardrobe",
-      "placement": "against_wall",
-      "replaces": "wardrobe or cabinet",
-      "handles": false,
-      "finishes": [
-        "shamenet",
-        "alon",
-        "lavan",
-        "mulban",
-        "shahor",
-        "sahara",
-        "shish",
-        "8003",
-        "8005",
-        "464"
-      ],
-      "identity": {
-        "door_count": 3,
-        "door_type": "sliding",
-        "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
-        "has_mirror": true,
-        "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
-      },
-      "features": [
-        "3 דלתות הזזה",
-        "מראה מלאה במרכז",
-        "מסילת אלומיניום",
-        "מנגנון טריקה שקטה"
-      ],
-      "renders": [
-        {
-          "finish": "464",
-          "profile": "shampa",
-          "image": "/products/simple3-240-464.jpg",
-          "thumb": "/products/thumbs/simple3-240-464.jpg"
-        },
-        {
-          "finish": "lavan",
-          "profile": "shampa",
-          "image": "/products/simple3-240-lavan.jpg",
-          "thumb": "/products/thumbs/simple3-240-lavan.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "shahor",
-          "image": "/products/simple3-240-shahor.jpg",
-          "thumb": "/products/thumbs/simple3-240-shahor.jpg"
-        }
-      ]
-    },
-    {
-      "id": "simple4-320",
-      "name": "סימפל · 4 דלתות הזזה",
-      "line": "ארונות הזזה",
-      "line_id": "hazaza",
-      "size": 3.2,
-      "price": 5990,
-      "price_note": "placeholder",
-      "dims": {
-        "w": 320,
-        "h": 270,
-        "d": 60
-      },
-      "_todo_dims": "⚠ מיקי אמר גובה 240. שם הקובץ אומר h270. לאמת.",
-      "lead_time_days": 21,
-      "category": "wardrobe",
-      "placement": "against_wall",
-      "replaces": "wardrobe or cabinet",
-      "handles": false,
-      "finishes": [
-        "shamenet",
-        "alon",
-        "lavan",
-        "mulban",
-        "shahor",
-        "sahara",
-        "shish",
-        "8003",
-        "8005",
-        "464"
-      ],
-      "identity": {
-        "door_count": 4,
-        "door_type": "sliding",
-        "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
-        "_desc": "4 דלתות הזזה · גובה 270"
-      },
-      "features": [
-        "4 דלתות הזזה",
-        "מסילת אלומיניום",
-        "גובה 270 ס״מ",
-        "מנגנון טריקה שקטה"
-      ],
-      "renders": [
-        {
-          "finish": "lavan",
-          "profile": "shampa",
-          "image": "/products/simple4-320-lavan.jpg",
-          "thumb": "/products/thumbs/simple4-320-lavan.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "shampa",
-          "image": "/products/simple4-320-shahor.jpg",
-          "thumb": "/products/thumbs/simple4-320-shahor.jpg"
-        },
-        {
-          "finish": "shahor",
-          "profile": "shahor",
-          "image": "/products/simple4-320-shahor-bp.jpg",
-          "thumb": "/products/thumbs/simple4-320-shahor-bp.jpg"
-        },
-        {
-          "finish": "8003",
-          "profile": "shampa",
-          "image": "/products/simple4-320-8003.jpg",
-          "thumb": "/products/thumbs/simple4-320-8003.jpg"
-        },
-        {
-          "finish": "8005",
-          "profile": "shahor",
-          "image": "/products/simple4-320-8005-bp.jpg",
-          "thumb": "/products/thumbs/simple4-320-8005-bp.jpg"
-        }
-      ]
-    }
-  ],
-  "handles": {
-    "_note": "בחירה בהזמנה, לא וריאציית תמונה. רלוונטי לדלתות פתיחה בלבד — לארונות הזזה הפרופיל הוא הידית.",
-    "_todo": "צלם כל ידית על רקע לבן. הלוח הנוכחי לא לאתר.",
-    "reference_image": "/products/handles-board.jpg",
-    "options": [
-      {
-        "id": "1",
-        "name": "ידית 1"
-      },
-      {
-        "id": "2",
-        "name": "ידית 2"
-      },
-      {
-        "id": "3",
-        "name": "ידית 3"
-      },
-      {
-        "id": "4",
-        "name": "ידית 4"
-      },
-      {
-        "id": "5",
-        "name": "ידית 5"
-      },
-      {
-        "id": "6",
-        "name": "ידית 6"
-      },
-      {
-        "id": "7",
-        "name": "ידית 7"
-      },
-      {
-        "id": "8",
-        "name": "ידית 8"
-      },
-      {
-        "id": "9",
-        "name": "ידית 9"
-      },
-      {
-        "id": "10",
-        "name": "ידית 10"
-      },
-      {
-        "id": "11",
-        "name": "ידית 11"
-      }
-    ]
+ "_note": "דגם אחד · N גימורים. זה בדיוק Variable Product + Attributes ב-Woo.",
+ "_model": "MODEL = מוצר. FINISH = תכונה. RENDER = וריאציה + תמונה. LAYOUT = ציר שלישי.\nחשוב: הפלטה היא לפי קו מוצר, לא גלובלית. כל דגם מצהיר ב-finishes אילו גימורים זמינים לו.",
+ "_todo": "מחירים הם placeholder. קודי לוח לאמת מול הספק.",
+ "finishes": [
+  {
+   "id": "alon",
+   "name": "אלון",
+   "swatch": "#D2AC6C",
+   "tier": 0,
+   "code": "5550"
   },
-  "layouts": {
-    "_note": "גיאומטריה. חייב רנדר — AI לא מזיז מדפים. הגוף לבן תמיד, ולכן אין ציר גימור.",
-    "_todo": "לאמת מול המפעל אילו פריסות זמינות לכל רוחב.",
-    "options": [
-      {
-        "id": "L2A",
-        "name": "תלייה + מדפים",
-        "doors": 2,
-        "desc": "תא תלייה מלא + עמודת מדפים",
-        "image": "/products/layout-2dl-a.jpg",
-        "thumb": "/products/thumbs/layout-2dl-a.jpg"
-      },
-      {
-        "id": "L2B",
-        "name": "מדפים + תלייה",
-        "doors": 2,
-        "desc": "עמודת מדפים + תא תלייה מלא",
-        "image": "/products/layout-2dl-b.jpg",
-        "thumb": "/products/thumbs/layout-2dl-b.jpg"
-      },
-      {
-        "id": "L3A",
-        "name": "שני מדפים + תלייה",
-        "doors": 3,
-        "desc": "שתי עמודות מדפים + תא תלייה",
-        "image": "/products/layout-3dl-a.jpg",
-        "thumb": "/products/thumbs/layout-3dl-a.jpg"
-      },
-      {
-        "id": "L3B",
-        "name": "תלייה · מדפים · תלייה",
-        "doors": 3,
-        "desc": "שני תאי תלייה משני צידי עמודת מדפים",
-        "image": "/products/layout-3dl-b.jpg",
-        "thumb": "/products/thumbs/layout-3dl-b.jpg"
-      }
-    ]
+  {
+   "id": "lavan",
+   "name": "לבן מט",
+   "swatch": "#F7F8F3",
+   "tier": 0
   },
-  "lines": {
-    "_note": "ציר הגודל שונה בין קווים. ספריות קודש = מספר דלתות. ארונות הזזה = רוחב.",
-    "kodesh": {
-      "name": "ספריות קודש",
-      "slug": "ספריות-קודש",
-      "size_axis": "doors",
-      "sizes": [
-        2,
-        3,
-        4,
-        5,
-        6,
-        8
-      ],
-      "size_label": "{n} דלתות"
-    },
-    "hazaza": {
-      "name": "ארונות הזזה",
-      "slug": "ארונות-הזזה",
-      "size_axis": "width_m",
-      "sizes": [
-        1.6,
-        2.4,
-        3.2
-      ],
-      "size_label": "{n} מטר"
-    }
+  {
+   "id": "mulban",
+   "name": "מולבן",
+   "swatch": "#DCD7CC",
+   "tier": 0
+  },
+  {
+   "id": "shamenet",
+   "name": "שמנת",
+   "swatch": "#EEE9C4",
+   "tier": 0,
+   "code": "3207"
+  },
+  {
+   "id": "shahor",
+   "name": "שחור",
+   "swatch": "#0E1115",
+   "tier": 0,
+   "code": "3199"
+  },
+  {
+   "id": "sahara",
+   "name": "סהרה",
+   "swatch": "#C6A67B",
+   "tier": 0
+  },
+  {
+   "id": "shish",
+   "name": "שיש שחור",
+   "swatch": "#2A2726",
+   "code": "—",
+   "tier": 1,
+   "_note": "לא בסרגל הסטנדרטי. גימור נוסף."
+  },
+  {
+   "id": "5180",
+   "name": "וונגה",
+   "swatch": "#2B221D",
+   "code": "5180",
+   "tier": 0,
+   "line": "קודש"
+  },
+  {
+   "id": "7903",
+   "name": "בטון מולבן",
+   "swatch": "#CEC7C1",
+   "code": "7903",
+   "tier": 0,
+   "line": "קודש"
+  },
+  {
+   "id": "7904",
+   "name": "בטון אפור",
+   "swatch": "#726E6D",
+   "code": "7904",
+   "tier": 0,
+   "line": "קודש"
+  },
+  {
+   "id": "mevuka",
+   "name": "אלון מבוקע",
+   "swatch": "#92754E",
+   "code": "—",
+   "tier": 0,
+   "line": "קודש"
+  },
+  {
+   "id": "8003",
+   "name": "שיש לבן",
+   "swatch": "#C5C5C5",
+   "code": "8003",
+   "tier": 1,
+   "line": "הזזה"
+  },
+  {
+   "id": "8005",
+   "name": "שיש שחור",
+   "swatch": "#111111",
+   "code": "8005",
+   "tier": 1,
+   "line": "הזזה"
+  },
+  {
+   "id": "464",
+   "name": "פשתן",
+   "swatch": "#E2DBD0",
+   "code": "464",
+   "tier": 0,
+   "line": "הזזה"
+  },
+  {
+   "id": "tchelet",
+   "name": "תכלת",
+   "swatch": "#A9D2E8",
+   "tier": 0,
+   "line": "ילדים"
+  },
+  {
+   "id": "mahogany",
+   "name": "מהגוני",
+   "swatch": "#7B3F2B",
+   "tier": 0,
+   "line": "ילדים"
+  },
+  {
+   "id": "ribuim",
+   "name": "ריבועים · תכלת",
+   "swatch": "#A9D2E8",
+   "tier": 0,
+   "line": "מיטות"
+  },
+  {
+   "id": "pasim",
+   "name": "פסים · בטון",
+   "swatch": "#B9B6B2",
+   "tier": 0,
+   "line": "מיטות"
+  },
+  {
+   "id": "plata",
+   "name": "פלטה · בטון",
+   "swatch": "#9E9B97",
+   "tier": 0,
+   "line": "מיטות"
+  },
+  {
+   "id": "8006",
+   "name": "שיש אפור",
+   "swatch": "#918E8A",
+   "code": "8006",
+   "tier": 1
+  },
+  {
+   "id": "afor",
+   "name": "אפור",
+   "swatch": "#9A9A9A",
+   "tier": 0,
+   "line": "מיטות"
+  },
+  {
+   "id": "varod",
+   "name": "ורוד",
+   "swatch": "#F3C4D1",
+   "tier": 0,
+   "line": "מיטות"
+  },
+  {
+   "id": "kapuchino",
+   "name": "קפוצ׳ינו",
+   "swatch": "#78685D",
+   "line": "מיטות"
+  },
+  {
+   "id": "krem",
+   "name": "קרם",
+   "swatch": "#CEC4B8",
+   "line": "מיטות"
   }
+ ],
+ "profiles": [
+  {
+   "id": "shampa",
+   "name": "שמפניה",
+   "swatch": "#A79A88"
+  },
+  {
+   "id": "shahor",
+   "name": "שחור",
+   "swatch": "#1F1D1C"
+  },
+  {
+   "id": "lavan",
+   "name": "לבן",
+   "swatch": "#F2F0EC"
+  }
+ ],
+ "models": [
+  {
+   "id": "opal-2dl-tv-160",
+   "name": "אופל TV · 2 דלתות הזזה",
+   "line": "ארונות הזזה",
+   "price": 3990,
+   "price_note": "placeholder — למלא",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "lead_time_days": 21,
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "handles": false,
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_tv_niche": true,
+    "tv_niche_position": "right door, middle band"
+   },
+   "features": [
+    "2 דלתות הזזה על מסילת אלומיניום",
+    "נישת מסך משולבת",
+    "מנגנון טריקה שקטה",
+    "מוט תלייה לכל הרוחב"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "shampa",
+     "image": "/products/opal-2dl-tv-shamenet.jpg",
+     "thumb": "/products/thumbs/opal-2dl-tv-shamenet.jpg"
+    },
+    {
+     "finish": "alon",
+     "profile": "shampa",
+     "image": "/products/opal-2dl-tv-alon.jpg",
+     "thumb": "/products/thumbs/opal-2dl-tv-alon.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "shampa",
+     "image": "/products/opal-2dl-tv-shahor.jpg",
+     "thumb": "/products/thumbs/opal-2dl-tv-shahor.jpg"
+    },
+    {
+     "finish": "shish",
+     "profile": "shampa",
+     "image": "/products/opal-2dl-tv-shish.jpg",
+     "thumb": "/products/thumbs/opal-2dl-tv-shish.jpg"
+    }
+   ],
+   "layouts": [
+    "L2A",
+    "L2D",
+    "L2E",
+    "L2B"
+   ],
+   "finishes": [
+    "shamenet",
+    "alon",
+    "lavan",
+    "mulban",
+    "shahor",
+    "sahara",
+    "shish",
+    "8003",
+    "8005",
+    "464"
+   ],
+   "line_id": "hazaza",
+   "size": 1.6,
+   "family": "אופל"
+  },
+  {
+   "line": "ספריות קודש",
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null,
+   "handles": true,
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "_todo_dims": "מידות אמיתיות",
+   "lead_time_days": 21,
+   "identity": {
+    "door_count": 6,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית + קרניז · בסיס תחתון על רגליות"
+   },
+   "id": "kodesh-3dl-a",
+   "name": "ספריית קודש 3 דלתות · דגם A",
+   "price": 3499,
+   "price_note": "placeholder — למלא",
+   "finishes": [
+    "5180",
+    "7903",
+    "7904",
+    "mevuka"
+   ],
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס תחתון · 3 דלתות",
+    "רגליות אלומיניום"
+   ],
+   "renders": [
+    {
+     "finish": "5180",
+     "profile": "—",
+     "image": "/products/kodesh-3dl-a-5180.jpg",
+     "thumb": "/products/thumbs/kodesh-3dl-a-5180.jpg"
+    },
+    {
+     "finish": "7903",
+     "profile": "—",
+     "image": "/products/kodesh-3dl-a-7903.jpg",
+     "thumb": "/products/thumbs/kodesh-3dl-a-7903.jpg"
+    },
+    {
+     "finish": "7904",
+     "profile": "—",
+     "image": "/products/kodesh-3dl-a-7904.jpg",
+     "thumb": "/products/thumbs/kodesh-3dl-a-7904.jpg"
+    },
+    {
+     "finish": "mevuka",
+     "profile": "—",
+     "image": "/products/kodesh-3dl-a-mevuka.jpg",
+     "thumb": "/products/thumbs/kodesh-3dl-a-mevuka.jpg"
+    }
+   ],
+   "line_id": "kodesh",
+   "size": 3,
+   "family": "ספריות קודש"
+  },
+  {
+   "line": "ספריות קודש",
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null,
+   "handles": true,
+   "dims": {
+    "w": 120,
+    "h": 220,
+    "d": 45
+   },
+   "_todo_dims": "מידות אמיתיות",
+   "lead_time_days": 21,
+   "identity": {
+    "door_count": 5,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": true,
+    "_desc": "ויטרינה עליונה 3 דלתות זכוכית · בסיס 2 דלתות + 3 מגירות מרכזיות"
+   },
+   "id": "kodesh-3dl-b",
+   "name": "ספריית קודש 3 דלתות + מגירות · דגם B",
+   "price": 3799,
+   "price_note": "placeholder — למלא",
+   "finishes": [
+    "shamenet",
+    "5180",
+    "7903",
+    "7904",
+    "mevuka"
+   ],
+   "features": [
+    "ויטרינה עליונה · 3 דלתות זכוכית",
+    "קרניז מוגבה",
+    "בסיס · 2 דלתות + 3 מגירות",
+    "רגליות אלומיניום"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/kodesh-3dl-b-3207.jpg",
+     "thumb": "/products/thumbs/kodesh-3dl-b-3207.jpg"
+    }
+   ],
+   "line_id": "kodesh",
+   "size": 3,
+   "family": "ספריות קודש"
+  },
+  {
+   "id": "kodesh-4dl-open",
+   "name": "ספריית קודש 4 דלתות · מדפים פתוחים",
+   "line": "ספריות קודש",
+   "line_id": "kodesh",
+   "size": 4,
+   "price": 2999,
+   "price_note": "placeholder — למלא",
+   "dims": {
+    "w": 160,
+    "h": 220,
+    "d": 40
+   },
+   "_todo_dims": "מידות אמיתיות",
+   "lead_time_days": 21,
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null,
+   "handles": true,
+   "finishes": [
+    "shamenet",
+    "shahor",
+    "5180",
+    "7903",
+    "7904",
+    "mevuka"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": false,
+    "_desc": "מדפים פתוחים מעל · בסיס סגור 4 דלתות · ידיות מוט"
+   },
+   "features": [
+    "מדפים פתוחים · גישה מיידית",
+    "בסיס סגור · 4 דלתות",
+    "ידיות מוט",
+    "קרניז תחתון"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/kodesh-4dl-open-shamenet.jpg",
+     "thumb": "/products/thumbs/kodesh-4dl-open-shamenet.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/kodesh-4dl-open-shahor.jpg",
+     "thumb": "/products/thumbs/kodesh-4dl-open-shahor.jpg"
+    }
+   ],
+   "family": "ספריות קודש"
+  },
+  {
+   "id": "desk-160",
+   "name": "ארון שולחן · 160",
+   "line": "ארונות הזזה",
+   "line_id": "hazaza",
+   "size": 1.6,
+   "price": 4990,
+   "price_note": "placeholder",
+   "dims": {
+    "w": 160,
+    "h": 240,
+    "d": 60
+   },
+   "lead_time_days": 21,
+   "category": "wardrobe",
+   "placement": "in_niche",
+   "replaces": null,
+   "handles": true,
+   "finishes": [
+    "shamenet",
+    "7903",
+    "7904",
+    "shahor"
+   ],
+   "_note": "רנדר של סצנה שלמה — לקטלוג בלבד, לא להדמיה בחדר.",
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "ארונות עליונים · נישת מדפים · שולחן משולב עם מגירה"
+   },
+   "features": [
+    "שולחן משולב עם מגירה",
+    "נישת מדפים פתוחה",
+    "ארונות עליונים",
+    "נבנה לנישה"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "shampa",
+     "image": "/products/desk-160-shamenet.jpg",
+     "thumb": "/products/thumbs/desk-160-shamenet.jpg"
+    },
+    {
+     "finish": "7903",
+     "profile": "shampa",
+     "image": "/products/desk-160-7903.jpg",
+     "thumb": "/products/thumbs/desk-160-7903.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "lavan",
+     "image": "/products/desk-160-shahor-w.jpg",
+     "thumb": "/products/thumbs/desk-160-shahor-w.jpg"
+    },
+    {
+     "finish": "7904",
+     "profile": "lavan",
+     "image": "/products/desk-160-7904-mirror.jpg",
+     "thumb": "/products/thumbs/desk-160-7904-mirror.jpg"
+    }
+   ],
+   "family": "ארונות הזזה",
+   "layouts": [
+    "LDESK"
+   ]
+  },
+  {
+   "id": "simple3-240",
+   "name": "סימפל · 3 דלתות הזזה + מראה",
+   "line": "ארונות הזזה",
+   "line_id": "hazaza",
+   "size": 2.4,
+   "price": 4290,
+   "price_note": "placeholder",
+   "dims": {
+    "w": 240,
+    "h": 240,
+    "d": 60
+   },
+   "lead_time_days": 21,
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "handles": false,
+   "finishes": [
+    "shamenet",
+    "alon",
+    "lavan",
+    "mulban",
+    "shahor",
+    "sahara",
+    "shish",
+    "8003",
+    "8005",
+    "464",
+    "7904"
+   ],
+   "identity": {
+    "door_count": 3,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "has_mirror": true,
+    "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
+   },
+   "features": [
+    "3 דלתות הזזה",
+    "מראה מלאה במרכז",
+    "מסילת אלומיניום",
+    "מנגנון טריקה שקטה"
+   ],
+   "renders": [
+    {
+     "finish": "464",
+     "profile": "shampa",
+     "image": "/products/simple3-240-464.jpg",
+     "thumb": "/products/thumbs/simple3-240-464.jpg"
+    },
+    {
+     "finish": "lavan",
+     "profile": "shampa",
+     "image": "/products/simple3-240-lavan.jpg",
+     "thumb": "/products/thumbs/simple3-240-lavan.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "shahor",
+     "image": "/products/simple3-240-shahor.jpg",
+     "thumb": "/products/thumbs/simple3-240-shahor.jpg"
+    },
+    {
+     "finish": "7904",
+     "profile": "shampa",
+     "image": "/products/simple3-240-7904.jpg",
+     "thumb": "/products/thumbs/simple3-240-7904.jpg"
+    },
+    {
+     "finish": "8005",
+     "profile": "shampa",
+     "image": "/products/simple3-240-8005.jpg",
+     "thumb": "/products/thumbs/simple3-240-8005.jpg"
+    }
+   ],
+   "family": "ארונות הזזה",
+   "layouts": [
+    "L3A",
+    "L3B"
+   ]
+  },
+  {
+   "id": "simple4-320",
+   "name": "סימפל · 4 דלתות הזזה",
+   "line": "ארונות הזזה",
+   "line_id": "hazaza",
+   "size": 3.2,
+   "price": 5990,
+   "price_note": "placeholder",
+   "dims": {
+    "w": 320,
+    "h": 270,
+    "d": 60
+   },
+   "_todo_dims": "⚠ מיקי אמר גובה 240. שם הקובץ אומר h270. לאמת.",
+   "lead_time_days": 21,
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "handles": false,
+   "finishes": [
+    "shamenet",
+    "alon",
+    "lavan",
+    "mulban",
+    "shahor",
+    "sahara",
+    "shish",
+    "8003",
+    "8005",
+    "464"
+   ],
+   "identity": {
+    "door_count": 4,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "champagne aluminium",
+    "_desc": "4 דלתות הזזה · גובה 270"
+   },
+   "features": [
+    "4 דלתות הזזה",
+    "מסילת אלומיניום",
+    "גובה 270 ס״מ",
+    "מנגנון טריקה שקטה"
+   ],
+   "renders": [
+    {
+     "finish": "lavan",
+     "profile": "shampa",
+     "image": "/products/simple4-320-lavan.jpg",
+     "thumb": "/products/thumbs/simple4-320-lavan.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "shampa",
+     "image": "/products/simple4-320-shahor.jpg",
+     "thumb": "/products/thumbs/simple4-320-shahor.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "shahor",
+     "image": "/products/simple4-320-shahor-bp.jpg",
+     "thumb": "/products/thumbs/simple4-320-shahor-bp.jpg"
+    },
+    {
+     "finish": "8003",
+     "profile": "shampa",
+     "image": "/products/simple4-320-8003.jpg",
+     "thumb": "/products/thumbs/simple4-320-8003.jpg"
+    },
+    {
+     "finish": "8005",
+     "profile": "shahor",
+     "image": "/products/simple4-320-8005-bp.jpg",
+     "thumb": "/products/thumbs/simple4-320-8005-bp.jpg"
+    }
+   ],
+   "family": "ארונות הזזה",
+   "layouts": [
+    "L4A"
+   ]
+  },
+  {
+   "id": "koren",
+   "name": "ספריית קורן · ילדים",
+   "line": "ספריות לילדים",
+   "line_id": "sifriyot-yeladim",
+   "family": "קורן",
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null,
+   "handles": true,
+   "price": 2199,
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "מידות אמיתיות — למלא",
+   "identity": {
+    "door_count": 4,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": false,
+    "_desc": "ספרייה גבוהה עם מדפים פתוחים + ארון תלוי + שולחן כתיבה + שידת 4 מגירות. גוף לבן, חזיתות בצבע."
+   },
+   "features": [
+    "שולחן כתיבה משולב",
+    "ארון תלוי",
+    "מדפים פתוחים",
+    "שידת 4 מגירות",
+    "גוף לבן · חזיתות בצבע"
+   ],
+   "finishes": [
+    "tchelet",
+    "mahogany",
+    "7904"
+   ],
+   "renders": [
+    {
+     "finish": "tchelet",
+     "profile": "—",
+     "image": "/products/koren-tchelet.jpg",
+     "thumb": "/products/thumbs/koren-tchelet.jpg"
+    },
+    {
+     "finish": "mahogany",
+     "profile": "—",
+     "image": "/products/koren-mahogany.jpg",
+     "thumb": "/products/thumbs/koren-mahogany.jpg"
+    },
+    {
+     "finish": "7904",
+     "profile": "—",
+     "image": "/products/koren-7904.jpg",
+     "thumb": "/products/thumbs/koren-7904.jpg"
+    }
+   ]
+  },
+  {
+   "id": "pipa",
+   "name": "ספריית פיפא · ילדים",
+   "line": "ספריות לילדים",
+   "line_id": "sifriyot-yeladim",
+   "family": "פיפא",
+   "category": "bookshelf",
+   "placement": "against_wall",
+   "replaces": null,
+   "handles": true,
+   "price": null,
+   "price_note": "מחיר לפי התאמה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "מידות אמיתיות — למלא",
+   "identity": {
+    "door_count": 2,
+    "door_type": "hinged",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "glass_doors": false,
+    "_desc": "יחידה תלויה: 2 ארונות עליונים + מדפים פתוחים באמצע, שולחן כתיבה ארוך, מגדל 4 מגירות. גוף לבן, ידיות שחורות."
+   },
+   "features": [
+    "2 ארונות עליונים",
+    "מדפים פתוחים",
+    "שולחן כתיבה ארוך",
+    "מגדל 4 מגירות",
+    "ידיות שחורות"
+   ],
+   "finishes": [
+    "lavan",
+    "tchelet"
+   ],
+   "renders": [
+    {
+     "finish": "lavan",
+     "profile": "—",
+     "image": "/products/pipa-lavan.jpg",
+     "thumb": "/products/thumbs/pipa-lavan.jpg"
+    },
+    {
+     "finish": "tchelet",
+     "profile": "—",
+     "image": "/products/pipa-tchelet.jpg",
+     "thumb": "/products/thumbs/pipa-tchelet.jpg"
+    }
+   ]
+  },
+  {
+   "id": "nira-120",
+   "name": "מיטת נירה · 120",
+   "line": "מיטות וחצי",
+   "line_id": "mitot-vahetzi",
+   "family": "נירה",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 1199,
+   "price_note": "מהאתר הישן — לאשר",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "גובה ראש המיטה",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת יחיד רחבה 120. גוף לבן מט, ראש מיטה גבוה עם חזית מעוצבת משובצת, בסיס סגור וקיר רגל נמוך."
+   },
+   "features": [
+    "מתאים למזרן 120×190",
+    "גוף לבן מט",
+    "ראש מיטה מעוצב",
+    "בסיס סגור"
+   ],
+   "finishes": [
+    "ribuim",
+    "pasim",
+    "plata"
+   ],
+   "renders": [
+    {
+     "finish": "ribuim",
+     "profile": "—",
+     "image": "/products/nira-ribuim.jpg",
+     "thumb": "/products/thumbs/nira-ribuim.jpg"
+    },
+    {
+     "finish": "pasim",
+     "profile": "—",
+     "image": "/products/nira-pasim.jpg",
+     "thumb": "/products/thumbs/nira-pasim.jpg"
+    },
+    {
+     "finish": "plata",
+     "profile": "—",
+     "image": "/products/nira-plata.jpg",
+     "thumb": "/products/thumbs/nira-plata.jpg"
+    }
+   ],
+   "gallery": [
+    "/products/nira-plata-shida.jpg"
+   ]
+  },
+  {
+   "id": "simple2-mirror",
+   "name": "סימפל · 2 דלתות הזזה + מראה",
+   "line": "ארונות הזזה",
+   "line_id": "hazaza",
+   "family": "סימפל",
+   "size": null,
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe or cabinet",
+   "handles": false,
+   "price": null,
+   "price_note": "מחיר לפי מידה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "רוחב · גובה · עומק",
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 3,
+    "frame_color": "black aluminium",
+    "has_tv_niche": false,
+    "_desc": "2 דלתות הזזה. כל דלת: פאנל עליון, פס מראה רחב באמצע, פאנל תחתון. גוף וגוון מסגרת שיש שחור, חזיתות שיש אפור."
+   },
+   "features": [
+    "2 דלתות הזזה",
+    "פס מראה מלא רוחב",
+    "מסגרת אלומיניום שחורה",
+    "דו-גוני · גוף שיש שחור"
+   ],
+   "finishes": [
+    "8006"
+   ],
+   "renders": [
+    {
+     "finish": "8006",
+     "profile": "shahor",
+     "image": "/products/simple2-mirror-8006.jpg",
+     "thumb": "/products/thumbs/simple2-mirror-8006.jpg"
+    }
+   ],
+   "layouts": [
+    "L2A",
+    "L2D",
+    "L2E",
+    "L2B"
+   ]
+  },
+  {
+   "line": "מיטות וחצי",
+   "line_id": "mitot-vahetzi",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 2999,
+   "price_note": "כולל 2 מזרנים מתנה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "גובה ראש המיטה",
+   "id": "mita-pasim",
+   "name": "מיטת נוער 120 · פסים",
+   "family": "פסים",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת יחיד רחבה 120 עם מיטת חבר נגררת מתחת ו-2 מגירות. ראש וקיר רגל גבוהים מלוחות אופקיים, גוף לבן."
+   },
+   "features": [
+    "מתאים למזרן 120×190",
+    "מיטת חבר נגררת",
+    "2 מגירות אחסון",
+    "2 מזרנים מתנה"
+   ],
+   "finishes": [
+    "tchelet"
+   ],
+   "renders": [
+    {
+     "finish": "tchelet",
+     "profile": "—",
+     "image": "/products/mita-pasim-tchelet.jpg",
+     "thumb": "/products/thumbs/mita-pasim-tchelet.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות וחצי",
+   "line_id": "mitot-vahetzi",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 2999,
+   "price_note": "כולל 2 מזרנים מתנה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "גובה ראש המיטה",
+   "id": "mita-harizim",
+   "name": "מיטת נוער 120 · חריצים",
+   "family": "חריצים",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת יחיד רחבה 120 עם מיטת חבר נגררת מתחת ו-2 מגירות. ראש וקיר רגל גבוהים בחריצים אנכיים, גוף לבן."
+   },
+   "features": [
+    "מתאים למזרן 120×190",
+    "מיטת חבר נגררת",
+    "2 מגירות אחסון",
+    "2 מזרנים מתנה"
+   ],
+   "finishes": [
+    "lavan",
+    "afor"
+   ],
+   "renders": [
+    {
+     "finish": "lavan",
+     "profile": "—",
+     "image": "/products/mita-harizim-lavan.jpg",
+     "thumb": "/products/thumbs/mita-harizim-lavan.jpg"
+    },
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/mita-harizim-afor.jpg",
+     "thumb": "/products/thumbs/mita-harizim-afor.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות וחצי",
+   "line_id": "mitot-vahetzi",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 2999,
+   "price_note": "כולל 2 מזרנים מתנה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "גובה ראש המיטה",
+   "id": "mita-misgeret",
+   "name": "מיטת נוער 120 · מסגרת",
+   "family": "מסגרת",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת יחיד רחבה 120 עם מיטת חבר נגררת מתחת ו-2 מגירות. ראש וקיר רגל עם מסגרת מוגבהת, גוף שמנת."
+   },
+   "features": [
+    "מתאים למזרן 120×190",
+    "מיטת חבר נגררת",
+    "2 מגירות אחסון",
+    "2 מזרנים מתנה"
+   ],
+   "finishes": [
+    "shamenet"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/mita-misgeret-shamenet.jpg",
+     "thumb": "/products/thumbs/mita-misgeret-shamenet.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות וחצי",
+   "line_id": "mitot-vahetzi",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 2999,
+   "price_note": "כולל 2 מזרנים מתנה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "גובה ראש המיטה",
+   "id": "mita-anan",
+   "name": "מיטת נוער 120 · ענן",
+   "family": "ענן",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת יחיד רחבה 120 עם מיטת חבר נגררת מתחת ו-2 מגירות. ראש וקיר רגל בקו גלי עם כפתורי עץ ועיטור פרח, גוף לבן."
+   },
+   "features": [
+    "מתאים למזרן 120×190",
+    "מיטת חבר נגררת",
+    "2 מגירות אחסון",
+    "2 מזרנים מתנה"
+   ],
+   "finishes": [
+    "lavan",
+    "varod"
+   ],
+   "renders": [
+    {
+     "finish": "lavan",
+     "profile": "—",
+     "image": "/products/mita-anan-lavan.jpg",
+     "thumb": "/products/thumbs/mita-anan-lavan.jpg"
+    },
+    {
+     "finish": "varod",
+     "profile": "—",
+     "image": "/products/mita-anan-varod.jpg",
+     "thumb": "/products/thumbs/mita-anan-varod.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות קומותיים",
+   "line_id": "mitot-komotayim",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 4499,
+   "price_note": "ל-3 ילדים · כולל מזרנים",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "רוחב · גובה · אורך",
+   "id": "bunk-pasim",
+   "name": "מיטת קומותיים · פסים",
+   "family": "פסים",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת קומותיים ל-3: קומה עליונה צרה עם מעקה, קומה תחתונה רחבה, מיטת חבר נגררת מתחת. דפנות בחריצים אנכיים, מדרגות מעוגלות בצד."
+   },
+   "features": [
+    "מיטה ל-3 ילדים",
+    "קומה עליונה 90 · תחתונה 120",
+    "מיטת חבר נגררת",
+    "מדרגות עם מאחז",
+    "כולל מזרנים"
+   ],
+   "finishes": [
+    "afor",
+    "shahor",
+    "shamenet"
+   ],
+   "renders": [
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/bunk-pasim-afor.jpg",
+     "thumb": "/products/thumbs/bunk-pasim-afor.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/bunk-pasim-shahor.jpg",
+     "thumb": "/products/thumbs/bunk-pasim-shahor.jpg"
+    },
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/bunk-pasim-shamenet.jpg",
+     "thumb": "/products/thumbs/bunk-pasim-shamenet.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות קומותיים",
+   "line_id": "mitot-komotayim",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 4499,
+   "price_note": "ל-3 ילדים · כולל מזרנים",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "רוחב · גובה · אורך",
+   "id": "bunk-misgeret",
+   "name": "מיטת קומותיים · מסגרת",
+   "family": "מסגרת",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת קומותיים ל-3: קומה עליונה צרה עם מעקה, קומה תחתונה רחבה, 2 מגירות אחסון. דפנות חלקות עם מסגרת מוגבהת, מדרגות מעוגלות בצד."
+   },
+   "features": [
+    "מיטה ל-3 ילדים",
+    "קומה עליונה 90 · תחתונה 120",
+    "מיטת חבר נגררת",
+    "מדרגות עם מאחז",
+    "כולל מזרנים"
+   ],
+   "finishes": [
+    "shamenet"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/bunk-misgeret-shamenet.jpg",
+     "thumb": "/products/thumbs/bunk-misgeret-shamenet.jpg"
+    }
+   ]
+  },
+  {
+   "line": "מיטות קומותיים",
+   "line_id": "mitot-komotayim",
+   "size": 120,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": 4499,
+   "price_note": "ל-3 ילדים · כולל מזרנים",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "רוחב · גובה · אורך",
+   "id": "bunk-sulam",
+   "name": "מיטת קומותיים · סולם ישר",
+   "family": "סולם ישר",
+   "_todo_name": "שם מסחרי — לאשר",
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת קומותיים ל-3: קומה עליונה צרה עם מעקה, קומה תחתונה רחבה, מיטת חבר נגררת ו-2 מגירות. דפנות חלקות, סולם ישר בצד, גומחת מדף מוארת."
+   },
+   "features": [
+    "מיטה ל-3 ילדים",
+    "קומה עליונה 90 · תחתונה 120",
+    "מיטת חבר נגררת",
+    "מדרגות עם מאחז",
+    "כולל מזרנים"
+   ],
+   "finishes": [
+    "shamenet"
+   ],
+   "renders": [
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/bunk-sulam-shamenet.jpg",
+     "thumb": "/products/thumbs/bunk-sulam-shamenet.jpg"
+    }
+   ]
+  },
+  {
+   "id": "simple2-160",
+   "name": "סימפל · 2 דלתות הזזה",
+   "line": "ארונות הזזה",
+   "line_id": "hazaza",
+   "family": "סימפל",
+   "size": 1.6,
+   "category": "wardrobe",
+   "placement": "against_wall",
+   "replaces": "wardrobe",
+   "handles": false,
+   "price": null,
+   "price_note": "מחיר לפי מידה",
+   "lead_time_days": 21,
+   "dims": null,
+   "_todo_dims": "רוחב · גובה · עומק",
+   "identity": {
+    "door_count": 2,
+    "door_type": "sliding",
+    "panel_seams_per_door": 2,
+    "frame_color": "champagne aluminium",
+    "glass_doors": false,
+    "_desc": "ארון הזזה 2 דלתות. חזית בגימור אחיד עם 2 חריצי אלומיניום אופקיים, מסגרת שמפניה, גוף בגימור הדלת."
+   },
+   "features": [
+    "2 דלתות הזזה",
+    "2 חריצי אלומיניום",
+    "מסגרת שמפניה",
+    "גוף בגימור הדלת",
+    "אפשרות רגלי במה"
+   ],
+   "finishes": [
+    "7904"
+   ],
+   "layouts": [
+    "L2A",
+    "L2D",
+    "L2E",
+    "L2B"
+   ],
+   "renders": [
+    {
+     "finish": "7904",
+     "profile": "shampa",
+     "image": "/products/simple2-160-7904.jpg",
+     "thumb": "/products/thumbs/simple2-160-7904.jpg"
+    }
+   ],
+   "gallery": [
+    "/products/simple2-160-7904-base.jpg"
+   ]
+  },
+  {
+   "id": "bed-zugit-140",
+   "name": "מיטה זוגית מרופדת · 140",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "זוגית מרופדת",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת, ראש מיטה גבוה מרופד בטאף כפתורים, בסיס סגור מרופד, רגלי מתכת."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד",
+    "ראש מיטה מרופד עם טאף כפתורים",
+    "בסיס סגור מרופד"
+   ],
+   "finishes": [
+    "afor",
+    "shahor"
+   ],
+   "renders": [
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/zugit-afor.jpg",
+     "thumb": "/products/thumbs/zugit-afor.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/zugit-shahor.jpg",
+     "thumb": "/products/thumbs/zugit-shahor.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-shokolad-140",
+   "name": "מיטה זוגית · שוקולד",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "שוקולד",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "_todo_size": "לאשר 140×190",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת בד, ראש מיטה גבוה עם ריפוד משבצות ומסגרת עוטפת, רגלי מתכת דקות."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד",
+    "ראש מיטה גבוה מרופד משבצות",
+    "רגלי מתכת"
+   ],
+   "finishes": [
+    "afor",
+    "varod",
+    "shahor"
+   ],
+   "renders": [
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/shokolad-afor.jpg",
+     "thumb": "/products/thumbs/shokolad-afor.jpg"
+    },
+    {
+     "finish": "varod",
+     "profile": "—",
+     "image": "/products/shokolad-varod.jpg",
+     "thumb": "/products/thumbs/shokolad-varod.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/shokolad-shahor.jpg",
+     "thumb": "/products/thumbs/shokolad-shahor.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-herods-140",
+   "name": "מיטה זוגית · הרודס",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "הרודס",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "_todo_size": "לאשר 140×190",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת בקו נמוך ונקי, ראש מיטה רחב ומרופד, בסיס עוטף בגובה מלא."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד",
+    "ראש מיטה רחב מרופד",
+    "בסיס עוטף"
+   ],
+   "finishes": [
+    "kapuchino",
+    "shahor"
+   ],
+   "renders": [
+    {
+     "finish": "kapuchino",
+     "profile": "—",
+     "image": "/products/herods-kapuchino.jpg",
+     "thumb": "/products/thumbs/herods-kapuchino.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/herods-shahor.jpg",
+     "thumb": "/products/thumbs/herods-shahor.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-mita1-140",
+   "name": "מיטה זוגית מרופדת · דגם 1",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "מרופדת",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "_todo_size": "לאשר 140×190",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת, ראש מיטה גבוה עם ריפוד משבצות וקצוות מעוגלים, בסיס סגור, רגלי כרום."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד",
+    "ראש מיטה גבוה מרופד",
+    "רגלי כרום"
+   ],
+   "finishes": [
+    "afor",
+    "shahor",
+    "shamenet"
+   ],
+   "renders": [
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/mita1-afor.jpg",
+     "thumb": "/products/thumbs/mita1-afor.jpg"
+    },
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/mita1-shahor.jpg",
+     "thumb": "/products/thumbs/mita1-shahor.jpg"
+    },
+    {
+     "finish": "shamenet",
+     "profile": "—",
+     "image": "/products/mita1-shamenet.jpg",
+     "thumb": "/products/thumbs/mita1-shamenet.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-cloud-140",
+   "name": "מיטה זוגית · קלאוד",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "קלאוד",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "_todo_size": "לאשר 140×190",
+   "_todo_colors": "עוד צבעים?",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת בסגנון בועות/ערוצים רכים, ראש מיטה וגוף עוטף בריפוד מלא."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד קטיפה",
+    "עיצוב בועות רך",
+    "בסיס עוטף מרופד"
+   ],
+   "finishes": [
+    "shahor"
+   ],
+   "renders": [
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/cloud-shahor.jpg",
+     "thumb": "/products/thumbs/cloud-shahor.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-rafael-140",
+   "name": "מיטה זוגית · רפאל",
+   "line": "מיטות זוגיות",
+   "line_id": "mitot-zugiyot",
+   "family": "רפאל",
+   "size": 140,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "_todo_size": "לאשר 140×190",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטה זוגית מרופדת, ראש מיטה מרופד משבצות, בסיס עוטף, רגלי מתכת."
+   },
+   "features": [
+    "מתאים למזרן 140×190",
+    "ריפוד בד/דמוי עור",
+    "ראש מיטה מרופד משבצות",
+    "רגלי מתכת"
+   ],
+   "finishes": [
+    "shahor",
+    "afor"
+   ],
+   "renders": [
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/rafael-shahor.jpg",
+     "thumb": "/products/thumbs/rafael-shahor.jpg"
+    },
+    {
+     "finish": "afor",
+     "profile": "—",
+     "image": "/products/rafael-afor.jpg",
+     "thumb": "/products/thumbs/rafael-afor.jpg"
+    }
+   ]
+  },
+  {
+   "id": "bed-fingers-hafrada",
+   "name": "מיטת הפרדה · פינגרס",
+   "line": "מיטות הפרדה",
+   "line_id": "mitot-hafrada",
+   "family": "פינגרס",
+   "size": 160,
+   "category": "bed",
+   "placement": "floor_center",
+   "replaces": "bed",
+   "handles": false,
+   "price": null,
+   "_todo_name": "לאשר שם מסחרי",
+   "_todo_price": "מחיר?",
+   "lead_time_days": 21,
+   "dims": null,
+   "identity": {
+    "door_count": 0,
+    "door_type": "none",
+    "panel_seams_per_door": 0,
+    "frame_color": "none",
+    "_desc": "מיטת הפרדה לזוג — שני מזרני יחיד 80×190. ראש מיטה מרופד ערוצים (פינגרס), ארגז מצעים בהרמה על בוכנות."
+   },
+   "features": [
+    "מיטת הפרדה — שני מזרני יחיד 80×190",
+    "מתאים לזוג בהפרדה",
+    "ראש מיטה מרופד ערוצים",
+    "ארגז מצעים בהרמה (בוכנות גז)"
+   ],
+   "finishes": [
+    "shahor",
+    "krem",
+    "varod"
+   ],
+   "renders": [
+    {
+     "finish": "shahor",
+     "profile": "—",
+     "image": "/products/fingers-shahor.jpg",
+     "thumb": "/products/thumbs/fingers-shahor.jpg"
+    },
+    {
+     "finish": "krem",
+     "profile": "—",
+     "image": "/products/fingers-krem.jpg",
+     "thumb": "/products/thumbs/fingers-krem.jpg"
+    },
+    {
+     "finish": "varod",
+     "profile": "—",
+     "image": "/products/fingers-varod.jpg",
+     "thumb": "/products/thumbs/fingers-varod.jpg"
+    }
+   ],
+   "gallery": [
+    "/products/fingers-shahor-open.jpg",
+    "/products/fingers-krem-open.jpg"
+   ]
+  }
+ ],
+ "handles": {
+  "_note": "בחירה בהזמנה, לא וריאציית תמונה. רלוונטי לדלתות פתיחה בלבד — לארונות הזזה הפרופיל הוא הידית.",
+  "_todo": "צלם כל ידית על רקע לבן. הלוח הנוכחי לא לאתר.",
+  "reference_image": "/products/handles-board.jpg",
+  "options": [
+   {
+    "id": "1",
+    "name": "ידית 1"
+   },
+   {
+    "id": "2",
+    "name": "ידית 2"
+   },
+   {
+    "id": "3",
+    "name": "ידית 3"
+   },
+   {
+    "id": "4",
+    "name": "ידית 4"
+   },
+   {
+    "id": "5",
+    "name": "ידית 5"
+   },
+   {
+    "id": "6",
+    "name": "ידית 6"
+   },
+   {
+    "id": "7",
+    "name": "ידית 7"
+   },
+   {
+    "id": "8",
+    "name": "ידית 8"
+   },
+   {
+    "id": "9",
+    "name": "ידית 9"
+   },
+   {
+    "id": "10",
+    "name": "ידית 10"
+   },
+   {
+    "id": "11",
+    "name": "ידית 11"
+   }
+  ]
+ },
+ "layouts": {
+  "_note": "גיאומטריה. חייב רנדר — AI לא מזיז מדפים.",
+  "_todo": "לאמת מול המפעל אילו פריסות זמינות לכל רוחב.",
+  "options": [
+   {
+    "id": "L2A",
+    "name": "מדפים + תא תלייה",
+    "doors": 2,
+    "desc": "עמודת מדפים מלאה + תא תלייה",
+    "image": "/products/layout-2dl-shelves.jpg",
+    "thumb": "/products/thumbs/layout-2dl-shelves.jpg",
+    "height": 240,
+    "alt_270": {
+     "image": "/products/layout-2dl-shelves-270.jpg",
+     "thumb": "/products/thumbs/layout-2dl-shelves-270.jpg"
+    }
+   },
+   {
+    "id": "L2D",
+    "name": "תלייה כפולה",
+    "doors": 2,
+    "desc": "תאי תלייה בשני הצדדים + מדפים עליונים",
+    "image": "/products/layout-2dl-double-hang.jpg",
+    "thumb": "/products/thumbs/layout-2dl-double-hang.jpg",
+    "height": 240
+   },
+   {
+    "id": "L2E",
+    "name": "מדפים + תלייה",
+    "doors": 2,
+    "desc": "שילוב מדפים ותלייה בשני הצדדים",
+    "image": "/products/layout-2dl-hang-both.jpg",
+    "thumb": "/products/thumbs/layout-2dl-hang-both.jpg",
+    "height": 240
+   },
+   {
+    "id": "L2B",
+    "name": "מגירות פנימיות",
+    "doors": 2,
+    "desc": "יחידת מגירות פנימית (זוג)",
+    "image": "/products/layout-2dl-shelves-drawers.jpg",
+    "thumb": "/products/thumbs/layout-2dl-shelves-drawers.jpg",
+    "height": 240,
+    "paid": true,
+    "price_note": "זוג מגירות: רגילות ₪400 · טריקה שקטה ₪500",
+    "price": 400
+   },
+   {
+    "id": "L3A",
+    "name": "שני מדפים + תלייה",
+    "doors": 3,
+    "desc": "שתי עמודות מדפים + תא תלייה",
+    "image": "/products/layout-3dl-a.jpg",
+    "thumb": "/products/thumbs/layout-3dl-a.jpg",
+    "height": 240,
+    "alt_270": {
+     "image": "/products/layout-3dl-a-270.jpg",
+     "thumb": "/products/thumbs/layout-3dl-a-270.jpg"
+    }
+   },
+   {
+    "id": "L3B",
+    "name": "תלייה · מדפים · תלייה",
+    "doors": 3,
+    "desc": "שני תאי תלייה משני צידי עמודת מדפים",
+    "image": "/products/layout-3dl-b.jpg",
+    "thumb": "/products/thumbs/layout-3dl-b.jpg",
+    "height": 240,
+    "alt_270": {
+     "image": "/products/layout-3dl-b-270.jpg",
+     "thumb": "/products/thumbs/layout-3dl-b-270.jpg"
+    }
+   },
+   {
+    "id": "L4A",
+    "name": "תלייה · מדפים · מדפים · תלייה",
+    "doors": 4,
+    "desc": "שני תאי תלייה בקצוות, שתי עמודות מדפים באמצע",
+    "height": 270,
+    "image": "/products/layout-4dl-a.jpg",
+    "thumb": "/products/thumbs/layout-4dl-a.jpg"
+   },
+   {
+    "id": "LDESK",
+    "name": "ספרייה + עמדת עבודה",
+    "doors": 4,
+    "desc": "מדפים · תא תלייה · שולחן עם מגירה",
+    "image": "/products/layout-desk-160.jpg",
+    "thumb": "/products/thumbs/layout-desk-160.jpg",
+    "height": 240
+   }
+  ]
+ },
+ "lines": {
+  "_note": "ציר הגודל שונה בין קווים. ספריות קודש = מספר דלתות. ארונות הזזה = רוחב.",
+  "kodesh": {
+   "name": "ספריות קודש",
+   "slug": "ספריות-קודש",
+   "size_axis": "doors",
+   "sizes": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8
+   ],
+   "size_label": "{n} דלתות",
+   "group": "kodesh"
+  },
+  "hazaza": {
+   "name": "ארונות הזזה",
+   "slug": "ארונות-הזזה",
+   "size_axis": "width_m",
+   "sizes": [
+    1.6,
+    2.4,
+    3.2
+   ],
+   "size_label": "{n} מטר",
+   "group": "aronot"
+  },
+  "bgadim": {
+   "name": "ארונות בגדים",
+   "slug": "ארונות-בגדים",
+   "size_axis": "width_m",
+   "size_label": "{n} מ׳",
+   "group": "aronot"
+  },
+  "tv": {
+   "name": "ארונות טלוויזיה",
+   "slug": "ארונות-טלוויזיה",
+   "size_axis": "width_m",
+   "size_label": "{n} מ׳",
+   "group": "aronot"
+  },
+  "meshulavim": {
+   "name": "ארונות משולבים",
+   "slug": "ארונות-משולבים",
+   "size_axis": "width_m",
+   "size_label": "{n} מ׳",
+   "group": "aronot"
+  },
+  "mitot-zugiyot": {
+   "name": "מיטות זוגיות",
+   "slug": "מיטות-זוגיות",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "mitot"
+  },
+  "mitot-hafrada": {
+   "name": "מיטות הפרדה",
+   "slug": "מיטות-הפרדה",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "mitot"
+  },
+  "mitot-vahetzi": {
+   "name": "מיטות וחצי",
+   "slug": "מיטות-וחצי",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "mitot",
+   "sizes": [
+    120
+   ]
+  },
+  "mitot-yeladim": {
+   "name": "מיטות לילדים",
+   "slug": "מיטות-לילדים",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "mitot"
+  },
+  "mitot-komotayim": {
+   "name": "מיטות קומותיים",
+   "slug": "מיטות-קומותיים",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "mitot",
+   "sizes": [
+    90,
+    120
+   ]
+  },
+  "hs-standard": {
+   "name": "חדרי שינה",
+   "slug": "חדרי-שינה",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "hadrei-shena"
+  },
+  "hs-merupadim": {
+   "name": "חדרי שינה מרופדים",
+   "slug": "חדרי-שינה-מרופדים",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "hadrei-shena"
+  },
+  "hs-datiim": {
+   "name": "חדרי שינה לדתיים",
+   "slug": "חדרי-שינה-לדתיים",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "floor_center",
+   "group": "hadrei-shena"
+  },
+  "mizronim": {
+   "name": "מזרנים",
+   "slug": "מזרנים",
+   "size_axis": "width_cm",
+   "size_label": "{n} ס״מ",
+   "default_placement": "on_bed_frame",
+   "visualizable": false,
+   "group": "mizronim"
+  },
+  "sifriyot-yeladim": {
+   "name": "ספריות לילדים",
+   "slug": "ספריות-לילדים",
+   "size_axis": "width_m",
+   "size_label": "{n} מ׳",
+   "sizes": [
+    1.2,
+    1.6,
+    2.0
+   ],
+   "group": "sifriyot-yeladim"
+  }
+ },
+ "groups": [
+  {
+   "id": "aronot",
+   "name": "ארונות",
+   "slug": "ארונות",
+   "lines": [
+    "hazaza",
+    "bgadim",
+    "tv",
+    "meshulavim"
+   ]
+  },
+  {
+   "id": "kodesh",
+   "name": "ספריות קודש",
+   "slug": "ספריות-קודש",
+   "lines": [
+    "kodesh"
+   ]
+  },
+  {
+   "id": "sifriyot-yeladim",
+   "name": "ספריות לילדים",
+   "slug": "ספריות-לילדים",
+   "lines": [
+    "sifriyot-yeladim"
+   ]
+  },
+  {
+   "id": "mitot",
+   "name": "מיטות",
+   "slug": "מיטות",
+   "lines": [
+    "mitot-zugiyot",
+    "mitot-vahetzi",
+    "mitot-yeladim",
+    "mitot-komotayim"
+   ]
+  },
+  {
+   "id": "hadrei-shena",
+   "name": "חדרי שינה",
+   "slug": "חדרי-שינה",
+   "lines": [
+    "hs-standard",
+    "hs-merupadim",
+    "hs-datiim"
+   ]
+  },
+  {
+   "id": "mizronim",
+   "name": "מזרנים",
+   "slug": "מזרנים",
+   "lines": [
+    "mizronim"
+   ]
+  }
+ ],
+ "upgrades": {
+  "_note": "תוספות בתשלום. לא משנות דגם — משנות מחיר.",
+  "options": [
+   {
+    "id": "h270",
+    "name": "הגבהה ל-2.70 מ׳",
+    "desc": "ניצול מלא של גובה החדר",
+    "price_note": "בתוספת מחיר",
+    "_todo_price": "כמה?"
+   },
+   {
+    "id": "drawers",
+    "name": "זוג מגירות פנימיות",
+    "desc": "מגירות רגילות",
+    "price": 400
+   },
+   {
+    "id": "drawers-soft",
+    "name": "זוג מגירות · טריקה שקטה",
+    "desc": "מגירות עם מנגנון טריקה שקטה",
+    "price": 500
+   },
+   {
+    "id": "alu-edge",
+    "name": "קאנט אלומיניום למדף",
+    "desc": "פס אלומיניום בקצה המדף",
+    "price": 90,
+    "colors": [
+     "כסוף",
+     "לבן"
+    ],
+    "ui": "addon"
+   }
+  ]
+ },
+ "constructions": {
+  "_note": "סוג בניית הארון — בחירת לקוח. מלמין = מחיר בסיס.",
+  "options": [
+   {
+    "id": "melamine",
+    "name": "מלמין",
+    "price_pct": 0
+   },
+   {
+    "id": "mdf",
+    "name": "MDF",
+    "price_pct": 0.2
+   },
+   {
+    "id": "sandwich",
+    "name": "סנדוויץ׳",
+    "price_pct": 0.4
+   }
+  ]
+ }
 }

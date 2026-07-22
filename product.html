@@ -63,6 +63,8 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .dims{font-size:15px;color:var(--ink-soft);font-weight:300;margin-top:8px}
 .price{font-family:var(--display);font-size:32px;font-weight:500;margin:22px 0 2px;letter-spacing:-.02em}
 .price small{font-size:13px;color:var(--ink-mute);font-weight:400;font-family:var(--body);margin-inline-start:8px}
+.ship{font-size:13px;color:var(--ink-soft,#56514b);margin:4px 0 0;font-weight:600}
+.ship span{color:var(--ink-mute);font-weight:400}
 .made{font-size:13px;color:var(--ink-mute);font-weight:300}
 
 /* בורר גימור — המסילה מהמוצר */
@@ -84,8 +86,30 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .lay img{width:100%;aspect-ratio:4/3;object-fit:contain}
 .lay b{display:block;font-size:12.5px;font-weight:600;margin-top:5px}
 .lay small{display:block;font-size:11px;color:var(--ink-mute);font-weight:300;line-height:1.4}
+.lay{position:relative}
+.lay .paid-tag{position:absolute;top:8px;inset-inline-end:8px;background:var(--ink);color:var(--paper);font-size:10px;font-weight:600;padding:3px 7px;letter-spacing:.01em}
 .lay[aria-pressed=true]{border-color:var(--ink)}
 .lay:hover{border-color:var(--champagne-lt)}
+.hslider{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--line);outline:none;margin:10px 0;border-radius:2px}
+.hslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 5px #0003}
+.hslider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--ink);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 5px #0003}
+.hnote{font-size:12px;color:var(--ink-mute);line-height:1.5}
+.addons{display:flex;flex-direction:column;gap:10px}
+.ax-toggle{display:flex;align-items:center;gap:11px;width:100%;border:1px solid var(--line);background:#fff;padding:12px 14px;font-family:inherit;font-size:14px;cursor:pointer;text-align:start}
+.ax-toggle:hover{background:var(--panel2,#f6f3ee)}
+.ax-toggle[aria-pressed=true]{border-color:var(--ink)}
+.ax-check{width:20px;height:20px;border:1.5px solid var(--champagne,#a79a88);flex:none;border-radius:4px;position:relative}
+.ax-toggle[aria-pressed=true] .ax-check{background:var(--ink);border-color:var(--ink)}
+.ax-toggle[aria-pressed=true] .ax-check::after{content:"";position:absolute;inset-inline-start:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.ax-name{flex:1;font-weight:600}
+.ax-price{color:var(--ink-mute);font-size:13px;font-weight:600}
+.ax-colors{display:flex;gap:8px;margin:8px 0 2px;padding-inline-start:31px}
+.ax-col{border:1px solid var(--line);background:#fff;padding:6px 14px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.ax-col.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{border:1px solid var(--line);background:#fff;padding:9px 18px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:.15s var(--ease)}
+.chip:hover{background:var(--panel2,#f6f3ee)}
+.chip[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
 
 /* פעולות — אין סל. הטלפון הוא הקנייה. */
 .acts{margin-top:36px;display:grid;gap:10px}
@@ -139,6 +163,7 @@ footer a:hover{color:var(--ink)}
       <p class="dims" id="dims">—</p>
 
       <div class="price" id="price">—<small>כולל מע״מ</small></div>
+      <p class="ship" id="ship" style="display:none"></p>
       <p class="made" id="made">—</p>
 
       <div class="opt">
@@ -153,10 +178,26 @@ footer a:hover{color:var(--ink)}
         <div class="sws" id="profs"></div>
       </div>
 
+      <div class="opt" id="constr-wrap" style="display:none">
+        <h2>סוג הארון<em id="cname">—</em></h2>
+        <div class="chips" id="constr"></div>
+      </div>
+
+      <div class="opt" id="hgt-wrap" style="display:none">
+        <h2>גובה הארון<em id="hval">2.40 מ׳</em></h2>
+        <input type="range" id="hslider" class="hslider" min="240" max="270" step="1" value="240" aria-label="גובה הארון">
+        <div class="hnote" id="hnote">גובה סטנדרטי 2.40 מ׳ · ניתן להגביה עד 2.70 מ׳ (עד +40%)</div>
+      </div>
+
       <div class="opt" id="lay-wrap">
         <h2>סידור פנים<em id="lname">—</em></h2>
         <div class="track"><div class="slider" id="lslider"></div></div>
         <div class="lays" id="lays"></div>
+      </div>
+
+      <div class="opt" id="addon-wrap" style="display:none">
+        <h2>תוספות</h2>
+        <div class="addons" id="addons"></div>
       </div>
 
       <div class="acts">
@@ -203,8 +244,28 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#line').textContent = m.line;
   $('#name').textContent = m.name;
   $('#dims').textContent = `${dm(m)}`;
-  $('#price').innerHTML = m.price ? nis(m.price) + '<small>כולל מע״מ</small>' : '<span style="font-size:.62em">מחיר לפי התאמה</span><small>דברו איתנו</small>';
+  const baseH = (m.dims && m.dims.h) || 240;
+  const canRaise = (m.category === 'wardrobe' || m.line_id === 'hazaza') && baseH < 270;
+  let curH = 240;                                   // standard height
+  let addons = 0;                                   // flat paid add-ons (₪)
+  let constrPct = 0, constrName = '';               // construction surcharge (%)
+  const surPct = h => h > 240 ? 0.40 : 0;                 // כל הגבהה מעל 2.40 = +40%
+  const renderPrice = () => {
+    const hpct = surPct(curH), pct = hpct + constrPct;    // אחוזים מצטברים על מחיר הבסיס
+    const bits = [];
+    if (curH > 240) bits.push(`גובה ${(curH / 100).toFixed(2)} מ׳ · +${Math.round(hpct * 100)}%`);
+    if (constrPct) bits.push(`${constrName} · +${Math.round(constrPct * 100)}%`);
+    if (addons) bits.push(`תוספות ₪${addons}`);
+    if (m.price) {
+      const p = Math.round(m.price * (1 + pct) / 10) * 10 + addons;
+      $('#price').innerHTML = nis(p) + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>כולל מע״מ</small>');
+    } else {
+      $('#price').innerHTML = '<span style="font-size:.62em">מחיר לפי התאמה</span>' + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>דברו איתנו</small>');
+    }
+  };
+  renderPrice();
   $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
+  if (m.delivery_install) { $('#ship').style.display=''; $('#ship').innerHTML = `משלוח והרכבה ₪${m.delivery_install} <span>· משולם בבית למרכיב</span>`; }
   $('#feats').innerHTML = m.features.map(f => `<li>${f}</li>`).join('');
   const slide = m.identity.door_type === 'sliding';
   $('#rows').innerHTML = [
@@ -266,11 +327,22 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       `<img id="v${N + i}" src="${l.image}" alt="${l.name}" loading="lazy">`).join(''));
     $('#lays').innerHTML = lays.map((l, i) =>
       `<button class="lay" data-l="${i}" aria-pressed="${!i}">
-         <img src="${l.thumb}" alt=""><b>${l.name}</b><small>${l.desc}</small></button>`).join('');
+         ${l.paid ? '<span class="paid-tag">בתוספת תשלום</span>' : ''}
+         <img src="${l.thumb}" alt=""><b>${l.name}</b><small>${l.paid && l.price_note ? l.price_note : l.desc}</small></button>`).join('');
 
   } else { $('#lay-wrap').style.display = 'none'; }
 
   const showOnly = i => document.querySelectorAll('.shot img').forEach((im, n) => im.classList.toggle('on', n === i));
+
+  // רנדר הפנים מתחלף לגרסת 270 כשמעלים את הגובה — היכן שקיים רנדר כזה
+  const layImg   = l => (curH > 240 && l.alt_270) ? l.alt_270.image : l.image;
+  const layThumb = l => (curH > 240 && l.alt_270) ? l.alt_270.thumb : l.thumb;
+  const applyLayHeight = () => {
+    lays.forEach((l, i) => {
+      const im = document.getElementById('v' + (N + i)); if (im) im.src = layImg(l);
+      const tb = document.querySelector(`.lay[data-l="${i}"] img`); if (tb) tb.src = layThumb(l);
+    });
+  };
 
   const pickLay = i => {
     document.querySelectorAll('.lay').forEach(b => b.setAttribute('aria-pressed', +b.dataset.l === i));
@@ -305,7 +377,69 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     history.replaceState(null, '', `?id=${m.id}&finish=${f.id}`);
   };
 
+  // סוג בניית הארון — בחירת לקוח (מלמין / MDF / סנדוויץ')
+  const constrs = (((d.constructions || {}).options) || []);
+  if (constrs.length && (m.category === 'wardrobe' || m.line_id === 'hazaza')) {
+    $('#constr-wrap').style.display = '';
+    $('#constr').innerHTML = constrs.map((c, i) =>
+      `<button class="chip" data-c="${i}" aria-pressed="${!i}">${c.name}</button>`).join('');
+    constrName = constrs[0].name; constrPct = constrs[0].price_pct || 0;
+    $('#cname').textContent = constrs[0].name;
+    renderPrice();
+  }
+
+  // תוספות בתשלום — נקראות מה-catalog (upgrades עם ui:addon)
+  const addonOpts = (((d.upgrades || {}).options) || []).filter(o => o.ui === 'addon');
+  if (addonOpts.length && (m.category === 'wardrobe' || m.line_id === 'hazaza')) {
+    $('#addon-wrap').style.display = '';
+    $('#addons').innerHTML = addonOpts.map(o => `
+      <div class="addon">
+        <button class="ax-toggle" data-price="${o.price}" data-id="${o.id}" aria-pressed="false">
+          <span class="ax-check"></span><span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.price}</span>
+        </button>
+        ${o.colors ? `<div class="ax-colors" hidden>${o.colors.map((c, ci) =>
+          `<button class="ax-col${ci ? '' : ' on'}" data-c="${c}">${c}</button>`).join('')}</div>` : ''}
+      </div>`).join('');
+  }
+
+  // בורר גובה — משפיע על מחיר ועל רנדר הפנים
+  if (canRaise) {
+    const hs = $('#hslider');
+    $('#hgt-wrap').style.display = '';
+    const onHeight = () => {
+      curH = +hs.value;
+      $('#hval').textContent = (curH / 100).toFixed(2) + ' מ׳';
+      $('#hnote').textContent = curH > 240
+        ? `הגבהה מ-2.40 מ׳ · +${Math.round(surPct(curH) * 100)}% למחיר הארון`
+        : 'גובה סטנדרטי 2.40 מ׳ · ניתן להגביה עד 2.70 מ׳ (עד +40%)';
+      renderPrice();
+      applyLayHeight();
+    };
+    hs.addEventListener('input', onHeight);
+  }
+
   document.addEventListener('click', e => {
+    const ch = e.target.closest('.chip[data-c]');
+    if (ch) {
+      const c = constrs[+ch.dataset.c];
+      document.querySelectorAll('.chip[data-c]').forEach(b => b.setAttribute('aria-pressed', b === ch));
+      constrName = c.name; constrPct = c.price_pct || 0;
+      $('#cname').textContent = c.name;
+      renderPrice();
+      return;
+    }
+    const ax = e.target.closest('.ax-toggle');
+    if (ax) {
+      const on = ax.getAttribute('aria-pressed') === 'true';
+      ax.setAttribute('aria-pressed', String(!on));
+      addons += on ? -(+ax.dataset.price) : (+ax.dataset.price);
+      const cols = ax.parentElement.querySelector('.ax-colors');
+      if (cols) cols.hidden = on;
+      renderPrice();
+      return;
+    }
+    const col = e.target.closest('.ax-col');
+    if (col) { col.parentElement.querySelectorAll('.ax-col').forEach(b => b.classList.toggle('on', b === col)); return; }
     const pb = e.target.closest('.sw[data-p]');
     if (pb) return pickProf(+pb.dataset.p);
     const b = e.target.closest('.sw[data-i], .tb');

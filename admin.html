@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ניהול מוצרים · Natural Comfort</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBFAF8;--panel:#EFEBE4;--panel2:#F4F1EA;--champagne:#A79A88;--ink:#211F1D;--ink-soft:#56514B;--ink-mute:#8A837A;--line:#E2DCD2;--oak:#B8894E;--red:#B4432E;--green:#4B7A56}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Assistant,sans-serif;font-weight:300;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1{font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:30px;letter-spacing:-.02em}
+h2{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:19px;margin:0 0 4px}
+.sub{color:var(--ink-mute);font-size:13.5px}
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.topbar .in{max-width:1240px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:18px}
+.topbar .sp{flex:1}
+.pill{font-size:12.5px;color:var(--ink-mute);background:var(--panel);padding:5px 11px;border-radius:20px}
+.pill.ok{color:var(--green);background:#EEF4EF}
+.pill.warn{color:var(--red);background:#FAEDEA}
+.layout{max-width:1240px;margin:0 auto;padding:22px 24px 90px;display:grid;grid-template-columns:250px 1fr 360px;gap:22px;align-items:start}
+@media(max-width:1080px){.layout{grid-template-columns:1fr}.aside,.side{position:static!important}}
+/* ---- left: model list ---- */
+.aside{position:sticky;top:78px}
+.newbtn{width:100%;background:var(--ink);color:var(--paper);border:0;padding:13px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
+.newbtn:hover{background:#000}
+.mlist{margin-top:12px;border:1px solid var(--line);background:#fff;max-height:70vh;overflow:auto}
+.mitem{padding:11px 14px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.mitem:last-child{border-bottom:0}
+.mitem:hover{background:var(--panel2)}
+.mitem.on{background:var(--panel);box-shadow:inset 3px 0 0 var(--oak)}
+.mitem small{color:var(--ink-mute);font-size:11.5px}
+.mitem .g{font-size:11px;color:var(--champagne);font-weight:600}
+.grouphdr{padding:8px 14px;font-size:11px;letter-spacing:.04em;color:var(--ink-mute);background:var(--panel2);border-bottom:1px solid var(--line);font-weight:600}
+/* ---- center: form ---- */
+.card{background:#fff;border:1px solid var(--line);padding:22px 22px 24px;margin-bottom:18px}
+.card > h2{display:flex;align-items:center;gap:9px}
+.card .hint{font-size:12.5px;color:var(--ink-mute);margin:2px 0 16px}
+label{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:600;margin:0 0 5px}
+input[type=text],input[type=number],select,textarea{width:100%;border:1px solid var(--line);padding:10px 12px;font-family:inherit;font-size:14.5px;background:#fff;font-weight:400}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outline-offset:-1px}
+.row{display:grid;gap:14px;margin-bottom:14px}
+.row.c2{grid-template-columns:1fr 1fr}
+.row.c3{grid-template-columns:1fr 1fr 1fr}
+.row.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+@media(max-width:560px){.row.c2,.row.c3,.row.c4{grid-template-columns:1fr 1fr}}
+.mono{font-family:ui-monospace,monospace;font-size:13px}
+.tag{display:inline-block;font-size:11px;color:var(--ink-mute);background:var(--panel);padding:2px 7px;border-radius:4px;margin-inline-start:6px}
+.fin-groups{display:flex;flex-direction:column;gap:14px}
+.fin-sec b{display:block;font-size:12px;color:var(--ink-mute);margin-bottom:8px;font-weight:600}
+.fin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.fin{display:flex;align-items:center;gap:9px;border:1px solid var(--line);padding:8px 10px;cursor:pointer;font-size:13.5px;background:#fff;user-select:none}
+.fin:hover{background:var(--panel2)}
+.fin.on{border-color:var(--oak);box-shadow:inset 0 0 0 1px var(--oak);background:#fff}
+.dot{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:0 0 0 1px #0002}
+.fin input{display:none}
+.renders{display:flex;flex-direction:column;gap:10px}
+.render{border:1px solid var(--line);background:var(--panel2);padding:12px}
+.render .rh{display:flex;align-items:center;gap:9px;margin-bottom:9px;font-size:13.5px;font-weight:600}
+.render .rh .def{font-size:10.5px;color:var(--oak);border:1px solid var(--oak);padding:1px 6px;border-radius:20px;font-weight:700;cursor:pointer}
+.render .rh .def.is{background:var(--oak);color:#fff}
+.render .rr{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:560px){.render .rr{grid-template-columns:1fr}}
+.feats .f{display:flex;gap:8px;margin-bottom:7px}
+.feats .f input{flex:1}
+.mini{border:1px solid var(--line);background:#fff;width:38px;flex:none;cursor:pointer;font-size:16px;color:var(--ink-soft)}
+.mini:hover{background:var(--panel)}
+.addline{border:1px dashed var(--champagne);background:transparent;color:var(--ink-soft);padding:8px 12px;font-family:inherit;font-size:13px;cursor:pointer;font-weight:600}
+.addline:hover{background:var(--panel2)}
+.adv summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);padding:6px 0}
+.adv[open] summary{margin-bottom:12px}
+.lay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.lay{border:1px solid var(--line);padding:9px 11px;font-size:13px;cursor:pointer;background:#fff}
+.lay.on{border-color:var(--oak);box-shadow:inset 0 0 0 1px var(--oak)}
+.lay small{display:block;color:var(--ink-mute);font-size:11px}
+/* ---- right: preview + actions ---- */
+.side{position:sticky;top:78px;display:flex;flex-direction:column;gap:16px}
+.errs{background:#FAEDEA;border-inline-start:3px solid var(--red);padding:12px 14px;font-size:13px;display:none}
+.errs.on{display:block}
+.errs ul{margin:6px 0 0;padding-inline-start:18px}
+.errs li{margin:2px 0}
+.errs.clean{background:#EEF4EF;border-color:var(--green);color:#2F5A3A}
+.pvcard{border:1px solid var(--line);background:#fff;overflow:hidden;margin-bottom:2px}
+.pvimg{aspect-ratio:4/3;background:var(--panel2,#f4f1ea);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pvimg img{width:100%;height:100%;object-fit:contain}
+.pvph{color:var(--ink-mute);font-size:13px}
+.pvbody{padding:13px 15px}
+.pvname{font-family:"Frank Ruhl Libre",serif;font-size:17px;font-weight:500;color:var(--ink)}
+.pvline{font-size:12px;color:var(--champagne);font-weight:600;margin-top:2px}
+.pvprice{font-size:16px;font-weight:700;color:var(--ink);margin-top:7px}
+.pvprice small{font-size:11px;color:var(--ink-mute);font-weight:400;margin-inline-start:6px}
+.pvdots{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.pvdots .d{width:20px;height:20px;border-radius:50%;box-shadow:0 0 0 1px #0002}
+.preview{background:#1B1A18;color:#E7E2D8;border:1px solid #000;max-height:44vh;overflow:auto}
+.preview .ph{background:#111;color:#B9B09E;padding:8px 12px;font-size:11.5px;letter-spacing:.04em;position:sticky;top:0}
+.preview pre{padding:12px 14px;font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.5;white-space:pre;color:#D8E6CE}
+.actions{display:flex;flex-direction:column;gap:9px}
+.dl{background:var(--oak);color:#fff;border:0;padding:14px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.dl:hover{filter:brightness(1.06)}
+.dl.sec{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:600;font-size:13.5px;padding:11px}
+.dl.sec:hover{background:var(--panel2)}
+.dl:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.checklist{background:#fff;border:1px solid var(--line);padding:14px 16px;font-size:13px}
+.checklist h3{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:15px;margin-bottom:8px}
+.checklist code{font-family:ui-monospace,monospace;font-size:11.5px;background:var(--panel);padding:1px 5px;word-break:break-all}
+.checklist li{margin:5px 0;list-style:none}
+.checklist .path{color:var(--ink-mute);font-size:11px}
+.toast{position:fixed;inset-block-end:22px;inset-inline-start:50%;transform:translateX(50%) translateY(120%);background:var(--ink);color:var(--paper);padding:13px 22px;font-weight:600;font-size:14px;transition:.3s;z-index:80}
+.toast.on{transform:translateX(50%) translateY(0)}
+.gate{max-width:520px;margin:60px auto;padding:0 24px}
+.load-drop{border:1px dashed var(--champagne);background:var(--panel2);padding:28px;text-align:center;margin-top:16px;cursor:pointer}
+.load-drop.hov{background:var(--panel);border-color:var(--oak)}
+.empty{color:var(--ink-mute);font-size:14px;padding:40px 20px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="in">
+  <div><h1>ניהול מוצרים</h1><div class="sub">ממלאים טופס · מורידים <span class="mono">catalog.json</span> · גוררים ל-GitHub. בלי לגעת ב-JSON ביד.</div></div>
+  <div class="sp"></div>
+  <div class="pill" id="loadState">טוען קטלוג…</div>
+</div></div>
+
+<!-- fallback loader if fetch fails (offline / file://) -->
+<div class="gate" id="gate" style="display:none">
+  <div class="card">
+    <h2>לא הצלחתי לטעון את הקטלוג מהאתר</h2>
+    <p class="hint">קורה כשפותחים את הקובץ מהמחשב במקום מהאתר החי. גררו לכאן את <span class="mono">products/catalog.json</span> הנוכחי, או בחרו קובץ.</p>
+    <div class="load-drop" id="drop">גררו לכאן את catalog.json &nbsp;·&nbsp; או לחצו לבחירה</div>
+    <input type="file" id="file" accept=".json,application/json" style="display:none">
+  </div>
+</div>
+
+<div class="layout" id="app" style="display:none">
+
+  <!-- LEFT -->
+  <aside class="aside">
+    <button class="newbtn" id="new">+ מוצר חדש</button>
+    <input type="text" id="msearch" placeholder="חיפוש דגם…" style="width:100%;margin-top:10px;border:1px solid var(--line);padding:9px 12px;font-family:inherit;font-size:13.5px;background:#fff">
+    <div class="mlist" id="mlist"></div>
+  </aside>
+
+  <!-- CENTER -->
+  <main id="form">
+    <div class="card">
+      <h2 id="formTitle" style="display:flex;align-items:center;gap:10px"><span id="formTitleText">מוצר חדש</span>
+        <button id="dupBtn" class="addline" style="display:none;margin-inline-start:auto">⿻ שכפל דגם זה</button></h2>
+      <p class="hint" id="formHint">בוחרים קטגוריה, ממלאים שם, ומסמנים באילו גימורים המוצר קיים.</p>
+
+      <div class="row c2">
+        <div>
+          <label>שם המוצר <span class="tag">מופיע ללקוח</span></label>
+          <input type="text" id="f_name" placeholder="למשל: סימפל · 3 דלתות הזזה + מראה">
+        </div>
+        <div>
+          <label>מזהה (id) <span class="tag">אנגלית · אוטומטי</span></label>
+          <input type="text" id="f_id" class="mono" placeholder="simple3-240">
+        </div>
+      </div>
+
+      <div class="row c3">
+        <div>
+          <label>קטגוריה / קו</label>
+          <select id="f_line"></select>
+        </div>
+        <div>
+          <label>משפחה <span class="tag">לא חובה</span></label>
+          <input type="text" id="f_family" placeholder="למשל: אופל">
+        </div>
+        <div>
+          <label>קוד ספק <span class="tag">לא חובה</span></label>
+          <input type="text" id="f_code" class="mono" placeholder="—">
+        </div>
+      </div>
+
+      <div class="row c4">
+        <div>
+          <label>מחיר ₪ <span class="tag">לא חובה</span></label>
+          <input type="number" id="f_price" placeholder="—" min="0" step="1">
+        </div>
+        <div>
+          <label>רוחב ס״מ</label>
+          <input type="number" id="f_w" placeholder="—" min="0">
+        </div>
+        <div>
+          <label>גובה ס״מ</label>
+          <input type="number" id="f_h" placeholder="—" min="0">
+        </div>
+        <div>
+          <label>עומק ס״מ</label>
+          <input type="number" id="f_d" placeholder="—" min="0">
+        </div>
+      </div>
+      <p class="hint" style="margin-top:-6px">מידות ריקות → יוצג ללקוח "מידות לפי התאמה אישית". זה תקין.</p>
+
+      <div class="row c2" style="margin-top:4px">
+        <div>
+          <label>דמי משלוח והרכבה ₪ <span class="tag">לא חובה</span></label>
+          <input type="number" id="f_ship" placeholder="—" min="0" step="1">
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <p class="hint" style="margin:0">משולם בבית למרכיב · מוצג בנפרד מהמחיר, לא מתווסף אליו.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>גימורים</h2>
+      <p class="hint">סמנו את הגימורים שבהם המוצר קיים. לכל גימור מסומן ייפתח שדה תמונה למטה.</p>
+      <div class="fin-groups" id="finGroups"></div>
+    </div>
+
+    <div class="card">
+      <h2>תמונות לכל גימור <span class="tag">renders</span></h2>
+      <p class="hint">שם קובץ מוצע אוטומטית. אחרי ההורדה — גררו את התמונות עצמן ל-<span class="mono">products/</span> ול-<span class="mono">products/thumbs/</span> ב-GitHub.</p>
+      <div class="renders" id="renders"></div>
+      <p class="empty" id="rendersEmpty">סמנו גימור למעלה כדי להוסיף תמונה.</p>
+    </div>
+
+    <div class="card">
+      <h2>תיאור ומאפיינים <span class="tag">לא חובה</span></h2>
+      <p class="hint">שורות קצרות שמופיעות בדף המוצר.</p>
+      <div class="feats" id="feats"></div>
+      <button class="addline" id="addFeat">+ הוסף שורה</button>
+
+      <details class="adv" style="margin-top:18px">
+        <summary>הגדרות מתקדמות · פריסות פנים, שיוך הדמיה</summary>
+        <div style="margin-top:10px">
+          <label>פריסות פנים (ארונות בלבד) <span class="tag">layouts</span></label>
+          <div class="lay-grid" id="layGrid"></div>
+        </div>
+        <div class="row c2" style="margin-top:16px">
+          <div>
+            <label>קטגוריית מערכת</label>
+            <select id="f_cat">
+              <option value="wardrobe">ארון (wardrobe)</option>
+              <option value="bookcase">ספרייה (bookcase)</option>
+              <option value="bed">מיטה (bed)</option>
+              <option value="bunk">קומותיים (bunk)</option>
+              <option value="dresser">שידה (dresser)</option>
+              <option value="other">אחר (other)</option>
+            </select>
+          </div>
+          <div>
+            <label>מיקום בחדר</label>
+            <select id="f_place">
+              <option value="against_wall">צמוד לקיר</option>
+              <option value="freestanding">עצמאי</option>
+              <option value="corner">פינתי</option>
+            </select>
+          </div>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <!-- RIGHT -->
+  <aside class="side">
+    <div class="errs" id="errs"></div>
+
+    <div class="actions">
+      <button class="dl" id="dlSite" disabled>הורדת catalog.json מעודכן</button>
+      <button class="dl sec" id="dlViz" disabled>הורדת רשומות הדמיה תואמות (viz)</button>
+    </div>
+
+    <div class="checklist" id="checklist" style="display:none">
+      <h3>תמונות להעלות ל-GitHub</h3>
+      <ul id="fileList"></ul>
+    </div>
+
+    <div class="pvcard" id="pvcard">
+      <div class="pvimg" id="pvimg"><span class="pvph">תצוגה מקדימה</span></div>
+      <div class="pvbody">
+        <div class="pvname" id="pvname">—</div>
+        <div class="pvline" id="pvline"></div>
+        <div class="pvprice" id="pvprice"></div>
+        <div class="pvdots" id="pvdots"></div>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div class="ph">תצוגה חיה · האובייקט שייכנס לקטלוג</div>
+      <pre id="pv">—</pre>
+    </div>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let CAT=null;          // full loaded site catalog
+let editingId=null;    // id being edited (null = new)
+let selFin=[];         // selected finish ids, in order (first = default)
+let renderMap={};      // finishId -> {image, thumb, profile}
+let defaultFin=null;   // finishId chosen as renders[0]
+let selLayouts=[];
+
+/* map a line_id to the "family" keyword used loosely in finishes[].line */
+const LINE_FAMILY = {
+  hazaza:'הזזה', bgadim:'הזזה', tv:'הזזה', meshulavim:'הזזה',
+  kodesh:'קודש', 'sifriyot-yeladim':'ילדים',
+  'mitot-zugiyot':'מיטות','mitot-vahetzi':'מיטות','mitot-yeladim':'מיטות','mitot-komotayim':'מיטות'
+};
+
+/* ---------- load ---------- */
+fetch('products/catalog.json',{cache:'no-store'})
+  .then(r=>{if(!r.ok)throw 0;return r.json()})
+  .then(boot)
+  .catch(()=>{ $('#loadState').textContent='טעינה ידנית'; $('#gate').style.display='block'; });
+
+$('#drop').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{const f=e.target.files[0];if(f)readFile(f)};
+['dragover','dragleave','drop'].forEach(ev=>$('#drop').addEventListener(ev,e=>{
+  e.preventDefault();
+  if(ev==='dragover')$('#drop').classList.add('hov');
+  if(ev==='dragleave')$('#drop').classList.remove('hov');
+  if(ev==='drop'){$('#drop').classList.remove('hov');const f=e.dataTransfer.files[0];if(f)readFile(f)}
+}));
+function readFile(f){const r=new FileReader();r.onload=()=>{try{boot(JSON.parse(r.result));$('#gate').style.display='none'}catch(err){alert('קובץ לא תקין: '+err.message)}};r.readAsText(f)}
+
+function boot(cat){
+  CAT=cat;
+  CAT.models=CAT.models||[];
+  CAT.finishes=CAT.finishes||[];
+  $('#gate').style.display='none';
+  $('#app').style.display='grid';
+  $('#loadState').className='pill ok';
+  $('#loadState').textContent=CAT.models.length+' דגמים בקטלוג';
+  buildLineSelect();
+  buildLayoutGrid();
+  buildModelList();
+  newModel();
+}
+
+/* ---------- left list ---------- */
+function realLines(){
+  // lines is a dict keyed by id; skip _note and entries without a name
+  return Object.entries(CAT.lines||{})
+    .filter(([k,v])=>k[0]!=='_'&&v&&v.name)
+    .map(([id,v])=>({id,...v}));
+}
+function lineName(id){const l=(CAT.lines||{})[id];return l&&l.name||id}
+function groupName(id){const g=(CAT.groups||[]).find(x=>x.id===id);return g&&g.name||id}
+function buildModelList(){
+  const byGroup={};
+  CAT.models.forEach(m=>{
+    const l=(CAT.lines||{})[m.line_id]; const g=l&&l.group||'—';
+    (byGroup[g]=byGroup[g]||[]).push(m);
+  });
+  let html='';
+  Object.keys(byGroup).forEach(g=>{
+    html+=`<div class="grouphdr">${groupName(g)}</div>`;
+    byGroup[g].forEach(m=>{
+      html+=`<div class="mitem" data-id="${m.id}">
+        <span>${m.name}<br><small>${lineName(m.line_id)}</small></span>
+        <span class="g">${(m.renders||[]).length}</span></div>`;
+    });
+  });
+  $('#mlist').innerHTML=html||'<p class="empty">אין דגמים עדיין.</p>';
+  $$('.mitem').forEach(el=>el.onclick=()=>loadModel(el.dataset.id));
+  filterList();
+}
+
+/* ---------- search the model list ---------- */
+$('#msearch').addEventListener('input',filterList);
+function filterList(){
+  const q=($('#msearch').value||'').trim().toLowerCase();
+  $$('#mlist .mitem').forEach(el=>{
+    const m=CAT.models.find(x=>x.id===el.dataset.id)||{};
+    const hay=[m.name,m.id,lineName(m.line_id),m.family].join(' ').toLowerCase();
+    el.style.display=(!q||hay.includes(q))?'':'none';
+  });
+  // hide a group header if all its items are hidden
+  $$('#mlist .grouphdr').forEach(h=>{
+    let n=h.nextElementSibling,any=false;
+    while(n&&!n.classList.contains('grouphdr')){if(n.classList.contains('mitem')&&n.style.display!=='none')any=true;n=n.nextElementSibling;}
+    h.style.display=any?'':'none';
+  });
+}
+
+/* ---------- duplicate the current model as a new one ---------- */
+$('#dupBtn').onclick=()=>{
+  const oldId=editingId; if(!oldId)return;
+  const base=CAT.models.find(x=>x.id===oldId)||{};
+  let n=oldId+'-2',i=2;
+  while(CAT.models.some(x=>x.id===n)){i++;n=oldId+'-'+i;}
+  // point suggested image paths at the new id
+  Object.values(renderMap).forEach(r=>{
+    if(r.image)r.image=r.image.split(oldId).join(n);
+    if(r.thumb)r.thumb=r.thumb.split(oldId).join(n);
+  });
+  editingId=null; idTouched=true;
+  $('#f_id').value=n;
+  $('#f_name').value=(base.name||$('#f_name').value)+' · עותק';
+  $('#formTitleText').textContent='מוצר חדש (שוכפל)';
+  $('#dupBtn').style.display='none';
+  $$('.mitem').forEach(x=>x.classList.remove('on'));
+  buildRenders();sync();
+  toast('שוכפל — ערוך את השם/הגימורים ושמור כמוצר חדש');
+};
+
+/* ---------- selects & grids ---------- */
+function buildLineSelect(){
+  $('#f_line').innerHTML=realLines()
+    .map(l=>`<option value="${l.id}">${l.name} — ${groupName(l.group)}</option>`).join('');
+}
+function buildLayoutGrid(){
+  const opts=((CAT.layouts||{}).options)||[];
+  $('#layGrid').innerHTML=opts.map(o=>
+    `<div class="lay" data-id="${o.id}">${o.name}<small>${o.id} · ${o.doors||'?'} דלתות${o.alt_270?' · יש 270':''}</small></div>`
+  ).join('')||'<p class="hint">אין פריסות מוגדרות בקטלוג.</p>';
+  $$('#layGrid .lay').forEach(el=>el.onclick=()=>{
+    el.classList.toggle('on');
+    selLayouts=$$('#layGrid .lay.on').map(x=>x.dataset.id);
+    sync();
+  });
+}
+function buildFinishes(){
+  const lineId=$('#f_line').value, fam=LINE_FAMILY[lineId];
+  const all=CAT.finishes.filter(f=>f.id&&f.name);
+  const globals=all.filter(f=>!f.line);
+  const forLine=all.filter(f=>f.line&&f.line===fam);
+  const others=all.filter(f=>f.line&&f.line!==fam);
+  const sec=(title,arr)=> !arr.length?'':
+    `<div class="fin-sec"><b>${title}</b><div class="fin-grid">`+
+    arr.map(f=>{
+      const on=selFin.includes(f.id)?'on':'';
+      return `<label class="fin ${on}" data-fin="${f.id}">
+        <span class="dot" style="background:${f.swatch||'#ccc'}"></span>${f.name}</label>`;
+    }).join('')+`</div></div>`;
+  $('#finGroups').innerHTML =
+    sec('מומלץ לקו זה',forLine) + sec('גימורים כלליים',globals) +
+    `<details class="adv"${others.length?'':' style="display:none"'}><summary>גימורים של קווים אחרים (${others.length})</summary><div style="margin-top:10px">`+
+    sec('',others).replace('<div class="fin-sec"><b></b>','<div class="fin-sec">')+`</div></details>`;
+  $$('#finGroups .fin').forEach(el=>el.onclick=()=>toggleFin(el.dataset.fin));
+}
+
+/* ---------- finish selection ---------- */
+function toggleFin(id){
+  const i=selFin.indexOf(id);
+  if(i>=0){selFin.splice(i,1); delete renderMap[id]; if(defaultFin===id)defaultFin=selFin[0]||null;}
+  else{selFin.push(id); renderMap[id]=suggestRender(id); if(!defaultFin)defaultFin=id;}
+  buildFinishes(); buildRenders(); sync();
+}
+function suggestRender(finId){
+  const id=$('#f_id').value.trim()||'model';
+  return {image:`/products/${id}-${finId}.jpg`, thumb:`/products/thumbs/${id}-${finId}.jpg`, profile:''};
+}
+function finById(id){return CAT.finishes.find(f=>f.id===id)||{name:id}}
+
+function buildRenders(){
+  const wrap=$('#renders');
+  $('#rendersEmpty').style.display=selFin.length?'none':'block';
+  // order: default first, then the rest in selection order
+  const order=[...new Set([defaultFin,...selFin].filter(Boolean))];
+  wrap.innerHTML=order.map(fid=>{
+    const r=renderMap[fid]||suggestRender(fid); renderMap[fid]=r;
+    const f=finById(fid);
+    return `<div class="render" data-fin="${fid}">
+      <div class="rh"><span class="dot" style="background:${f.swatch||'#ccc'}"></span>${f.name}
+        <span style="flex:1"></span>
+        <span class="def ${fid===defaultFin?'is':''}" data-def="${fid}">${fid===defaultFin?'ברירת מחדל':'קבע כברירת מחדל'}</span></div>
+      <div class="rr">
+        <div><label>תמונה מלאה</label><input type="text" class="mono" data-k="image" value="${r.image}"></div>
+        <div><label>תמונה ממוזערת</label><input type="text" class="mono" data-k="thumb" value="${r.thumb}"></div>
+      </div></div>`;
+  }).join('');
+  $$('#renders .render').forEach(el=>{
+    const fid=el.dataset.fin;
+    el.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{renderMap[fid][inp.dataset.k]=inp.value;sync()});
+    el.querySelector('.def').onclick=()=>{defaultFin=fid;buildRenders();sync()};
+  });
+}
+
+/* ---------- features ---------- */
+function addFeat(v=''){
+  const d=document.createElement('div');d.className='f';
+  d.innerHTML=`<input type="text" placeholder="מאפיין קצר" value="${v.replace(/"/g,'&quot;')}"><button class="mini" title="מחק">×</button>`;
+  d.querySelector('input').oninput=sync;
+  d.querySelector('.mini').onclick=()=>{d.remove();sync()};
+  $('#feats').appendChild(d);
+}
+$('#addFeat').onclick=()=>{addFeat();};
+function readFeats(){return $$('#feats .f input').map(i=>i.value.trim()).filter(Boolean)}
+
+/* ---------- new / load ---------- */
+function newModel(){
+  editingId=null;selFin=[];renderMap={};defaultFin=null;selLayouts=[];
+  $('#formTitleText').textContent='מוצר חדש';
+  $('#dupBtn').style.display='none';
+  $('#formHint').textContent='בוחרים קטגוריה, ממלאים שם, ומסמנים באילו גימורים המוצר קיים.';
+  ['f_name','f_id','f_family','f_code','f_price','f_w','f_h','f_d','f_ship'].forEach(k=>$('#'+k).value='');
+  $('#f_line').selectedIndex=0; $('#f_cat').value='wardrobe'; $('#f_place').value='against_wall';
+  $('#feats').innerHTML='';
+  $$('#layGrid .lay').forEach(x=>x.classList.remove('on'));
+  $$('.mitem').forEach(x=>x.classList.remove('on'));
+  buildFinishes();buildRenders();sync();
+}
+$('#new').onclick=newModel;
+
+function loadModel(id){
+  const m=CAT.models.find(x=>x.id===id);if(!m)return;
+  editingId=id;
+  $('#formTitleText').textContent='עריכת: '+m.name;
+  $('#dupBtn').style.display='';
+  $('#formHint').textContent='שינויים ייכנסו כשמורידים את הקובץ ומעלים ל-GitHub.';
+  $('#f_name').value=m.name||'';
+  $('#f_id').value=m.id||'';
+  $('#f_line').value=m.line_id||realLines()[0]?.id;
+  $('#f_family').value=m.family||'';
+  $('#f_code').value=m.code||'';
+  $('#f_price').value=(m.price??'');
+  $('#f_ship').value=(m.delivery_install??'');
+  $('#f_w').value=m.dims?.w??''; $('#f_h').value=m.dims?.h??''; $('#f_d').value=m.dims?.d??'';
+  $('#f_cat').value=m.category||'wardrobe'; $('#f_place').value=m.placement||'against_wall';
+  // features
+  $('#feats').innerHTML=''; (m.features||[]).forEach(f=>addFeat(f));
+  // renders → finishes + map
+  selFin=[]; renderMap={}; defaultFin=null;
+  (m.renders||[]).forEach((r,i)=>{
+    if(!selFin.includes(r.finish))selFin.push(r.finish);
+    renderMap[r.finish]={image:r.image||'',thumb:r.thumb||'',profile:r.profile||''};
+    if(i===0)defaultFin=r.finish;
+  });
+  // layouts
+  selLayouts=[...(m.layouts||[])];
+  $$('#layGrid .lay').forEach(x=>x.classList.toggle('on',selLayouts.includes(x.dataset.id)));
+  $$('.mitem').forEach(x=>x.classList.toggle('on',x.dataset.id===id));
+  buildFinishes();buildRenders();sync();
+}
+
+/* ---------- id auto-slug ---------- */
+let idTouched=false;
+$('#f_id').addEventListener('input',()=>{idTouched=true;sync()});
+$('#f_name').addEventListener('input',()=>{
+  if(!idTouched&&!editingId){
+    $('#f_id').value=slug($('#f_name').value);
+  }
+  sync();
+});
+function slug(s){
+  return (s||'').toLowerCase()
+    .replace(/[·|,]/g,' ').replace(/[^\wא-ת\- ]/g,'')
+    .replace(/[א-ת]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+}
+$('#f_line').addEventListener('change',()=>{buildFinishes();sync()});
+['f_family','f_code','f_price','f_w','f_h','f_d','f_ship','f_cat','f_place'].forEach(k=>$('#'+k).addEventListener('input',sync));
+
+/* ---------- build the model object ---------- */
+function buildModel(){
+  // when editing, start from the original so unmanaged fields
+  // (identity, handles, replaces, lead_time_days, size, _todo_*, gallery…) survive
+  const orig = editingId ? (CAT.models.find(x=>x.id===editingId)||{}) : {};
+  const m = JSON.parse(JSON.stringify(orig));
+
+  const dims={}; ['w','h','d'].forEach(k=>{const v=$('#f_'+k).value;if(v!=='')dims[k]=+v;});
+  const order=[...new Set([defaultFin,...selFin].filter(Boolean))];
+  const renders=order.map(fid=>{
+    const r=renderMap[fid]||{};
+    const o={finish:fid};
+    if(r.profile)o.profile=r.profile;
+    o.image=r.image||''; o.thumb=r.thumb||'';
+    return o;
+  });
+
+  // managed fields — always overwritten from the form
+  m.id=$('#f_id').value.trim();
+  m.name=$('#f_name').value.trim();
+  m.line_id=$('#f_line').value;
+  m.line=lineName($('#f_line').value);
+  m.category=$('#f_cat').value;
+  m.placement=$('#f_place').value;
+  m.finishes=selFin.slice();
+  m.renders=renders;
+
+  // managed-but-optional — set when present, cleared when emptied
+  const setOrDel=(k,v)=>{ if(v===''||v==null||(Array.isArray(v)&&!v.length)||(typeof v==='object'&&!Array.isArray(v)&&!Object.keys(v).length)) delete m[k]; else m[k]=v; };
+  const price=$('#f_price').value; setOrDel('price', price===''?'':+price);
+  const ship=$('#f_ship').value; setOrDel('delivery_install', ship===''?'':+ship);
+  setOrDel('family',$('#f_family').value.trim());
+  setOrDel('code',$('#f_code').value.trim());
+  setOrDel('dims',dims);
+  setOrDel('features',readFeats());
+  setOrDel('layouts',selLayouts.slice());
+  return m;
+}
+
+/* ---------- validation ---------- */
+function validate(m){
+  const e=[];
+  if(!m.name)e.push('חסר שם מוצר.');
+  if(!m.id)e.push('חסר מזהה (id).');
+  else if(!/^[a-z0-9\-]+$/.test(m.id))e.push('המזהה יכול להכיל רק אותיות אנגליות קטנות, ספרות ומקף.');
+  else{
+    const clash=CAT.models.find(x=>x.id===m.id&&x.id!==editingId);
+    if(clash)e.push('כבר קיים דגם עם המזהה הזה. בחרו מזהה אחר.');
+  }
+  if(!m.renders.length)e.push('סמנו לפחות גימור אחד עם תמונה.');
+  m.renders.forEach(r=>{
+    if(!r.image||!r.thumb)e.push('לגימור "'+finById(r.finish).name+'" חסר נתיב תמונה.');
+  });
+  return e;
+}
+
+/* ---------- sync everything ---------- */
+function sync(){
+  const m=buildModel();
+  const errs=validate(m);
+  $('#pv').textContent=JSON.stringify(m,null,1);
+  renderPreviewCard(m);
+  const box=$('#errs');
+  if(errs.length){
+    box.className='errs on';
+    box.innerHTML='<b>יש לתקן לפני הורדה:</b><ul>'+errs.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+    $('#dlSite').disabled=true; $('#dlViz').disabled=true;
+  }else{
+    box.className='errs on clean';
+    box.innerHTML='✓ הכול תקין. מוכן להורדה.';
+    $('#dlSite').disabled=false; $('#dlViz').disabled=false;
+  }
+  buildChecklist(m,errs.length===0);
+}
+
+function renderPreviewCard(m){
+  const img=(m.renders&&m.renders[0]&&m.renders[0].image)||'';
+  $('#pvimg').innerHTML = img
+    ? `<img src="${img}" alt="" onerror="this.parentElement.innerHTML='<span class=&quot;pvph&quot;>התמונה תופיע אחרי העלאה ל-GitHub</span>'">`
+    : '<span class="pvph">תצוגה מקדימה</span>';
+  $('#pvname').textContent = m.name || 'שם המוצר';
+  $('#pvline').textContent = m.line || '';
+  const nis = n => '₪'+Number(n).toLocaleString('he-IL');
+  $('#pvprice').innerHTML = m.price
+    ? nis(m.price)+'<small>כולל מע״מ</small>'
+    : '<span style="color:var(--ink-mute);font-weight:600">מחיר לפי התאמה</span>';
+  // finish dots from the catalog swatches
+  const fmap={}; (CAT&&CAT.finishes||[]).forEach(f=>{if(f&&f.id)fmap[f.id]=f;});
+  $('#pvdots').innerHTML = (m.finishes||[]).map(fid=>{
+    const f=fmap[fid]||{}; return `<span class="d" title="${f.name||fid}" style="background:${f.swatch||'#ccc'}"></span>`;
+  }).join('');
+}
+
+function buildChecklist(m,ok){
+  const cl=$('#checklist');
+  if(!ok||!m.renders.length){cl.style.display='none';return}
+  cl.style.display='block';
+  $('#fileList').innerHTML=m.renders.map(r=>
+    `<li>◻︎ <span class="path">${r.image}</span></li>
+     <li>◻︎ <span class="path">${r.thumb}</span></li>`
+  ).join('');
+}
+
+/* ---------- download site catalog ---------- */
+function download(name,text){
+  const b=new Blob([text],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),2600)}
+
+$('#dlSite').onclick=()=>{
+  const m=buildModel();
+  const out=JSON.parse(JSON.stringify(CAT));
+  const i=out.models.findIndex(x=>x.id===(editingId||m.id));
+  if(i>=0)out.models[i]=m; else out.models.push(m);
+  download('catalog.json',JSON.stringify(out,null,1));
+  // reflect into working copy so further edits stack
+  CAT=out; editingId=m.id; buildModelList();
+  $$('.mitem').forEach(x=>x.classList.toggle('on',x.dataset.id===m.id));
+  $('#loadState').textContent=CAT.models.length+' דגמים בקטלוג';
+  toast('הורד catalog.json · גררו ל-GitHub');
+};
+
+/* ---------- download viz stubs ---------- */
+$('#dlViz').onclick=()=>{
+  const m=buildModel();
+  const viz={_note:'רשומות הדמיה — צריך תמונות room-ready נפרדות ב-/viz/img/',products:[]};
+  // start from existing viz if we can fetch it later; here we emit only the new stubs
+  m.renders.forEach(r=>{
+    const f=finById(r.finish);
+    viz.products.push({
+      id:`${m.id}-${r.finish}`,
+      name:`${m.family||m.name} · ${f.name}`,
+      line:m.line,
+      image:`/viz/img/${m.id}-${r.finish}.jpg`,
+      thumb:`/viz/img/thumbs/${m.id}-${r.finish}.jpg`,
+      finish:f.name,
+      dims:m.dims||null,
+      features:m.features||[],
+      category:m.category,
+      placement:m.placement,
+      model:m.id,
+      finish_id:r.finish,
+      profile_id:r.profile||''
+    });
+  });
+  download(`viz-stubs-${m.id}.json`,JSON.stringify(viz,null,1));
+  toast('הורדו רשומות הדמיה · שימו לב: צריך תמונות /viz/img/ נפרדות');
+};
+</script>
+</body>
+</html>

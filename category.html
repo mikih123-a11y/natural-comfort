@@ -12,7 +12,7 @@
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4; --champagne:#A79A88; --champagne-lt:#C9BFAE;
-  --ink:#211F1D; --ink-soft:#56514B; --ink-mute:#8A837A; --oak:#B8894E; --line:#E2DCD2;
+  --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F; --oak:#B8894E; --line:#E2DCD2;
   --display:"Frank Ruhl Libre",Georgia,serif; --body:"Assistant",system-ui,sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
@@ -25,11 +25,13 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
 .top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.top .brand,.top .tel{flex:none}
 .brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
 .brand span{color:var(--champagne);font-weight:400}
-.nav{display:flex;gap:28px;font-size:14.5px;color:var(--ink-soft)}
-.nav a{position:relative;padding:4px 0}
+.nav{display:flex;flex-wrap:nowrap;gap:18px;font-size:13.5px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
 .nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
 .nav a:hover,.nav a[aria-current]{color:var(--ink)}
 .nav a:hover::after,.nav a[aria-current]::after{width:100%}
@@ -38,13 +40,13 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
 @media(max-width:900px){.nav{display:none}}
 
-.crumb{font-size:13px;color:var(--ink-mute);font-weight:300;padding:22px 0 0}
+.crumb{font-size:13px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
 .crumb a:hover{color:var(--ink)}
 .crumb i{font-style:normal;margin:0 8px;color:var(--champagne-lt)}
 
 .head{padding:24px 0 8px;max-width:560px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.024em}
-.head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:300}
+.head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:400}
 
 /* מסנן גודל — ציר הגודל של הקו. על המסילה, כמו כל בורר באתר. */
 .filt{margin:36px 0 40px}
@@ -66,19 +68,19 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .card .ph{aspect-ratio:1/1;background:#fff;position:relative;overflow:hidden}
 .card .ph img{width:100%;height:100%;object-fit:contain;transition:transform .5s var(--ease)}
 .card:hover .ph img{transform:scale(1.03)}
-.card .sz-tag{position:absolute;top:12px;inset-inline-start:12px;background:var(--panel);color:var(--ink-soft);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 10px}
+.card .sz-tag{position:absolute;top:12px;inset-inline-start:12px;background:var(--panel);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 10px}
 .card .b{padding:18px 20px 20px;border-top:1px solid var(--line)}
 .card h3{font-family:var(--display);font-size:18px;font-weight:500;line-height:1.25}
-.card .dm{font-size:12.5px;color:var(--ink-mute);font-weight:300;margin-top:3px}
+.card .dm{font-size:12.5px;color:var(--ink-soft);font-weight:400;margin-top:3px}
 .card .pr{font-family:var(--display);font-size:21px;font-weight:500;margin-top:10px;letter-spacing:-.02em}
 .dots{display:flex;gap:5px;margin-top:12px}
 .dots i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line);display:block}
-.dots span{font-size:11px;color:var(--ink-mute);font-weight:300;margin-inline-start:4px;align-self:center}
+.dots span{font-size:11px;color:var(--ink-soft);font-weight:400;margin-inline-start:4px;align-self:center}
 .empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--ink-mute)}
 .empty b{font-family:var(--display);font-size:20px;font-weight:500;color:var(--ink);display:block;margin-bottom:8px}
 .empty a{color:var(--oak);text-decoration:underline}
 
-footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-soft);font-weight:400}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .fl{display:flex;gap:20px;flex-wrap:wrap}
 footer a:hover{color:var(--ink)}
@@ -130,7 +132,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const subs  = group ? group.lines.filter(l => d.models.some(m => m.line_id === l)) : [];
   if (!lineId && subs.length === 1) lineId = subs[0];
   const line = d.lines[lineId] || d.lines[subs[0]] || {};
-  const fin = id => d.finishes.find(f => f.id === id);
+  const fin = id => (d.finishes || []).find(f => f.id === id);
 
   // ניווט מהעולמות — ריקים לא מוצגים
   const groupOf = m => d.lines[m.line_id] && d.lines[m.line_id].group;
@@ -158,7 +160,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const label = s => s === 'all' ? 'הכל'
                    : byType ? d.lines[s].name
                    : (line.size_label || '{n}').replace('{n}', s);
-  const has   = s => s === 'all' || (byType ? true : mine.some(m => m.size === s));
+  const has   = s => s === 'all' || (byType ? mine.some(m => m.line_id === s) : mine.some(m => m.size === s));
 
   $('#sizes').innerHTML = opts.map((s, i) =>
     `<button class="sz" data-i="${i}" data-s="${s}" aria-pressed="${!i}" ${has(s) ? '' : 'disabled'}>${label(s)}</button>`).join('');
@@ -171,7 +173,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const extra = (m.finishes || []).length > 6 ? `<span>+${m.finishes.length - 6}</span>` : '';
     return `<a class="card" href="/product.html?id=${m.id}">
       <div class="ph"><span class="sz-tag">${byType ? d.lines[m.line_id].name : label(m.size)}</span>
-        <img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy"></div>
+        ${(m.renders && m.renders[0]) ? `<img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy">` : ''}</div>
       <div class="b">
         <h3>${m.name}</h3>
         <div class="dm">${dm(m)}</div>

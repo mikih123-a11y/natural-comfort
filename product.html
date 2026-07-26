@@ -36,7 +36,8 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .nav::-webkit-scrollbar{display:none}
 .nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
 .nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
-.nav a:hover{color:var(--ink)}.nav a:hover::after{width:100%}
+.nav a:hover,.nav a[aria-current]{color:var(--ink)}
+.nav a:hover::after,.nav a[aria-current]::after{width:100%}
 .tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
 .tel:hover{background:#000}
 .tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
@@ -244,7 +245,13 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     || { id: id || '-', name: id || 'גימור', swatch: '#cccccc', code: '' };
   const idn = m.identity || {};
   const rends = m.renders || [];
-  $('#nav').innerHTML = Object.entries(d.lines).filter(([k]) => !k.startsWith('_')).map(([k,l]) => `<a href="/category.html?line=${k}">${l.name}</a>`).join('');
+  // ניווט לפי עולמות. עולם בלי מוצרים לא מוצג — אין יותר טאבים שמובילים לדף ריק.
+  const groupOf = x => ((d.lines || {})[x.line_id] || {}).group;
+  const myGroup = groupOf(m);
+  $('#nav').innerHTML = (d.groups || [])
+    .filter(g => d.models.some(x => groupOf(x) === g.id))
+    .map(g => `<a href="/category.html?group=${g.id}"${g.id === myGroup ? ' aria-current="page"' : ''}>${g.name}</a>`)
+    .join('');
 
   $('#crumb-name').textContent = m.name;
   $('#line').textContent = m.line;

@@ -28,11 +28,13 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
 .top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.top .brand,.top .tel{flex:none}
 .brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
 .brand span{color:var(--champagne);font-weight:400}
-.nav{display:flex;gap:28px;font-size:14.5px;color:var(--ink-soft)}
-.nav a{position:relative;padding:4px 0}
+.nav{display:flex;flex-wrap:nowrap;gap:18px;font-size:13.5px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
 .nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
 .nav a:hover{color:var(--ink)}.nav a:hover::after{width:100%}
 .tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}

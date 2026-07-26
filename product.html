@@ -166,7 +166,7 @@ footer a:hover{color:var(--ink)}
       <p class="ship" id="ship" style="display:none"></p>
       <p class="made" id="made">—</p>
 
-      <div class="opt">
+      <div class="opt" id="fin-wrap">
         <h2><span id="flbl">גימור דלתות</span><em id="fname">—</em></h2>
         <div class="track"><div class="slider" id="slider"></div></div>
         <div class="sws" id="sws"></div>
@@ -237,7 +237,11 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   // ?id=... בוחר דגם. ברירת מחדל: הראשון.
   const want = new URLSearchParams(location.search).get('id');
   const m = d.models.find(x => x.id === want) || d.models[0];
-  const fin = id => d.finishes.find(f => f.id === id);
+  // גימור חסר בקטלוג לא מפיל את הדף
+  const fin = id => (d.finishes || []).find(f => f.id === id)
+    || { id: id || '-', name: id || 'גימור', swatch: '#cccccc', code: '' };
+  const idn = m.identity || {};
+  const rends = m.renders || [];
   $('#nav').innerHTML = Object.entries(d.lines).filter(([k]) => !k.startsWith('_')).map(([k,l]) => `<a href="/category.html?line=${k}">${l.name}</a>`).join('');
 
   $('#crumb-name').textContent = m.name;
@@ -264,42 +268,48 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     }
   };
   renderPrice();
-  $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
+  if (m.lead_time_days) $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
+  else $('#made').textContent = 'נבנה להזמנה';
   if (m.delivery_install) { $('#ship').style.display=''; $('#ship').innerHTML = `משלוח והרכבה ₪${m.delivery_install} <span>· משולם בבית למרכיב</span>`; }
-  $('#feats').innerHTML = m.features.map(f => `<li>${f}</li>`).join('');
-  const slide = m.identity.door_type === 'sliding';
+  $('#feats').innerHTML = (m.features || []).map(f => `<li>${f}</li>`).join('');
+  const slide = idn.door_type === 'sliding';
   $('#rows').innerHTML = [
-    ['מידות', `רוחב ${m.dims.w} · גובה ${m.dims.h} · עומק ${m.dims.d} ס״מ`],
-    ['דלתות', `${m.identity.door_count} דלתות ${slide ? 'הזזה' : 'פתיחה'}`],
+
+    m.dims ? ['מידות', `רוחב ${m.dims.w} · גובה ${m.dims.h} · עומק ${m.dims.d} ס״מ`]
+           : ['מידות', 'לפי התאמה אישית'],
+    idn.door_count ? ['דלתות', `${idn.door_count} דלתות ${slide ? 'הזזה' : 'פתיחה'}`] : null,
     slide ? ['מסילה', 'אלומיניום שמפניה'] : null,
-    m.identity.glass_doors ? ['זכוכית', 'דלתות ויטרינה עליונות'] : null,
+    idn.glass_doors ? ['זכוכית', 'דלתות ויטרינה עליונות'] : null,
     m.handles ? ['ידיות', 'לבחירה מתוך 11 דגמים'] : null,
     ['התאמה', 'נבנה למידות הקיר שלכם'],
   ].filter(Boolean).map(([k, v]) => `<div class="row"><b>${k}</b><span>${v}</span></div>`).join('');
 
   // תמונה לכל גימור. מוצר אחד, N וריאציות — בדיוק כמו ב-Woo.
-  $('#shot').insertAdjacentHTML('beforeend', m.renders.map((r, i) =>
+  $('#shot').insertAdjacentHTML('beforeend', rends.map((r, i) =>
     `<img id="v${i}" class="${i ? '' : 'on'}" src="${r.image}" alt="${m.name} בגימור ${fin(r.finish).name}" ${i ? 'loading="lazy"' : ''}>`).join(''));
 
-  $('#thumbs').innerHTML = m.renders.map((r, i) =>
+  $('#thumbs').innerHTML = rends.map((r, i) =>
     `<button class="tb" data-i="${i}" aria-pressed="${!i}" aria-label="${fin(r.finish).name}"><img src="${r.thumb}" alt=""></button>`).join('');
 
-  $('#sws').innerHTML = m.renders.map((r, i) => {
+  $('#sws').innerHTML = rends.map((r, i) => {
     const f = fin(r.finish);
     return `<button class="sw" data-i="${i}" aria-pressed="${!i}">
       <i style="background:${f.swatch}"></i><span>${f.name}</span>${f.code && f.code !== '—' ? `<span class="code">${f.code}</span>` : ''}</button>`;
   }).join('');
 
+  // אין גימורים בקטלוג — מסתירים את הבורר במקום להשאיר אזור ריק
+  if (rends.length < 2) $('#fin-wrap').style.display = 'none';
+
   // מודדים את הכפתור עצמו. חישוב אחוזים ידני נשבר ב-RTL.
   const moveRail = (track, wrap, btn) => {
-    if (!btn) return;
+    if (!btn || !track || !wrap) return;
     const t = wrap.getBoundingClientRect(), b = btn.getBoundingClientRect();
     track.style.width = b.width + 'px';
     track.style.insetInlineStart = (document.dir === 'rtl' ? t.right - b.right : b.left - t.left) + 'px';
   };
 
   // ציר הפרופיל. מופיע רק אם לדגם יש יותר מפרופיל אחד.
-  const profs = [...new Set(m.renders.map(r => r.profile))].filter(x => x && x !== '—');
+  const profs = [...new Set(rends.map(r => r.profile))].filter(x => x && x !== '—');
   if (profs.length > 1) {
     $('#prof-wrap').style.display = '';
     $('#profs').innerHTML = profs.map((id, i) => {
@@ -315,13 +325,13 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const pr = (d.profiles || []).find(x => x.id === profs[i]);
     $('#pname').textContent = pr ? pr.name : profs[i];
     // הרנדר הראשון עם הפרופיל הזה
-    const n = m.renders.findIndex(r => r.profile === profs[i]);
+    const n = rends.findIndex(r => r.profile === profs[i]);
     if (n > -1) pick(n);
   };
 
   // סידור פנים: ציר שלישי. גיאומטריה, לא צבע — לכן תמונה נפרדת ולא וריאציה.
-  const lays = (m.layouts || []).map(id => d.layouts.options.find(o => o.id === id)).filter(Boolean);
-  const N = m.renders.length;
+  const lays = (m.layouts || []).map(id => ((d.layouts || {}).options || []).find(o => o.id === id)).filter(Boolean);
+  const N = rends.length;
   if (lays.length) {
     $('#shot').insertAdjacentHTML('beforeend', lays.map((l, i) =>
       `<img id="v${N + i}" src="${l.image}" alt="${l.name}" loading="lazy">`).join(''));
@@ -352,21 +362,22 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   };
 
   const pick = i => {
-    const f = fin(m.renders[i].finish);
+    if (!rends.length || !rends[i]) return;
+    const f = fin(rends[i].finish);
     showOnly(i);
     document.querySelectorAll('.sw, .tb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
     moveRail($('#slider'), $('#sws'), document.querySelector(`.sw[data-i="${i}"]`));
     $('#fname').textContent = f.name;
     $('#flbl').textContent = m.category === 'bed' ? 'חזית ראש המיטה'
                            : m.category === 'mattress' ? 'דגם'
-                           : (m.identity && m.identity.door_count) ? 'גימור דלתות' : 'גימור';
+                           : idn.door_count ? 'גימור דלתות' : 'גימור';
     $('#see').href = `/viz/?model=${m.id}&finish=${f.id}`;
     $('#crumb-cat').textContent = m.line;
     $('#crumb-cat').href = `/category.html?line=${m.line_id}`;
     $('#wa').href = `https://wa.me/972524400030?text=` +
       encodeURIComponent(`היי, מתעניין ב${m.name} · ${f.name}${f.code ? ` (${f.code})` : ''}. אפשר פרטים?`);
     if (profs.length > 1) {
-      const pi = profs.indexOf(m.renders[i].profile);
+      const pi = profs.indexOf(rends[i].profile);
       if (pi > -1) {
         document.querySelectorAll('.sw[data-p]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.p === pi));
         moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-p="${pi}"]`));
@@ -457,7 +468,9 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   });
 
   const wf = new URLSearchParams(location.search).get('finish');
-  pick(Math.max(0, m.renders.findIndex(r => r.finish === wf)));
+  pick(Math.max(0, rends.findIndex(r => r.finish === wf)));
+}).catch(err => {
+  console.error('catalog load / render error:', err);
 });
 </script>
 </body>

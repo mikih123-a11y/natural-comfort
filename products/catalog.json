@@ -226,7 +226,7 @@
     {
       "id": "opal-2dl-tv-160",
       "name": "אופל TV · 2 דלתות הזזה",
-      "line": "ארונות הזזה",
+      "line": "ארונות טלוויזיה",
       "price": 3990,
       "price_note": "placeholder — למלא",
       "dims": {
@@ -297,7 +297,7 @@
         "8005",
         "464"
       ],
-      "line_id": "hazaza",
+      "line_id": "tv",
       "size": 1.6,
       "family": "אופל"
     },
@@ -2226,8 +2226,8 @@
       "lines": [
         "hazaza",
         "bgadim",
-        "meshulavim",
-        "tv"
+        "tv",
+        "meshulavim"
       ]
     },
     {

@@ -464,7 +464,6 @@
         "h": 245,
         "d": 30
       },
-      "_todo_dims": "⚠ עומק 30 ס״מ — לאמת. שאר ספריות הקודש 40–45.",
       "lead_time_days": 21,
       "identity": {
         "door_count": 6,
@@ -480,7 +479,8 @@
         "גוף סנדוויץ׳ פורמייקה",
         "מדפי MDF בעובי 28 מ״מ",
         "ידיות מעוצבות · ניתן לבחור דגם",
-        "קרניז מוגבה · רגליות אלומיניום"
+        "קרניז מוגבה · רגליות אלומיניום",
+        "עומק עליון 30 ס״מ"
       ],
       "finishes": [
         "shamenet",
@@ -514,6 +514,84 @@
           "profile": "—",
           "image": "/products/kodesh-6dl-eliyahu-mevuka.jpg",
           "thumb": "/products/thumbs/kodesh-6dl-eliyahu-mevuka.jpg"
+        }
+      ]
+    },
+    {
+      "id": "kodesh-5dl-tveria",
+      "name": "ספריית קודש 5 דלתות · דגם טבריה",
+      "line": "ספריות קודש",
+      "line_id": "kodesh",
+      "family": "ספריות קודש",
+      "size": 5,
+      "category": "bookshelf",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": true,
+      "price": null,
+      "price_note": "מחיר לפי מידה",
+      "_todo_price": "⚠ מיקי לא מסר מחיר",
+      "dims": {
+        "w": 200,
+        "h": 245,
+        "d": 30
+      },
+      "lead_time_days": 21,
+      "identity": {
+        "door_count": 5,
+        "door_type": "hinged",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "glass_doors": true,
+        "_desc": "ויטרינה עליונה · 5 דלתות · בסיס מזנון על במה רחבה"
+      },
+      "features": [
+        "5 דלתות עץ מלא",
+        "בסיס מזנון על במה רחבה",
+        "גוף סנדוויץ׳ בציפוי פורמייקה",
+        "מדפי MDF בעובי 28 מ״מ",
+        "ידיות מעוצבות בעיצוב קלאסי",
+        "חלק עליון 160.5 ס״מ · מזנון תחתון 83.5 ס״מ",
+        "עומק עליון 30 ס״מ · עומק מזנון 40 ס״מ"
+      ],
+      "finishes": [
+        "shamenet",
+        "5180",
+        "mulban",
+        "mevuka",
+        "7903",
+        "7904"
+      ],
+      "renders": [
+        {
+          "finish": "shamenet",
+          "profile": "—",
+          "image": "/products/kodesh-5dl-tveria-shamenet.jpg",
+          "thumb": "/products/thumbs/kodesh-5dl-tveria-shamenet.jpg"
+        },
+        {
+          "finish": "5180",
+          "profile": "—",
+          "image": "/products/kodesh-5dl-tveria-5180.jpg",
+          "thumb": "/products/thumbs/kodesh-5dl-tveria-5180.jpg"
+        },
+        {
+          "finish": "7903",
+          "profile": "—",
+          "image": "/products/kodesh-5dl-tveria-7903.jpg",
+          "thumb": "/products/thumbs/kodesh-5dl-tveria-7903.jpg"
+        },
+        {
+          "finish": "7904",
+          "profile": "—",
+          "image": "/products/kodesh-5dl-tveria-7904.jpg",
+          "thumb": "/products/thumbs/kodesh-5dl-tveria-7904.jpg"
+        },
+        {
+          "finish": "mevuka",
+          "profile": "—",
+          "image": "/products/kodesh-5dl-tveria-mevuka.jpg",
+          "thumb": "/products/thumbs/kodesh-5dl-tveria-mevuka.jpg"
         }
       ]
     },

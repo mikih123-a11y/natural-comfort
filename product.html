@@ -94,8 +94,6 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .sw[aria-pressed=true] i{transform:scale(1.14);border-color:var(--champagne)}
 .sw[aria-pressed=true] span{color:var(--ink);font-weight:600}
 .sw:hover i{transform:scale(1.07)}
-.sw[disabled]{opacity:.28;cursor:not-allowed}
-.sw[disabled]:hover i{transform:none}
 .code{font-size:11px;color:var(--champagne-lt);font-weight:300}
 .lays{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
 .lay{border:1px solid var(--line);background:#fff;padding:6px;text-align:center;transition:.18s var(--ease)}
@@ -306,7 +304,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     if (constrPct) bits.push(`${constrName} · +${Math.round(constrPct * 100)}%`);
     if (addons) bits.push(`תוספות ₪${addons}`);
     if (m.price) {
-      const p = Math.round(m.price * (1 + pct) / 10) * 10 + addons;
+      const p = (pct ? Math.round(m.price * (1 + pct) / 10) * 10 : m.price) + addons;
       $('#price').innerHTML = nis(p) + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>כולל מע״מ</small>');
     } else {
       $('#price').innerHTML = '<span style="font-size:.62em">מחיר לפי התאמה</span>' + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>דברו איתנו</small>');
@@ -437,11 +435,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
 
     if (hasAcc) {
       const pr = acc(curA);
-      document.querySelectorAll('.sw[data-a]').forEach(b => {
-        b.setAttribute('aria-pressed', b.dataset.a === curA);
-        // שילוב שלא קיים בגוף הנבחר — מכבים אותו במקום לזרוק את הלקוח לגוף אחר
-        b.disabled = rIndex(curF, b.dataset.a) === -1;
-      });
+      document.querySelectorAll('.sw[data-a]').forEach(b =>
+        b.setAttribute('aria-pressed', b.dataset.a === curA));
       moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-a="${curA}"]`));
       $('#pname').textContent = pr.name;
     }
@@ -544,7 +539,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const axi = e.target.closest('.ax-img');
     if (axi) { openLb(axi.src, axi.alt); return; }
     const pb = e.target.closest('.sw[data-a]');
-    if (pb) return pb.disabled ? null : pickAcc(pb.dataset.a);
+    if (pb) return pickAcc(pb.dataset.a);
     const fb = e.target.closest('.sw[data-f]');
     if (fb) return pickFinish(fb.dataset.f);
     const b = e.target.closest('.tb');

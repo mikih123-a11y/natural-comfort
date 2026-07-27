@@ -1716,13 +1716,10 @@
         "id": "L2B",
         "name": "מגירות פנימיות",
         "doors": 2,
-        "desc": "יחידת מגירות פנימית (זוג)",
+        "desc": "יחידת מגירות פנימית (זוג) · תוספת בתשלום למטה",
         "image": "/products/layout-2dl-shelves-drawers.jpg",
         "thumb": "/products/thumbs/layout-2dl-shelves-drawers.jpg",
-        "height": 240,
-        "paid": true,
-        "price_note": "זוג מגירות: רגילות ₪400 · טריקה שקטה ₪500",
-        "price": 400
+        "height": 240
       },
       {
         "id": "L3A",
@@ -1985,14 +1982,19 @@
       {
         "id": "drawers",
         "name": "זוג מגירות פנימיות",
-        "desc": "מגירות רגילות",
-        "price": 400
-      },
-      {
-        "id": "drawers-soft",
-        "name": "זוג מגירות · טריקה שקטה",
-        "desc": "מגירות עם מנגנון טריקה שקטה",
-        "price": 500
+        "desc": "יחידת מגירות בתוך הארון · לבחירה רגילות או טריקה שקטה",
+        "ui": "addon",
+        "image": "/products/thumbs/layout-2dl-shelves-drawers.jpg",
+        "variants": [
+          {
+            "name": "רגילות",
+            "price": 400
+          },
+          {
+            "name": "טריקה שקטה",
+            "price": 500
+          }
+        ]
       },
       {
         "id": "alu-edge",

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>אופל · 2 דלתות הזזה · Natural Comfort</title>
-<meta name="description" content="ארון הזזה אופל, 2 דלתות, 160×240 ס״מ. שמנת, אלון או שיש שחור. נבנה למידות הקיר שלכם.">
+<title>Natural Comfort — ריהוט בהתאמה אישית</title>
+<meta name="description" content="ריהוט בהתאמה אישית. נבנה למידות שלכם.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
@@ -271,6 +271,13 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     .filter(g => d.models.some(x => groupOf(x) === g.id))
     .map(g => `<a href="/category.html?group=${g.id}"${g.id === myGroup ? ' aria-current="page"' : ''}>${g.name}</a>`)
     .join('');
+
+  // כותרת ותיאור לכל מוצר. אם מולאו ידנית ב-seo בקטלוג — הם גוברים.
+  const seo = m.seo || {};
+  document.title = seo.title || `${m.name} · ${m.line} · Natural Comfort`;
+  const md = document.querySelector('meta[name="description"]');
+  if (md) md.setAttribute('content', seo.description ||
+    `${m.name} · ${m.line} · ${dm(m)} · נבנה בהתאמה אישית למידות שלכם.`);
 
   $('#crumb-name').textContent = m.name;
   $('#line').textContent = m.line;

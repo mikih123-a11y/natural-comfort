@@ -628,8 +628,8 @@
     {
       "id": "desk-160",
       "name": "ארון שולחן · 160",
-      "line": "ארונות הזזה",
-      "line_id": "hazaza",
+      "line": "ארונות משולבים · ספרייה",
+      "line_id": "meshulavim",
       "size": 1.6,
       "price": 4990,
       "price_note": "placeholder",
@@ -1290,8 +1290,8 @@
       ]
     },
     {
-      "line": "מיטות קומותיים",
-      "line_id": "mitot-komotayim",
+      "line": "מיטות ילדים",
+      "line_id": "mitot-yeladim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -1347,8 +1347,8 @@
       ]
     },
     {
-      "line": "מיטות קומותיים",
-      "line_id": "mitot-komotayim",
+      "line": "מיטות ילדים",
+      "line_id": "mitot-yeladim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -1390,8 +1390,8 @@
       ]
     },
     {
-      "line": "מיטות קומותיים",
-      "line_id": "mitot-komotayim",
+      "line": "מיטות ילדים",
+      "line_id": "mitot-yeladim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -2113,7 +2113,7 @@
       "group": "aronot"
     },
     "bgadim": {
-      "name": "ארונות בגדים",
+      "name": "ארונות דלתות פתיחה",
       "slug": "ארונות-בגדים",
       "size_axis": "width_m",
       "size_label": "{n} מ׳",
@@ -2127,7 +2127,7 @@
       "group": "aronot"
     },
     "meshulavim": {
-      "name": "ארונות משולבים",
+      "name": "ארונות משולבים · ספרייה",
       "slug": "ארונות-משולבים",
       "size_axis": "width_m",
       "size_label": "{n} מ׳",
@@ -2163,14 +2163,6 @@
     "mitot-yeladim": {
       "name": "מיטות ילדים",
       "slug": "מיטות-לילדים",
-      "size_axis": "width_cm",
-      "size_label": "{n} ס״מ",
-      "default_placement": "floor_center",
-      "group": "mitot"
-    },
-    "mitot-komotayim": {
-      "name": "מיטות קומותיים",
-      "slug": "מיטות-קומותיים",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
@@ -2234,8 +2226,8 @@
       "lines": [
         "hazaza",
         "bgadim",
-        "tv",
-        "meshulavim"
+        "meshulavim",
+        "tv"
       ]
     },
     {
@@ -2260,7 +2252,6 @@
       "slug": "מיטות",
       "lines": [
         "mitot-yeladim",
-        "mitot-komotayim",
         "mitot-vahetzi",
         "mitot-zugiyot",
         "mitot-hafrada"

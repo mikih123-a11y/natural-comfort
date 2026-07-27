@@ -120,6 +120,12 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .ax-colors{display:flex;gap:8px;margin:8px 0 2px;padding-inline-start:66px}
 .ax-col{border:1px solid var(--line);background:#fff;padding:6px 14px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
 .ax-col.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.ax-vars{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 2px;padding-inline-start:66px}
+.ax-var{border:1px solid var(--line);background:#fff;padding:7px 14px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.ax-var b{font-weight:600}
+.ax-var em{font-style:normal;color:var(--ink-soft);font-weight:400;margin-inline-start:6px}
+.ax-var.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.ax-var.on em{color:var(--panel)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
 .chip{border:1px solid var(--line);background:#fff;padding:9px 18px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:.15s var(--ease)}
 .chip:hover{background:var(--panel2,#f6f3ee)}
@@ -276,6 +282,14 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   let addons = 0;                                   // flat paid add-ons (₪)
   let constrPct = 0, constrName = '';               // construction surcharge (%)
   const surPct = h => h > 240 ? 0.40 : 0;                 // כל הגבהה מעל 2.40 = +40%
+  // סוכמים מחדש מהמסך — תוספת עם כמה אפשרויות מחיר לא יכולה להיתקע על סכום ישן
+  const recalcAddons = () => {
+    addons = 0;
+    document.querySelectorAll('.ax-toggle[aria-pressed="true"]').forEach(t => {
+      const v = t.closest('.addon').querySelector('.ax-var.on');
+      addons += v ? +v.dataset.price : +t.dataset.price;
+    });
+  };
   const renderPrice = () => {
     const hpct = surPct(curH), pct = hpct + constrPct;    // אחוזים מצטברים על מחיר הבסיס
     const bits = [];
@@ -433,11 +447,13 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       <div class="addon">
         <div class="ax-row">
           ${o.image ? `<img class="ax-img" src="${o.image}" alt="${o.name}" title="לחצו להגדלה" onerror="this.remove()">` : ''}
-          <button class="ax-toggle" data-price="${o.price}" data-id="${o.id}" aria-pressed="false">
-            <span class="ax-check"></span><span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.price}</span>
+          <button class="ax-toggle" data-price="${o.variants ? o.variants[0].price : o.price}" data-id="${o.id}" aria-pressed="false">
+            <span class="ax-check"></span><span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.variants ? o.variants[0].price : o.price}</span>
           </button>
         </div>
         ${o.desc ? `<div class="ax-desc">${o.desc}</div>` : ''}
+        ${o.variants ? `<div class="ax-vars">${o.variants.map((v, vi) =>
+          `<button class="ax-var${vi ? '' : ' on'}" data-price="${v.price}"><b>${v.name}</b><em>₪${v.price}</em></button>`).join('')}</div>` : ''}
         ${o.colors ? `<div class="ax-colors" hidden>${o.colors.map((c, ci) =>
           `<button class="ax-col${ci ? '' : ' on'}" data-c="${c}" data-img="${(o.color_images || {})[c] || ''}">${c}</button>`).join('')}</div>` : ''}
       </div>`).join('');
@@ -473,9 +489,19 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     if (ax) {
       const on = ax.getAttribute('aria-pressed') === 'true';
       ax.setAttribute('aria-pressed', String(!on));
-      addons += on ? -(+ax.dataset.price) : (+ax.dataset.price);
-      const cols = ax.parentElement.querySelector('.ax-colors');
+      const wrap = ax.closest('.addon');
+      const cols = wrap.querySelector('.ax-colors');
       if (cols) cols.hidden = on;
+      recalcAddons();
+      renderPrice();
+      return;
+    }
+    const av = e.target.closest('.ax-var');
+    if (av) {
+      av.parentElement.querySelectorAll('.ax-var').forEach(b => b.classList.toggle('on', b === av));
+      const wrap = av.closest('.addon');
+      wrap.querySelector('.ax-price').textContent = '+₪' + av.dataset.price;
+      recalcAddons();
       renderPrice();
       return;
     }

@@ -2342,28 +2342,31 @@
     ]
   },
   "gallery": {
-    "_note": "עבודות שבוצעו אצל לקוחות. הדגמה בלבד — בלי מחיר ובלי קישור למוצר. ההזמנה תמיד מהקטלוג.",
+    "_note": "עבודות שבוצעו אצל לקוחות. מוצגות בעמוד הגלריה, וגם בתחתית דף המוצר של הדגם שב-model. בלי מחיר ובלי כפתור הזמנה.",
     "items": [
       {
         "id": "g-beton-bahir",
         "finish": "בטון בהיר",
         "caption": "ארון משולב עם שולחן ומדפים",
         "image": "/products/gallery-beton-bahir.jpg",
-        "thumb": "/products/thumbs/gallery-beton-bahir.jpg"
+        "thumb": "/products/thumbs/gallery-beton-bahir.jpg",
+        "model": "desk-160"
       },
       {
         "id": "g-shish-bahir",
         "finish": "שיש בהיר",
         "caption": "ארון משולב עם שולחן ומדפים",
         "image": "/products/gallery-shish-bahir.jpg",
-        "thumb": "/products/thumbs/gallery-shish-bahir.jpg"
+        "thumb": "/products/thumbs/gallery-shish-bahir.jpg",
+        "model": "desk-160"
       },
       {
         "id": "g-alon-mevuka",
         "finish": "אלון מבוקע",
-        "caption": "ארון משולב · תקריב גימור",
+        "caption": "ארון משולב עם שולחן ומדפים",
         "image": "/products/gallery-alon-mevuka.jpg",
-        "thumb": "/products/thumbs/gallery-alon-mevuka.jpg"
+        "thumb": "/products/thumbs/gallery-alon-mevuka.jpg",
+        "model": "desk-160"
       }
     ]
   }

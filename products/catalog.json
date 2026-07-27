@@ -1004,7 +1004,7 @@
     {
       "id": "nira-120",
       "name": "מיטת נירה · 120",
-      "line": "מיטות וחצי",
+      "line": "מיטות נוער · מיטה וחצי",
       "line_id": "mitot-vahetzi",
       "family": "נירה",
       "size": 120,
@@ -1108,7 +1108,7 @@
       ]
     },
     {
-      "line": "מיטות וחצי",
+      "line": "מיטות נוער · מיטה וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1150,7 +1150,7 @@
       ]
     },
     {
-      "line": "מיטות וחצי",
+      "line": "מיטות נוער · מיטה וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1199,7 +1199,7 @@
       ]
     },
     {
-      "line": "מיטות וחצי",
+      "line": "מיטות נוער · מיטה וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1241,7 +1241,7 @@
       ]
     },
     {
-      "line": "מיטות וחצי",
+      "line": "מיטות נוער · מיטה וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1788,7 +1788,7 @@
     {
       "id": "bed-fingers-hafrada",
       "name": "מיטת הפרדה · פינגרס",
-      "line": "מיטות הפרדה",
+      "line": "מיטות לדתיים · בהפרדה",
       "line_id": "mitot-hafrada",
       "family": "פינגרס",
       "size": 160,
@@ -1847,7 +1847,7 @@
     {
       "id": "mita-opal",
       "name": "מיטת ילדים · דגם אופל",
-      "line": "מיטות לילדים",
+      "line": "מיטות ילדים",
       "line_id": "mitot-yeladim",
       "family": "מיטות ילדים",
       "size": 90,
@@ -2142,7 +2142,7 @@
       "group": "mitot"
     },
     "mitot-hafrada": {
-      "name": "מיטות הפרדה",
+      "name": "מיטות לדתיים · בהפרדה",
       "slug": "מיטות-הפרדה",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
@@ -2150,7 +2150,7 @@
       "group": "mitot"
     },
     "mitot-vahetzi": {
-      "name": "מיטות וחצי",
+      "name": "מיטות נוער · מיטה וחצי",
       "slug": "מיטות-וחצי",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
@@ -2161,7 +2161,7 @@
       ]
     },
     "mitot-yeladim": {
-      "name": "מיטות לילדים",
+      "name": "מיטות ילדים",
       "slug": "מיטות-לילדים",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
@@ -2259,10 +2259,10 @@
       "name": "מיטות",
       "slug": "מיטות",
       "lines": [
-        "mitot-zugiyot",
-        "mitot-vahetzi",
         "mitot-yeladim",
         "mitot-komotayim",
+        "mitot-vahetzi",
+        "mitot-zugiyot",
         "mitot-hafrada"
       ]
     },

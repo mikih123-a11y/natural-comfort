@@ -446,6 +446,78 @@
       "family": "ספריות קודש"
     },
     {
+      "id": "kodesh-6dl-eliyahu",
+      "name": "ספריית קודש 6 דלתות · דגם אליהו",
+      "line": "ספריות קודש",
+      "line_id": "kodesh",
+      "family": "ספריות קודש",
+      "size": 6,
+      "category": "bookshelf",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": true,
+      "price": null,
+      "price_note": "מחיר לפי מידה",
+      "_todo_price": "⚠ מיקי לא מסר מחיר",
+      "dims": {
+        "w": 240,
+        "h": 245,
+        "d": 30
+      },
+      "_todo_dims": "⚠ עומק 30 ס״מ — לאמת. שאר ספריות הקודש 40–45.",
+      "lead_time_days": 21,
+      "identity": {
+        "door_count": 6,
+        "door_type": "hinged",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "glass_doors": true,
+        "_desc": "ויטרינה עליונה 6 דלתות זכוכית · בסיס 4 תאי אחסון עם זוגות דלתות פתיחה + 3 מגירות מרכזיות"
+      },
+      "features": [
+        "ויטרינה עליונה · 6 דלתות זכוכית",
+        "בסיס · 4 תאי אחסון + 3 מגירות",
+        "גוף סנדוויץ׳ פורמייקה",
+        "מדפי MDF בעובי 28 מ״מ",
+        "ידיות מעוצבות · ניתן לבחור דגם",
+        "קרניז מוגבה · רגליות אלומיניום"
+      ],
+      "finishes": [
+        "shamenet",
+        "5180",
+        "shahor",
+        "mevuka",
+        "7903",
+        "7904"
+      ],
+      "renders": [
+        {
+          "finish": "shamenet",
+          "profile": "—",
+          "image": "/products/kodesh-6dl-eliyahu-shamenet.jpg",
+          "thumb": "/products/thumbs/kodesh-6dl-eliyahu-shamenet.jpg"
+        },
+        {
+          "finish": "7903",
+          "profile": "—",
+          "image": "/products/kodesh-6dl-eliyahu-7903.jpg",
+          "thumb": "/products/thumbs/kodesh-6dl-eliyahu-7903.jpg"
+        },
+        {
+          "finish": "7904",
+          "profile": "—",
+          "image": "/products/kodesh-6dl-eliyahu-7904.jpg",
+          "thumb": "/products/thumbs/kodesh-6dl-eliyahu-7904.jpg"
+        },
+        {
+          "finish": "mevuka",
+          "profile": "—",
+          "image": "/products/kodesh-6dl-eliyahu-mevuka.jpg",
+          "thumb": "/products/thumbs/kodesh-6dl-eliyahu-mevuka.jpg"
+        }
+      ]
+    },
+    {
       "id": "desk-160",
       "name": "ארון שולחן · 160",
       "line": "ארונות הזזה",

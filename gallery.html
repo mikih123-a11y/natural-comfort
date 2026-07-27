@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>גלריית עבודות · Natural Comfort</title>
+<meta name="description" content="עבודות שביצענו אצל לקוחות. גימורים אמיתיים בתאורה של בית.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/premium-inner.css">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4; --champagne:#A79A88; --champagne-lt:#C9BFAE;
+  --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F; --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif; --body:"Assistant",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--oak);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+.top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.top .brand,.top .tel{flex:none}
+.brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
+.brand span{color:var(--champagne);font-weight:400}
+.nav{display:flex;flex-wrap:nowrap;gap:18px;font-size:13.5px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
+.nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
+.nav a:hover,.nav a[aria-current]{color:var(--ink)}
+.nav a:hover::after,.nav a[aria-current]::after{width:100%}
+.tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
+.tel:hover{background:#000}
+.tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
+@media(max-width:900px){.nav{display:none}}
+
+.crumb{font-size:13px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
+.crumb a:hover{color:var(--ink)}
+.crumb i{font-style:normal;margin:0 8px;color:var(--champagne-lt)}
+
+.head{padding:24px 0 8px;max-width:620px}
+.kicker{font-size:11.5px;letter-spacing:.16em;color:var(--champagne);font-weight:600}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.024em;margin-top:10px}
+.head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:400}
+
+.filt{margin:34px 0 30px;display:flex;gap:8px;flex-wrap:wrap}
+.fx{padding:9px 20px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;transition:.15s var(--ease);white-space:nowrap}
+.fx:hover{border-color:var(--champagne-lt)}
+.fx[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding-bottom:70px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);background:#fff;overflow:hidden;text-align:start;width:100%;transition:.25s var(--ease)}
+.card:hover{border-color:var(--champagne-lt);transform:translateY(-3px)}
+.card .ph{aspect-ratio:3/4;overflow:hidden;background:var(--panel);position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.card:hover .ph img{transform:scale(1.03)}
+.card .zoom{position:absolute;bottom:12px;inset-inline-end:12px;background:rgba(33,31,29,.72);color:#fff;font-size:11px;font-weight:600;padding:5px 10px}
+.card .b{padding:16px 18px 18px;border-top:1px solid var(--line)}
+.card b{display:block;font-family:var(--display);font-size:17px;font-weight:500}
+.card small{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:400;margin-top:3px}
+
+.note{border-top:1px solid var(--line);padding:26px 0 70px;font-size:13.5px;color:var(--ink-soft);font-weight:400;max-width:680px}
+.note a{color:var(--oak);text-decoration:underline}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink-soft)}
+
+.lb{position:fixed;inset:0;z-index:200;background:rgba(20,19,18,.94);display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:94vw;max-height:88vh;width:auto;height:auto;object-fit:contain}
+.lb-x{position:fixed;top:18px;inset-inline-end:22px;color:#fff;font-size:30px;line-height:1;font-weight:300;z-index:201;cursor:pointer}
+.lb-cap{position:fixed;bottom:22px;inset-inline:0;text-align:center;color:#EDE9E2;font-size:13.5px;z-index:201;pointer-events:none}
+
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-soft);font-weight:400}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fl{display:flex;gap:20px;flex-wrap:wrap}
+footer a:hover{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a href="/" class="brand">Natural<span>Comfort</span></a>
+  <nav class="nav" id="nav"></nav>
+  <a class="tel" href="tel:079-6622666">
+    <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    079-6622666
+  </a>
+</div></header>
+
+<main class="wrap">
+  <div class="crumb"><a href="/">בית</a><i>·</i><span>גלריית עבודות</span></div>
+
+  <div class="head">
+    <div class="kicker">Our work</div>
+    <h1>עבודות אצל לקוחות</h1>
+    <p>תמונות מהתקנות אמיתיות, בתאורה של בית. כאן רואים איך הגימור נראה בפועל — לא רנדר.</p>
+  </div>
+
+  <div class="filt" id="filt"></div>
+  <div class="grid" id="grid"></div>
+
+  <p class="note" id="note"></p>
+</main>
+
+<div class="lb" id="lb">
+  <span class="lb-x" id="lbx">&times;</span>
+  <img id="lbimg" src="" alt="">
+  <div class="lb-cap" id="lbcap"></div>
+</div>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div class="fl"><a href="/אודות/">אודות</a><a href="/תקנון/">תקנון</a><a href="/privacy.html">פרטיות</a><a href="/נגישות/">נגישות</a></div>
+</div></footer>
+
+<script>
+const $ = s => document.querySelector(s);
+
+fetch('/products/catalog.json').then(r => r.json()).then(d => {
+  // ניווט לפי עולמות פעילים, בדיוק כמו בשאר הדפים
+  const groupOf = m => ((d.lines || {})[m.line_id] || {}).group;
+  const live = (d.groups || []).filter(g => d.models.some(m => groupOf(m) === g.id));
+  $('#nav').innerHTML = live.map(g => `<a href="/category.html?group=${g.id}">${g.name}</a>`).join('')
+    + '<a href="/gallery.html" aria-current="page">גלריה</a>';
+
+  const items = ((d.gallery || {}).items) || [];
+  if (!items.length) {
+    $('#grid').innerHTML = '<div class="empty">בקרוב — תמונות מהתקנות אצל לקוחות.</div>';
+    return;
+  }
+
+  const finishes = [...new Set(items.map(i => i.finish).filter(Boolean))];
+  const opts = ['all', ...finishes];
+  $('#filt').innerHTML = opts.map((f, i) =>
+    `<button class="fx" data-f="${f}" aria-pressed="${!i}">${f === 'all' ? 'הכול' : f}</button>`).join('');
+
+  const card = it => `<button class="card" data-id="${it.id}">
+      <div class="ph"><img src="${it.thumb}" alt="${it.finish || ''} ${it.caption || ''}" loading="lazy">
+        <span class="zoom">לחצו להגדלה</span></div>
+      <div class="b"><b>${it.finish || ''}</b><small>${it.caption || ''}</small></div>
+    </button>`;
+
+  const show = f => {
+    document.querySelectorAll('.fx').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === f));
+    const list = f === 'all' ? items : items.filter(i => i.finish === f);
+    $('#grid').innerHTML = list.length ? list.map(card).join('')
+      : '<div class="empty">אין עדיין תמונה בגימור הזה.</div>';
+  };
+  show('all');
+
+  // גלריה להדגמה בלבד. אין מחיר ואין קישור למוצר — ההזמנה תמיד מהקטלוג.
+  $('#note').innerHTML = 'התמונות להדגמה בלבד. הגימורים, המידות והחלוקה הפנימית נקבעים בהתאמה אישית — '
+    + 'לבחירה ולהזמנה עברו ל<a href="/#shop">קטלוג הדגמים</a>.';
+
+  const openLb = it => {
+    $('#lbimg').src = it.image;
+    $('#lbimg').alt = `${it.finish || ''} ${it.caption || ''}`;
+    $('#lbcap').textContent = [it.finish, it.caption].filter(Boolean).join(' · ');
+    $('#lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeLb = () => { $('#lb').classList.remove('open'); document.body.style.overflow = ''; };
+
+  document.addEventListener('click', e => {
+    const f = e.target.closest('.fx');
+    if (f) return show(f.dataset.f);
+    const c = e.target.closest('.card');
+    if (c) { const it = items.find(x => x.id === c.dataset.id); if (it) openLb(it); return; }
+    if (e.target.closest('#lb')) closeLb();
+  });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+}).catch(err => {
+  console.error('gallery load error:', err);
+  document.querySelector('#grid').innerHTML = '<div class="empty">שגיאה בטעינת הגלריה.</div>';
+});
+</script>
+</body>
+</html>

@@ -178,8 +178,8 @@
   "profiles": [
     {
       "id": "shampa",
-      "name": "שמפניה",
-      "swatch": "#A79A88"
+      "name": "אלומיניום כסוף",
+      "swatch": "#C7C8CA"
     },
     {
       "id": "shahor",
@@ -213,7 +213,7 @@
         "door_count": 2,
         "door_type": "sliding",
         "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
+        "frame_color": "silver aluminium",
         "has_tv_niche": true,
         "tv_niche_position": "right door, middle band"
       },
@@ -547,7 +547,7 @@
         "door_count": 3,
         "door_type": "sliding",
         "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
+        "frame_color": "silver aluminium",
         "has_mirror": true,
         "_desc": "3 דלתות הזזה · מראה מלאה במרכז"
       },
@@ -603,7 +603,7 @@
       "identity": {
         "door_count": 3,
         "door_type": "sliding",
-        "frame_color": "champagne aluminium",
+        "frame_color": "silver aluminium",
         "has_mirror": true,
         "_desc": "3 דלתות הזזה · פס מראה בשליש הדלת"
       },
@@ -671,7 +671,7 @@
         "door_count": 4,
         "door_type": "sliding",
         "panel_seams_per_door": 3,
-        "frame_color": "champagne aluminium",
+        "frame_color": "silver aluminium",
         "_desc": "4 דלתות הזזה · גובה 270"
       },
       "features": [
@@ -1272,14 +1272,14 @@
         "door_count": 2,
         "door_type": "sliding",
         "panel_seams_per_door": 2,
-        "frame_color": "champagne aluminium",
+        "frame_color": "silver aluminium",
         "glass_doors": false,
-        "_desc": "ארון הזזה 2 דלתות. חזית בגימור אחיד עם 2 חריצי אלומיניום אופקיים, מסגרת שמפניה, גוף בגימור הדלת."
+        "_desc": "ארון הזזה 2 דלתות. חזית בגימור אחיד עם 2 חריצי אלומיניום אופקיים, מסגרת אלומיניום כסוף, גוף בגימור הדלת."
       },
       "features": [
         "2 דלתות הזזה",
         "2 חריצי אלומיניום",
-        "מסגרת שמפניה",
+        "מסגרת אלומיניום כסוף",
         "גוף בגימור הדלת",
         "אפשרות רגלי במה"
       ],

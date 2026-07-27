@@ -2003,7 +2003,8 @@
           "כסוף",
           "לבן"
         ],
-        "ui": "addon"
+        "ui": "addon",
+        "image": "/products/thumbs/addon-alu-edge.jpg"
       }
     ]
   },

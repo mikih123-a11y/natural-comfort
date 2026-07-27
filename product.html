@@ -60,8 +60,11 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .lb.open{display:flex}
 .lb img{max-width:96vw;max-height:92vh;width:auto;height:auto;object-fit:contain}
 .lb-x{position:fixed;top:18px;inset-inline-end:22px;color:#fff;font-size:30px;line-height:1;font-weight:300;z-index:201;cursor:pointer}
-.ax-img{width:44px;height:44px;object-fit:cover;border:1px solid var(--line);flex:none}
-.ax-desc{font-size:12px;color:var(--ink-soft);font-weight:400;padding-inline-start:31px;margin-top:2px}
+.ax-row{display:flex;gap:10px;align-items:stretch}
+.ax-row .ax-toggle{flex:1}
+.ax-img{width:56px;height:56px;object-fit:cover;border:1px solid var(--line);flex:none;cursor:zoom-in;background:#fff;transition:.15s}
+.ax-img:hover{border-color:var(--champagne)}
+.ax-desc{font-size:12px;color:var(--ink-soft);font-weight:400;padding-inline-start:66px;margin-top:3px}
 .tag{position:absolute;top:14px;inset-inline-start:14px;background:var(--panel);color:var(--ink-soft);font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 11px;z-index:2}
 .thumbs{display:flex;gap:10px;margin-top:12px}
 .tb{width:76px;height:60px;border:1px solid var(--line);background:#fff;padding:3px;transition:.15s}
@@ -114,7 +117,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .ax-toggle[aria-pressed=true] .ax-check::after{content:"";position:absolute;inset-inline-start:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .ax-name{flex:1;font-weight:600}
 .ax-price{color:var(--ink-mute);font-size:13px;font-weight:600}
-.ax-colors{display:flex;gap:8px;margin:8px 0 2px;padding-inline-start:31px}
+.ax-colors{display:flex;gap:8px;margin:8px 0 2px;padding-inline-start:66px}
 .ax-col{border:1px solid var(--line);background:#fff;padding:6px 14px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
 .ax-col.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
 .chips{display:flex;flex-wrap:wrap;gap:9px}
@@ -428,12 +431,15 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     $('#addon-wrap').style.display = '';
     $('#addons').innerHTML = addonOpts.map(o => `
       <div class="addon">
-        <button class="ax-toggle" data-price="${o.price}" data-id="${o.id}" aria-pressed="false">
-          <span class="ax-check"></span>${o.image ? `<img class="ax-img" src="${o.image}" alt="" onerror="this.remove()">` : ''}<span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.price}</span>
-        </button>
+        <div class="ax-row">
+          ${o.image ? `<img class="ax-img" src="${o.image}" alt="${o.name}" title="לחצו להגדלה" onerror="this.remove()">` : ''}
+          <button class="ax-toggle" data-price="${o.price}" data-id="${o.id}" aria-pressed="false">
+            <span class="ax-check"></span><span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.price}</span>
+          </button>
+        </div>
         ${o.desc ? `<div class="ax-desc">${o.desc}</div>` : ''}
         ${o.colors ? `<div class="ax-colors" hidden>${o.colors.map((c, ci) =>
-          `<button class="ax-col${ci ? '' : ' on'}" data-c="${c}">${c}</button>`).join('')}</div>` : ''}
+          `<button class="ax-col${ci ? '' : ' on'}" data-c="${c}" data-img="${(o.color_images || {})[c] || ''}">${c}</button>`).join('')}</div>` : ''}
       </div>`).join('');
   }
 
@@ -474,7 +480,14 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       return;
     }
     const col = e.target.closest('.ax-col');
-    if (col) { col.parentElement.querySelectorAll('.ax-col').forEach(b => b.classList.toggle('on', b === col)); return; }
+    if (col) {
+      col.parentElement.querySelectorAll('.ax-col').forEach(b => b.classList.toggle('on', b === col));
+      const im = col.closest('.addon').querySelector('.ax-img');   // כסוף / לבן — תמונה לכל צבע
+      if (im && col.dataset.img) im.src = col.dataset.img;
+      return;
+    }
+    const axi = e.target.closest('.ax-img');
+    if (axi) { openLb(axi.src, axi.alt); return; }
     const pb = e.target.closest('.sw[data-p]');
     if (pb) return pickProf(+pb.dataset.p);
     const b = e.target.closest('.sw[data-i], .tb');
@@ -492,16 +505,19 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   });
 
   // הגדלה — לוחצים על התמונה הראשית ורואים אותה במסך מלא
-  const openLb = () => {
-    const cur = document.querySelector('.shot img.on');
-    if (!cur) return;
-    $('#lbimg').src = cur.src;
-    $('#lbimg').alt = cur.alt || '';
+  const openLb = (src, alt) => {
+    if (!src) {
+      const cur = document.querySelector('.shot img.on');
+      if (!cur) return;
+      src = cur.src; alt = cur.alt;
+    }
+    $('#lbimg').src = src;
+    $('#lbimg').alt = alt || '';
     $('#lb').classList.add('open');
     document.body.style.overflow = 'hidden';
   };
   const closeLb = () => { $('#lb').classList.remove('open'); document.body.style.overflow = ''; };
-  $('#shot').addEventListener('click', openLb);
+  $('#shot').addEventListener('click', () => openLb());
   $('#lb').addEventListener('click', closeLb);
   addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 

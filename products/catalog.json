@@ -541,9 +541,7 @@
         "sahara",
         "shish",
         "8003",
-        "8005",
-        "464",
-        "7904"
+        "464"
       ],
       "identity": {
         "door_count": 3,
@@ -577,7 +575,49 @@
           "profile": "shahor",
           "image": "/products/simple3-240-shahor.jpg",
           "thumb": "/products/thumbs/simple3-240-shahor.jpg"
-        },
+        }
+      ],
+      "family": "ארונות הזזה",
+      "layouts": [
+        "L3A",
+        "L3B"
+      ]
+    },
+    {
+      "id": "simple3-shlish-mirror",
+      "name": "סימפל · 3 דלתות הזזה · שליש מראה",
+      "line": "ארונות הזזה",
+      "line_id": "hazaza",
+      "family": "סימפל",
+      "size": 2.4,
+      "category": "wardrobe",
+      "placement": "against_wall",
+      "replaces": "wardrobe or cabinet",
+      "handles": false,
+      "price": null,
+      "price_note": "מחיר לפי מידה",
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_dims": "רוחב · גובה · עומק",
+      "_todo_price": "מחיר לאמת עם מיקי",
+      "identity": {
+        "door_count": 3,
+        "door_type": "sliding",
+        "frame_color": "champagne aluminium",
+        "has_mirror": true,
+        "_desc": "3 דלתות הזזה · פס מראה בשליש הדלת"
+      },
+      "features": [
+        "3 דלתות הזזה",
+        "פס מראה בשליש הדלת",
+        "מסילת אלומיניום",
+        "מנגנון טריקה שקטה"
+      ],
+      "finishes": [
+        "7904",
+        "8005"
+      ],
+      "renders": [
         {
           "finish": "7904",
           "profile": "shampa",
@@ -591,7 +631,6 @@
           "thumb": "/products/thumbs/simple3-240-8005.jpg"
         }
       ],
-      "family": "ארונות הזזה",
       "layouts": [
         "L3A",
         "L3B"

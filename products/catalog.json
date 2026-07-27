@@ -12,7 +12,7 @@
     },
     {
       "id": "lavan",
-      "name": "לבן מט",
+      "name": "לבן",
       "swatch": "#F7F8F3",
       "tier": 0
     },
@@ -24,8 +24,8 @@
     },
     {
       "id": "shamenet",
-      "name": "לבן",
-      "swatch": "#F4F2EE",
+      "name": "שמנת",
+      "swatch": "#EDE6D6",
       "tier": 0,
       "code": "3207"
     },
@@ -190,6 +190,36 @@
       "id": "lavan",
       "name": "לבן",
       "swatch": "#F2F0EC"
+    },
+    {
+      "id": "acc-none",
+      "name": "ללא שילוב",
+      "swatch": "#FFFFFF"
+    },
+    {
+      "id": "acc-blue",
+      "name": "כחול",
+      "swatch": "#496D9E"
+    },
+    {
+      "id": "acc-green",
+      "name": "ירוק",
+      "swatch": "#9EB553"
+    },
+    {
+      "id": "acc-red",
+      "name": "אדום",
+      "swatch": "#A82016"
+    },
+    {
+      "id": "acc-pink",
+      "name": "ורוד",
+      "swatch": "#CC928B"
+    },
+    {
+      "id": "acc-grey",
+      "name": "אפור",
+      "swatch": "#A5A5A7"
     }
   ],
   "models": [
@@ -1812,6 +1842,103 @@
       "gallery": [
         "/products/fingers-shahor-open.jpg",
         "/products/fingers-krem-open.jpg"
+      ]
+    },
+    {
+      "id": "mita-opal",
+      "name": "מיטת ילדים · דגם אופל",
+      "line": "מיטות לילדים",
+      "line_id": "mitot-yeladim",
+      "family": "מיטות ילדים",
+      "size": 90,
+      "category": "bed",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": false,
+      "price": 1699,
+      "lead_time_days": 21,
+      "dims": {
+        "w": 90,
+        "h": 76,
+        "d": 200
+      },
+      "axis1_label": "צבע גוף",
+      "axis2_label": "שילוב צבעים",
+      "identity": {
+        "door_type": "none",
+        "frame_color": "none",
+        "_desc": "מיטת ילדים עם מיטה נגררת על גלגלים, שתי מגירות אחסון ומגן בטיחות"
+      },
+      "features": [
+        "עץ אורן מלא בשילוב MDF · תו תקן ישראלי",
+        "מיטה נגררת תחתונה על גלגלים",
+        "שתי מגירות אחסון תחתונות",
+        "מגן בטיחות למניעת נפילה",
+        "זוג מזרני ספוג · 80×190, עובי 7 ס״מ · מתנה",
+        "מתאים למזרן 80×190 ס״מ"
+      ],
+      "addons": [
+        {
+          "id": "bed-90",
+          "name": "הרחבה ל-90×190 ס״מ",
+          "desc": "המיטה העליונה במידה מורחבת · כולל מזרן תואם",
+          "price": 250
+        }
+      ],
+      "finishes": [
+        "lavan",
+        "shamenet",
+        "shahor"
+      ],
+      "renders": [
+        {
+          "finish": "lavan",
+          "profile": "acc-none",
+          "image": "/products/mita-opal-lavan.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "acc-blue",
+          "image": "/products/mita-opal-lavan-blue.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan-blue.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "acc-green",
+          "image": "/products/mita-opal-lavan-green.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan-green.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "acc-red",
+          "image": "/products/mita-opal-lavan-red.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan-red.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "acc-pink",
+          "image": "/products/mita-opal-lavan-pink.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan-pink.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "acc-grey",
+          "image": "/products/mita-opal-lavan-grey.jpg",
+          "thumb": "/products/thumbs/mita-opal-lavan-grey.jpg"
+        },
+        {
+          "finish": "shamenet",
+          "profile": "acc-none",
+          "image": "/products/mita-opal-shamenet.jpg",
+          "thumb": "/products/thumbs/mita-opal-shamenet.jpg"
+        },
+        {
+          "finish": "shahor",
+          "profile": "acc-none",
+          "image": "/products/mita-opal-shahor.jpg",
+          "thumb": "/products/thumbs/mita-opal-shahor.jpg"
+        }
       ]
     }
   ],

@@ -2004,7 +2004,11 @@
           "לבן"
         ],
         "ui": "addon",
-        "image": "/products/thumbs/addon-alu-edge.jpg"
+        "image": "/products/thumbs/addon-alu-edge-silver.jpg",
+        "color_images": {
+          "כסוף": "/products/thumbs/addon-alu-edge-silver.jpg",
+          "לבן": "/products/thumbs/addon-alu-edge-white.jpg"
+        }
       }
     ]
   },

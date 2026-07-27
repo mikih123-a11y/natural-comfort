@@ -94,6 +94,8 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .sw[aria-pressed=true] i{transform:scale(1.14);border-color:var(--champagne)}
 .sw[aria-pressed=true] span{color:var(--ink);font-weight:600}
 .sw:hover i{transform:scale(1.07)}
+.sw[disabled]{opacity:.28;cursor:not-allowed}
+.sw[disabled]:hover i{transform:none}
 .code{font-size:11px;color:var(--champagne-lt);font-weight:300}
 .lays{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
 .lay{border:1px solid var(--line);background:#fff;padding:6px;text-align:center;transition:.18s var(--ease)}
@@ -193,7 +195,7 @@ footer a:hover{color:var(--ink)}
       </div>
 
       <div class="opt" id="prof-wrap" style="display:none">
-        <h2>צבע פרופיל<em id="pname">—</em></h2>
+        <h2><span id="plbl">צבע פרופיל</span><em id="pname">—</em></h2>
         <div class="track"><div class="slider" id="pslider"></div></div>
         <div class="sws" id="profs"></div>
       </div>
@@ -334,14 +336,22 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#thumbs').innerHTML = rends.map((r, i) =>
     `<button class="tb" data-i="${i}" aria-pressed="${!i}" aria-label="${fin(r.finish).name}"><img src="${r.thumb}" alt=""></button>`).join('');
 
-  $('#sws').innerHTML = rends.map((r, i) => {
-    const f = fin(r.finish);
-    return `<button class="sw" data-i="${i}" aria-pressed="${!i}">
+  // שני צירים: צבע גוף + שילוב צבעים. כל ציר מציג ערך אחד לכל אפשרות,
+  // גם כשיש כמה רנדרים שחולקים את אותו גוף.
+  const finList = [...new Set(rends.map(r => r.finish))];
+  const accList = [...new Set(rends.map(r => r.profile))].filter(x => x && x !== '—');
+  const hasAcc  = accList.length > 1;
+  const acc = id => (d.profiles || []).find(x => x.id === id) || { id, name: id, swatch: '#ccc' };
+  const rIndex = (f, a) => rends.findIndex(r => r.finish === f && (!hasAcc || r.profile === a));
+  let curF = rends[0].finish, curA = rends[0].profile;
+
+  $('#sws').innerHTML = finList.map((id, i) => {
+    const f = fin(id);
+    return `<button class="sw" data-f="${id}" aria-pressed="${!i}">
       <i style="background:${f.swatch}"></i><span>${f.name}</span>${f.code && f.code !== '—' ? `<span class="code">${f.code}</span>` : ''}</button>`;
   }).join('');
 
-  // אין גימורים בקטלוג — מסתירים את הבורר במקום להשאיר אזור ריק
-  if (rends.length < 2) $('#fin-wrap').style.display = 'none';
+  if (finList.length < 2) $('#fin-wrap').style.display = 'none';
 
   // מודדים את הכפתור עצמו. חישוב אחוזים ידני נשבר ב-RTL.
   const moveRail = (track, wrap, btn) => {
@@ -351,25 +361,26 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     track.style.insetInlineStart = (document.dir === 'rtl' ? t.right - b.right : b.left - t.left) + 'px';
   };
 
-  // ציר הפרופיל. מופיע רק אם לדגם יש יותר מפרופיל אחד.
-  const profs = [...new Set(rends.map(r => r.profile))].filter(x => x && x !== '—');
-  if (profs.length > 1) {
+  // ציר שני — פרופיל בארונות, שילוב צבעים במיטות. מופיע רק אם יש יותר מערך אחד.
+  if (hasAcc) {
     $('#prof-wrap').style.display = '';
-    $('#profs').innerHTML = profs.map((id, i) => {
-      const pr = (d.profiles || []).find(x => x.id === id) || { name: id, swatch: '#ccc' };
-      return `<button class="sw" data-p="${i}" aria-pressed="${!i}">
+    $('#plbl').textContent = m.axis2_label || 'צבע פרופיל';
+    $('#profs').innerHTML = accList.map((id, i) => {
+      const pr = acc(id);
+      return `<button class="sw" data-a="${id}" aria-pressed="${!i}">
         <i style="background:${pr.swatch}"></i><span>${pr.name}</span></button>`;
     }).join('');
   }
 
-  const pickProf = i => {
-    document.querySelectorAll('.sw[data-p]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.p === i));
-    moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-p="${i}"]`));
-    const pr = (d.profiles || []).find(x => x.id === profs[i]);
-    $('#pname').textContent = pr ? pr.name : profs[i];
-    // הרנדר הראשון עם הפרופיל הזה
-    const n = rends.findIndex(r => r.profile === profs[i]);
-    if (n > -1) pick(n);
+  // בוחרים גוף — שומרים על השילוב אם הוא קיים בגוף הזה
+  const pickFinish = f => {
+    const n = rIndex(f, curA);
+    pick(n > -1 ? n : rends.findIndex(r => r.finish === f));
+  };
+  // בוחרים שילוב — שומרים על הגוף אם הצירוף קיים
+  const pickAcc = a => {
+    const n = rIndex(curF, a);
+    pick(n > -1 ? n : rends.findIndex(r => r.profile === a));
   };
 
   // סידור פנים: ציר שלישי. גיאומטריה, לא צבע — לכן תמונה נפרדת ולא וריאציה.
@@ -410,28 +421,37 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
 
   const pick = i => {
     if (!rends.length || !rends[i]) return;
-    const f = fin(rends[i].finish);
+    curF = rends[i].finish; curA = rends[i].profile;
+    const f = fin(curF);
     showOnly(i);
-    document.querySelectorAll('.sw, .tb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
-    moveRail($('#slider'), $('#sws'), document.querySelector(`.sw[data-i="${i}"]`));
+
+    document.querySelectorAll('.tb').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+    document.querySelectorAll('.sw[data-f]').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === curF));
+    moveRail($('#slider'), $('#sws'), document.querySelector(`.sw[data-f="${curF}"]`));
+
     $('#fname').textContent = f.name;
-    $('#flbl').textContent = m.category === 'bed' ? 'חזית ראש המיטה'
+    $('#flbl').textContent = m.axis1_label
+                           || (m.category === 'bed' ? 'חזית ראש המיטה'
                            : m.category === 'mattress' ? 'דגם'
-                           : idn.door_count ? 'גימור דלתות' : 'גימור';
+                           : idn.door_count ? 'גימור דלתות' : 'גימור');
+
+    if (hasAcc) {
+      const pr = acc(curA);
+      document.querySelectorAll('.sw[data-a]').forEach(b => {
+        b.setAttribute('aria-pressed', b.dataset.a === curA);
+        // שילוב שלא קיים בגוף הנבחר — מכבים אותו במקום לזרוק את הלקוח לגוף אחר
+        b.disabled = rIndex(curF, b.dataset.a) === -1;
+      });
+      moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-a="${curA}"]`));
+      $('#pname').textContent = pr.name;
+    }
+
     $('#see').href = `/viz/?model=${m.id}&finish=${f.id}`;
     $('#crumb-cat').textContent = m.line;
     $('#crumb-cat').href = `/category.html?line=${m.line_id}`;
+    const accTxt = hasAcc ? ` · ${acc(curA).name}` : '';
     $('#wa').href = `https://wa.me/972524400030?text=` +
-      encodeURIComponent(`היי, מתעניין ב${m.name} · ${f.name}${f.code ? ` (${f.code})` : ''}. אפשר פרטים?`);
-    if (profs.length > 1) {
-      const pi = profs.indexOf(rends[i].profile);
-      if (pi > -1) {
-        document.querySelectorAll('.sw[data-p]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.p === pi));
-        moveRail($('#pslider'), $('#profs'), document.querySelector(`.sw[data-p="${pi}"]`));
-        const pr = (d.profiles || []).find(x => x.id === profs[pi]);
-        $('#pname').textContent = pr ? pr.name : profs[pi];
-      }
-    }
+      encodeURIComponent(`היי, מתעניין ב${m.name} · ${f.name}${f.code ? ` (${f.code})` : ''}${accTxt}. אפשר פרטים?`);
     history.replaceState(null, '', `?id=${m.id}&finish=${f.id}`);
   };
 
@@ -447,8 +467,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   }
 
   // תוספות בתשלום — נקראות מה-catalog (upgrades עם ui:addon)
-  const addonOpts = (((d.upgrades || {}).options) || []).filter(o => o.ui === 'addon');
-  if (addonOpts.length && (m.category === 'wardrobe' || m.line_id === 'hazaza')) {
+  const globalAddons = (m.category === 'wardrobe' || m.line_id === 'hazaza')
+    ? (((d.upgrades || {}).options) || []).filter(o => o.ui === 'addon') : [];
+  const addonOpts = [...globalAddons, ...(m.addons || [])];   // תוספות ספציפיות לדגם
+  if (addonOpts.length) {
     $('#addon-wrap').style.display = '';
     $('#addons').innerHTML = addonOpts.map(o => `
       <div class="addon">
@@ -521,9 +543,11 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     }
     const axi = e.target.closest('.ax-img');
     if (axi) { openLb(axi.src, axi.alt); return; }
-    const pb = e.target.closest('.sw[data-p]');
-    if (pb) return pickProf(+pb.dataset.p);
-    const b = e.target.closest('.sw[data-i], .tb');
+    const pb = e.target.closest('.sw[data-a]');
+    if (pb) return pb.disabled ? null : pickAcc(pb.dataset.a);
+    const fb = e.target.closest('.sw[data-f]');
+    if (fb) return pickFinish(fb.dataset.f);
+    const b = e.target.closest('.tb');
     if (b) return pick(+b.dataset.i);
     const l = e.target.closest('.lay');
     if (l) pickLay(+l.dataset.l);
@@ -532,9 +556,9 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
 
   // גימור מה-URL — קישור ישיר לצבע ספציפי
   addEventListener('resize', () => {
-    moveRail($('#slider'), $('#sws'), document.querySelector('.sw[data-i][aria-pressed="true"]'));
+    moveRail($('#slider'), $('#sws'), document.querySelector('.sw[data-f][aria-pressed="true"]'));
     if (lays.length) moveRail($('#lslider'), $('#lays'), document.querySelector('.lay[aria-pressed="true"]'));
-    if (profs.length > 1) moveRail($('#pslider'), $('#profs'), document.querySelector('.sw[data-p][aria-pressed="true"]'));
+    if (hasAcc) moveRail($('#pslider'), $('#profs'), document.querySelector('.sw[data-a][aria-pressed="true"]'));
   });
 
   // הגדלה — לוחצים על התמונה הראשית ורואים אותה במסך מלא

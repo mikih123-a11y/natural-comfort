@@ -84,6 +84,18 @@ table.tbl tr:hover td{background:#FCFBF9}
 .st-production{background:#FFF4D6;color:#7A5B00}
 .st-delivered{background:#E4F1E7;color:#2E6B41}
 .st-cancelled{background:#FAEDEA;color:#8C3323}
+#authGate{position:fixed;inset:0;background:var(--paper,#FBFAF8);z-index:999;
+  display:flex;align-items:center;justify-content:center;padding:24px}
+#authGate .bx{width:min(400px,100%);border:1px solid var(--line);background:#fff;padding:30px}
+#authGate h1{font-size:22px;margin:0 0 6px}
+#authGate p{color:var(--ink-mute);font-size:14px;margin:0 0 18px}
+#authGate input{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:4px;margin-bottom:10px}
+#authGate #ac{text-align:center;letter-spacing:.4em;font-size:22px;font-weight:700}
+#authGate button{width:100%;padding:13px;background:var(--ink,#1d2a25);color:#fff;border:0;
+  font:inherit;font-weight:600;cursor:pointer}
+#authGate .msg{font-size:13.5px;margin-top:12px;min-height:20px}
+#authGate .lnk{display:block;text-align:center;margin-top:12px;font-size:13px;
+  color:var(--ink-mute);text-decoration:underline;cursor:pointer}
 .st-received{background:#FBF0E4;color:#8A5B20}
 .st-paid{background:#EAF0EB;color:#3F6B4F}
 .st-ready{background:#E6EFF7;color:#25567F}
@@ -599,10 +611,32 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
   <div class="foot">
     <a href="/" target="_blank">האתר ↗</a>
     <a href="/viz/" target="_blank">ההדמיה ↗</a>
+    <a id="logout" style="cursor:pointer">יציאה</a>
   </div>
 </aside>
 
 </div><!-- /shell -->
+
+<div id="authGate">
+  <div class="bx">
+    <h1>מערכת ניהול</h1>
+    <p>Natural Comfort</p>
+
+    <div id="stepMail">
+      <input id="ae" type="email" inputmode="email" autocomplete="username" placeholder="כתובת המייל שלך" dir="ltr">
+      <button id="aSend">שליחת קוד</button>
+    </div>
+
+    <div id="stepCode" style="display:none">
+      <p id="sentTo">—</p>
+      <input id="ac" inputmode="numeric" maxlength="6" placeholder="000000" dir="ltr" autocomplete="one-time-code">
+      <button id="aGo">כניסה</button>
+      <span class="lnk" id="aBack">שליחה לכתובת אחרת</span>
+    </div>
+
+    <div class="msg" id="aMsg"></div>
+  </div>
+</div>
 
 <div class="drawer" id="odrawer"><div class="box">
   <div class="hd"><h2 id="odTitle">—</h2><button class="x" id="odX">&times;</button></div>
@@ -1205,13 +1239,91 @@ $('#dlViz').onclick=()=>{
   if(tok) tok.value = TOKEN;
 
   const api = async (params, opts) => {
-    if(!TOKEN) throw new Error('חסר טוקן. הגדירו אותו בלוח הבקרה.');
-    const q = new URLSearchParams({ ...params, token: TOKEN }).toString();
-    const r = await fetch('/api/admin?' + q, opts);
+    const p = { ...params };
+    if(TOKEN) p.token = TOKEN;                      // גיבוי, כשאין סשן
+    const q = new URLSearchParams(p).toString();
+    const r = await fetch('/api/admin?' + q, { credentials:'same-origin', ...(opts||{}) });
+    const d = await r.json().catch(()=>({}));
+    if(r.status === 401){ showGate(); throw new Error('נדרשת כניסה מחדש.'); }
+    if(!r.ok) throw new Error(d.error || ('שגיאה ' + r.status));
+    return d;
+  };
+
+  /* ==========================================================
+     כניסה — קוד חד-פעמי למייל
+     ========================================================== */
+  const gate = document.getElementById('authGate');
+  const aMsg = document.getElementById('aMsg');
+  const showGate = () => { gate.style.display = 'flex'; };
+  const hideGate = () => { gate.style.display = 'none'; };
+  const say = (t, bad) => { aMsg.innerHTML = t ? `<span class="badge ${bad?'bad':'good'}">${t}</span>` : ''; };
+
+  const post = async (url, body) => {
+    const r = await fetch(url, {
+      method:'POST', credentials:'same-origin',
+      headers:{'content-type':'application/json'},
+      body: JSON.stringify(body)
+    });
     const d = await r.json().catch(()=>({}));
     if(!r.ok) throw new Error(d.error || ('שגיאה ' + r.status));
     return d;
   };
+
+  let authEmail = '';
+  try{ authEmail = localStorage.getItem('nc_admin_email') || ''; }catch(e){}
+  const aeEl = document.getElementById('ae');
+  if(aeEl) aeEl.value = authEmail;
+
+  document.getElementById('aSend').onclick = async () => {
+    const v = (document.getElementById('ae').value||'').trim();
+    if(!v.includes('@')) return say('כתובת מייל לא תקינה.', true);
+    say('שולח…');
+    try{
+      const d = await post('/api/admin-login', { email: v });
+      authEmail = v;
+      try{ localStorage.setItem('nc_admin_email', v); }catch(e){}
+      document.getElementById('stepMail').style.display = 'none';
+      document.getElementById('stepCode').style.display = '';
+      document.getElementById('sentTo').textContent =
+        d.mail ? ('שלחנו קוד בן 6 ספרות ל-' + v) : 'הקוד נרשם ביומן הפונקציות בנטליפיי.';
+      say('');
+      document.getElementById('ac').focus();
+    }catch(e){ say(e.message, true); }
+  };
+
+  document.getElementById('aBack').onclick = () => {
+    document.getElementById('stepCode').style.display = 'none';
+    document.getElementById('stepMail').style.display = '';
+    say('');
+  };
+
+  const doVerify = async () => {
+    const code = (document.getElementById('ac').value||'').replace(/\D/g,'');
+    if(code.length !== 6) return say('צריך שש ספרות.', true);
+    say('בודק…');
+    try{
+      await post('/api/admin-verify', { email: authEmail, code });
+      hideGate();
+      say('');
+      document.getElementById('ac').value = '';
+      setTok();
+      const h = location.hash.replace('#','') || 'dash';
+      go(h);
+    }catch(e){ say(e.message, true); }
+  };
+  document.getElementById('aGo').onclick = doVerify;
+  document.getElementById('ac').addEventListener('keydown', e => { if(e.key==='Enter') doVerify(); });
+  document.getElementById('ae').addEventListener('keydown', e => {
+    if(e.key==='Enter') document.getElementById('aSend').click();
+  });
+
+  /* בדיקה בטעינה — אם יש סשן תקף, השער לא מוצג בכלל */
+  (async () => {
+    try{
+      const r = await fetch('/api/admin?type=session', { credentials:'same-origin' });
+      if(r.ok) hideGate(); else showGate();
+    }catch(e){ showGate(); }
+  })();
 
   const tokState = document.getElementById('tokState');
   const setTok = async () => {
@@ -1661,6 +1773,13 @@ $('#dlViz').onclick=()=>{
   const kgo = document.getElementById('kgo'); if(kgo) kgo.onclick = loadCosts;
   const kq  = document.getElementById('kq');
   if(kq) kq.addEventListener('input', () => { if(Object.keys(COSTS).length || cat()) paintCosts(); });
+
+  const lo = document.getElementById('logout');
+  if(lo) lo.onclick = async () => {
+    try{ await post('/api/admin-verify', { logout:true }); }catch(e){}
+    try{ localStorage.removeItem('nc_admin_token'); }catch(e){}
+    location.reload();
+  };
 
   /* מצייר ברגע שהקטלוג נטען */
   const tick = setInterval(() => {

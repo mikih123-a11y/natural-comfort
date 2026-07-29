@@ -303,6 +303,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <input type="date" id="ofrom" title="מתאריך">
     <input type="date" id="oto" title="עד תאריך">
     <button class="go" id="ogo">חיפוש</button>
+    <button class="go" id="oexp" style="background:#fff;color:var(--ink);border:1px solid var(--line)">ייצוא ל-CSV</button>
   </div></div>
 
   <div class="dash">
@@ -618,6 +619,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <a href="/" target="_blank">האתר ↗</a>
     <a href="/viz/" target="_blank">ההדמיה ↗</a>
     <a id="logout" style="cursor:pointer">יציאה</a>
+    <a id="logoutAll" style="cursor:pointer">ניתוק כל המכשירים</a>
   </div>
 </aside>
 
@@ -1402,6 +1404,19 @@ $('#dlViz').onclick=()=>{
     }
   }
   ['ogo'].forEach(id => { const b=document.getElementById(id); if(b) b.onclick = loadOrders; });
+
+  const oexp = document.getElementById('oexp');
+  if(oexp) oexp.onclick = () => {
+    const p = new URLSearchParams({
+      type:'export',
+      q:      document.getElementById('oq').value || '',
+      status: document.getElementById('ost').value || '',
+      from:   document.getElementById('ofrom').value || '',
+      to:     document.getElementById('oto').value || '',
+    });
+    if(TOKEN) p.set('token', TOKEN);
+    location.href = '/api/admin?' + p.toString();     // הדפדפן מוריד את הקובץ
+  };
   const oq = document.getElementById('oq');
   if(oq) oq.addEventListener('keydown', e => { if(e.key==='Enter') loadOrders(); });
 
@@ -1930,6 +1945,16 @@ $('#dlViz').onclick=()=>{
   const kgo = document.getElementById('kgo'); if(kgo) kgo.onclick = loadCosts;
   const kq  = document.getElementById('kq');
   if(kq) kq.addEventListener('input', () => { if(Object.keys(COSTS).length || cat()) paintCosts(); });
+
+  const loAll = document.getElementById('logoutAll');
+  if(loAll) loAll.onclick = async () => {
+    if(!confirm('לנתק את כל המכשירים? תצטרך להיכנס מחדש עם קוד למייל, גם כאן.')) return;
+    try{
+      await api({ type:'logout-all' }, { method:'POST' });
+      await post('/api/admin-verify', { logout:true }).catch(()=>{});
+      location.reload();
+    }catch(e){ alert(e.message); }
+  };
 
   const lo = document.getElementById('logout');
   if(lo) lo.onclick = async () => {

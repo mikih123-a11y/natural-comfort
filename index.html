@@ -38,4 +38,25 @@ fetch('products/catalog.json').then(r=>r.json()).then(d=>{
   }).join('');
   render();
 });document.addEventListener('click',e=>{let f=e.target.closest('.filter');if(f){active=f.dataset.line;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('on',x===f));render($('#search').value)}let s=e.target.closest('.swatch');if(s){e.preventDefault();document.querySelectorAll(`[data-model="${s.dataset.model}"]`).forEach(x=>x.classList.remove('on'));s.classList.add('on');$(`#img-${s.dataset.model}`).src=s.dataset.src}});$('#search').addEventListener('input',e=>render(e.target.value));$('#searchBtn').onclick=()=>{$('#shop').scrollIntoView();setTimeout(()=>$('#search').focus(),500)};
-</script><script>if(location.protocol==='file:'){document.querySelectorAll('a[href^="/"]').forEach(a=>a.setAttribute('href',a.getAttribute('href').replace(/^\//,'')))}</script><script src="footer-upgrade.js" defer></script></body></html>
+</script><script>if(location.protocol==='file:'){document.querySelectorAll('a[href^="/"]').forEach(a=>a.setAttribute('href',a.getAttribute('href').replace(/^\//,'')))}</script><script src="footer-upgrade.js" defer></script><script>
+/* תצוגה מקדימה של גימור במעבר עכבר — בלי להיכנס לעמוד המוצר.
+   הבחירה בלחיצה נשארת; המעבר רק מציץ וחוזר. */
+(function(){
+  if(!window.matchMedia || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+  document.addEventListener('mouseover', function(e){
+    var sw = e.target.closest && e.target.closest('.swatch');
+    if(!sw) return;
+    var img = document.getElementById('img-' + sw.dataset.model);
+    if(img && sw.dataset.src) img.src = sw.dataset.src;
+  });
+
+  document.addEventListener('mouseout', function(e){
+    var card = e.target.closest && e.target.closest('.card');
+    if(!card || card.contains(e.relatedTarget)) return;   /* עדיין בתוך הכרטיס */
+    var on  = card.querySelector('.swatch.on');
+    var img = card.querySelector('.card-img > img');
+    if(on && img && on.dataset.src) img.src = on.dataset.src;
+  });
+})();
+</script></body></html>

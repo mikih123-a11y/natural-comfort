@@ -293,6 +293,50 @@
   window.ncOnConsent(loadPixel);
 
   /* ==========================================================
+     חלק 3ב — מונה צפיות פנימי
+     כל אירוע שנדחף ל-ncQ נספר גם אצלנו, כדי שמסך השיווק
+     באדמין ידע מה נצפה ומה נכנס לסל. נשלח מזהה דגם בלבד —
+     בלי מידע אישי, בלי עוגייה, ולכן לא תלוי בהסכמת עוגיות.
+     ========================================================== */
+
+  var COUNTED = { ViewContent: 1, AddToCart: 1, InitiateCheckout: 1 };
+
+  function mirror(name, params) {
+    if (!COUNTED[name]) return;
+    var raw = params && (params.content_ids || params.content_id);
+    var ids = [];
+    if (Object.prototype.toString.call(raw) === '[object Array]') {
+      for (var i = 0; i < raw.length; i++)
+        if (typeof raw[i] === 'string' && raw[i]) ids.push(raw[i]);
+    } else if (typeof raw === 'string' && raw) ids.push(raw);
+    if (!ids.length) return;
+
+    try {
+      fetch('/api/pv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: name, ids: ids }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  (function () {
+    var q = window.ncQ;
+    /* אירועים שנדחפו לפני שנטענו */
+    for (var i = 0; i < q.length; i++) if (q[i]) mirror(q[i][0], q[i][1]);
+    /* ומכאן והלאה */
+    var origPush = q.push;
+    q.push = function () {
+      for (var j = 0; j < arguments.length; j++) {
+        var e = arguments[j];
+        if (e) mirror(e[0], e[1]);
+      }
+      return origPush.apply(q, arguments);
+    };
+  })();
+
+  /* ==========================================================
      חלק 4 — קישור למעקב הזמנה בפוטר
      נדחף אוטומטית לכל עמוד שיש בו קישור לתקנון,
      כדי שלא צריך לערוך את הפוטר בכל קובץ בנפרד.

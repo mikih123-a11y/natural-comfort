@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סל ההזמנה · Natural Comfort</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4; --panel-2:#E4DED3;
+  --champagne:#A79A88; --champagne-lt:#C9BFAE;
+  --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F;
+  --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+.brand{font-family:var(--display);font-size:19px;font-weight:700}
+.brand span{color:var(--champagne);font-weight:400}
+.top .tel{color:var(--ink-soft);font-size:14px}
+
+.head{padding:44px 0 22px}
+.head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
+.head p{color:var(--ink-mute);margin-top:6px;font-size:15px}
+
+.layout{display:grid;grid-template-columns:1fr 340px;gap:26px;align-items:start;padding-bottom:70px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+
+.item{display:grid;grid-template-columns:104px 1fr auto;gap:18px;background:#fff;
+  border:1px solid var(--line);padding:16px;margin-bottom:12px}
+.item .ph{width:104px;height:104px;background:var(--panel);display:grid;place-items:center;overflow:hidden}
+.item .ph img{width:100%;height:100%;object-fit:contain}
+.item h3{font-family:var(--display);font-size:20px;font-weight:500;margin-bottom:6px}
+.cfg{list-style:none;font-size:13.5px;color:var(--ink-mute);display:grid;gap:2px}
+.cfg li::before{content:'· '}
+.right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:12px}
+.money{font-family:var(--display);font-size:19px;font-weight:500;white-space:nowrap}
+.money small{display:block;font-family:var(--body);font-size:12px;color:var(--ink-mute);font-weight:400;text-align:start}
+.qty{display:flex;align-items:center;border:1px solid var(--line)}
+.qty button{width:32px;height:32px;font-size:17px;line-height:1}
+.qty button:hover{background:var(--panel)}
+.qty span{width:34px;text-align:center;font-weight:600;font-size:14px}
+.rm{font-size:13px;color:var(--ink-mute);text-decoration:underline}
+.rm:hover{color:#8C3323}
+
+.sum{background:#fff;border:1px solid var(--line);padding:22px;position:sticky;top:88px}
+.sum h2{font-family:var(--display);font-size:20px;font-weight:500;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;font-size:14.5px;color:var(--ink-soft)}
+.row.tot{border-top:1px solid var(--line);margin-top:8px;padding-top:14px;font-size:17px;font-weight:600;color:var(--ink)}
+.row.tot b{font-family:var(--display);font-size:24px;font-weight:500}
+.go{display:block;width:100%;text-align:center;background:var(--ink);color:var(--paper);
+  padding:16px;font-size:16px;font-weight:600;margin-top:16px;transition:.2s var(--ease)}
+.go:hover{background:#000}
+.keep{display:block;text-align:center;margin-top:12px;font-size:14px;color:var(--ink-mute);text-decoration:underline}
+.note{font-size:12.5px;color:var(--ink-mute);margin-top:14px;line-height:1.55}
+
+.empty{background:#fff;border:1px solid var(--line);padding:54px 24px;text-align:center}
+.empty h2{font-family:var(--display);font-size:24px;font-weight:500;margin-bottom:8px}
+.empty p{color:var(--ink-mute);margin-bottom:22px}
+.empty a{display:inline-block;background:var(--ink);color:var(--paper);padding:14px 26px;font-weight:600}
+
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <a class="tel" href="tel:0796622666">079-6622666</a>
+</div></header>
+
+<main class="wrap">
+  <div class="head">
+    <h1>סל ההזמנה</h1>
+    <p id="sub">—</p>
+  </div>
+
+  <div id="empty" class="empty" hidden>
+    <h2>הסל ריק</h2>
+    <p>בחרו דגם, גימור וסידור פנים — והוסיפו לסל מתוך עמוד המוצר.</p>
+    <a href="/#shop">לכל הדגמים</a>
+  </div>
+
+  <div class="layout" id="layout" hidden>
+    <div id="list"></div>
+
+    <aside class="sum">
+      <h2>סיכום</h2>
+      <div class="row"><span>פריטים</span><span id="s-count">0</span></div>
+      <div class="row"><span>הובלה והרכבה</span><span>נקבע בשיחה</span></div>
+      <div class="row tot"><span>סה״כ</span><b id="s-total">—</b></div>
+      <a class="go" href="/checkout.html">מעבר לפרטי ההזמנה</a>
+      <a class="keep" href="/#shop">להמשך בחירה</a>
+      <p class="note">
+        אין תשלום באתר. אחרי שליחת ההזמנה ניצור קשר לאישור הפרטים,
+        לתיאום מדידה ולגבייה. המחיר הסופי נקבע אחרי מדידה בשטח.
+      </p>
+    </aside>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div><a href="/orders.html">ההזמנות שלי</a></div>
+</div></footer>
+
+<script src="/cart.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+
+function draw(){
+  const list = ncCart.items();
+
+  $('#empty').hidden  = list.length > 0;
+  $('#layout').hidden = list.length === 0;
+  $('#sub').textContent = list.length
+    ? 'בדקו את ההרכבה לפני שליחה. אפשר לשנות כמות או להסיר פריט.'
+    : '';
+
+  $('#list').innerHTML = list.map(it => `
+    <article class="item">
+      <div class="ph">${it.image ? `<img src="${it.image}" alt="">` : ''}</div>
+      <div>
+        <h3>${it.url ? `<a href="${it.url}">${it.name}</a>` : it.name}</h3>
+        <ul class="cfg">${(it.config||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
+      </div>
+      <div class="right">
+        <div class="money">
+          ${typeof it.price === 'number'
+              ? ncCart.nis(it.price * (it.qty||1))
+              : '<span style="font-size:14px">לפי התאמה</span>'}
+          ${it.qty > 1 && typeof it.price === 'number'
+              ? `<small>${ncCart.nis(it.price)} ליחידה</small>` : ''}
+        </div>
+        <div class="qty">
+          <button data-inc="${it.sig}" aria-label="הוספה">+</button>
+          <span>${it.qty||1}</span>
+          <button data-dec="${it.sig}" aria-label="הפחתה">−</button>
+        </div>
+        <button class="rm" data-rm="${it.sig}">הסרה</button>
+      </div>
+    </article>`).join('');
+
+  const t = ncCart.total();
+  $('#s-count').textContent = ncCart.count();
+  $('#s-total').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
+}
+
+document.addEventListener('click', e => {
+  const inc = e.target.closest('[data-inc]');
+  const dec = e.target.closest('[data-dec]');
+  const rm  = e.target.closest('[data-rm]');
+  if(!inc && !dec && !rm) return;
+
+  const items = ncCart.items();
+  const find = sig => items.find(x => x.sig === sig);
+
+  if(inc){ const it = find(inc.dataset.inc); ncCart.setQty(it.sig, (it.qty||1)+1); }
+  if(dec){ const it = find(dec.dataset.dec); ncCart.setQty(it.sig, (it.qty||1)-1); }
+  if(rm){  ncCart.remove(rm.dataset.rm); }
+  draw();
+});
+
+draw();
+</script>
+</body>
+</html>

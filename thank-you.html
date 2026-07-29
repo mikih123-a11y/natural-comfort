@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ההזמנה התקבלה · Natural Comfort</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4;
+  --champagne:#A79A88; --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F;
+  --oak:#B8894E; --line:#E2DCD2; --green:#3F6B4F;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--display);font-size:19px;font-weight:700}
+.brand span{color:var(--champagne);font-weight:400}
+.top .tel{color:var(--ink-soft);font-size:14px}
+
+.hero{text-align:center;padding:60px 0 34px}
+.tick{width:56px;height:56px;border-radius:50%;background:var(--green);margin:0 auto 20px;
+  display:grid;place-items:center}
+.tick svg{stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.hero h1{font-family:var(--display);font-size:clamp(30px,5vw,44px);font-weight:700;letter-spacing:-.02em}
+.hero p{color:var(--ink-mute);margin-top:8px}
+
+.num{background:#fff;border:1px solid var(--line);padding:20px;text-align:center;margin-bottom:20px}
+.num small{display:block;font-size:12.5px;letter-spacing:.1em;color:var(--ink-mute);margin-bottom:4px}
+.num b{font-family:var(--display);font-size:28px;font-weight:700;letter-spacing:.02em}
+
+.next{background:#fff;border:1px solid var(--line);padding:24px;margin-bottom:20px}
+.next h2{font-family:var(--display);font-size:20px;font-weight:500;margin-bottom:16px}
+.next ol{list-style:none;counter-reset:s}
+.next li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:12px;
+  padding:11px 0;border-bottom:1px solid var(--line)}
+.next li:last-child{border-bottom:0}
+.next li::before{content:counter(s);width:26px;height:26px;border-radius:50%;
+  border:1px solid var(--champagne);color:var(--oak);font-size:13px;font-weight:700;
+  display:grid;place-items:center}
+.next b{display:block;font-size:15.5px}
+.next small{color:var(--ink-mute);font-size:13.5px}
+
+.acts{display:grid;gap:10px;margin-bottom:36px}
+.b1{display:block;text-align:center;background:var(--ink);color:var(--paper);padding:16px;font-weight:600}
+.b2{display:block;text-align:center;border:1px solid var(--ink);padding:15px;font-weight:600}
+.b2:hover{background:var(--ink);color:var(--paper)}
+
+.warn{background:#FDF6EE;border-inline-start:3px solid var(--oak);padding:13px 16px;
+  font-size:13.5px;color:var(--ink-soft);margin-bottom:20px}
+
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute);text-align:center}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <a class="tel" href="tel:0796622666">079-6622666</a>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="tick"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h1>ההזמנה התקבלה</h1>
+    <p>שלחנו אליכם מייל עם כל הפרטים.</p>
+  </div>
+
+  <div class="num">
+    <small>מספר הזמנה</small>
+    <b id="num">—</b>
+  </div>
+
+  <section class="next">
+    <h2>מה קורה עכשיו</h2>
+    <ol>
+      <li><div><b>ניצור קשר</b><small>בתוך יום עסקים אחד, לאישור ההרכבה והפרטים.</small></div></li>
+      <li><div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div></li>
+      <li><div><b>גבייה וייצור</b><small>אחרי אישור המחיר. הייצור מתחיל מיד לאחר מכן.</small></div></li>
+      <li><div><b>אספקה והתקנה</b><small>עד 21 ימי עסקים — לא כולל שישי, שבת, ערבי חג וחגים.</small></div></li>
+    </ol>
+  </section>
+
+  <p class="warn">
+    שמרו את מספר ההזמנה. הוא נשמר גם בדפדפן הזה תחת "ההזמנות שלי",
+    אבל אם תחליפו מכשיר או תנקו את היסטוריית הדפדפן — המייל הוא העותק שיישאר לכם.
+  </p>
+
+  <div class="acts">
+    <a class="b1" href="/orders.html">ההזמנות שלי</a>
+    <a class="b2" href="/#shop">להמשך עיון בקטלוג</a>
+  </div>
+</main>
+
+<footer>© Natural Comfort · מקבוצת קניה טובה</footer>
+
+<script src="/cart.js"></script>
+<script>
+const num = new URLSearchParams(location.search).get('o');
+if(num){
+  document.getElementById('num').textContent = num;
+  document.title = 'הזמנה ' + num + ' · Natural Comfort';
+}else{
+  const last = ncCart.orders()[0];
+  document.getElementById('num').textContent = last ? last.number : '—';
+}
+</script>
+</body>
+</html>

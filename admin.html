@@ -387,6 +387,32 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
   </div>
 </section>
 
+<!-- ---------- מסך: שיווק ---------- -->
+<section class="screen" id="sc-marketing">
+  <div class="abar"><div class="in">
+    <select id="mkDays">
+      <option value="30">30 יום</option>
+      <option value="90">90 יום</option>
+      <option value="365" selected>שנה</option>
+      <option value="730">שנתיים</option>
+    </select>
+    <button class="go" id="mkGo">רענון</button>
+  </div></div>
+  <div class="dash">
+    <h1>שיווק</h1>
+    <p class="lede">מאיפה באות ההזמנות, מה נצפה, ומה נצפה הרבה ולא נמכר. מספר מוחלט בלי המרה
+      לא אומר כלום — לכן הכל מוצג כאן זה מול זה.</p>
+    <div class="kpis" id="mkKpis"></div>
+    <div class="panel"><h2>אזורים · לפי הזמנות</h2><div class="body"><div id="mkAreas"></div></div></div>
+    <div class="panel"><h2>קו מוצר לפי אזור</h2>
+      <div class="body"><p>מי קונה מה, ואיפה. זה החתך שקובע לאן להפנות תקציב — לא ניחוש דמוגרפי.</p>
+      <div id="mkCross" style="overflow:auto"></div></div></div>
+    <div class="panel"><h2>מוצרים · נצפו מול נמכרו</h2>
+      <div class="body" style="padding:0"><div id="mkProducts">טוען…</div></div></div>
+    <div class="panel"><h2>ערים</h2><div class="body" style="padding:0"><div id="mkCities"></div></div></div>
+  </div>
+</section>
+
 <!-- ---------- מסך: חשבוניות ספק ---------- -->
 <section class="screen" id="sc-supplier">
   <div class="abar"><div class="in">
@@ -628,6 +654,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <a data-sc="dash" class="on"><span class="ic">▦</span> לוח בקרה</a>
     <a data-sc="orders"><span class="ic">🧾</span> הזמנות <span class="cnt" id="navOrders">—</span></a>
     <a data-sc="analytics"><span class="ic">📊</span> ניתוחים</a>
+    <a data-sc="marketing"><span class="ic">◎</span> שיווק</a>
     <a data-sc="leads"><span class="ic">✉</span> לידים מההדמיה</a>
     <a data-sc="customers"><span class="ic">☺</span> לקוחות</a>
     <a data-sc="costs"><span class="ic">₪</span> עלויות ורווחיות</a>
@@ -1184,11 +1211,12 @@ $('#dlViz').onclick=()=>{
     if(name === 'leads')     loadLeads();
     if(name === 'costs')     loadCosts();
     if(name === 'supplier')  loadSupplier();
+    if(name === 'marketing') loadMarketing();
   }
   $$$('.nav a[data-sc]').forEach(a => a.onclick = () => go(a.dataset.sc));
   addEventListener('hashchange', () => {
     const h = location.hash.replace('#','');
-    if(['dash','orders','analytics','leads','customers','costs','supplier','products','health'].includes(h)) go(h);
+    if(['dash','orders','analytics','marketing','leads','customers','costs','supplier','products','health'].includes(h)) go(h);
   });
 
   /* ---------- ניתוח הקטלוג ---------- */
@@ -1824,6 +1852,162 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
     const tr = e.target.closest('[data-open]');
     if(tr) openOrder(tr.dataset.open);
   });
+
+  /* ---------- שיווק ---------- */
+
+  /* מפת אזורים. ההתאמה היא לפי הביטוי הארוך ביותר שנמצא,
+     כדי ש"מודיעין עילית" לא ייפול לאותו אזור עם "מודיעין". */
+  const AREAS = [
+    ['ירושלים והסביבה', ['ירושלים','jerusalem','בית שמש','beit shemesh','bet shemesh','ביתר עילית','beitar','מבשרת','mevaseret','מעלה אדומים','maale adumim','גבעת זאב','givat zeev','אפרת','efrat','צור הדסה','tzur hadassah','טלז סטון','קרית יערים']],
+    ['גוש דן', ['תל אביב','tel aviv','רמת גן','ramat gan','גבעתיים','givatayim','בני ברק','bnei brak','bene beraq','חולון','holon','בת ים','bat yam','אור יהודה','or yehuda','קרית אונו','kiryat ono','qiryat ono','רמת השרון','ramat hasharon','הרצליה','herzliya','גבעת שמואל','givat shmuel','יהוד','yehud','אזור','azor']],
+    ['שרון וחוף', ['נתניה','netanya','כפר סבא','kfar saba','רעננה','raanana','הוד השרון','hod hasharon','חדרה','hadera','פרדס חנה','pardes hanna','אבן יהודה','even yehuda','קדימה','kadima','זכרון','zichron','צורן','tzoran','כפר יונה','kfar yona']],
+    ['שפלה ומרכז', ['פתח תקווה','petah tikva','petach tikva','ראשון לציון','rishon','רחובות','rehovot','נס ציונה','ness ziona','nes ziona','לוד','lod','רמלה','ramla','מודיעין מכבים רעות','modiin','שוהם','shoham','אלעד','elad','ראש העין','rosh haayin','גדרה','gedera','קרית עקרון','kiryat ekron','באר יעקב','beer yaakov','גן יבנה','gan yavne','יבנה','yavne']],
+    ['דרום', ['אשדוד','ashdod','אשקלון','ashkelon','באר שבע','beer sheva','beersheba','קרית גת','kiryat gat','qiryat gat','קרית מלאכי','kiryat malachi','נתיבות','netivot','אופקים','ofakim','שדרות','sderot','דימונה','dimona','ערד','arad','אילת','eilat','רהט','rahat','מיתר','meitar','להבים','lehavim','עומר','omer']],
+    ['צפון', ['חיפה','haifa','קרית ביאליק','kiryat bialik','קרית מוצקין','motzkin','קרית ים','kiryat yam','קרית אתא','kiryat ata','נשר','nesher','טירת כרמל','tirat carmel','עכו','akko','נהריה','nahariya','כרמיאל','karmiel','צפת','safed','tzfat','טבריה','tiberias','מגדל העמק','migdal haemek','עפולה','afula','נצרת','nazareth','נוף הגליל','nof hagalil','בית שאן','beit shean','קרית שמונה','kiryat shmona','יקנעם','yokneam','מעלות','maalot','טבעון','tivon','חצור','hatzor']],
+    ['יהודה ושומרון', ['אריאל','ariel','קרני שומרון','karnei shomron','אלפי מנשה','alfei menashe','אורנית','oranit','אלקנה','elkana','קדומים','kedumim','עמנואל','emanuel','קרית ארבע','kiryat arba','בית אל','beit el','שילה','shilo','כוכב יעקב','kochav yaakov','מודיעין עילית','modiin illit','kiryat sefer','קרית ספר']],
+  ];
+
+  function areaOf(city){
+    const c = String(city||'').toLowerCase().replace(/[^\u0590-\u05FFa-z ]/g,' ').replace(/\s+/g,' ').trim();
+    if(!c) return 'לא צוין';
+    let best = null, len = 0;
+    AREAS.forEach(([name, toks]) => toks.forEach(t => {
+      if(t.length > len && c.indexOf(t.toLowerCase()) !== -1){ best = name; len = t.length; }
+    }));
+    return best || 'אחר';
+  }
+
+  function modelPrice(m){
+    if(typeof m.price === 'number') return m.price;
+    const t = (m.width_tiers && m.width_tiers.tiers || []).map(x=>x.price).filter(x=>typeof x==='number');
+    return t.length ? Math.min(...t) : null;
+  }
+
+  async function loadMarketing(){
+    const box = document.getElementById('mkProducts');
+    if(!box) return;
+    box.innerHTML = 'טוען…';
+    try{
+      const days = document.getElementById('mkDays').value;
+      const d = await api({ type:'marketing', days });
+      const C = cat() || {};
+      const models = C.models || [];
+      const lines  = C.lines  || {};
+      const byId = {};
+      models.forEach(m => byId[m.id] = m);
+
+      /* ----- אזורים וערים ----- */
+      const areas = {}, cities = {}, cross = {};
+      let revenue = 0, orderCount = 0, soldById = {};
+
+      (d.orders||[]).forEach(o => {
+        orderCount++;
+        const rev = typeof o.total === 'number' ? o.total : 0;
+        revenue += rev;
+
+        const ar = areaOf(o.city);
+        areas[ar] = areas[ar] || { orders:0, revenue:0 };
+        areas[ar].orders++; areas[ar].revenue += rev;
+
+        const cy = (o.city||'—').trim() || '—';
+        cities[cy] = cities[cy] || { orders:0, revenue:0 };
+        cities[cy].orders++; cities[cy].revenue += rev;
+
+        (o.products||[]).forEach(pid => {
+          soldById[pid] = (soldById[pid]||0) + 1;
+          const m = byId[pid];
+          const ln = m ? (m.line_id || '—') : '—';
+          cross[ln] = cross[ln] || {};
+          cross[ln][ar] = (cross[ln][ar]||0) + 1;
+        });
+      });
+
+      /* ----- מוצרים: צפיות מול מכירות ----- */
+      const M = d.metrics || {};
+      let views = 0, carts = 0;
+      Object.keys(M).forEach(k => { views += M[k].view||0; carts += M[k].cart||0; });
+
+      const rows = models.map(m => {
+        const mm = M[m.id] || {};
+        const v  = mm.view||0, ct = mm.cart||0, so = soldById[m.id]||0;
+        return {
+          id:m.id, name:m.name||m.id,
+          line: (lines[m.line_id] && lines[m.line_id].name) || m.line_id || '—',
+          price: modelPrice(m), view:v, cart:ct, sold:so,
+          conv: v ? Math.round((so/v)*1000)/10 : null,
+        };
+      }).filter(r => r.view || r.cart || r.sold)
+        .sort((a,b) => (b.view - a.view) || (b.sold - a.sold));
+
+      document.getElementById('mkKpis').innerHTML = `
+        <div class="kpi"><b>${orderCount}</b><span>הזמנות</span></div>
+        <div class="kpi"><b>${nis(revenue)}</b><span>מחזור</span></div>
+        <div class="kpi"><b>${views || '—'}</b><span>צפיות במוצרים</span></div>
+        <div class="kpi"><b>${views ? (Math.round((orderCount/views)*1000)/10)+'%' : '—'}</b><span>מצפייה להזמנה</span></div>`;
+
+      /* ----- ציור ----- */
+      const amax = Math.max(1, ...Object.values(areas).map(x=>x.orders));
+      document.getElementById('mkAreas').innerHTML = Object.keys(areas).length
+        ? '<div class="bars">' + Object.entries(areas).sort((a,b)=>b[1].orders-a[1].orders)
+            .map(([n,v]) => barRow(n, v.orders, amax, v.revenue ? ' · ' + nis(v.revenue) : '')).join('') + '</div>'
+        : '<span style="color:var(--ink-mute)">אין הזמנות בטווח.</span>';
+
+      const usedAreas = Object.keys(areas).sort((a,b)=>areas[b].orders-areas[a].orders);
+      const lineKeys  = Object.keys(cross);
+      document.getElementById('mkCross').innerHTML = lineKeys.length
+        ? '<table class="tbl"><thead><tr><th>קו מוצר</th>' +
+          usedAreas.map(a=>`<th>${esc(a)}</th>`).join('') + '<th>סה״כ</th></tr></thead><tbody>' +
+          lineKeys.map(ln => {
+            const tot = usedAreas.reduce((s,a)=>s+(cross[ln][a]||0),0);
+            return `<tr><td><b>${esc((lines[ln]&&lines[ln].name)||ln)}</b></td>` +
+              usedAreas.map(a=>`<td>${cross[ln][a]||'—'}</td>`).join('') +
+              `<td><b>${tot}</b></td></tr>`;
+          }).join('') + '</tbody></table>'
+        : '<span style="color:var(--ink-mute)">אין נתונים עדיין.</span>';
+
+      box.innerHTML = !d.tracking
+        ? `<div style="padding:20px;color:var(--ink-mute)">
+             מונה הצפיות התחיל לרוץ עכשיו. הנתונים יצטברו מכאן והלאה — כדאי לחזור בעוד כמה ימים.
+             ${rows.length ? 'בינתיים מוצגות המכירות בלבד.' : ''}
+           </div>` + (rows.length ? prodTable(rows) : '')
+        : prodTable(rows);
+
+      const cmax = Math.max(1, ...Object.values(cities).map(x=>x.orders));
+      document.getElementById('mkCities').innerHTML = Object.keys(cities).length
+        ? '<table class="tbl"><thead><tr><th>עיר</th><th>אזור</th><th>הזמנות</th><th>מחזור</th></tr></thead><tbody>'
+          + Object.entries(cities).sort((a,b)=>b[1].orders-a[1].orders).slice(0,40)
+            .map(([n,v])=>`<tr><td><b>${esc(n)}</b></td><td>${esc(areaOf(n))}</td>
+              <td>${v.orders}</td><td>${nis(v.revenue)}</td></tr>`).join('')
+          + '</tbody></table>'
+        : '<div style="padding:18px;color:var(--ink-mute)">אין נתונים.</div>';
+      void cmax;
+    }catch(e){
+      box.innerHTML = '<div style="padding:18px"><span class="badge bad">' + esc(e.message) + '</span></div>';
+    }
+  }
+
+  function prodTable(rows){
+    if(!rows.length) return '<div style="padding:18px;color:var(--ink-mute)">אין נתונים עדיין.</div>';
+    return '<table class="tbl"><thead><tr><th>דגם</th><th>קו</th><th>מחיר</th><th>צפיות</th>' +
+      '<th>לסל</th><th>הזמנות</th><th>המרה</th><th>קריאה</th></tr></thead><tbody>' +
+      rows.map(r => {
+        let tag = '', cls = '';
+        if(r.view >= 25 && r.sold === 0){ tag = 'נצפה ולא נמכר'; cls = 'bad'; }
+        else if(r.view >= 25 && r.cart === 0){ tag = 'לא מגיע לסל'; cls = 'bad'; }
+        else if(r.conv !== null && r.conv >= 3){ tag = 'מוביל'; cls = 'good'; }
+        else if(r.sold && !r.view){ tag = 'נמכר · אין מדידה'; }
+        return `<tr>
+          <td><b>${esc(r.name)}</b></td>
+          <td>${esc(r.line)}</td>
+          <td>${r.price === null ? '—' : nis(r.price)}</td>
+          <td>${r.view || '—'}</td>
+          <td>${r.cart || '—'}</td>
+          <td>${r.sold || '—'}</td>
+          <td>${r.conv === null ? '—' : r.conv + '%'}</td>
+          <td>${tag ? `<span class="badge ${cls}">${tag}</span>` : ''}</td></tr>`;
+      }).join('') + '</tbody></table>';
+  }
+  const mkGo = document.getElementById('mkGo'); if(mkGo) mkGo.onclick = loadMarketing;
 
   /* ---------- חשבוניות ספק ---------- */
   async function loadSupplier(){

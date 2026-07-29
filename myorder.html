@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מעקב הזמנה · Natural Comfort</title>
+<meta name="description" content="מעקב אחר הזמנה ב-Natural Comfort — סטטוס ההזמנה, הפריטים, דמי ההובלה וההרכבה וזמן האספקה.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4;
+  --champagne:#A79A88; --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F;
+  --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
+.top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--display);font-size:19px;font-weight:700;text-decoration:none}
+.brand span{color:var(--champagne);font-weight:400}
+.top .tel{color:var(--ink-soft);font-size:14px;text-decoration:none}
+.head{padding:52px 0 10px}
+.head .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);margin-bottom:10px}
+.head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
+.head p{color:var(--ink-mute);margin-top:8px;font-size:15.5px}
+main{padding-bottom:80px}
+
+/* טופס */
+.card{background:#fff;border:1px solid var(--line);padding:22px;margin:24px 0}
+.row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.fld{flex:1;min-width:210px}
+.fld label{display:block;font-size:13px;color:var(--ink-mute);margin-bottom:5px}
+.fld input{width:100%;font:inherit;font-size:15.5px;padding:11px 13px;border:1px solid var(--line);background:var(--paper);border-radius:2px}
+.fld input:focus{outline:0;border-color:var(--oak)}
+.btn{background:var(--ink);color:#fff;border:0;font:600 15px var(--body);padding:12px 30px;cursor:pointer;border-radius:2px}
+.btn:hover{background:#000}
+.btn[disabled]{opacity:.5;cursor:default}
+.hint{font-size:13.5px;color:var(--ink-mute);margin-top:10px}
+.err{background:#FBEAEA;border-inline-start:3px solid #C0392B;padding:12px 15px;margin-top:14px;font-size:14.5px}
+
+/* תוצאה */
+#out{display:none}
+.sum{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
+     border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}
+.sum h2{font-family:var(--display);font-size:24px;font-weight:700}
+.sum .meta{font-size:13.5px;color:var(--ink-mute)}
+.pill{display:inline-block;background:var(--panel);padding:6px 15px;font-size:14px;font-weight:600;border-radius:2px}
+.pill.bad{background:#FBEAEA;color:#8C3323}
+
+/* שרשרת סטטוס */
+.flow{display:flex;gap:6px;margin:0 0 24px;flex-wrap:wrap}
+.flow div{flex:1;min-width:92px;text-align:center;font-size:12.5px;color:var(--ink-mute);
+          padding:9px 4px;background:#fff;border:1px solid var(--line)}
+.flow div.done{background:var(--panel);color:var(--ink-soft)}
+.flow div.cur{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+
+.it{border:1px solid var(--line);background:#fff;padding:16px 18px;margin-bottom:12px}
+.it b{font-size:16px}
+.it ul{margin:7px 0 0;padding-inline-start:19px;font-size:14px;color:var(--ink-mute)}
+.it .pr{margin-top:9px;font-weight:600}
+.ship{margin-top:9px;font-size:13.5px;color:var(--ink-soft);background:#FDF6EE;
+      border-inline-start:3px solid var(--oak);padding:8px 11px}
+.tot{background:#fff;border:1px solid var(--line);padding:16px 18px;margin-top:6px}
+.tot div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
+.tot div:last-child{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:17px;margin-top:5px;padding-top:11px}
+.tot small{display:block;color:var(--ink-mute);font-weight:400;font-size:12px}
+h3{font-family:var(--display);font-size:19px;font-weight:500;margin:30px 0 10px}
+.kv{background:#fff;border:1px solid var(--line);padding:16px 18px;font-size:14.5px}
+.kv div{padding:5px 0}
+.kv span{color:var(--ink-mute);display:inline-block;min-width:130px}
+.terms{font-size:13.5px;color:var(--ink-mute);line-height:1.85;margin-top:26px;
+       border-top:1px solid var(--line);padding-top:16px}
+.terms b{color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
+footer .wrap{max-width:1080px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{text-decoration:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <a class="tel" href="tel:0796622666">079-6622666</a>
+</div></header>
+
+<main class="wrap">
+  <div class="head">
+    <div class="kick">Order</div>
+    <h1>מעקב הזמנה</h1>
+    <p>מזינים את מספר ההזמנה ואת הטלפון שנמסר בה. בלי הרשמה ובלי סיסמה.</p>
+  </div>
+
+  <div class="card" id="form">
+    <div class="row">
+      <div class="fld"><label for="n">מספר הזמנה</label>
+        <input id="n" dir="ltr" placeholder="NC-260729-422" autocomplete="off"></div>
+      <div class="fld"><label for="p">טלפון</label>
+        <input id="p" dir="ltr" inputmode="tel" placeholder="050-0000000" autocomplete="tel"></div>
+    </div>
+    <button class="btn" id="go">הצגת ההזמנה</button>
+    <div class="hint">מספר ההזמנה נשלח אליכם באישור ההזמנה. לא מוצאים אותו? חייגו
+      <a href="tel:0796622666">079-6622666</a> או כתבו ב<a href="https://wa.me/972524400030">וואטסאפ</a>.</div>
+    <div class="err" id="err" style="display:none"></div>
+  </div>
+
+  <div id="out"></div>
+</main>
+
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div><a href="/about.html">אודות</a> · <a href="/terms.html">תקנון</a> · <a href="/privacy.html">פרטיות</a> · <a href="/accessibility.html">נגישות</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var money = function(n){ return '₪' + Number(n).toLocaleString('he-IL'); };
+
+  /* דמי משלוח והרכבה של דגם — נשלפים מהקטלוג הציבורי אם לא נשמרו בהזמנה */
+  var SHIP = {};
+  fetch('/products/catalog.json').then(function(r){ return r.json(); }).then(function(c){
+    (c.models||[]).forEach(function(m){
+      if(typeof m.delivery_install === 'number') SHIP[m.id] = m.delivery_install;
+    });
+  }).catch(function(){});
+
+  function shipOf(it){
+    if(typeof it.delivery_install === 'number') return it.delivery_install;
+    if(it.modelId && typeof SHIP[it.modelId] === 'number') return SHIP[it.modelId];
+    return null;
+  }
+
+  function render(d){
+    var items = d.items || [];
+    var prodSum = 0, allPrices = items.length > 0;
+    var shipSum = 0, anyShip = false, allShip = items.length > 0;
+
+    items.forEach(function(it){
+      if(typeof it.price === 'number') prodSum += it.price * it.qty; else allPrices = false;
+      var s = shipOf(it);
+      if(s === null) allShip = false; else { anyShip = true; shipSum += s * it.qty; }
+    });
+
+    var orderLevel = false;
+    if(!anyShip && typeof d.shipping_num === 'number'){
+      shipSum = d.shipping_num; allShip = true; orderLevel = true;
+    }
+
+    var flow = d.cancelled ? '' :
+      '<div class="flow">' + (d.flow||[]).map(function(s,i){
+        var cls = s.key === d.status ? 'cur' : (d.at >= 0 && i < d.at ? 'done' : '');
+        return '<div class="' + cls + '">' + esc(s.label) + '</div>';
+      }).join('') + '</div>';
+
+    var rows = items.map(function(it){
+      var s = shipOf(it);
+      var cfg = (it.config||[]).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('');
+      var ship = s === null
+        ? '<div class="ship">הובלה והרכבה: תיקבע בשיחת האישור.</div>'
+        : '<div class="ship">הובלה והרכבה: ' + money(s) + ' לפריט' +
+          (it.qty > 1 ? ' × ' + it.qty + ' = ' + money(s * it.qty) : '') +
+          ' · משולם בבית למרכיב, אינו כלול במחיר המוצר.</div>';
+      return '<div class="it"><b>' + esc(it.name) + '</b>' +
+        (it.qty > 1 ? ' × ' + it.qty : '') +
+        (cfg ? '<ul>' + cfg + '</ul>' : '') +
+        '<div class="pr">' + (typeof it.price === 'number'
+            ? money(it.price) + (it.qty > 1 ? ' ליחידה · ' + money(it.price * it.qty) + ' סה״כ' : '')
+            : 'מחיר בהתאמה אישית') + '</div>' + ship + '</div>';
+    }).join('');
+
+    var addr = [d.address.street, d.address.apartment ? 'דירה ' + d.address.apartment : '', d.address.city]
+      .filter(Boolean).map(esc).join(', ');
+
+    var date = '';
+    try { date = new Date(d.date).toLocaleDateString('he-IL'); } catch(e){}
+
+    $('out').innerHTML =
+      '<div class="sum">' +
+        '<div><h2>הזמנה ' + esc(d.number) + '</h2>' +
+          '<div class="meta">' + esc(d.customer.name || '') + (date ? ' · התקבלה ' + date : '') + '</div></div>' +
+        '<div><span class="pill' + (d.cancelled ? ' bad' : '') + '">' + esc(d.label) + '</span></div>' +
+      '</div>' +
+      flow +
+      '<h3>הפריטים</h3>' + (rows || '<div class="it">אין פריטים.</div>') +
+      '<div class="tot">' +
+        '<div><span>סך המוצרים</span><b>' +
+          (allPrices ? money(prodSum) : esc(d.total || 'בהתאמה אישית')) + '</b></div>' +
+        '<div><span>הובלה והרכבה<small>' +
+          (orderLevel ? 'לכל ההזמנה' : 'סכום דמי ההובלה של כל הפריטים') +
+          ' · משולם בבית למרכיב</small></span><b>' +
+          (allShip ? money(shipSum) : (anyShip ? money(shipSum) + ' ומעלה' : 'ייקבע בשיחה')) + '</b></div>' +
+        '<div><span>סה״כ<small>מוצרים + הובלה והרכבה</small></span><b>' +
+          ((allPrices && allShip) ? money(prodSum + shipSum) : 'ייקבע בשיחת האישור') + '</b></div>' +
+      '</div>' +
+      '<h3>פרטי האספקה</h3>' +
+      '<div class="kv">' +
+        '<div><span>כתובת</span>' + (addr || '—') + '</div>' +
+        (d.address.floor ? '<div><span>קומה</span>' + esc(d.address.floor) + '</div>' : '') +
+        (d.address.lift ? '<div><span>מעלית</span>' + esc(d.address.lift) + '</div>' : '') +
+        (d.customer.phone ? '<div><span>טלפון</span><span dir="ltr">' + esc(d.customer.phone) + '</span></div>' : '') +
+        (d.measure ? '<div><span>מדידה</span>' + esc(d.measure) + '</div>' : '') +
+        (d.measure_note ? '<div><span>מידות שנמסרו</span>' + esc(d.measure_note) + '</div>' : '') +
+        (d.notes ? '<div><span>הערות שמסרתם</span>' + esc(d.notes) + '</div>' : '') +
+      '</div>' +
+      '<div class="terms">' +
+        '<div><b>זמן אספקה:</b> עד 21 ימי עסקים ממועד אישור ההזמנה — לא כולל שישי, שבת, ערבי חג וחגים.</div>' +
+        '<div><b>הובלה, סבלות והרכבה</b> משולמים למרכיב בבית ואינם כלולים במחיר המוצר. הסכום נגבה לכל פריט בנפרד, גם כשהפריטים באותה הזמנה. תוספת 50 ₪ לקומה מהקומה השלישית ומעלה ללא מעלית.</div>' +
+        '<div><b>המידות באחריות הלקוח</b> אלא אם הוזמנה מדידה מקצועית. פרטים מלאים ב<a href="/terms.html">תקנון</a>.</div>' +
+        '<div>שאלה על ההזמנה? <a href="tel:0796622666">079-6622666</a> · <a href="https://wa.me/972524400030">וואטסאפ</a></div>' +
+      '</div>';
+
+    $('out').style.display = 'block';
+    $('form').style.display = 'none';
+  }
+
+  function look(){
+    var n = ($('n').value||'').trim();
+    var p = ($('p').value||'').trim();
+    var e = $('err');
+    e.style.display = 'none';
+    if(!n || !p){ e.textContent = 'יש להזין מספר הזמנה וטלפון.'; e.style.display = 'block'; return; }
+
+    $('go').disabled = true;
+    $('go').textContent = 'בודק…';
+
+    fetch('/api/my-order?number=' + encodeURIComponent(n) + '&phone=' + encodeURIComponent(p))
+      .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+      .then(function(res){
+        if(!res.ok){ e.textContent = res.j.error || 'שגיאה.'; e.style.display = 'block'; return; }
+        render(res.j);
+      })
+      .catch(function(){ e.textContent = 'שגיאת רשת. נסו שוב.'; e.style.display = 'block'; })
+      .then(function(){ $('go').disabled = false; $('go').textContent = 'הצגת ההזמנה'; });
+  }
+
+  $('go').onclick = look;
+  ['n','p'].forEach(function(id){
+    $(id).addEventListener('keydown', function(ev){ if(ev.key === 'Enter') look(); });
+  });
+
+  /* קישור ישיר מהמייל: /myorder.html?n=NC-...&p=05... */
+  var q = new URLSearchParams(location.search);
+  if(q.get('n')) $('n').value = q.get('n');
+  if(q.get('p')) $('p').value = q.get('p');
+  if(q.get('n') && q.get('p')) look();
+})();
+</script>
+<script src="/site.js"></script>
+</body>
+</html>

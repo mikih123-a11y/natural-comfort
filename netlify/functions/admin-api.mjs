@@ -354,28 +354,56 @@ export default async (req) => {
 
   /* ---------- לידים ---------- */
   if (type === 'leads') {
-    const days = Math.min(+(u.searchParams.get('days') || 30), 365);
+    const days = Math.min(+(u.searchParams.get('days') || 180), 730);
     const since = Date.now() - days * 864e5;
     const ls = store('leads');
     const { blobs } = await ls.list();
-    const keys = blobs
-      .map(b => b.key)
-      .filter(k => {
-        const ts = +String(k).split('-')[0];
-        return !isNaN(ts) && ts >= since;
-      })
-      .sort((a, b) => +String(b).split('-')[0] - +String(a).split('-')[0])
-      .slice(0, 500);
 
-    const rows = (await Promise.all(
-      keys.map(k => ls.get(k, { type: 'json' }).catch(() => null))
-    )).filter(Boolean).map(l => ({
-      at: +String(l.consentAt ? Date.parse(l.consentAt) : 0) || null,
+    /* קוראים הכל ומסננים לפי התאריך שברשומה עצמה — מפתח האחסון לא אמין */
+    const all = (await Promise.all(
+      blobs.slice(0, 1200).map(b => ls.get(b.key, { type: 'json' }).catch(() => null))
+    )).filter(Boolean);
+
+    let rows = all.map(l => ({
+      at: l.consentAt ? Date.parse(l.consentAt) : null,
       consentAt: l.consentAt, name: l.name, phone: l.phone, email: l.email,
       productId: l.productId, imageUrl: l.imageUrl, ip: l.ip,
     }));
 
-    return json({ leads: rows, count: rows.length });
+    rows = rows.filter(r => !r.at || r.at >= since);
+    rows.sort((a, b) => (b.at || 0) - (a.at || 0));
+
+    /* מי מהם באמת הזמין — זו השאלה היחידה שחשובה במסך הזה */
+    const idx = await allIndex(os);
+    const tail = x => digits(x).replace(/^972/, '').replace(/^0/, '');
+    const byPhone = {}, byMail = {};
+    idx.forEach(r => {
+      const t = tail(r.phone);
+      if (t) (byPhone[t] = byPhone[t] || []).push(r);
+      const m = norm(r.email);
+      if (m) (byMail[m] = byMail[m] || []).push(r);
+    });
+
+    rows = rows.map(r => {
+      const hits = byPhone[tail(r.phone)] || byMail[norm(r.email)] || [];
+      const live = hits.filter(h => h.status !== 'cancelled');
+      return {
+        ...r,
+        orders: live.length,
+        revenue: live.reduce((s2, h) => s2 + (typeof h.total_num === 'number' ? h.total_num : 0), 0),
+        lastOrder: live.length ? live[0].number : null,
+      };
+    });
+
+    const converted = rows.filter(r => r.orders > 0).length;
+
+    return json({
+      leads: rows.slice(0, 600),
+      count: rows.length,
+      converted,
+      rate: rows.length ? Math.round((converted / rows.length) * 100) : 0,
+      revenue: rows.reduce((s2, r) => s2 + (r.revenue || 0), 0),
+    });
   }
 
   /* ---------- ניתוחים ---------- */
@@ -385,9 +413,19 @@ export default async (req) => {
     const idx = (await allIndex(os)).filter(r => Date.parse(r.date) >= since);
 
     const cities = {}, products = {}, statuses = {}, byMonth = {};
-    let revenue = 0, cost = 0, costRows = 0;
+    let revenue = 0, cost = 0, costRows = 0, live = 0, cancelled = 0, lost = 0;
 
     idx.forEach(r => {
+      statuses[r.status] = (statuses[r.status] || 0) + 1;
+
+      /* הזמנה שבוטלה לא נכנסת למחזור, לרווח ולממוצע */
+      if (r.status === 'cancelled') {
+        cancelled++;
+        if (typeof r.total_num === 'number') lost += r.total_num;
+        return;
+      }
+      live++;
+
       const c = (r.city || '—').trim() || '—';
       cities[c] = cities[c] || { orders: 0, revenue: 0 };
       cities[c].orders++;
@@ -395,7 +433,6 @@ export default async (req) => {
       if (typeof r.cost_num === 'number') { cost += r.cost_num; costRows++; }
 
       (r.products || []).forEach(p => { products[p] = (products[p] || 0) + 1; });
-      statuses[r.status] = (statuses[r.status] || 0) + 1;
 
       const m = String(r.date).slice(0, 7);
       byMonth[m] = byMonth[m] || { orders: 0, revenue: 0, cost: 0 };
@@ -409,12 +446,16 @@ export default async (req) => {
 
     return json({
       days,
-      orders: idx.length,
+      orders: live,
+      total: idx.length,
+      cancelled,
+      lost,
       revenue,
       cost: costRows ? cost : null,
       profit: costRows ? revenue - cost : null,
-      costCoverage: idx.length ? Math.round((costRows / idx.length) * 100) : 0,
-      avg: idx.length ? Math.round(revenue / idx.length) : 0,
+      margin: (costRows && revenue) ? Math.round(((revenue - cost) / revenue) * 1000) / 10 : null,
+      costCoverage: live ? Math.round((costRows / live) * 100) : 0,
+      avg: live ? Math.round(revenue / live) : 0,
       cities:   top(cities).slice(0, 40).map(([name, v]) => ({ name, ...v })),
       products: top(products).slice(0, 40).map(([id, n]) => ({ id, n })),
       statuses,

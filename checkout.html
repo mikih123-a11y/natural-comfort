@@ -115,8 +115,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
   <!-- Netlify מזהה את הטופס לפי ה-HTML הזה. השליחה עצמה נעשית ב-JS. -->
   <form name="order" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="text" name="bot-field">
-    <input name="order_number"><input name="name"><input name="phone"><input name="email">
-    <input name="city"><input name="street"><input name="floor"><input name="lift">
+    <input name="order_number"><input name="name"><input name="first_name"><input name="last_name">
+    <input name="phone"><input name="email">
+    <input name="city"><input name="street"><input name="apartment"><input name="floor"><input name="lift">
     <input name="contact_pref"><input name="measure"><textarea name="measure_note"></textarea><textarea name="notes"></textarea>
     <textarea name="order_items"></textarea><input name="order_total">
   </form>
@@ -128,10 +129,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <section class="card">
         <h2>מי מזמין</h2>
         <div class="grid2">
-          <div class="field"><label for="f-name">שם מלא *</label><input id="f-name" autocomplete="name"></div>
-          <div class="field"><label for="f-phone">טלפון נייד *</label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000"></div>
+          <div class="field"><label for="f-first">שם פרטי *</label><input id="f-first" autocomplete="given-name"></div>
+          <div class="field"><label for="f-last">שם משפחה *</label><input id="f-last" autocomplete="family-name"></div>
         </div>
-        <div class="field"><label for="f-email">אימייל *</label><input id="f-email" type="email" inputmode="email" autocomplete="email"></div>
+        <div class="grid2">
+          <div class="field"><label for="f-phone">טלפון נייד *</label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000"></div>
+          <div class="field"><label for="f-email">אימייל *</label><input id="f-email" type="email" inputmode="email" autocomplete="email"></div>
+        </div>
       </section>
 
       <section class="card">
@@ -141,7 +145,10 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
           <div class="field"><label for="f-street">רחוב ומספר *</label><input id="f-street" autocomplete="street-address"></div>
         </div>
         <div class="grid2">
+          <div class="field"><label for="f-apt">דירה <em>(אופציונלי)</em></label><input id="f-apt"></div>
           <div class="field"><label for="f-floor">קומה <em>(אופציונלי)</em></label><input id="f-floor"></div>
+        </div>
+        <div class="grid2">
           <div class="field">
             <label for="f-lift">מעלית</label>
             <select id="f-lift">
@@ -256,10 +263,11 @@ const okMail  = m => /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(m);
 
 $('#send').addEventListener('click', async () => {
   clr();
-  ['f-name','f-phone','f-email','f-city','f-street'].forEach(i=>$('#'+i).classList.remove('bad'));
+  ['f-first','f-last','f-phone','f-email','f-city','f-street'].forEach(i=>$('#'+i).classList.remove('bad'));
 
   const v = id => $('#'+id).value.trim();
-  if(v('f-name').length < 2){ $('#f-name').classList.add('bad'); return err('צריך שם מלא.'); }
+  if(v('f-first').length < 2){ $('#f-first').classList.add('bad'); return err('צריך שם פרטי.'); }
+  if(v('f-last').length < 2){ $('#f-last').classList.add('bad'); return err('צריך שם משפחה.'); }
   if(!okPhone(v('f-phone'))){ $('#f-phone').classList.add('bad'); return err('מספר נייד ישראלי לא תקין. לדוגמה 0501234567.'); }
   if(!okMail(v('f-email'))){ $('#f-email').classList.add('bad'); return err('כתובת אימייל לא תקינה.'); }
   if(!v('f-city')){ $('#f-city').classList.add('bad'); return err('צריך למלא עיר.'); }
@@ -277,11 +285,14 @@ $('#send').addEventListener('click', async () => {
   const data = {
     'form-name':    'order',
     order_number:   num,
-    name:           v('f-name'),
+    name:           v('f-first') + ' ' + v('f-last'),
+    first_name:     v('f-first'),
+    last_name:      v('f-last'),
     phone:          v('f-phone'),
     email:          v('f-email'),
     city:           v('f-city'),
     street:         v('f-street'),
+    apartment:      v('f-apt'),
     floor:          v('f-floor'),
     lift:           $('#f-lift').value,
     contact_pref:   document.querySelector('input[name=pref]:checked').value,
@@ -306,8 +317,10 @@ $('#send').addEventListener('click', async () => {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        number:num, name:data.name, phone:data.phone, email:data.email,
-        city:data.city, street:data.street, floor:data.floor, lift:data.lift,
+        number:num, name:data.name, first:data.first_name, last:data.last_name,
+        phone:data.phone, email:data.email,
+        city:data.city, street:data.street, apartment:data.apartment,
+        floor:data.floor, lift:data.lift,
         contact_pref:data.contact_pref, measure:data.measure,
         measure_note:data.measure_note, notes:data.notes,
         items, total:totalTxt, total_num: t
@@ -328,7 +341,7 @@ $('#send').addEventListener('click', async () => {
     console.warn('order post failed', e);
     order.sent = false;
     ncCart.saveOrder(order);
-    const txt = `הזמנה ${num}\n${data.name} · ${data.phone}\n${data.street}, ${data.city}\n\n`
+    const txt = `הזמנה ${num}\n${data.name} · ${data.phone}\n${data.street}${data.apartment?' דירה '+data.apartment:''}, ${data.city}\n\n`
               + data.order_items + `\n\nסה״כ: ${totalTxt}\nמדידה: ${data.measure}`
               + (data.measure_note ? `\nמידות שנמסרו: ${data.measure_note}` : '');
     window.location.href = 'https://wa.me/972524400030?text=' + encodeURIComponent(txt);

@@ -170,8 +170,9 @@
       })
       .catch(function (err) {
         if (err && err.name === 'AbortError') return; /* המשתמש ביטל */
-        console.error('[ncShare]', err);
-        alert('לא הצלחנו להכין את התמונה לשיתוף. אפשר לשמור אותה בלחיצה ארוכה על ההדמיה.');
+        console.warn('[ncShare] נפילה לשיתוף טקסט בלבד:', err);
+        /* אם הצריבה נכשלה (בדרך כלל CORS) — לפחות פותחים וואטסאפ עם הקישור */
+        window.open('https://wa.me/?text=' + encodeURIComponent(whatsappText()), '_blank');
       })
       .then(function () { setBusy(false); });
   }

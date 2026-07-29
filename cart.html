@@ -153,6 +153,8 @@ function draw(){
               : '<span style="font-size:14px">לפי התאמה</span>'}
           ${it.qty > 1 && typeof it.price === 'number'
               ? `<small>${ncCart.nis(it.price)} ליחידה</small>` : ''}
+          ${typeof it.ship === 'number'
+              ? `<small>משלוח והרכבה ${ncCart.nis(it.ship * (it.qty||1))} · לתשלום בבית למרכיב</small>` : ''}
         </div>
         <div class="qty">
           <button data-inc="${it.sig}" aria-label="הוספה">+</button>
@@ -188,6 +190,19 @@ document.addEventListener('click', e => {
 });
 
 draw();
+
+/* פייסבוק — צפייה בסל */
+(function(){
+  const it = ncCart.items();
+  if(!it.length) return;
+  (window.ncQ = window.ncQ || []).push(['ViewCart', {
+    content_type: 'product',
+    content_ids: it.map(x => x.modelId).filter(Boolean),
+    num_items: ncCart.count(),
+    value: ncCart.total() || 0,
+    currency: 'ILS'
+  }, true]);
+})();
 </script>
 <script src="/site.js"></script>
 </body>

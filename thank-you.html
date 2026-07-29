@@ -132,6 +132,9 @@ function copyText(o){
     (it.config||[]).forEach(c => L.push('   · ' + c));
     L.push('   מחיר: ' + (typeof it.price === 'number'
       ? ncCart.nis(it.price*(it.qty||1)) : (it.priceText || 'לפי התאמה')));
+    if(typeof it.ship === 'number'){
+      L.push('   משלוח והרכבה: ' + ncCart.nis(it.ship*(it.qty||1)) + ' · לתשלום בבית למרכיב');
+    }
     L.push('');
   });
   L.push('סה״כ: ' + (o.total || '—'));
@@ -146,6 +149,22 @@ function copyText(o){
 
 /* מי שמסר מידות בעצמו לא מקבל שלב של תיאום מדידה */
 const last = ncCart.orders()[0];
+
+/* פייסבוק — רכישה. הערך הוא סכום ההזמנה בלי דמי המשלוח,
+   כי המשלוח משולם למרכיב ולא נכנס אליך. */
+if(last && !sessionStorage.getItem('nc_purch_' + last.number)){
+  try{ sessionStorage.setItem('nc_purch_' + last.number, '1'); }catch(e){}
+  const val = (last.items||[]).reduce((s,it) =>
+    s + (typeof it.price === 'number' ? it.price * (it.qty||1) : 0), 0);
+  (window.ncQ = window.ncQ || []).push(['Purchase', {
+    content_type: 'product',
+    content_ids: (last.items||[]).map(x => x.modelId).filter(Boolean),
+    num_items: (last.items||[]).reduce((s,it) => s + (it.qty||1), 0),
+    value: val,
+    currency: 'ILS',
+    order_id: last.number
+  }, false]);
+}
 
 if(last){
   const body = copyText(last);

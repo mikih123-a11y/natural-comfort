@@ -447,6 +447,17 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     updateWa();
   };
   renderPrice();
+
+  /* פייסבוק — צפייה במוצר. נכנס לתור ונורה רק אחרי הסכמת עוגיות. */
+  (window.ncQ = window.ncQ || []).push(['ViewContent', {
+    content_type: 'product',
+    content_ids: [m.id],
+    content_name: m.name,
+    content_category: m.line || '',
+    value: priceNum || 0,
+    currency: 'ILS'
+  }, false]);
+
   if (m.lead_time_days) $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
   else $('#made').textContent = 'נבנה להזמנה';
   if (m.delivery_install) {
@@ -785,6 +796,14 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       ship:      (typeof m.delivery_install === 'number') ? m.delivery_install : null,
       config:    buildConfig(),
       qty:       1
+    });
+
+    (window.ncTrack || function(){})('AddToCart', {
+      content_type: 'product',
+      content_ids: [m.id],
+      content_name: m.name,
+      value: priceNum || 0,
+      currency: 'ILS'
     });
 
     justAdded = true;

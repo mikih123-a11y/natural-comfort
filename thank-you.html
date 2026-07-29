@@ -85,7 +85,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     <h2>מה קורה עכשיו</h2>
     <ol>
       <li><div><b>ניצור קשר</b><small>בתוך יום עסקים אחד, לאישור ההרכבה והפרטים.</small></div></li>
-      <li id="step2"><div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div></li>
+      <li id="step2"><div><b>מאשרים את המידות</b><small>נעבור איתכם על המידות שמסרתם לפני שנסגר המחיר.</small></div></li>
       <li><div><b>גבייה וייצור</b><small>אחרי אישור המחיר. הייצור מתחיל מיד לאחר מכן.</small></div></li>
       <li><div><b>אספקה והתקנה</b><small>עד 21 ימי עסקים — לא כולל שישי, שבת, ערבי חג וחגים.</small></div></li>
     </ol>
@@ -150,7 +150,10 @@ if(last){
   document.getElementById('mail').style.display = 'none';
   document.getElementById('wa').style.display = 'none';
 }
-if(last && last.measure === 'הלקוח מוסר מידות'){
+if(last && last.measure === 'מדידה מקצועית בבית'){
+  document.getElementById('step2').innerHTML =
+    '<div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div>';
+}else{
   document.getElementById('step2').innerHTML =
     '<div><b>מאשרים את המידות</b><small>נעבור איתכם על המידות שמסרתם לפני שנסגר המחיר. '
   + 'רהיט שמיוצר לפי מידות שנמסרו על ידכם אינו ניתן להחזרה או להחלפה.</small></div>';

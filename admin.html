@@ -556,7 +556,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <div class="errs" id="errs"></div>
 
     <div class="actions">
-      <button class="dl" id="dlSite" disabled>הורדת catalog.json מעודכן</button>
+      <button class="dl" id="saveSite" disabled>שמירה ופרסום</button>
+      <div id="saveMsg" style="font-size:13px;color:var(--ink-mute);margin:8px 0 10px;min-height:18px"></div>
+      <button class="dl sec" id="dlSite" disabled>הורדת catalog.json (גיבוי)</button>
       <button class="dl sec" id="dlViz" disabled>הורדת רשומות הדמיה תואמות (viz)</button>
     </div>
 
@@ -1026,11 +1028,11 @@ function sync(){
   if(errs.length){
     box.className='errs on';
     box.innerHTML='<b>יש לתקן לפני הורדה:</b><ul>'+errs.map(x=>`<li>${x}</li>`).join('')+'</ul>';
-    $('#dlSite').disabled=true; $('#dlViz').disabled=true;
+    $('#saveSite').disabled=$('#dlSite').disabled=true; $('#dlViz').disabled=true;
   }else{
     box.className='errs on clean';
     box.innerHTML='✓ הכול תקין. מוכן להורדה.';
-    $('#dlSite').disabled=false; $('#dlViz').disabled=false;
+    $('#saveSite').disabled=$('#dlSite').disabled=false; $('#dlViz').disabled=false;
   }
   buildChecklist(m,errs.length===0);
 }
@@ -1075,17 +1077,46 @@ function download(name,text){
 }
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),2600)}
 
-$('#dlSite').onclick=()=>{
+/* מרכיב את הקטלוג המלא עם הדגם הנוכחי, ומעדכן את עותק העבודה */
+function catalogWithCurrent(){
   const m=buildModel();
   const out=JSON.parse(JSON.stringify(CAT));
   const i=out.models.findIndex(x=>x.id===(editingId||m.id));
   if(i>=0)out.models[i]=m; else out.models.push(m);
-  download('catalog.json',JSON.stringify(out,null,1));
-  // reflect into working copy so further edits stack
   CAT=out; editingId=m.id; buildModelList();
   $$('.mitem').forEach(x=>x.classList.toggle('on',x.dataset.id===m.id));
   $('#loadState').textContent=CAT.models.length+' דגמים בקטלוג';
-  toast('הורד catalog.json · גררו ל-GitHub');
+  return out;
+}
+
+$('#dlSite').onclick=()=>{
+  download('catalog.json',JSON.stringify(catalogWithCurrent(),null,1));
+  toast('הורד catalog.json · גיבוי מקומי');
+};
+
+/* שמירה ישירה לגיטהאב — בלי הורדה ובלי גרירה */
+$('#saveSite').onclick=async()=>{
+  const btn=$('#saveSite'), msg=$('#saveMsg');
+  const out=catalogWithCurrent();
+  btn.disabled=true; const label=btn.textContent; btn.textContent='שומר…';
+  msg.textContent='';
+  try{
+    let tok=''; try{ tok=localStorage.getItem('nc_admin_token')||''; }catch(e){}
+    const url='/api/catalog-save'+(tok?('?token='+encodeURIComponent(tok)):'');
+    const r=await fetch(url,{
+      method:'POST', credentials:'same-origin',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({path:'products/catalog.json',data:out})
+    });
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error||('שגיאה '+r.status));
+    msg.innerHTML='<span class="badge good">נשמר · '+d.models+' דגמים. '
+      +'האתר יתעדכן תוך דקה-שתיים.</span>';
+    toast('נשמר לגיטהאב');
+  }catch(e){
+    msg.innerHTML='<span class="badge bad">'+e.message+'</span>';
+  }
+  btn.disabled=false; btn.textContent=label;
 };
 
 /* ---------- download viz stubs ---------- */

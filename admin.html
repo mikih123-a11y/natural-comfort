@@ -328,6 +328,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     </div></div>
 
     <div class="kpis" id="aKpis"></div>
+    <div class="panel"><h2>צנרת ההזמנות</h2><div class="body"><div id="aPipe"></div></div></div>
     <div class="panel"><h2>ערים · לפי מספר הזמנות</h2><div class="body"><div id="aCities"></div></div></div>
     <div class="panel"><h2>הדגמים הנמכרים</h2><div class="body"><div id="aProducts"></div></div></div>
     <div class="panel"><h2>לפי חודש</h2><div class="body" style="padding:0"><div id="aMonths"></div></div></div>
@@ -1577,10 +1578,24 @@ $('#dlViz').onclick=()=>{
     try{
       const d = await api({ type:'analytics', days });
       document.getElementById('aKpis').innerHTML = `
-        <div class="kpi"><b>${d.orders}</b><span>הזמנות</span></div>
-        <div class="kpi"><b>₪${Number(d.revenue).toLocaleString('he-IL')}</b><span>מחזור</span></div>
-        <div class="kpi"><b>₪${Number(d.avg).toLocaleString('he-IL')}</b><span>הזמנה ממוצעת</span></div>
-        <div class="kpi"><b>${d.cities.length}</b><span>ערים</span></div>`;
+        <div class="kpi"><b>${d.orders}</b><span>הזמנות פעילות</span></div>
+        <div class="kpi"><b>${nis(d.revenue)}</b><span>מחזור</span></div>
+        <div class="kpi"><b>${nis(d.profit)}</b><span>רווח${d.margin!==null?' · '+d.margin+'%':''}</span></div>
+        <div class="kpi"><b>${nis(d.avg)}</b><span>הזמנה ממוצעת</span></div>`;
+
+      /* צנרת ההזמנות — מה צריך טיפול היום */
+      const order = ['received','paid','production','ready','scheduled','shipped','cancelled'];
+      const pipeMax = Math.max(1, ...order.map(k => d.statuses[k] || 0));
+      document.getElementById('aPipe').innerHTML =
+        '<div class="bars">' + order.filter(k => d.statuses[k])
+          .map(k => barRow(ST[k], d.statuses[k], pipeMax)).join('') + '</div>'
+        + (d.cancelled
+            ? `<p style="margin:12px 0 0;font-size:13px;color:var(--ink-mute)">
+                 ${d.cancelled} הזמנות בוטלו · ${nis(d.lost)} שלא נכנסו למחזור.</p>` : '')
+        + (d.costCoverage < 100
+            ? `<p style="margin:8px 0 0;font-size:13px;color:var(--ink-mute)">
+                 לרק ${d.costCoverage}% מההזמנות יש עלות מהמפעל, אז הרווח חלקי.
+                 <button class="linkbtn" data-goto="costs">למסך העלויות</button></p>` : '');
 
       const cmax = Math.max(1, ...d.cities.map(c=>c.orders));
       cEl.innerHTML = d.cities.length

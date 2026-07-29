@@ -413,9 +413,19 @@ export default async (req) => {
     const idx = (await allIndex(os)).filter(r => Date.parse(r.date) >= since);
 
     const cities = {}, products = {}, statuses = {}, byMonth = {};
-    let revenue = 0, cost = 0, costRows = 0;
+    let revenue = 0, cost = 0, costRows = 0, live = 0, cancelled = 0, lost = 0;
 
     idx.forEach(r => {
+      statuses[r.status] = (statuses[r.status] || 0) + 1;
+
+      /* הזמנה שבוטלה לא נכנסת למחזור, לרווח ולממוצע */
+      if (r.status === 'cancelled') {
+        cancelled++;
+        if (typeof r.total_num === 'number') lost += r.total_num;
+        return;
+      }
+      live++;
+
       const c = (r.city || '—').trim() || '—';
       cities[c] = cities[c] || { orders: 0, revenue: 0 };
       cities[c].orders++;
@@ -423,7 +433,6 @@ export default async (req) => {
       if (typeof r.cost_num === 'number') { cost += r.cost_num; costRows++; }
 
       (r.products || []).forEach(p => { products[p] = (products[p] || 0) + 1; });
-      statuses[r.status] = (statuses[r.status] || 0) + 1;
 
       const m = String(r.date).slice(0, 7);
       byMonth[m] = byMonth[m] || { orders: 0, revenue: 0, cost: 0 };
@@ -437,12 +446,16 @@ export default async (req) => {
 
     return json({
       days,
-      orders: idx.length,
+      orders: live,
+      total: idx.length,
+      cancelled,
+      lost,
       revenue,
       cost: costRows ? cost : null,
       profit: costRows ? revenue - cost : null,
-      costCoverage: idx.length ? Math.round((costRows / idx.length) * 100) : 0,
-      avg: idx.length ? Math.round(revenue / idx.length) : 0,
+      margin: (costRows && revenue) ? Math.round(((revenue - cost) / revenue) * 1000) / 10 : null,
+      costCoverage: live ? Math.round((costRows / live) * 100) : 0,
+      avg: live ? Math.round(revenue / live) : 0,
       cities:   top(cities).slice(0, 40).map(([name, v]) => ({ name, ...v })),
       products: top(products).slice(0, 40).map(([id, n]) => ({ id, n })),
       statuses,

@@ -1198,6 +1198,7 @@ $('#dlViz').onclick=()=>{
     const g = [];
     const hasTier = m.width_tiers && (m.width_tiers.tiers||[]).some(t => typeof t.price === 'number');
     if(!m.price && !hasTier) g.push('מחיר');
+    if(typeof m.delivery_install !== 'number') g.push('דמי משלוח');
     if(!m.dims || !m.dims.w || !m.dims.h || !m.dims.d) g.push('מידות');
     if(!(m.renders||[]).length) g.push('תמונות');
     else if((m.renders||[]).some(r => !r.image || !r.thumb)) g.push('תמונה חסרה');

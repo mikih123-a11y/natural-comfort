@@ -300,19 +300,27 @@
 
   function addTrackLink() {
     if (location.pathname.indexOf('myorder') !== -1) return;
-    var anchor = document.querySelector('footer a[href="/terms.html"]')
-              || document.querySelector('footer a[href="/about.html"]');
-    if (!anchor || !anchor.parentNode) return;
-    var box = anchor.parentNode;
-    if (box.querySelector('a[href^="/myorder"]')) return;
+    var foot = document.querySelector('footer');
+    if (!foot || foot.querySelector('a[href^="/myorder"]')) return;
 
-    var sep = document.createTextNode(' · ');
+    var anchor = foot.querySelector('a[href="/terms.html"]')
+              || foot.querySelector('a[href="/about.html"]');
+
     var a = document.createElement('a');
     a.href = '/myorder.html';
     a.textContent = 'מעקב הזמנה';
     a.style.textDecoration = 'none';
-    box.appendChild(sep);
-    box.appendChild(a);
+
+    if (anchor && anchor.parentNode) {
+      anchor.parentNode.appendChild(document.createTextNode(' · '));
+      anchor.parentNode.appendChild(a);
+    } else {
+      /* פוטר בלי קישורי תקנון — מוסיפים שורה משלנו */
+      var d = document.createElement('div');
+      d.style.marginTop = '8px';
+      d.appendChild(a);
+      (foot.querySelector('.wrap') || foot).appendChild(d);
+    }
   }
 
   /* ---------- הפעלה ---------- */

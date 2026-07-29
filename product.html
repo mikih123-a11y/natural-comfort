@@ -246,6 +246,12 @@ footer a:hover{color:var(--ink)}
         <div class="chips" id="constr"></div>
       </div>
 
+      <div class="opt" id="wid-wrap" style="display:none">
+        <h2>רוחב הארון<em id="wval">—</em></h2>
+        <input type="range" id="wslider" class="hslider" min="120" max="360" step="10" value="240" aria-label="רוחב הארון">
+        <div class="hnote" id="wnote"></div>
+      </div>
+
       <div class="opt" id="hgt-wrap" style="display:none">
         <h2>גובה הארון<em id="hval">2.40 מ׳</em></h2>
         <input type="range" id="hslider" class="hslider" min="240" max="270" step="1" value="240" aria-label="גובה הארון">
@@ -281,7 +287,7 @@ footer a:hover{color:var(--ink)}
           <svg width="16" height="16" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.5 8.5 8.5 0 01-4-1L3 21l2-4.9A8.4 8.4 0 014 11.5a8.5 8.5 0 0117 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
           שלחו הזמנה בוואטסאפ
         </a>
-        <p class="hint">ההרכבה שבחרתם נשלחת אלינו בוואטסאפ · המחיר הסופי נקבע אחרי מדידה.</p>
+        <p class="hint">ההרכבה שבחרתם נשלחת אלינו בוואטסאפ · המידות באחריות הלקוח · ההרכבה משולמת למתקין בבית.</p>
       </div>
 
       <div class="spec">
@@ -351,6 +357,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   let priceNum = null;                              // אותו מחיר כמספר, או null לפי התאמה
   let updateWa = () => {};                          // מוחלף למטה, אחרי שכל הבוררים קיימים
   let constrPct = 0, constrName = '';               // construction surcharge (%)
+  let curW = null;                                  // רוחב נבחר, בס״מ
+  let widthTiers = null;                            // מדרגות מחיר לפי רוחב
   const surPct = h => h > 240 ? 0.40 : 0;                 // כל הגבהה מעל 2.40 = +40%
   // סוכמים מחדש מהמסך — תוספת עם כמה אפשרויות מחיר לא יכולה להיתקע על סכום ישן
   const recalcAddons = () => {
@@ -367,16 +375,21 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const N = [];
     if (isWardrobe()) {
 
-    // בסיס אלומיניום — רק אם התוספת נבחרה בפועל
+      // תוספות שנבחרו בפועל — תיאור לפי מה שהן באמת
       document.querySelectorAll('.ax-toggle[aria-pressed="true"]').forEach(t => {
-      const w = t.closest('.addon');
-      const nm = w.querySelector('.ax-name').textContent;
-      if (!/אלומיניום|קאנט/.test(nm)) return;
-      const col = w.querySelector('.ax-col.on');
-      const gav = col ? ` בגוון ${col.textContent.trim()}` : '';
-      N.push([`בסיס אלומיניום${gav}`,
-        'פרופיל אלומיניום מובנה בתחתית הארון, יוצר הגנה מלאה מפני רטיבות ומונע נפיחות של הלוח התחתון.']);
-    });
+        const w  = t.closest('.addon');
+        const nm = w.querySelector('.ax-name').textContent.trim();
+        const col = w.querySelector('.ax-col.on');
+        const gav = col ? ` בגוון ${col.textContent.trim()}` : '';
+
+        if (/קאנט/.test(nm)) {
+          N.push([`קאנט אלומיניום למדף${gav}`,
+            'פס אלומיניום בקצה המדף — מגן על הקצה ונותן גימור נקי.']);
+        } else if (/בסיס/.test(nm)) {
+          N.push([`בסיס אלומיניום${gav}`,
+            'פרופיל אלומיניום מובנה בתחתית הארון, יוצר הגנה מפני רטיבות ומונע נפיחות של הלוח התחתון.']);
+        }
+      });
 
     // גוף הארון — לפי סוג הבנייה שנבחר
       if (constrName) {
@@ -387,6 +400,9 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       if (txt) N.push([`גוף הארון · ${constrName}`, txt]);
     }
 
+      const alBase = [...document.querySelectorAll('.ax-toggle[aria-pressed="true"] .ax-name')]
+                       .some(x => /בסיס/.test(x.textContent));
+      if (!alBase) N.push(['בסיס הארון', 'רגלי במה. בסיס אלומיניום אטום לרטיבות זמין בתוספת תשלום.']);
       N.push(['מנגנון הדלתות', 'כולל מנגנוני טריקה שקטה בכל הדלתות.']);
       N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום — דברו איתנו.']);
     }
@@ -398,14 +414,25 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     $('#nts').style.display = '';
   };
 
+  /* מחיר הבסיס: מדרגת הרוחב גוברת על המחיר הקבוע של הדגם */
+  const tierFor = w => (widthTiers || []).find(t => w >= t.from && w <= t.to) || null;
+  const basePrice = () => {
+    if (widthTiers && curW != null) {
+      const t = tierFor(curW);
+      return t && typeof t.price === 'number' ? t.price : null;
+    }
+    return m.price || null;
+  };
+
   const renderPrice = () => {
     const hpct = surPct(curH), pct = hpct + constrPct;    // אחוזים מצטברים על מחיר הבסיס
+    const base = basePrice();
     const bits = [];
     if (curH > 240) bits.push(`גובה ${(curH / 100).toFixed(2)} מ׳ · +${Math.round(hpct * 100)}%`);
     if (constrPct) bits.push(`${constrName} · +${Math.round(constrPct * 100)}%`);
     if (addons) bits.push(`תוספות ₪${addons}`);
-    if (m.price) {
-      const p = (pct ? Math.round(m.price * (1 + pct) / 10) * 10 : m.price) + addons;
+    if (base) {
+      const p = (pct ? Math.round(base * (1 + pct) / 10) * 10 : base) + addons;
       priceTxt = nis(p);
       priceNum = p;                                   // המספר עצמו — לסל
       $('#price').innerHTML = nis(p) + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>כולל מע״מ</small>');
@@ -557,6 +584,39 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   };
 
   // סוג בניית הארון — בחירת לקוח (מלמין / MDF / סנדוויץ')
+  /* ---------- בורר רוחב ---------- */
+  if (m.width_tiers && Array.isArray(m.width_tiers.tiers) && m.width_tiers.tiers.length) {
+    widthTiers = m.width_tiers.tiers;
+    const step = m.width_tiers.step || 10;
+    const lo = Math.min(...widthTiers.map(t => t.from));
+    const hi = Math.max(...widthTiers.map(t => t.to));
+
+    const ws = $('#wslider');
+    ws.min = lo; ws.max = hi; ws.step = step;
+
+    // ברירת מחדל: הרוחב מהקטלוג אם הוא בטווח, אחרת הקצה התחתון
+    const fromUrl = parseInt(new URLSearchParams(location.search).get('width'), 10);
+    let start = (m.dims && m.dims.w) || lo;
+    if (!isNaN(fromUrl)) start = fromUrl;
+    start = Math.min(hi, Math.max(lo, Math.round(start / step) * step));
+    ws.value = start;
+    curW = start;
+
+    $('#wid-wrap').style.display = '';
+
+    const onWidth = () => {
+      curW = +ws.value;
+      $('#wval').textContent = curW + ' ס״מ';
+      const t = tierFor(curW);
+      $('#wnote').textContent = t
+        ? `טווח ${t.from}–${t.to} ס״מ · מחיר אחיד בטווח. רוחב אחר? נבנה בדיוק למידה שלכם.`
+        : 'רוחב מחוץ לטווח המחירון — נבנה בהתאמה אישית, דברו איתנו.';
+      renderPrice();
+    };
+    ws.addEventListener('input', onWidth);
+    onWidth();
+  }
+
   const constrs = (((d.constructions || {}).options) || []);
   if (constrs.length && (m.category === 'wardrobe' || m.line_id === 'hazaza')) {
     $('#constr-wrap').style.display = '';
@@ -680,6 +740,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       if (a) L.push(`${$('#plbl').textContent}: ${a}`);
     }
     if (visible('#constr-wrap')) L.push(`סוג הארון: ${$('#cname').textContent}`);
+    if (visible('#wid-wrap'))    L.push(`רוחב: ${$('#wval').textContent}`);
     if (visible('#hgt-wrap'))    L.push(`גובה: ${$('#hval').textContent}`);
     const lay = document.querySelector('.lay[aria-pressed="true"] b');
     if (lay) L.push(`סידור פנים: ${lay.textContent.trim()}`);

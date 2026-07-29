@@ -10,6 +10,7 @@ import { readSession, bumpSessionVersion } from './_auth.mjs';
  *   ?type=order-status   (POST)  {id, status, note}
  *   ?type=order-update   (POST)  {id, customer{}, address{}, tax_id, admin_notes, cost_num, shipping_num}
  *   ?type=order-note     (POST)  {id, text}            הוספת הערה ליומן
+ *   ?type=supplier                          חשבוניות ספק · כפילויות · חסרות · לא שולמו
  *   ?type=customer&phone=  |  &email=      כרטיס לקוח מלא
  *   ?type=export&q=&status=&from=&to=       ייצוא הזמנות ל-CSV
  *   ?type=logout-all     (POST)             ניתוק כל המכשירים
@@ -129,6 +130,9 @@ function matches(row, q) {
 }
 
 /* עדכון שורה באינדקס בלי לקרוא את כל החודשים */
+/* מספר חשבונית ספק מנורמל — בלי רווחים, מקפים או אותיות גדולות/קטנות */
+const supKey = v => String(v || '').replace(/[\s\-_.\/\\]/g, '').toUpperCase();
+
 async function patchIndex(os, order, patch) {
   const key = `_idx:${String(order.date).slice(0, 7)}`;
   try {
@@ -197,8 +201,20 @@ export default async (req) => {
     const costs = await loadCosts();
     const cost = orderCost(o, costs);
     const rev  = typeof o.total_num === 'number' ? o.total_num : null;
+
+    /* אותה חשבונית ספק על יותר מהזמנה אחת = חיוב כפול */
+    let dupInvoice = [];
+    const myKey = supKey(o.supplier?.invoice_no);
+    if (myKey) {
+      const rows = await allIndex(os);
+      dupInvoice = rows
+        .filter(r => r.number !== o.number && supKey(r.sup_no) === myKey)
+        .map(r => ({ number: r.number, name: r.name || '', amount: r.sup_amount ?? null, date: r.date || null }));
+    }
+
     return json({
       order: o,
+      dupInvoice,
       cost,
       profit: (rev !== null && cost !== null) ? rev - cost : null,
       margin: (rev && cost !== null) ? Math.round(((rev - cost) / rev) * 1000) / 10 : null,
@@ -265,6 +281,17 @@ export default async (req) => {
     /* משלוח והרכבה — מגיע מהקטלוג, ניתן לדריסה כאן במקרה חריג */
     if (b.shipping_num !== undefined) o.shipping_num = num(b.shipping_num);
 
+    /* ---------- חשבונית ספק ---------- */
+    if (b.supplier !== undefined) {
+      const s = b.supplier || {};
+      o.supplier = o.supplier || {};
+      if (s.invoice_no   !== undefined) o.supplier.invoice_no   = supKey(s.invoice_no) ? clean(s.invoice_no, 40) : '';
+      if (s.invoice_date !== undefined) o.supplier.invoice_date = clean(s.invoice_date, 12);
+      if (s.amount       !== undefined) o.supplier.amount       = num(s.amount);
+      if (s.paid         !== undefined) o.supplier.paid         = !!s.paid;
+      if (s.note         !== undefined) o.supplier.note         = clean(s.note, 300);
+    }
+
     o.log = o.log || [];
     o.log.unshift({ at: new Date().toISOString(), what: 'הפרטים עודכנו באדמין' });
     await os.setJSON(id, o);
@@ -277,9 +304,66 @@ export default async (req) => {
       apartment: o.address.apartment, floor: o.address.floor,
       cost_num: o.cost_num,
       shipping_num: o.shipping_num,
+      sup_no:     o.supplier?.invoice_no ?? null,
+      sup_amount: o.supplier?.amount ?? null,
+      sup_paid:   o.supplier?.paid ?? null,
+      sup_date:   o.supplier?.invoice_date ?? null,
     });
 
     return json({ ok: true });
+  }
+
+  /* ---------- חשבוניות ספק ---------- */
+  if (type === 'supplier') {
+    const rows = await allIndex(os);
+
+    /* קיבוץ לפי מספר חשבונית מנורמל — כדי לתפוס חיוב כפול */
+    const byInv = new Map();
+    rows.forEach(r => {
+      const k = supKey(r.sup_no);
+      if (!k) return;
+      if (!byInv.has(k)) byInv.set(k, []);
+      byInv.get(k).push(r);
+    });
+
+    const dups = [];
+    byInv.forEach((list, k) => {
+      if (list.length > 1) dups.push({
+        invoice: list[0].sup_no,
+        key: k,
+        count: list.length,
+        sum: list.reduce((a, r) => a + (typeof r.sup_amount === 'number' ? r.sup_amount : 0), 0),
+        orders: list.map(r => ({ number: r.number, name: r.name || '', date: r.date || null, amount: r.sup_amount ?? null })),
+      });
+    });
+
+    const active  = rows.filter(r => r.status !== 'cancelled');
+    const withInv = active.filter(r => supKey(r.sup_no));
+    const missing = active
+      .filter(r => !supKey(r.sup_no))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+      .slice(0, 200)
+      .map(r => ({ number: r.number, name: r.name || '', date: r.date || null, total: r.total_num ?? null }));
+
+    const unpaid = withInv
+      .filter(r => !r.sup_paid)
+      .map(r => ({ number: r.number, name: r.name || '', invoice: r.sup_no, date: r.sup_date || null, amount: r.sup_amount ?? null }));
+
+    return json({
+      dups,
+      missing,
+      unpaid,
+      counts: {
+        orders:   active.length,
+        invoiced: withInv.length,
+        missing:  active.length - withInv.length,
+        unpaid:   unpaid.length,
+      },
+      totals: {
+        invoiced: withInv.reduce((a, r) => a + (typeof r.sup_amount === 'number' ? r.sup_amount : 0), 0),
+        unpaid:   unpaid.reduce((a, r) => a + (typeof r.amount === 'number' ? r.amount : 0), 0),
+      },
+    });
   }
 
   /* ---------- ניתוק כל המכשירים ---------- */

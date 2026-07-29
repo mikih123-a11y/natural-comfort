@@ -146,6 +146,15 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
   font-family:inherit;cursor:pointer;transition:.2s var(--ease)}
 .b0:hover{background:#a5793f}
 .b0.done{background:#3F6B4F}
+/* ---- הערות מפרט דינמיות ---- */
+.nts{margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+.nts h2{font-family:var(--display);font-size:17px;font-weight:500;margin-bottom:12px}
+.nts ul{list-style:none;display:grid;gap:11px}
+.nts li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;
+  font-size:14px;line-height:1.6;color:var(--ink-mute)}
+.nts li b{color:var(--ink);font-weight:600}
+.nts li::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--champagne);margin-top:9px}
 .acts{margin-top:36px;display:grid;gap:10px}
 .b1{display:flex;align-items:center;justify-content:center;gap:11px;background:var(--ink);color:var(--paper);padding:17px;font-size:16px;font-weight:600;transition:.2s var(--ease)}
 .b1:hover{background:#000;gap:16px}
@@ -254,6 +263,11 @@ footer a:hover{color:var(--ink)}
         <div class="addons" id="addons"></div>
       </div>
 
+      <section class="nts" id="nts" style="display:none">
+        <h2>מה מקבלים</h2>
+        <ul id="ntslist"></ul>
+      </section>
+
       <div class="acts">
         <button class="b0" id="addCart" type="button">
           <svg width="17" height="17" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -346,6 +360,44 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       addons += v ? +v.dataset.price : +t.dataset.price;
     });
   };
+  /* ---------- הערות מפרט, משתנות לפי הבחירה ---------- */
+  const isWardrobe = () => m.category === 'wardrobe' || m.line_id === 'hazaza';
+
+  const renderNotes = () => {
+    const N = [];
+    if (isWardrobe()) {
+
+    // בסיס אלומיניום — רק אם התוספת נבחרה בפועל
+      document.querySelectorAll('.ax-toggle[aria-pressed="true"]').forEach(t => {
+      const w = t.closest('.addon');
+      const nm = w.querySelector('.ax-name').textContent;
+      if (!/אלומיניום|קאנט/.test(nm)) return;
+      const col = w.querySelector('.ax-col.on');
+      const gav = col ? ` בגוון ${col.textContent.trim()}` : '';
+      N.push([`בסיס אלומיניום${gav}`,
+        'פרופיל אלומיניום מובנה בתחתית הארון, יוצר הגנה מלאה מפני רטיבות ומונע נפיחות של הלוח התחתון.']);
+    });
+
+    // גוף הארון — לפי סוג הבנייה שנבחר
+      if (constrName) {
+      let txt = '';
+      if (/מלמין/.test(constrName))        txt = 'מלמין יצוק.';
+      else if (/MDF/i.test(constrName))    txt = 'לוח MDF. ניתן לבחור מתוך מגוון רחב של צבעים.';
+      else if (/סנדוויץ/.test(constrName)) txt = 'לוח סנדוויץ׳ איכותי מתוצרת אירופה. ניתן לבחור מתוך מגוון רחב של צבעים.';
+      if (txt) N.push([`גוף הארון · ${constrName}`, txt]);
+    }
+
+      N.push(['מנגנון הדלתות', 'כולל מנגנוני טריקה שקטה בכל הדלתות.']);
+      N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום — דברו איתנו.']);
+    }
+
+    N.push(['הובלה, סבלות והרכבה',
+      'התשלום עבור ההובלה, הסבלות וההרכבה משולם ישירות למתקין בבית הלקוח, במעמד ההתקנה, ואינו כלול במחיר המוצר.']);
+
+    $('#ntslist').innerHTML = N.map(([h, t]) => `<li><span><b>${h}:</b> ${t}</span></li>`).join('');
+    $('#nts').style.display = '';
+  };
+
   const renderPrice = () => {
     const hpct = surPct(curH), pct = hpct + constrPct;    // אחוזים מצטברים על מחיר הבסיס
     const bits = [];
@@ -362,6 +414,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       priceNum = null;
       $('#price').innerHTML = '<span style="font-size:.62em">מחיר לפי התאמה</span>' + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>דברו איתנו</small>');
     }
+    renderNotes();
     updateWa();
   };
   renderPrice();

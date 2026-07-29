@@ -13,6 +13,60 @@ body{background:var(--paper);color:var(--ink);font-family:Assistant,sans-serif;f
 h1{font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:30px;letter-spacing:-.02em}
 h2{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:19px;margin:0 0 4px}
 .sub{color:var(--ink-mute);font-size:13.5px}
+/* ===== מעטפת האדמין ===== */
+.shell{display:grid;grid-template-columns:1fr 232px;min-height:100vh}
+@media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+.nav{background:#141C1A;color:#CFD6D2;position:sticky;top:0;height:100vh;
+     display:flex;flex-direction:column;overflow-y:auto}
+@media(max-width:900px){.nav{position:static;height:auto}}
+.nav .brand{padding:20px 20px 16px;border-bottom:1px solid #2A3532}
+.nav .brand b{display:block;font-family:var(--display,Georgia),serif;font-size:18px;color:#fff;font-weight:600}
+.nav .brand small{display:block;font-size:11.5px;color:#7E8B86;margin-top:3px;letter-spacing:.06em}
+.nav nav{padding:10px 0;flex:1}
+.nav a{display:flex;align-items:center;gap:10px;padding:11px 20px;color:#CFD6D2;
+       text-decoration:none;font-size:14.5px;border-inline-start:3px solid transparent;cursor:pointer}
+.nav a:hover{background:#1D2825;color:#fff}
+.nav a.on{background:#1D2825;color:#fff;border-inline-start-color:var(--oak,#B8894E);font-weight:600}
+.nav a .ic{width:18px;text-align:center;opacity:.85}
+.nav a .cnt{margin-inline-start:auto;font-size:11.5px;background:#2A3532;color:#9FB0AA;
+            padding:2px 8px;border-radius:999px}
+.nav .foot{padding:14px 20px;border-top:1px solid #2A3532;font-size:12px;color:#6F7C77}
+.nav .foot a{padding:4px 0;font-size:12.5px;color:#9FB0AA;border:0}
+
+.screen{display:none;min-width:0}
+.screen.on{display:block}
+
+/* ===== דשבורד ===== */
+.dash{max-width:1240px;margin:0 auto;padding:24px 24px 90px}
+.dash h1{font-family:var(--display,Georgia),serif;font-size:30px;font-weight:600;letter-spacing:-.02em}
+.dash .lede{color:var(--ink-mute);font-size:14.5px;margin:5px 0 24px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:#fff;border:1px solid var(--line);padding:18px}
+.kpi b{display:block;font-family:var(--display,Georgia),serif;font-size:30px;font-weight:600;line-height:1.1}
+.kpi span{display:block;font-size:12.5px;color:var(--ink-mute);margin-top:5px}
+.kpi.warn b{color:#B4562E}
+.kpi.ok b{color:#3F6B4F}
+
+.panel{background:#fff;border:1px solid var(--line);margin-bottom:16px}
+.panel h2{font-family:var(--display,Georgia),serif;font-size:18px;font-weight:500;
+          padding:16px 18px;border-bottom:1px solid var(--line);margin:0}
+.panel .body{padding:16px 18px}
+.panel .body p{color:var(--ink-mute);font-size:14px;margin-bottom:10px}
+
+table.tbl{width:100%;border-collapse:collapse;font-size:14px}
+table.tbl th{text-align:start;font-size:12px;color:var(--ink-mute);font-weight:600;
+             padding:9px 12px;border-bottom:1px solid var(--line);background:#FCFBF9}
+table.tbl td{padding:10px 12px;border-bottom:1px solid var(--line)}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl tr:hover td{background:#FCFBF9}
+.badge{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+.badge.bad{background:#FAEDEA;color:#8C3323}
+.badge.warn{background:#FBF0E4;color:#8A5B20}
+.badge.good{background:#EAF0EB;color:#3F6B4F}
+.linkbtn{background:none;border:0;color:var(--oak,#B8894E);font:inherit;cursor:pointer;text-decoration:underline;padding:0}
+
 .topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
 .topbar .in{max-width:1240px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:18px}
 .topbar .sp{flex:1}
@@ -119,6 +173,71 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
 </style>
 </head>
 <body>
+
+<div class="shell">
+
+<!-- ================= תוכן ================= -->
+<div style="min-width:0">
+
+<!-- ---------- מסך: דשבורד ---------- -->
+<section class="screen on" id="sc-dash">
+  <div class="dash">
+    <h1>לוח בקרה</h1>
+    <p class="lede">מצב הקטלוג והמדמה במבט אחד.</p>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="panel">
+      <h2>מה דורש טיפול</h2>
+      <div class="body"><div id="todo"></div></div>
+    </div>
+
+    <div class="panel">
+      <h2>הקטלוג לפי קו</h2>
+      <div class="body" style="padding:0"><div id="bylines"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- מסך: הזמנות ולידים ---------- -->
+<section class="screen" id="sc-leads">
+  <div class="dash">
+    <h1>הזמנות ולידים</h1>
+    <p class="lede">ההזמנות והלידים נשמרים אצל Netlify. מכאן קופצים ישר אליהם.</p>
+
+    <div class="kpis" id="funnelKpis"></div>
+
+    <div class="panel">
+      <h2>משפך ההדמיה</h2>
+      <div class="body">
+        <p>נדרש <span class="mono">STATS_TOKEN</span> כדי לשלוף נתונים. מגדירים אותו ב-Netlify ומדביקים כאן.</p>
+        <div class="row c2">
+          <div>
+            <label>STATS_TOKEN</label>
+            <input type="password" id="statsToken" placeholder="הדביקו כאן">
+          </div>
+          <div>
+            <label>טווח בימים</label>
+            <input type="number" id="statsDays" value="30" min="1" max="90">
+          </div>
+        </div>
+        <button class="addline" id="loadStats" style="margin-top:10px">טעינת נתונים</button>
+        <div id="statsOut" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>קישורים מהירים</h2>
+      <div class="body">
+        <p>הזמנות מהאתר ולידים מההדמיה יושבים בלוח הבקרה של Netlify.</p>
+        <a class="addline" id="lnkForms" href="#" target="_blank">פתיחת Forms ב-Netlify ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- מסך: מוצרים ---------- -->
+<section class="screen" id="sc-products">
 
 <div class="topbar"><div class="in">
   <div><h1>ניהול מוצרים</h1><div class="sub">ממלאים טופס · מורידים <span class="mono">catalog.json</span> · גוררים ל-GitHub. בלי לגעת ב-JSON ביד.</div></div>
@@ -315,6 +434,40 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
 </div>
 
 <div class="toast" id="toast"></div>
+
+</section>
+<!-- ---------- מסך: בריאות הנתונים ---------- -->
+<section class="screen" id="sc-health">
+  <div class="dash">
+    <h1>בריאות הנתונים</h1>
+    <p class="lede">כל דגם שחסר לו משהו — כאן. לחיצה פותחת אותו לעריכה.</p>
+    <div class="panel"><h2>דגמים חסרים</h2>
+      <div class="body" style="padding:0"><div id="healthTbl"></div></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /תוכן -->
+
+<!-- ================= תפריט ================= -->
+<aside class="nav">
+  <div class="brand">
+    <b>Natural Comfort</b>
+    <small>מערכת ניהול</small>
+  </div>
+  <nav>
+    <a data-sc="dash"     class="on"><span class="ic">▦</span> לוח בקרה</a>
+    <a data-sc="leads"><span class="ic">✉</span> הזמנות ולידים</a>
+    <a data-sc="products"><span class="ic">▤</span> מוצרים <span class="cnt" id="navCount">—</span></a>
+    <a data-sc="health"><span class="ic">⚠</span> בריאות הנתונים <span class="cnt" id="navGaps">—</span></a>
+  </nav>
+  <div class="foot">
+    <a href="/" target="_blank">האתר ↗</a>
+    <a href="/viz/" target="_blank">ההדמיה ↗</a>
+  </div>
+</aside>
+
+</div><!-- /shell -->
 
 <script>
 "use strict";
@@ -778,6 +931,168 @@ $('#dlViz').onclick=()=>{
   download(`viz-stubs-${m.id}.json`,JSON.stringify(viz,null,1));
   toast('הורדו רשומות הדמיה · שימו לב: צריך תמונות /viz/img/ נפרדות');
 };
+
+/* ==========================================================
+   מעטפת: ניווט, לוח בקרה, בריאות נתונים, משפך
+   ========================================================== */
+(function(){
+  const $$$ = sel => Array.from(document.querySelectorAll(sel));
+  const cat = () => (typeof CAT !== 'undefined' && CAT) ? CAT : null;
+
+  /* ---------- ניווט ---------- */
+  function go(name){
+    $$$('.screen').forEach(x => x.classList.toggle('on', x.id === 'sc-' + name));
+    $$$('.nav a[data-sc]').forEach(a => a.classList.toggle('on', a.dataset.sc === name));
+    location.hash = name;
+    window.scrollTo(0,0);
+    if(name === 'dash')   paintDash();
+    if(name === 'health') paintHealth();
+  }
+  $$$('.nav a[data-sc]').forEach(a => a.onclick = () => go(a.dataset.sc));
+  addEventListener('hashchange', () => {
+    const h = location.hash.replace('#','');
+    if(['dash','leads','products','health'].includes(h)) go(h);
+  });
+
+  /* ---------- ניתוח הקטלוג ---------- */
+  const nis0 = n => '₪' + Number(n).toLocaleString('he-IL');
+
+  function gaps(m){
+    const g = [];
+    const hasTier = m.width_tiers && (m.width_tiers.tiers||[]).some(t => typeof t.price === 'number');
+    if(!m.price && !hasTier) g.push('מחיר');
+    if(!m.dims || !m.dims.w || !m.dims.h || !m.dims.d) g.push('מידות');
+    if(!(m.renders||[]).length) g.push('תמונות');
+    else if((m.renders||[]).some(r => !r.image || !r.thumb)) g.push('תמונה חסרה');
+    if(!(m.features||[]).length) g.push('מה כלול');
+    return g;
+  }
+
+  function analyse(){
+    const C = cat() || {};
+    const models = C.models || [];
+    const lines  = C.lines  || {};
+    const rows = models.map(m => ({ m, g: gaps(m) }));
+    const byLine = {};
+    models.forEach(m => {
+      const k = m.line_id || '—';
+      byLine[k] = byLine[k] || { n:0, gaps:0, name:(lines[k]&&lines[k].name)||k };
+      byLine[k].n++;
+      if(gaps(m).length) byLine[k].gaps++;
+    });
+    const emptyLines = Object.keys(lines)
+      .filter(k => !k.startsWith('_') && !models.some(m => m.line_id === k))
+      .map(k => lines[k].name);
+    return { models, rows, byLine, emptyLines,
+             noPrice: rows.filter(r => r.g.includes('מחיר')).length,
+             noDims:  rows.filter(r => r.g.includes('מידות')).length,
+             withGaps:rows.filter(r => r.g.length).length };
+  }
+
+  /* ---------- לוח בקרה ---------- */
+  function paintDash(){
+    if(!cat()) return;
+    const a = analyse();
+
+    document.getElementById('kpis').innerHTML = `
+      <div class="kpi"><b>${a.models.length}</b><span>דגמים בקטלוג</span></div>
+      <div class="kpi ${a.noPrice?'warn':'ok'}"><b>${a.noPrice}</b><span>בלי מחיר</span></div>
+      <div class="kpi ${a.noDims?'warn':'ok'}"><b>${a.noDims}</b><span>בלי מידות</span></div>
+      <div class="kpi ${a.emptyLines.length?'warn':'ok'}"><b>${a.emptyLines.length}</b><span>קווים ריקים</span></div>`;
+
+    const todo = [];
+    if(a.noPrice)  todo.push(`<b>${a.noPrice} דגמים בלי מחיר.</b> לקוח שרואה "מחיר לפי התאמה" ברוב הקטלוג לא מזמין. <button class="linkbtn" data-goto="health">לרשימה</button>`);
+    if(a.noDims)   todo.push(`<b>${a.noDims} דגמים בלי מידות.</b> המידות מופיעות בכרטיס המוצר ובהזמנה.`);
+    if(a.emptyLines.length) todo.push(`<b>קווים בלי אף דגם:</b> ${a.emptyLines.join(' · ')}. הם מוסתרים מהאתר עד שיהיה בהם מוצר.`);
+    document.getElementById('todo').innerHTML = todo.length
+      ? '<ul style="padding-inline-start:18px;line-height:2">' + todo.map(t=>`<li>${t}</li>`).join('') + '</ul>'
+      : '<span class="badge good">הכל מלא. אין מה לתקן.</span>';
+
+    document.getElementById('bylines').innerHTML =
+      '<table class="tbl"><thead><tr><th>קו</th><th>דגמים</th><th>חסרים</th><th></th></tr></thead><tbody>' +
+      Object.entries(a.byLine).sort((x,y)=>y[1].n-x[1].n).map(([k,v]) => `
+        <tr><td>${v.name}</td><td>${v.n}</td>
+        <td>${v.gaps ? `<span class="badge warn">${v.gaps}</span>` : '<span class="badge good">0</span>'}</td>
+        <td></td></tr>`).join('') + '</tbody></table>';
+
+    const nc = document.getElementById('navCount');
+    const ng = document.getElementById('navGaps');
+    if(nc) nc.textContent = a.models.length;
+    if(ng) ng.textContent = a.withGaps;
+  }
+
+  /* ---------- בריאות הנתונים ---------- */
+  function paintHealth(){
+    if(!cat()) return;
+    const a = analyse();
+    const bad = a.rows.filter(r => r.g.length);
+    document.getElementById('healthTbl').innerHTML = bad.length
+      ? '<table class="tbl"><thead><tr><th>דגם</th><th>קו</th><th>חסר</th><th></th></tr></thead><tbody>' +
+        bad.map(r => `<tr>
+          <td><b>${r.m.name||r.m.id}</b><br><span class="mono" style="font-size:11.5px;color:var(--ink-mute)">${r.m.id}</span></td>
+          <td>${((cat().lines||{})[r.m.line_id]||{}).name || r.m.line_id || '—'}</td>
+          <td>${r.g.map(x=>`<span class="badge bad" style="margin-inline-end:4px">${x}</span>`).join('')}</td>
+          <td><button class="linkbtn" data-edit="${r.m.id}">עריכה</button></td>
+        </tr>`).join('') + '</tbody></table>'
+      : '<div style="padding:18px"><span class="badge good">אין דגמים חסרים.</span></div>';
+  }
+
+  /* ניווט מתוך הטבלאות */
+  document.addEventListener('click', e => {
+    const g = e.target.closest('[data-goto]');
+    if(g) return go(g.dataset.goto);
+    const ed = e.target.closest('[data-edit]');
+    if(ed){
+      go('products');
+      const btn = document.querySelector(`.mlist [data-id="${ed.dataset.edit}"]`);
+      if(btn){ btn.click(); btn.scrollIntoView({block:'center'}); }
+    }
+  });
+
+  /* ---------- משפך ---------- */
+  const T_KEY = 'nc_stats_token';
+  const tok = document.getElementById('statsToken');
+  try{ if(tok) tok.value = localStorage.getItem(T_KEY) || ''; }catch(e){}
+
+  const lf = document.getElementById('lnkForms');
+  if(lf) lf.href = 'https://app.netlify.com/projects/nc-visualizer/forms';
+
+  const btn = document.getElementById('loadStats');
+  if(btn) btn.onclick = async () => {
+    const t = (tok.value||'').trim();
+    const days = document.getElementById('statsDays').value || 30;
+    const out = document.getElementById('statsOut');
+    if(!t){ out.innerHTML = '<span class="badge bad">חסר טוקן.</span>'; return; }
+    try{ localStorage.setItem(T_KEY, t); }catch(e){}
+    out.innerHTML = 'טוען…';
+    try{
+      const r = await fetch(`/api/stats?days=${days}&token=${encodeURIComponent(t)}`);
+      const d = await r.json();
+      if(!r.ok) throw new Error(d.error || 'שגיאה');
+      const f = d.funnel;
+      document.getElementById('funnelKpis').innerHTML = `
+        <div class="kpi"><b>${f.uploaded}</b><span>העלו תמונה</span></div>
+        <div class="kpi"><b>${f.completed}</b><span>הדמיות שהושלמו</span></div>
+        <div class="kpi ok"><b>${f.leads}</b><span>השאירו פרטים</span></div>
+        <div class="kpi ${f.abandoned_at_gate?'warn':''}"><b>${f.abandoned_at_gate}</b><span>נטשו בשער</span></div>`;
+      out.innerHTML =
+        '<table class="tbl"><thead><tr><th>שלב</th><th>כמות</th></tr></thead><tbody>' +
+        `<tr><td>העלאת תמונה</td><td>${f.uploaded}</td></tr>` +
+        `<tr><td>הדמיה הושלמה</td><td>${f.completed} <span class="badge good">${f.rate_upload_to_done}%</span></td></tr>` +
+        `<tr><td>השאירו פרטים</td><td>${f.leads} <span class="badge good">${f.rate_done_to_lead}%</span></td></tr>` +
+        `<tr><td>נסגרו (ידני)</td><td>${f.won} <span class="badge good">${f.rate_lead_to_won}%</span></td></tr>` +
+        '</tbody></table>';
+    }catch(e){
+      out.innerHTML = `<span class="badge bad">${e.message}</span>`;
+    }
+  };
+
+  /* מצייר ברגע שהקטלוג נטען */
+  const tick = setInterval(() => {
+    if(cat()){ clearInterval(tick); paintDash();
+      const h = location.hash.replace('#',''); if(h) go(h); }
+  }, 300);
+})();
 </script>
 </body>
 </html>

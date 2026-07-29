@@ -1,4 +1,5 @@
 import { store, json, normPhone } from './_lib.mjs';
+import { readSession } from './_auth.mjs';
 
 /**
  * ה-API היחיד שהאדמין קורא לו.
@@ -107,11 +108,19 @@ function orderCost(order, costs) {
 
 export default async (req) => {
   const u = new URL(req.url);
+  if (!process.env.STATS_TOKEN && !process.env.ADMIN_SECRET)
+    return json({ error: 'STATS_TOKEN לא מוגדר ב-Netlify.' }, 500);
+
+  /* שתי דרכי כניסה: סשן חתום מהעוגייה, או טוקן ידני לגיבוי */
+  const email = await readSession(req);
   const token = u.searchParams.get('token') || req.headers.get('x-admin-token');
-  if (!process.env.STATS_TOKEN) return json({ error: 'STATS_TOKEN לא מוגדר ב-Netlify.' }, 500);
-  if (token !== process.env.STATS_TOKEN) return json({ error: 'לא מורשה.' }, 403);
+  const byToken = process.env.STATS_TOKEN && token === process.env.STATS_TOKEN;
+  if (!email && !byToken) return json({ error: 'לא מורשה.', login: true }, 401);
 
   const type = u.searchParams.get('type') || 'orders';
+
+  /* בדיקת סשן — האדמין קורא לזה לפני שהוא מצייר משהו */
+  if (type === 'session') return json({ ok: true, email: email || null, via: email ? 'session' : 'token' });
   const os = store('orders');
   const cs = store('costs');
 

@@ -139,40 +139,69 @@
     if (!btn) return;
     btn.disabled = state;
     if (state) {
-      btn.dataset.ncLabel = btn.textContent;
+      if (!btn.dataset.ncLabel) btn.dataset.ncLabel = btn.textContent;
       btn.textContent = 'מכין את התמונה…';
-    } else if (btn.dataset.ncLabel) {
+    } else if (btn.dataset.ncLabel && btn.textContent === 'מכין את התמונה…') {
       btn.textContent = btn.dataset.ncLabel;
     }
+  }
+
+  /* הודעה קצרה על הכפתור עצמו — בלי חלונות קופצים */
+  function flash(msg, ms) {
+    if (!btn) return;
+    var keep = btn.dataset.ncLabel || btn.textContent;
+    btn.dataset.ncLabel = keep;
+    btn.textContent = msg;
+    setTimeout(function () { btn.textContent = keep; }, ms || 4000);
+  }
+
+  /* העתקה ללוח — מאפשרת הדבקה בוואטסאפ רגיל, ביזנס, או כל אפליקציה */
+  function copyToClipboard(canvas) {
+    return new Promise(function (resolve, reject) {
+      if (!navigator.clipboard || !window.ClipboardItem) { reject(new Error('no clipboard')); return; }
+      canvas.toBlob(function (blob) {
+        if (!blob) { reject(new Error('no blob')); return; }
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(resolve, reject);
+      }, 'image/png');
+    });
   }
 
   function share() {
     if (busy || !currentImage) return;
     setBusy(true);
 
+    var canvas = null;
+
     loadImage(currentImage, true)
       .catch(function () { return loadImage(currentImage, false); })
-      .then(brand)
-      .then(canvasToFile)
+      .then(function (img) { canvas = brand(img); return canvasToFile(canvas); })
       .then(function (file) {
         var canShareFile = navigator.canShare &&
                            navigator.canShare({ files: [file] }) &&
                            navigator.share;
 
+        /* נייד — גיליון השיתוף של המערכת. וואטסאפ וגם וואטסאפ ביזנס מופיעים שם. */
         if (canShareFile) {
-          /* בנייד זה פותח את גיליון השיתוף — וואטסאפ נמצא שם */
           return navigator.share({ files: [file], text: whatsappText() });
         }
 
-        /* בדסקטופ: מורידים את התמונה ופותחים וואטסאפ להדבקה */
+        /* מחשב — אי אפשר לצרף קובץ דרך קישור.
+           מעתיקים ללוח וגם מורידים, והמשתמש מדביק לאן שהוא רוצה. */
         downloadFile(file);
-        window.open('https://wa.me/?text=' + encodeURIComponent(whatsappText()), '_blank');
+        return copyToClipboard(canvas)
+          .then(function () { flash('הועתק — הדביקו בוואטסאפ ב-Ctrl+V', 6000); })
+          .catch(function () { flash('התמונה ירדה — גררו אותה לוואטסאפ', 6000); });
       })
       .catch(function (err) {
         if (err && err.name === 'AbortError') return; /* המשתמש ביטל */
-        console.warn('[ncShare] נפילה לשיתוף טקסט בלבד:', err);
-        /* אם הצריבה נכשלה (בדרך כלל CORS) — לפחות פותחים וואטסאפ עם הקישור */
-        window.open('https://wa.me/?text=' + encodeURIComponent(whatsappText()), '_blank');
+        console.warn('[ncShare]', err);
+        /* הצריבה נכשלה — לפחות מורידים את ההדמיה עצמה */
+        var a = document.createElement('a');
+        a.href = currentImage;
+        a.download = 'natural-comfort.jpg';
+        a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        flash('התמונה ירדה — גררו אותה לוואטסאפ', 6000);
       })
       .then(function () { setBusy(false); });
   }

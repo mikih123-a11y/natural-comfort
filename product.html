@@ -407,8 +407,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום — דברו איתנו.']);
     }
 
-    N.push(['הובלה, סבלות והרכבה',
-      'התשלום עבור ההובלה, הסבלות וההרכבה משולם ישירות למתקין בבית הלקוח, במעמד ההתקנה, ואינו כלול במחיר המוצר.']);
+    N.push(['משלוח והרכבה',
+      (m.delivery_install ? `₪${m.delivery_install}. ` : '')
+      + (window.ncCart && ncCart.shipNote ? ncCart.shipNote().join(' ') :
+         'מחיר המשלוח כולל הרכבה מקצועית בבית הלקוח. התשלום משולם ישירות למרכיב.')]);
 
     $('#ntslist').innerHTML = N.map(([h, t]) => `<li><span><b>${h}:</b> ${t}</span></li>`).join('');
     $('#nts').style.display = '';
@@ -447,7 +449,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   renderPrice();
   if (m.lead_time_days) $('#made').textContent = `נבנה להזמנה · אספקה עד ${m.lead_time_days} ימי עסקים`;
   else $('#made').textContent = 'נבנה להזמנה';
-  if (m.delivery_install) { $('#ship').style.display=''; $('#ship').innerHTML = `משלוח והרכבה ₪${m.delivery_install} <span>· משולם בבית למרכיב</span>`; }
+  if (m.delivery_install) {
+    $('#ship').style.display='';
+    $('#ship').innerHTML = `משלוח והרכבה ₪${m.delivery_install} <span>· משולם בבית למרכיב</span>`;
+  }
   $('#feats').innerHTML = (m.features || []).map(f => `<li>${f}</li>`).join('');
   const slide = idn.door_type === 'sliding';
   $('#rows').innerHTML = [
@@ -777,6 +782,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       image:     cur ? cur.src : ((rends[0] && rends[0].image) || ''),
       price:     priceNum,
       priceText: priceTxt,
+      ship:      (typeof m.delivery_install === 'number') ? m.delivery_install : null,
       config:    buildConfig(),
       qty:       1
     });

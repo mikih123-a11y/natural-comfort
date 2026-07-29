@@ -87,9 +87,14 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <li><div><b>ניצור קשר</b><small>בתוך יום עסקים אחד, לאישור ההרכבה והפרטים.</small></div></li>
       <li id="step2"><div><b>מאשרים את המידות</b><small>נעבור איתכם על המידות שמסרתם לפני שנסגר המחיר.</small></div></li>
       <li><div><b>גבייה וייצור</b><small>אחרי אישור המחיר. הייצור מתחיל מיד לאחר מכן.</small></div></li>
-      <li><div><b>אספקה והתקנה</b><small>עד 21 ימי עסקים — לא כולל שישי, שבת, ערבי חג וחגים.
-        ההובלה, הסבלות וההרכבה משולמים ישירות למתקין בבית, במעמד ההתקנה.</small></div></li>
+      <li><div><b>אספקה והתקנה</b><small>עד 21 ימי עסקים — לא כולל שישי, שבת, ערבי חג וחגים.</small></div></li>
     </ol>
+    <div id="shipbox" style="display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px">
+      <div style="display:flex;justify-content:space-between;font-weight:600">
+        <span>משלוח והרכבה</span><b id="shipsum">—</b>
+      </div>
+      <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:13px;color:var(--ink-mute);line-height:1.7"></ul>
+    </div>
   </section>
 
   <p class="warn">
@@ -130,6 +135,9 @@ function copyText(o){
     L.push('');
   });
   L.push('סה״כ: ' + (o.total || '—'));
+  if(typeof o.shipping === 'number'){
+    L.push('משלוח והרכבה: ' + ncCart.nis(o.shipping) + ' — משולם ישירות למרכיב בבית');
+  }
   if(o.measure) L.push('מידות: ' + o.measure);
   if(o.address) L.push('כתובת: ' + o.address);
   L.push('', 'Natural Comfort · 079-6622666', location.origin);
@@ -151,6 +159,13 @@ if(last){
   document.getElementById('mail').style.display = 'none';
   document.getElementById('wa').style.display = 'none';
 }
+if(last && typeof last.shipping === 'number'){
+  document.getElementById('shipbox').style.display = '';
+  document.getElementById('shipsum').textContent = ncCart.nis(last.shipping);
+  document.getElementById('shipnote').innerHTML =
+    ncCart.shipNote().map(x => '<li>' + x + '</li>').join('');
+}
+
 if(last && last.measure === 'מדידה מקצועית בבית'){
   document.getElementById('step2').innerHTML =
     '<div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div>';

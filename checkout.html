@@ -119,7 +119,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     <input name="phone"><input name="email">
     <input name="city"><input name="street"><input name="apartment"><input name="floor"><input name="lift">
     <input name="contact_pref"><input name="measure"><textarea name="measure_note"></textarea><textarea name="notes"></textarea>
-    <textarea name="order_items"></textarea><input name="order_total">
+    <textarea name="order_items"></textarea><input name="order_total"><input name="order_shipping">
   </form>
 
   <div class="layout">
@@ -210,6 +210,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <h2>ההזמנה שלכם</h2>
       <div id="lines"></div>
       <div class="tot"><span>סה״כ</span><b id="tot">—</b></div>
+      <div id="shipbox" class="hidden" style="border-top:1px solid var(--line);margin-top:10px;padding-top:10px">
+        <div style="display:flex;justify-content:space-between;font-weight:600;font-size:14px">
+          <span>משלוח והרכבה</span><b id="shiptot">—</b>
+        </div>
+        <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:12px;color:var(--ink-mute);line-height:1.7"></ul>
+      </div>
       <button class="send" id="send" type="button">שליחת ההזמנה</button>
       <a class="back" href="/cart.html">חזרה לסל</a>
       <p class="note" id="sidenote"></p>
@@ -235,6 +241,13 @@ $('#lines').innerHTML = items.map(it => `
 
 const t = ncCart.total();
 $('#tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
+
+const shipT = ncCart.shipTotal();
+if (shipT !== null) {
+  $('#shipbox').classList.remove('hidden');
+  $('#shiptot').textContent = ncCart.nis(shipT);
+  $('#shipnote').innerHTML = ncCart.shipNote().map(x => `<li>${x}</li>`).join('');
+}
 
 /* בחירת מדידה משנה גם את התיבה וגם את הבטחת המחיר בצד */
 const selfMeasure = () => document.querySelector('input[name=measure_choice]:checked').value === 'הלקוח מוסר מידות';
@@ -300,7 +313,8 @@ $('#send').addEventListener('click', async () => {
     measure_note:   selfMeasure() ? v('f-meas') : '',
     notes:          v('f-notes'),
     order_items:    ncCart.orderText(items),
-    order_total:    totalTxt
+    order_total:    totalTxt,
+    order_shipping: shipT !== null ? ncCart.nis(shipT) + ' — משולם ישירות למרכיב' : 'לא צוין'
   };
 
   const order = {
@@ -308,7 +322,7 @@ $('#send').addEventListener('click', async () => {
     name: data.name, phone: data.phone, email: data.email,
     address: data.street + ', ' + data.city,
     measure: data.measure,
-    total: totalTxt, items: items
+    total: totalTxt, shipping: shipT, items: items
   };
 
   try{
@@ -323,7 +337,7 @@ $('#send').addEventListener('click', async () => {
         floor:data.floor, lift:data.lift,
         contact_pref:data.contact_pref, measure:data.measure,
         measure_note:data.measure_note, notes:data.notes,
-        items, total:totalTxt, total_num: t
+        items, total:totalTxt, total_num: t, shipping_num: shipT
       })
     }).catch(()=>null);
     if(!save || !save.ok) console.warn('order save failed');

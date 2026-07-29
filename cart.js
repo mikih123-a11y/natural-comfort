@@ -54,6 +54,7 @@
         image: item.image || '',
         price: (typeof item.price === 'number' && isFinite(item.price)) ? item.price : null,
         priceText: item.priceText || '',
+        ship: (typeof item.ship === 'number' && isFinite(item.ship)) ? item.ship : null,
         config: item.config || [],
         repeat: !!item.repeat,          // הגיע מהזמנה קודמת
         qty: item.qty || 1,
@@ -94,6 +95,24 @@
     }
     return sum;
   }
+
+  /* דמי משלוח והרכבה — מחיר קבוע לכל דגם, לא מתווסף למחיר המוצר */
+  function shipTotal() {
+    var list = items(), sum = 0, known = false;
+    for (var i = 0; i < list.length; i++) {
+      if (typeof list[i].ship === 'number') { sum += list[i].ship * (list[i].qty || 1); known = true; }
+    }
+    return known ? sum : null;
+  }
+
+  var SHIP_NOTE = [
+    'מחיר המשלוח כולל הרכבה מקצועית בבית הלקוח. התשלום משולם ישירות למרכיב.',
+    'הרמת המוצר לקומה שלישית ומעלה ללא מעלית — תוספת 50 ₪ לקומה.',
+    'במקרה של צורך בשירותי מנוף חיצוניים, הלקוח משלם את הסכום הנדרש.',
+    'אין אספקה לאזור אילת והערבה. אזורים מעבר לקו הירוק מצריכים אישור מראש.'
+  ];
+
+  function shipNote() { return SHIP_NOTE.slice(); }
 
   function hasRepeat() {
     return items().some(function (x) { return x.repeat; });
@@ -156,12 +175,17 @@
     });
     var t = total();
     L.push(t !== null ? 'סה״כ: ' + nis(t) : 'סה״כ: חלק מהפריטים מתומחרים לפי התאמה אישית');
+    var sh = shipTotal();
+    if (sh !== null) {
+      L.push('משלוח והרכבה: ' + nis(sh) + ' — משולם ישירות למרכיב בבית, לא כלול בסה״כ');
+    }
     return L.join('\n');
   }
 
   window.ncCart = {
     add: add, items: items, setQty: setQty, remove: remove, clear: clear,
-    count: count, total: total, hasCustomPrice: hasCustomPrice, hasRepeat: hasRepeat,
+    count: count, total: total, shipTotal: shipTotal, shipNote: shipNote,
+    hasCustomPrice: hasCustomPrice, hasRepeat: hasRepeat,
     badge: badge, repaint: paintAll, nis: nis,
     orderNumber: orderNumber, saveOrder: saveOrder, orders: orders,
     orderText: orderText

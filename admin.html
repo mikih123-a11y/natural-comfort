@@ -1316,6 +1316,7 @@ $('#dlViz').onclick=()=>{
           <div><b>${nis(d.cost)}</b><span>עלות מהמפעל</span></div>
           <div class="${(d.profit!==null&&d.profit<0)?'neg':''}"><b>${nis(d.profit)}</b><span>רווח</span></div>
           <div><b>${d.margin===null?'—':d.margin+'%'}</b><span>רווחיות</span></div>
+          <div><b>${nis(o.shipping_num)}</b><span>משלוח בבית</span></div>
         </div>
 
         <h3 style="font-size:16px;margin:0 0 8px">פרטי הלקוח</h3>
@@ -1332,6 +1333,7 @@ $('#dlViz').onclick=()=>{
           <div class="f"><label>קומה</label><input id="e-floor" value="${esc(a.floor||'')}"></div>
           <div class="f"><label>מעלית</label><input id="e-lift" value="${esc(a.lift||'')}"></div>
           <div class="f"><label>עלות ידנית להזמנה (₪)</label><input id="e-cost" dir="ltr" inputmode="numeric" value="${o.cost_num==null?'':o.cost_num}" placeholder="ריק = לפי מפת העלויות"></div>
+          <div class="f"><label>משלוח והרכבה (₪) · נגבה בבית</label><input id="e-ship" dir="ltr" inputmode="numeric" value="${o.shipping_num==null?'':o.shipping_num}" placeholder="מהקטלוג"></div>
           <div class="f wide"><label>הערה פנימית (לא נראית ללקוח)</label><input id="e-note" value="${esc(o.admin_notes||'')}"></div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px">
@@ -1362,6 +1364,15 @@ $('#dlViz').onclick=()=>{
               · עלות ${ic&&ic.cost!==null?nis(ic.cost):'לא הוזנה'}</span></div>
         </div>`;}).join('')}
         <div style="text-align:start;font-size:17px;font-weight:700;margin-top:10px">סה״כ ${esc(o.total||'—')}</div>
+
+        <h3 style="font-size:16px;margin:22px 0 8px">הערות</h3>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input id="e-newnote" placeholder="הערה חדשה…" style="flex:1;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:4px">
+          <button class="addline" id="odAddNote">הוספה</button>
+        </div>
+        <div id="odNotes">${(o.notes_log||[]).map(n=>`<div class="oi" style="padding:10px">
+          <div style="font-size:12px;color:var(--ink-mute)">${dtl(n.at)}</div>${esc(n.text)}</div>`).join('')
+          || '<div style="color:var(--ink-mute);font-size:13.5px">אין הערות.</div>'}</div>
 
         <h3 style="font-size:16px;margin:22px 0 8px">יומן</h3>
         <ul style="padding-inline-start:18px;font-size:13.5px;color:var(--ink-mute);line-height:1.9">
@@ -1395,11 +1406,30 @@ $('#dlViz').onclick=()=>{
                         floor:g('e-floor'), lift:g('e-lift') },
               admin_notes: g('e-note'),
               cost_num: g('e-cost') === '' ? null : Number(g('e-cost')),
+              shipping_num: g('e-ship') === '' ? null : Number(g('e-ship')),
             })
           });
           msg.textContent = 'נשמר.';
           loadOrders();
         }catch(e){ msg.textContent = e.message; }
+      };
+
+      const noteBtn = document.getElementById('odAddNote');
+      if(noteBtn) noteBtn.onclick = async () => {
+        const inp = document.getElementById('e-newnote');
+        const txt = (inp.value||'').trim();
+        if(!txt) return;
+        noteBtn.disabled = true;
+        try{
+          const r = await api({ type:'order-note' }, {
+            method:'POST', headers:{'content-type':'application/json'},
+            body: JSON.stringify({ id, text: txt })
+          });
+          inp.value = '';
+          document.getElementById('odNotes').innerHTML = (r.notes_log||[]).map(n=>`<div class="oi" style="padding:10px">
+            <div style="font-size:12px;color:var(--ink-mute)">${dtl(n.at)}</div>${esc(n.text)}</div>`).join('');
+        }catch(e){ alert(e.message); }
+        noteBtn.disabled = false;
       };
 
       const cl = document.getElementById('odCust');

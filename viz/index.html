@@ -129,6 +129,17 @@ input{font-family:inherit;font-size:16px}
 .btn2.solid:hover{background:#000}
 .disc{font-size:12px;color:var(--ink-mute);margin-top:18px;font-weight:300;max-width:420px;margin-inline:auto}
 
+/* ── compare + share (added) ── */
+.cmp{margin:22px 0 0;display:none}
+.cmp.on{display:block}
+.cmp-h{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+       color:var(--ink-mute);margin-bottom:10px;text-align:center}
+.nc-compare{border-radius:2px !important;box-shadow:none !important;border:1px solid var(--line)}
+.since{display:flex;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap;
+       margin:26px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.since b{font-family:var(--display);font-size:19px;font-weight:700;color:var(--champagne)}
+.since span{font-size:13.5px;color:var(--ink-mute);font-weight:300}
+
 /* ── footer ── */
 footer{border-top:1px solid var(--line);margin-top:80px;padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -212,8 +223,14 @@ footer a{color:var(--ink-soft);text-decoration:none}
     <div class="after" id="after">
       <div class="row">
         <a class="btn2 solid" id="wa" href="#">רוצה הצעת מחיר לארון הזה</a>
+        <button class="btn2" id="ncShareBtn" type="button" hidden>שליחה בוואטסאפ</button>
         <button class="btn2" id="dl">שמירת התמונה</button>
         <button class="btn2" id="again">הדמיה נוספת</button>
+      </div>
+
+      <div class="cmp" id="cmp">
+        <div class="cmp-h">גררו כדי להשוות</div>
+        <div id="cmpBox"></div>
       </div>
       <p class="disc"><b>הדמיה.</b> נועדה להמחיש את הדגם, הגוון והפרופורציות בחדר שלכם. המוצר מיוצר בדיוק לפי המידות שיימדדו אצלכם בבית.</p>
     </div>
@@ -221,11 +238,17 @@ footer a{color:var(--ink-soft);text-decoration:none}
 
 </main>
 
+<div class="wrap">
+  <p class="since"><b>משנת 2006</b><span>מייצרים ריהוט בהתאמה אישית בישראל</span></p>
+</div>
+
 <footer><div class="wrap">
   <div>© Natural Comfort · נטורל קומפורט בע"מ</div>
   <div><a href="/privacy.html">פרטיות ומחיקת מידע</a></div>
 </div></footer>
 
+<script src="/compare.js"></script>
+<script src="/share.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 // ארבעת המספרים. לא חוסם, לא זורק.
@@ -234,6 +257,9 @@ const track = (stage, productId) => { try{
     body:JSON.stringify({stage, productId}), keepalive:true}).catch(()=>{});
 }catch(e){} };
 const S = { room:null, product:null, jobId:null, session:crypto.randomUUID(), phone:null, catalog:[] };
+
+/* שיתוף ממותג — הלוגו נצרב על ההדמיה לפני השליחה */
+ncShare.init({ button:'#ncShareBtn', logo:'/logo.png', site:'naturalcomfort.co.il' });
 
 /* ---------- catalog ---------- */
 fetch('catalog.json').then(r=>r.json()).then(d=>{
@@ -396,8 +422,15 @@ $('#verify-otp').onclick = async () => {
       track('reveal', S.product);
       $('#gate').classList.remove('on');
       setTimeout(()=>{ $('#after').classList.add('on'); $('#doorbox').scrollIntoView({block:'center',behavior:'smooth'}); }, 900);
+      // סליידר לפני/אחרי — התמונה שהעלו מול ההדמיה
+      try{
+        ncCompare.create($('#cmpBox'), S.room, rd.url,
+          { labelBefore:'החדר שלכם', labelAfter:'עם הארון' });
+        $('#cmp').classList.add('on');
+      }catch(e){ console.warn('compare', e); }
     };
     const p = S.catalog.find(x=>x.id===S.product);
+    ncShare.setImage(rd.url, p ? p.name : '');
     $('#wa').href = `https://wa.me/972524400030?text=${encodeURIComponent(`היי, עשיתי הדמיה של ${p.name} בסלון שלי ואשמח להצעת מחיר.`)}`;
     $('#dl').onclick = () => { const a=document.createElement('a'); a.href=rd.url; a.download='natural-comfort-הדמיה.jpg'; a.click(); };
     $('#again').onclick = () => location.reload();

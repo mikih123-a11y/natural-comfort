@@ -1443,10 +1443,14 @@
       "placement": "against_wall",
       "replaces": "wardrobe",
       "handles": false,
-      "price": null,
+      "price": 1999,
       "price_note": "מחיר לפי מידה",
       "lead_time_days": 21,
-      "dims": null,
+      "dims": {
+        "w": 160,
+        "h": 240,
+        "d": 60
+      },
       "_todo_dims": "רוחב · גובה · עומק",
       "identity": {
         "door_count": 2,
@@ -1482,7 +1486,18 @@
       ],
       "gallery": [
         "/products/simple2-160-7904-base.jpg"
-      ]
+      ],
+      "width_tiers": {
+        "unit": "cm",
+        "step": 10,
+        "tiers": [
+          {
+            "from": 120,
+            "to": 160,
+            "price": 1999
+          }
+        ]
+      }
     },
     {
       "id": "bed-zugit-140",

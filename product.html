@@ -77,16 +77,17 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .dims{font-size:15px;color:var(--ink-soft);font-weight:400;margin-top:8px}
 .price{font-family:var(--display);font-size:32px;font-weight:500;margin:22px 0 2px;letter-spacing:-.02em}
 .price small{font-size:13px;color:var(--ink-mute);font-weight:400;font-family:var(--body);margin-inline-start:8px}
-.vizcard{display:flex;align-items:center;gap:13px;margin-top:14px;padding:14px 16px;
-  border:1px solid var(--line);background:#fff;text-decoration:none;color:inherit;
-  transition:border-color .2s,box-shadow .2s}
-.vizcard:hover{border-color:var(--ink,#211F1D);box-shadow:0 3px 14px rgba(0,0,0,.06)}
-.vizcard .vc-ic{flex:0 0 auto;width:42px;height:42px;border-radius:50%;
-  background:var(--panel,#EFEBE4);display:grid;place-items:center;color:var(--ink,#211F1D)}
+.vizcard{display:flex;align-items:center;gap:13px;margin-top:14px;padding:15px 17px;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  transition:background .2s,gap .2s}
+.vizcard:hover{background:#000}
+.vizcard:hover .vc-ar{transform:translateX(-4px)}
+.vizcard .vc-ic{flex:0 0 auto;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.12);display:grid;place-items:center;color:#fff}
 .vizcard .vc-tx{flex:1;min-width:0}
-.vizcard .vc-tx b{display:block;font-size:15.5px;font-weight:600;margin-bottom:2px}
-.vizcard .vc-tx small{display:block;font-size:12.5px;color:var(--ink-mute,#5F584F);line-height:1.45}
-.vizcard .vc-ar{flex:0 0 auto;color:var(--ink-mute,#5F584F)}
+.vizcard .vc-tx b{display:block;font-size:16px;font-weight:600;margin-bottom:2px}
+.vizcard .vc-tx small{display:block;font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.45}
+.vizcard .vc-ar{flex:0 0 auto;color:#fff;transition:transform .2s}
 @media(max-width:860px){.vizcard .vc-tx small{display:none}}
 .ship{font-size:13px;color:var(--ink-soft,#56514b);margin:4px 0 0;font-weight:600}
 .ship span{color:var(--ink-mute);font-weight:400}

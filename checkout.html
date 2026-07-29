@@ -158,9 +158,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <section class="card">
         <h2>מידות</h2>
         <div class="pay">
-          <label class="opt"><input type="radio" name="measure" value="מדידה מקצועית בבית" checked>
+          <label class="opt"><input type="radio" name="measure_choice" value="מדידה מקצועית בבית" checked>
             <span><b>מדידה מקצועית בבית</b><small>שירות בתשלום · המחיר מתואם בשיחה. אנחנו אחראים למידות.</small></span></label>
-          <label class="opt"><input type="radio" name="measure" value="הלקוח מוסר מידות">
+          <label class="opt"><input type="radio" name="measure_choice" value="הלקוח מוסר מידות">
             <span><b>אני מוסר/ת את המידות בעצמי</b><small>בלי עלות מדידה. המידות באחריותכם.</small></span></label>
         </div>
 
@@ -228,7 +228,7 @@ const t = ncCart.total();
 $('#tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
 
 /* בחירת מדידה משנה גם את התיבה וגם את הבטחת המחיר בצד */
-const selfMeasure = () => document.querySelector('input[name=measure]:checked').value === 'הלקוח מוסר מידות';
+const selfMeasure = () => document.querySelector('input[name=measure_choice]:checked').value === 'הלקוח מוסר מידות';
 
 function syncMeasure(){
   const self = selfMeasure();
@@ -240,7 +240,7 @@ function syncMeasure(){
     : 'המחיר באתר הוא הערכה לפי ההרכבה שבחרתם. המחיר הסופי נקבע אחרי מדידה בשטח. '
       + 'זמן אספקה: עד 21 ימי עסקים (לא כולל שישי, שבת, ערבי חג וחגים).';
 }
-document.querySelectorAll('input[name=measure]').forEach(r => r.addEventListener('change', syncMeasure));
+document.querySelectorAll('input[name=measure_choice]').forEach(r => r.addEventListener('change', syncMeasure));
 syncMeasure();
 
 const err = m => { $('#err').textContent = m; $('#err').classList.add('on');
@@ -281,7 +281,7 @@ $('#send').addEventListener('click', async () => {
     floor:          v('f-floor'),
     lift:           $('#f-lift').value,
     contact_pref:   document.querySelector('input[name=pref]:checked').value,
-    measure:        document.querySelector('input[name=measure]:checked').value,
+    measure:        document.querySelector('input[name=measure_choice]:checked').value,
     measure_note:   selfMeasure() ? v('f-meas') : '',
     notes:          v('f-notes'),
     order_items:    ncCart.orderText(items),

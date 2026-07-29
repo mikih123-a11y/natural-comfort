@@ -73,7 +73,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
   <div class="hero">
     <div class="tick"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
     <h1>ההזמנה התקבלה</h1>
-    <p>שלחנו אליכם מייל עם כל הפרטים.</p>
+    <p>ההזמנה הגיעה אלינו. שמרו את מספר ההזמנה.</p>
   </div>
 
   <div class="num">
@@ -92,12 +92,14 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
   </section>
 
   <p class="warn">
-    שמרו את מספר ההזמנה. הוא נשמר גם בדפדפן הזה תחת "ההזמנות שלי",
-    אבל אם תחליפו מכשיר או תנקו את היסטוריית הדפדפן — המייל הוא העותק שיישאר לכם.
+    ההזמנה נשמרת בדפדפן הזה תחת "ההזמנות שלי". אם תחליפו מכשיר או תנקו את היסטוריית
+    הדפדפן היא לא תופיע שם — לכן שווה לשלוח לעצמכם עותק בכפתור למעלה.
   </p>
 
   <div class="acts">
-    <a class="b1" href="/orders.html">ההזמנות שלי</a>
+    <a class="b1" id="mail" href="#">שליחת עותק לעצמי במייל</a>
+    <a class="b2" id="wa" href="#">שמירת עותק בוואטסאפ</a>
+    <a class="b2" href="/orders.html">ההזמנות שלי</a>
     <a class="b2" href="/#shop">להמשך עיון בקטלוג</a>
   </div>
 </main>
@@ -115,8 +117,39 @@ if(num){
   document.getElementById('num').textContent = last0 ? last0.number : '—';
 }
 
+/* עותק ללקוח — mailto ו-וואטסאפ עובדים בכל מכשיר, בלי שרת */
+function copyText(o){
+  if(!o) return '';
+  const L = ['הזמנה ' + o.number, ''];
+  (o.items||[]).forEach((it,i) => {
+    L.push((i+1) + '. ' + it.name + '  ×' + (it.qty||1));
+    (it.config||[]).forEach(c => L.push('   · ' + c));
+    L.push('   מחיר: ' + (typeof it.price === 'number'
+      ? ncCart.nis(it.price*(it.qty||1)) : (it.priceText || 'לפי התאמה')));
+    L.push('');
+  });
+  L.push('סה״כ: ' + (o.total || '—'));
+  if(o.measure) L.push('מידות: ' + o.measure);
+  if(o.address) L.push('כתובת: ' + o.address);
+  L.push('', 'Natural Comfort · 079-6622666', location.origin);
+  return L.join('\n');
+}
+
 /* מי שמסר מידות בעצמו לא מקבל שלב של תיאום מדידה */
 const last = ncCart.orders()[0];
+
+if(last){
+  const body = copyText(last);
+  document.getElementById('mail').href =
+    'mailto:' + encodeURIComponent(last.email || '') +
+    '?subject=' + encodeURIComponent('הזמנה ' + last.number + ' · Natural Comfort') +
+    '&body=' + encodeURIComponent(body);
+  document.getElementById('wa').href =
+    'https://wa.me/?text=' + encodeURIComponent(body);
+}else{
+  document.getElementById('mail').style.display = 'none';
+  document.getElementById('wa').style.display = 'none';
+}
 if(last && last.measure === 'הלקוח מוסר מידות'){
   document.getElementById('step2').innerHTML =
     '<div><b>מאשרים את המידות</b><small>נעבור איתכם על המידות שמסרתם לפני שנסגר המחיר. '

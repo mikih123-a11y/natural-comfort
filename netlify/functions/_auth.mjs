@@ -8,6 +8,8 @@
  * הרשימה הלבנה: ADMIN_EMAILS (מופרד בפסיקים).
  */
 
+import { store } from './_lib.mjs';
+
 const enc = new TextEncoder();
 
 export const SESSION_HOURS = 12;
@@ -47,9 +49,25 @@ export async function hashCode(email, code) {
 
 /* ---------- סשן ---------- */
 
+/** גרסת הסשנים. הגדלה שלה מבטלת כל סשן קיים בכל המכשירים. */
+export async function sessionVersion() {
+  try {
+    const v = await store('adminauth').get('sessver');
+    return Number(v) || 1;
+  } catch (e) { return 1; }
+}
+
+export async function bumpSessionVersion() {
+  const st = store('adminauth');
+  const v = (Number(await st.get('sessver')) || 1) + 1;
+  await st.set('sessver', String(v));
+  return v;
+}
+
 export async function makeSession(email) {
   const payload = JSON.stringify({
     e: String(email).toLowerCase(),
+    v: await sessionVersion(),
     x: Date.now() + SESSION_HOURS * 3600e3,
   });
   const body = b64url(enc.encode(payload));
@@ -75,6 +93,7 @@ export async function readSession(req) {
     const data = JSON.parse(atob(pad));
     if (!data.x || Date.now() > data.x) return null;  // פג תוקף
     if (!isAllowed(data.e)) return null;              // הוסר מהרשימה הלבנה
+    if ((data.v || 1) !== await sessionVersion()) return null;   // נותק מכל המכשירים
     return data.e;
   } catch (e) { return null; }
 }

@@ -1,5 +1,5 @@
 import { store, json, normPhone } from './_lib.mjs';
-import { readSession } from './_auth.mjs';
+import { readSession, bumpSessionVersion } from './_auth.mjs';
 
 /**
  * ה-API היחיד שהאדמין קורא לו.
@@ -11,6 +11,8 @@ import { readSession } from './_auth.mjs';
  *   ?type=order-update   (POST)  {id, customer{}, address{}, tax_id, admin_notes, cost_num, shipping_num}
  *   ?type=order-note     (POST)  {id, text}            הוספת הערה ליומן
  *   ?type=customer&phone=  |  &email=      כרטיס לקוח מלא
+ *   ?type=export&q=&status=&from=&to=       ייצוא הזמנות ל-CSV
+ *   ?type=logout-all     (POST)             ניתוק כל המכשירים
  *   ?type=costs                             מפת עלויות מהמפעל
  *   ?type=cost-set       (POST)  {modelId, cost, note}
  *   ?type=leads&days=30
@@ -278,6 +280,64 @@ export default async (req) => {
     });
 
     return json({ ok: true });
+  }
+
+  /* ---------- ניתוק כל המכשירים ---------- */
+  if (type === 'logout-all') {
+    if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
+    const v = await bumpSessionVersion();
+    console.warn('[admin] כל הסשנים נותקו · גרסה', v);
+    return json({ ok: true, version: v });
+  }
+
+  /* ---------- ייצוא ל-CSV ---------- */
+  if (type === 'export') {
+    const q = u.searchParams.get('q') || '';
+    const st = u.searchParams.get('status') || '';
+    const from = u.searchParams.get('from') || '';
+    const to = u.searchParams.get('to') || '';
+
+    let rows = await allIndex(os);
+    if (st)   rows = rows.filter(r => r.status === st);
+    if (from) rows = rows.filter(r => r.date >= from);
+    if (to)   rows = rows.filter(r => r.date <= to + 'T23:59:59Z');
+    if (q)    rows = rows.filter(r => matches(r, q));
+    rows.sort((a, b) => (a.date < b.date ? 1 : -1));
+
+    const head = ['מספר הזמנה','תאריך','סטטוס','שם פרטי','שם משפחה','טלפון','מייל',
+                  'ת.ז','ח.פ','עיר','רחוב','דירה','קומה','פריטים','סכום','עלות','רווח','משלוח'];
+
+    /* אקסל בעברית נשבר בלי BOM, ומפרש מספר שמתחיל ב-0 כמספר. גרש מקדים פותר את שניהם. */
+    const cell = v => {
+      if (v == null) return '';
+      const t = String(v).replace(/"/g, '""');
+      return /[",\n]/.test(t) ? '"' + t + '"' : t;
+    };
+    const tel = p => "'" + String(p || '').replace(/^\+972/, '0');
+
+    const lines = [head.join(',')];
+    rows.forEach(r => {
+      const cost = typeof r.cost_num === 'number' ? r.cost_num : null;
+      const rev  = typeof r.total_num === 'number' ? r.total_num : null;
+      lines.push([
+        cell(r.number), cell(String(r.date).slice(0, 10)), cell(STATUS[r.status] || r.status),
+        cell(r.first), cell(r.last), cell(tel(r.phone)), cell(r.email),
+        cell(r.tax_id ? "'" + r.tax_id : ''), cell(r.business_id ? "'" + r.business_id : ''),
+        cell(r.city), cell(r.street), cell(r.apartment), cell(r.floor),
+        cell(r.items), cell(rev), cell(cost),
+        cell(rev !== null && cost !== null ? rev - cost : ''),
+        cell(r.shipping_num),
+      ].join(','));
+    });
+
+    const csv = '\uFEFF' + lines.join('\r\n');
+    const name = 'natural-comfort-orders-' + new Date().toISOString().slice(0, 10) + '.csv';
+    return new Response(csv, {
+      headers: {
+        'content-type': 'text/csv; charset=utf-8',
+        'content-disposition': 'attachment; filename="' + name + '"',
+      },
+    });
   }
 
   /* ---------- הוספת הערה ---------- */

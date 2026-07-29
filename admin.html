@@ -1361,6 +1361,7 @@ $('#dlViz').onclick=()=>{
   const stKey = k => ST[k] ? k : (LEG[k] || 'received');
   const stTag = k => { const v = stKey(k); return `<span class="st st-${v}">${ST[v]}</span>`; };
   const nis = n => (typeof n === 'number' && isFinite(n)) ? '₪' + n.toLocaleString('he-IL') : '—';
+  const tel = p => String(p||'').replace(/^\+972/, '0');
 
   /* ---------- הזמנות ---------- */
   async function loadOrders(){
@@ -1387,7 +1388,7 @@ $('#dlViz').onclick=()=>{
             <td class="num">${esc(o.number)}</td>
             <td>${dt(o.date)}</td>
             <td><b>${esc(o.name)}</b></td>
-            <td dir="ltr">${esc(o.phone)}</td>
+            <td dir="ltr">${esc(tel(o.phone))}</td>
             <td>${esc(o.email||'—')}</td>
             <td dir="ltr">${esc(o.tax_id || o.business_id || '—')}</td>
             <td>${esc(o.city||'—')}</td>

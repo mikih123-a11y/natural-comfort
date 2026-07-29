@@ -61,6 +61,40 @@ async function allIndex(os) {
 }
 
 const norm   = s => String(s || '').toLowerCase().trim();
+
+/**
+ * כרום ממלא כתובות באנגלית. הלקוח כתב Petah Tikva, אתה מחפש "פתח תקווה".
+ * המפה הזו מגשרת בין השניים לשני הכיוונים.
+ */
+const CITY_ALIAS = [
+  ['פתח תקווה','petah tikva','petach tikva','petah tiqwa','petah tikwa'],
+  ['תל אביב','tel aviv','tel aviv-yafo','tel aviv yafo'],
+  ['ירושלים','jerusalem','yerushalayim'],
+  ['חיפה','haifa','hefa'],
+  ['ראשון לציון','rishon lezion','rishon letzion','rishon leziyyon'],
+  ['אשדוד','ashdod'], ['אשקלון','ashkelon','ashqelon'],
+  ['נתניה','netanya','netania'], ['באר שבע','beer sheva','beersheba','be er sheva'],
+  ['בני ברק','bnei brak','bene beraq'], ['חולון','holon'],
+  ['רמת גן','ramat gan'], ['רחובות','rehovot','rehovoth'],
+  ['בת ים','bat yam'], ['הרצליה','herzliya','herzliyya'],
+  ['כפר סבא','kfar saba','kefar sava'], ['חדרה','hadera','hadera'],
+  ['מודיעין','modiin','modiin maccabim reut'], ['רעננה','raanana','ra anana'],
+  ['רמלה','ramla','ramle'], ['לוד','lod'], ['נצרת','nazareth'],
+  ['אילת','eilat','elat'], ['עכו','acre','akko'], ['טבריה','tiberias','teverya'],
+  ['ראש העין','rosh haayin','rosh ha ayin'], ['יבנה','yavne','yavneh'],
+  ['הוד השרון','hod hasharon'], ['גבעתיים','givatayim'], ['קריית גת','kiryat gat'],
+  ['קריית ביאליק','kiryat bialik'], ['אור יהודה','or yehuda'],
+  ['ראש פינה','rosh pina'], ['נס ציונה','ness ziona','nes ziyyona'],
+  ['אריאל','ariel'], ['בית שמש','beit shemesh'], ['דימונה','dimona'],
+];
+
+/** מחזיר את כל השמות המקבילים לערך שהוקלד */
+function cityForms(v) {
+  const t = norm(v).replace(/['"׳״-]/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!t) return [];
+  const row = CITY_ALIAS.find(r => r.some(x => norm(x) === t || norm(x).includes(t) || t.includes(norm(x))));
+  return row ? row.map(norm) : [t];
+}
 const digits = s => String(s || '').replace(/\D/g, '');
 const clean  = (v, max = 200) =>
   v == null ? '' : String(v).replace(/[\u0000-\u001F\u007F]/g, '').slice(0, max);
@@ -77,6 +111,10 @@ function matches(row, q) {
   const txt = [row.number, row.name, row.first, row.last, row.email, row.city, row.street]
     .map(norm).join(' | ');
   if (txt.includes(t)) return true;
+
+  /* עיר — גם אם נכתבה באנגלית והחיפוש בעברית, או להפך */
+  const rc = norm(row.city);
+  if (rc && cityForms(q).some(f => rc.includes(f) || f.includes(rc))) return true;
   if (d.length >= 4) {
     /* 0525005600 · 972525005600 · 525005600 — כולם צריכים למצוא את אותו לקוח */
     const p = digits(row.phone);

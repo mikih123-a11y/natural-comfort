@@ -33,10 +33,15 @@ input{font-family:inherit;font-size:16px}
 /* ── header ── */
 .top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.92);backdrop-filter:blur(8px);z-index:50}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+.brand{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em;
+       color:var(--ink);text-decoration:none;flex:none}
 .brand span{color:var(--champagne);font-weight:400}
 .top a{color:var(--ink-soft);text-decoration:none;font-size:14px}
 .top a:hover{color:var(--ink)}
+.topnav{display:flex;gap:22px;margin-inline-end:auto;margin-inline-start:30px}
+.topwa{flex:none}
+@media(max-width:820px){.topnav{display:none}}
+@media(max-width:520px){.topwa{font-size:13px}}
 
 /* ── hero ── */
 .hero{padding:72px 0 40px;text-align:center}
@@ -141,17 +146,29 @@ input{font-family:inherit;font-size:16px}
 .since span{font-size:13.5px;color:var(--ink-mute);font-weight:300}
 
 /* ── footer ── */
-footer{border-top:1px solid var(--line);margin-top:80px;padding:32px 0;font-size:13px;color:var(--ink-mute);font-weight:300}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-footer a{color:var(--ink-soft);text-decoration:none}
+footer{border-top:1px solid var(--line);margin-top:80px;padding:36px 0 24px;font-size:13px;color:var(--ink-mute);font-weight:300}
+.fcols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.fcol{display:flex;flex-direction:column;gap:9px}
+.fcol h4{font-family:var(--display);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+         color:var(--ink-mute);font-weight:500;margin-bottom:2px}
+footer a{color:var(--ink-soft);text-decoration:none;font-size:13.5px}
+footer a:hover{color:var(--ink);text-decoration:underline}
+.fbot{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px}
+@media(max-width:700px){.fcols{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.fcols{grid-template-columns:1fr}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="brand">Natural<span>Comfort</span></div>
-  <a href="https://wa.me/972524400030">דברו איתנו · 052-4400030</a>
+  <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <nav class="topnav">
+    <a href="/#shop">כל הדגמים</a>
+    <a href="/gallery">גלריה</a>
+    <a href="/#contact">ייעוץ אישי</a>
+  </nav>
+  <a class="topwa" href="https://wa.me/972524400030">דברו איתנו · 052-4400030</a>
 </div></header>
 
 <main class="wrap">
@@ -243,10 +260,31 @@ footer a{color:var(--ink-soft);text-decoration:none}
   <p class="since"><b>משנת 2006</b><span>מייצרים ריהוט בהתאמה אישית בישראל</span></p>
 </div>
 
-<footer><div class="wrap">
-  <div>© Natural Comfort · נטורל קומפורט בע"מ</div>
-  <div><a href="/privacy.html">פרטיות ומחיקת מידע</a></div>
-</div></footer>
+<footer>
+  <div class="wrap fcols">
+    <div class="fcol">
+      <h4>הקטלוג</h4>
+      <a href="/">דף הבית</a>
+      <a href="/#shop">כל הדגמים</a>
+      <a href="/#collections">קולקציות</a>
+      <a href="/gallery">גלריית עבודות</a>
+    </div>
+    <div class="fcol">
+      <h4>מדריכים</h4>
+      <a href="/before-move-in.html">ריהוט לפני איכלוס</a>
+      <a href="/small-bedroom-wardrobe.html">ארון לחדר שינה קטן</a>
+      <a href="/sacred-bookcase-living-room.html">ספריית קודש לסלון</a>
+      <a href="/shared-kids-room.html">חדר ילדים משותף</a>
+    </div>
+    <div class="fcol">
+      <h4>דברו איתנו</h4>
+      <a href="tel:0796622666">079-6622666</a>
+      <a href="https://wa.me/972524400030">וואטסאפ · 052-4400030</a>
+      <a href="/privacy.html">פרטיות ומחיקת מידע</a>
+    </div>
+  </div>
+  <div class="wrap fbot">© Natural Comfort · נטורל קומפורט בע"מ</div>
+</footer>
 
 <script src="/compare.js"></script>
 <script src="/share.js"></script>

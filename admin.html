@@ -1671,6 +1671,7 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px">
           <button class="go" id="odSave">שמירת פרטים</button>
           <button class="addline" id="odPrint">הדפסת הזמנה</button>
+          ${wa?`<button class="addline" id="odCopy">עותק ההזמנה בוואטסאפ</button>`:''}
           <a href="tel:${esc(c.phone)}">חיוג</a>
           ${wa?`<a href="https://wa.me/${esc(wa)}" target="_blank">וואטסאפ</a>`:''}
           <a href="#customers" id="odCust">כרטיס הלקוח ↗</a>
@@ -1757,6 +1758,37 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
 
       const prBtn = document.getElementById('odPrint');
       if(prBtn) prBtn.onclick = () => printOrder(id, o, c, a, d);
+
+      const cpBtn = document.getElementById('odCopy');
+      if(cpBtn) cpBtn.onclick = () => {
+        const models = (cat() && cat().models) || [];
+        const shipOf = it => {
+          const v = [it.delivery_install, it.shipping, it.ship].find(x => typeof x === 'number');
+          if(typeof v === 'number') return v;
+          const m = models.find(x => x.id === it.modelId);
+          return (m && typeof m.delivery_install === 'number') ? m.delivery_install : null;
+        };
+        const money = n => '₪' + Number(n).toLocaleString('he-IL');
+        const L = ['שלום ' + (c.first || c.name || '') + ', זה עותק ההזמנה שלך מנטורל קומפורט.', ''];
+        L.push('הזמנה ' + id, '');
+        (o.items || []).forEach((it, i) => {
+          const q = Number(it.qty) || 1;
+          L.push((i+1) + '. ' + it.name + ' ×' + q);
+          (it.config || []).forEach(x => L.push('   · ' + x));
+          L.push('   מחיר: ' + (typeof it.price === 'number' ? money(it.price * q) : 'לפי התאמה אישית'));
+          const s = shipOf(it);
+          if(s !== null) L.push('   הובלה והרכבה: ' + money(s * q) + ' · משולם בבית למרכיב');
+          L.push('');
+        });
+        L.push('סה״כ מוצרים: ' + (o.total || '—'));
+        L.push('', 'זמן אספקה: עד 21 ימי עסקים.');
+        L.push('ההובלה וההרכבה משולמות למרכיב בבית ואינן כלולות במחיר.');
+        L.push('', 'מעקב אחרי ההזמנה בכל שלב:');
+        L.push(location.origin + '/myorder.html?n=' + encodeURIComponent(id) +
+               '&p=' + encodeURIComponent(c.phone || ''));
+        L.push('', 'נטורל קומפורט · 079-6622666');
+        window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(L.join('\n')), '_blank');
+      };
 
       const noteBtn = document.getElementById('odAddNote');
       if(noteBtn) noteBtn.onclick = async () => {

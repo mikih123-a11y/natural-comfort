@@ -292,12 +292,36 @@
 
   window.ncOnConsent(loadPixel);
 
+  /* ==========================================================
+     חלק 4 — קישור למעקב הזמנה בפוטר
+     נדחף אוטומטית לכל עמוד שיש בו קישור לתקנון,
+     כדי שלא צריך לערוך את הפוטר בכל קובץ בנפרד.
+     ========================================================== */
+
+  function addTrackLink() {
+    if (location.pathname.indexOf('myorder') !== -1) return;
+    var anchor = document.querySelector('footer a[href="/terms.html"]')
+              || document.querySelector('footer a[href="/about.html"]');
+    if (!anchor || !anchor.parentNode) return;
+    var box = anchor.parentNode;
+    if (box.querySelector('a[href^="/myorder"]')) return;
+
+    var sep = document.createTextNode(' · ');
+    var a = document.createElement('a');
+    a.href = '/myorder.html';
+    a.textContent = 'מעקב הזמנה';
+    a.style.textDecoration = 'none';
+    box.appendChild(sep);
+    box.appendChild(a);
+  }
+
   /* ---------- הפעלה ---------- */
   function init() {
     inject();
     buildA11y();
     apply();
     buildCookies();
+    addTrackLink();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

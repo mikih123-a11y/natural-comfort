@@ -49,6 +49,7 @@ h2{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:19px;margin:0 
 .kpi span{display:block;font-size:12.5px;color:var(--ink-mute);margin-top:5px}
 .kpi.warn b{color:#B4562E}
 .kpi.ok b{color:#3F6B4F}
+.kpi.neg b{color:#8C3323}
 
 .panel{background:#fff;border:1px solid var(--line);margin-bottom:16px}
 .panel h2{font-family:var(--display,Georgia),serif;font-size:18px;font-weight:500;
@@ -386,6 +387,22 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
   </div>
 </section>
 
+<!-- ---------- מסך: חשבוניות ספק ---------- -->
+<section class="screen" id="sc-supplier">
+  <div class="abar"><div class="in">
+    <button class="go" id="supGo">רענון</button>
+  </div></div>
+  <div class="dash">
+    <h1>חשבוניות ספק</h1>
+    <p class="lede">לכל הזמנה חשבונית אחת מהמפעל. אם אותו מספר חשבונית מופיע על יותר מהזמנה אחת —
+      <b>חויבת פעמיים</b> והוא יופיע כאן באדום. גם ההזמנות שעדיין בלי חשבונית מרוכזות כאן.</p>
+    <div class="kpis" id="supKpis"></div>
+    <div class="panel"><h2>חיוב כפול</h2><div class="body" style="padding:0"><div id="supDups">טוען…</div></div></div>
+    <div class="panel"><h2>חשבוניות שטרם שולמו</h2><div class="body" style="padding:0"><div id="supUnpaid"></div></div></div>
+    <div class="panel"><h2>הזמנות בלי חשבונית ספק</h2><div class="body" style="padding:0"><div id="supMissing"></div></div></div>
+  </div>
+</section>
+
 <!-- ---------- מסך: מוצרים ---------- -->
 <section class="screen" id="sc-products">
 
@@ -614,6 +631,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <a data-sc="leads"><span class="ic">✉</span> לידים מההדמיה</a>
     <a data-sc="customers"><span class="ic">☺</span> לקוחות</a>
     <a data-sc="costs"><span class="ic">₪</span> עלויות ורווחיות</a>
+    <a data-sc="supplier"><span class="ic">🧮</span> חשבוניות ספק <span class="cnt" id="navSup">—</span></a>
     <a data-sc="products"><span class="ic">▤</span> מוצרים <span class="cnt" id="navCount">—</span></a>
     <a data-sc="health"><span class="ic">⚠</span> בריאות הנתונים <span class="cnt" id="navGaps">—</span></a>
   </nav>
@@ -1165,11 +1183,12 @@ $('#dlViz').onclick=()=>{
     if(name === 'analytics') loadAnalytics();
     if(name === 'leads')     loadLeads();
     if(name === 'costs')     loadCosts();
+    if(name === 'supplier')  loadSupplier();
   }
   $$$('.nav a[data-sc]').forEach(a => a.onclick = () => go(a.dataset.sc));
   addEventListener('hashchange', () => {
     const h = location.hash.replace('#','');
-    if(['dash','orders','analytics','leads','customers','costs','products','health'].includes(h)) go(h);
+    if(['dash','orders','analytics','leads','customers','costs','supplier','products','health'].includes(h)) go(h);
   });
 
   /* ---------- ניתוח הקטלוג ---------- */
@@ -1458,6 +1477,138 @@ $('#dlViz').onclick=()=>{
   drawer.addEventListener('click', e => { if(e.target === drawer) closeDr(); });
   addEventListener('keydown', e => { if(e.key === 'Escape') closeDr(); });
 
+  /* ---------- הדפסת הזמנה ---------- */
+  function printOrder(id, o, c, a, d){
+    const items  = o.items || [];
+    const models = (cat() && cat().models) || [];
+    const qtyOf  = it => Number(it.qty) || 1;
+
+    /* דמי משלוח והרכבה — לכל פריט בנפרד. אם לא נשמרו בהזמנה, נלקחים מהקטלוג. */
+    const shipOf = it => {
+      const v = [it.delivery_install, it.shipping, it.ship].find(x => typeof x === 'number');
+      if(typeof v === 'number') return v;
+      const m = models.find(x => x.id === it.modelId);
+      return (m && typeof m.delivery_install === 'number') ? m.delivery_install : null;
+    };
+
+    let prodSum = 0, allPrices = items.length > 0;
+    let shipSum = 0, anyShip = false, allShip = items.length > 0;
+    items.forEach(it => {
+      if(typeof it.price === 'number') prodSum += it.price * qtyOf(it); else allPrices = false;
+      const s = shipOf(it);
+      if(s === null) allShip = false; else { anyShip = true; shipSum += s * qtyOf(it); }
+    });
+
+    /* אין דמי משלוח ברמת הפריט — נופלים לסכום שברמת ההזמנה */
+    let orderLevelShip = null;
+    if(!anyShip && typeof o.shipping_num === 'number'){ orderLevelShip = o.shipping_num; shipSum = o.shipping_num; allShip = true; }
+
+    const money    = n => '₪' + Number(n).toLocaleString('he-IL');
+    const prodTxt  = allPrices ? money(prodSum) : (o.total || '—');
+    const shipTxt  = allShip ? money(shipSum) : (anyShip ? money(shipSum) + ' + פריטים ללא דמי משלוח' : '—');
+    const grandTxt = (allPrices && allShip) ? money(prodSum + shipSum) : '—';
+
+    const rows = items.map(it => {
+      const q = qtyOf(it);
+      const s = shipOf(it);
+      const unit = typeof it.price === 'number' ? money(it.price) : 'לפי התאמה אישית';
+      const line = typeof it.price === 'number' ? money(it.price * q) : '—';
+      const cfg  = (it.config || []).map(x => `<li>${esc(x)}</li>`).join('');
+      const ship = s === null
+        ? `<div class="ship none">הובלה והרכבה: לא נקבעה · לתיאום מול המשרד</div>`
+        : `<div class="ship">הובלה והרכבה: ${money(s)} לפריט${q > 1 ? ` × ${q} = ${money(s * q)}` : ''} · משולם בבית למרכיב, אינו כלול במחיר המוצר</div>`;
+      return `<tr>
+        <td class="prod"><b>${esc(it.name)}</b>${cfg ? `<ul>${cfg}</ul>` : ''}${ship}</td>
+        <td class="num">${q}</td><td class="num">${unit}</td><td class="num">${line}</td></tr>`;
+    }).join('');
+
+    const name = [c.first || (c.name || '').split(' ')[0] || '', c.last || (c.name || '').split(' ').slice(1).join(' ') || ''].join(' ').trim();
+    const addr = [a.street, a.apartment ? 'דירה ' + a.apartment : '', a.city].filter(Boolean).map(esc).join(', ');
+    const floor = [a.floor ? 'קומה ' + esc(a.floor) : '', a.lift ? 'מעלית: ' + esc(a.lift) : ''].filter(Boolean).join(' · ');
+
+    const html = `<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8">
+<title>הזמנה ${esc(id)} — נטורל קומפורט</title>
+<style>
+*{box-sizing:border-box}
+body{font:14px/1.6 "Segoe UI",Arial,sans-serif;color:#1a1a1a;max-width:820px;margin:0 auto;padding:28px}
+h1{font-size:22px;margin:0}
+.top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #1a1a1a;padding-bottom:12px;margin-bottom:18px}
+.meta{text-align:start;font-size:13px;color:#555}
+.cols{display:flex;gap:16px;margin-bottom:20px}
+.box{flex:1;border:1px solid #ddd;border-radius:6px;padding:12px}
+.box h3{margin:0 0 8px;font-size:13px;color:#666;font-weight:600}
+.box div{margin:2px 0}
+table{width:100%;border-collapse:collapse;margin-bottom:16px}
+th{text-align:start;font-size:12px;color:#666;border-bottom:1px solid #ccc;padding:6px 8px;font-weight:600}
+td{border-bottom:1px solid #eee;padding:10px 8px;vertical-align:top}
+td.num{text-align:start;white-space:nowrap}
+.prod ul{margin:5px 0 0;padding-inline-start:18px;font-size:12.5px;color:#555}
+.ship{margin-top:7px;font-size:12.5px;color:#444;background:#f6f3ee;border-inline-start:3px solid #b08d57;padding:6px 9px;border-radius:3px}
+.ship.none{background:#fbeaea;border-inline-start-color:#c0392b}
+.sum{margin-inline-start:auto;width:340px}
+.sum div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
+.sum div.tot{border-bottom:none;border-top:2px solid #1a1a1a;font-weight:700;font-size:16px;margin-top:4px;padding-top:9px}
+.sum small{display:block;color:#666;font-weight:400;font-size:11.5px}
+.terms{margin-top:26px;border-top:1px solid #ddd;padding-top:12px;font-size:12px;color:#555;line-height:1.8}
+.terms b{color:#1a1a1a}
+@media print{body{padding:0}.noprint{display:none}}
+.noprint{margin-bottom:16px}
+.noprint button{font:inherit;padding:8px 18px;cursor:pointer;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;border-radius:4px}
+</style></head><body>
+<div class="noprint"><button onclick="window.print()">הדפסה</button></div>
+
+<div class="top">
+  <div><h1>נטורל קומפורט</h1><div style="font-size:12.5px;color:#666">ריהוט בהתאמה אישית · מקבוצת קניה טובה</div></div>
+  <div class="meta">
+    <div><b>הזמנה ${esc(id)}</b></div>
+    <div>תאריך: ${dtl(o.date)}</div>
+    <div>סטטוס: ${esc(ST[stKey(o.status)] || '—')}</div>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="box"><h3>פרטי הלקוח</h3>
+    <div><b>${esc(name || '—')}</b></div>
+    <div dir="ltr" style="text-align:start">${esc(c.phone || '—')}</div>
+    <div dir="ltr" style="text-align:start">${esc(c.email || '')}</div>
+    ${c.tax_id ? `<div>ת.ז: ${esc(c.tax_id)}</div>` : ''}
+    ${c.business_id ? `<div>ח.פ: ${esc(c.business_id)}</div>` : ''}
+  </div>
+  <div class="box"><h3>כתובת למשלוח</h3>
+    <div>${addr || '—'}</div>
+    ${floor ? `<div>${floor}</div>` : ''}
+    ${o.measure ? `<div style="margin-top:6px">מדידה: ${esc(o.measure)}</div>` : ''}
+    ${o.measure_note ? `<div>מידות שנמסרו: ${esc(o.measure_note)}</div>` : ''}
+  </div>
+</div>
+
+<table>
+  <thead><tr><th>מוצר</th><th>כמות</th><th>מחיר ליחידה</th><th>סה״כ</th></tr></thead>
+  <tbody>${rows || '<tr><td colspan="4">אין פריטים.</td></tr>'}</tbody>
+</table>
+
+<div class="sum">
+  <div><span>סך המוצרים</span><b>${prodTxt}</b></div>
+  <div><span>הובלה והרכבה<small>${orderLevelShip !== null ? 'סכום ברמת ההזמנה' : 'סכום דמי המשלוח של כל הפריטים'} · משולם בבית למרכיב</small></span><b>${shipTxt}</b></div>
+  <div class="tot"><span>סה״כ<small style="font-weight:400">מוצרים + הובלה והרכבה</small></span><b>${grandTxt}</b></div>
+</div>
+
+${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</div>` : ''}
+
+<div class="terms">
+  <div><b>הובלה, סבלות והרכבה</b> משולמים למרכיב בבית ואינם כלולים במחיר המוצר. דמי ההובלה וההרכבה נגבים לכל פריט בנפרד, גם כשהפריטים באותה הזמנה. תוספת 50 ₪ לקומה מהקומה השלישית ומעלה ללא מעלית. אין אספקה לאילת ולערבה.</div>
+  <div><b>זמן אספקה:</b> עד 21 ימי עסקים, לא כולל שישי, שבת, ערבי חג וחגים.</div>
+  <div><b>המידות באחריות הלקוח.</b> מדידה מקצועית היא שירות בתשלום.</div>
+  <div>נטורל קומפורט · mikiH123@gmail.com · 079-6622666</div>
+</div>
+</body></html>`;
+
+    const w = window.open('', '_blank');
+    if(!w){ alert('הדפדפן חסם את החלון. יש לאשר חלונות קופצים לאתר.'); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+    w.focus();
+  }
+
   async function openOrder(id){
     drawer.classList.add('on');
     document.getElementById('odTitle').textContent = id;
@@ -1465,7 +1616,7 @@ $('#dlViz').onclick=()=>{
     b.innerHTML = 'טוען…';
     try{
       const d = await api({ type:'order', id });
-      const o = d.order, c = o.customer||{}, a = o.address||{};
+      const o = d.order, c = o.customer||{}, a = o.address||{}, sup = o.supplier||{};
       const cur = stKey(o.status);
       const at  = FLOW.indexOf(cur);
       const wa  = String(c.phone||'').replace(/[^0-9]/g,'');
@@ -1501,8 +1652,25 @@ $('#dlViz').onclick=()=>{
           <div class="f"><label>משלוח והרכבה (₪) · נגבה בבית</label><input id="e-ship" dir="ltr" inputmode="numeric" value="${o.shipping_num==null?'':o.shipping_num}" placeholder="מהקטלוג"></div>
           <div class="f wide"><label>הערה פנימית (לא נראית ללקוח)</label><input id="e-note" value="${esc(o.admin_notes||'')}"></div>
         </div>
+
+        <h3 style="font-size:16px;margin:0 0 8px">חשבונית ספק</h3>
+        ${(d.dupInvoice||[]).length ? `<div class="oi" style="background:#fbeaea;border-inline-start:3px solid #c0392b;margin-bottom:10px">
+          <b>אותה חשבונית מופיעה על עוד ${d.dupInvoice.length} הזמנות — ייתכן חיוב כפול.</b>
+          <ul style="margin:6px 0 0;padding-inline-start:18px">${d.dupInvoice.map(x=>`<li>
+            <button class="linkbtn" data-open="${esc(x.number)}">${esc(x.number)}</button>
+            ${esc(x.name||'')} ${typeof x.amount==='number'?'· '+nis(x.amount):''}</li>`).join('')}</ul>
+        </div>` : ''}
+        <div class="edt">
+          <div class="f"><label>מספר חשבונית</label><input id="e-sup-no" dir="ltr" value="${esc(sup.invoice_no||'')}" placeholder="כפי שמופיע על החשבונית"></div>
+          <div class="f"><label>תאריך החשבונית</label><input id="e-sup-date" type="date" value="${esc(sup.invoice_date||'')}"></div>
+          <div class="f"><label>סכום החשבונית (₪)</label><input id="e-sup-amt" dir="ltr" inputmode="numeric" value="${sup.amount==null?'':sup.amount}"></div>
+          <div class="f"><label>שולמה למפעל</label>
+            <select id="e-sup-paid"><option value="">טרם שולמה</option><option value="1" ${sup.paid?'selected':''}>שולמה</option></select></div>
+          <div class="f wide"><label>הערה לחשבונית</label><input id="e-sup-note" value="${esc(sup.note||'')}"></div>
+        </div>
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px">
           <button class="go" id="odSave">שמירת פרטים</button>
+          <button class="addline" id="odPrint">הדפסת הזמנה</button>
           <a href="tel:${esc(c.phone)}">חיוג</a>
           ${wa?`<a href="https://wa.me/${esc(wa)}" target="_blank">וואטסאפ</a>`:''}
           <a href="#customers" id="odCust">כרטיס הלקוח ↗</a>
@@ -1572,12 +1740,23 @@ $('#dlViz').onclick=()=>{
               admin_notes: g('e-note'),
               cost_num: g('e-cost') === '' ? null : Number(g('e-cost')),
               shipping_num: g('e-ship') === '' ? null : Number(g('e-ship')),
+              supplier:{
+                invoice_no:   g('e-sup-no'),
+                invoice_date: g('e-sup-date'),
+                amount:       g('e-sup-amt') === '' ? null : Number(g('e-sup-amt')),
+                paid:         g('e-sup-paid') === '1',
+                note:         g('e-sup-note'),
+              },
             })
           });
           msg.textContent = 'נשמר.';
           loadOrders();
+          openOrder(id);   /* מרענן כדי שאזהרת החיוב הכפול תופיע מיד */
         }catch(e){ msg.textContent = e.message; }
       };
+
+      const prBtn = document.getElementById('odPrint');
+      if(prBtn) prBtn.onclick = () => printOrder(id, o, c, a, d);
 
       const noteBtn = document.getElementById('odAddNote');
       if(noteBtn) noteBtn.onclick = async () => {
@@ -1612,6 +1791,58 @@ $('#dlViz').onclick=()=>{
     const tr = e.target.closest('[data-open]');
     if(tr) openOrder(tr.dataset.open);
   });
+
+  /* ---------- חשבוניות ספק ---------- */
+  async function loadSupplier(){
+    const dupEl = document.getElementById('supDups');
+    if(!dupEl) return;
+    dupEl.innerHTML = 'טוען…';
+    try{
+      const d = await api({ type:'supplier' });
+
+      document.getElementById('supKpis').innerHTML = `
+        <div class="kpi"><b>${d.counts.invoiced}</b><span>הזמנות עם חשבונית</span></div>
+        <div class="kpi"><b>${d.counts.missing}</b><span>בלי חשבונית</span></div>
+        <div class="kpi ${d.dups.length?'neg':''}"><b>${d.dups.length}</b><span>חיוב כפול</span></div>
+        <div class="kpi"><b>${nis(d.totals.unpaid)}</b><span>טרם שולם למפעל · ${d.counts.unpaid} חשבוניות</span></div>`;
+
+      const nav = document.getElementById('navSup');
+      if(nav) nav.textContent = d.dups.length || d.counts.missing || '';
+
+      dupEl.innerHTML = d.dups.length
+        ? d.dups.map(x=>`<div class="oi" style="background:#fbeaea;border-inline-start:3px solid #c0392b;margin:10px">
+            <b>חשבונית ${esc(x.invoice)}</b> — מופיעה על ${x.count} הזמנות${x.sum?` · ${nis(x.sum)} בסך הכל`:''}
+            <ul style="margin:6px 0 0;padding-inline-start:18px">${x.orders.map(o=>`<li>
+              <button class="linkbtn" data-open="${esc(o.number)}">${esc(o.number)}</button>
+              ${esc(o.name||'')} ${typeof o.amount==='number'?'· '+nis(o.amount):''}</li>`).join('')}</ul>
+          </div>`).join('')
+        : '<div style="padding:18px;color:var(--ink-mute)">אין כפילויות. כל חשבונית מופיעה פעם אחת.</div>';
+
+      const tbl = (rows, cols, empty) => rows.length
+        ? '<table class="tbl"><thead><tr>' + cols.map(c=>`<th>${c[0]}</th>`).join('') + '</tr></thead><tbody>'
+          + rows.map(r=>'<tr>' + cols.map(c=>`<td>${c[1](r)}</td>`).join('') + '</tr>').join('')
+          + '</tbody></table>'
+        : `<div style="padding:18px;color:var(--ink-mute)">${empty}</div>`;
+
+      document.getElementById('supUnpaid').innerHTML = tbl(d.unpaid, [
+        ['הזמנה', r=>`<button class="linkbtn" data-open="${esc(r.number)}">${esc(r.number)}</button>`],
+        ['לקוח',  r=>esc(r.name||'—')],
+        ['חשבונית', r=>esc(r.invoice||'—')],
+        ['תאריך', r=>esc(r.date||'—')],
+        ['סכום',  r=>typeof r.amount==='number'?nis(r.amount):'—'],
+      ], 'כל החשבוניות שולמו.');
+
+      document.getElementById('supMissing').innerHTML = tbl(d.missing, [
+        ['הזמנה', r=>`<button class="linkbtn" data-open="${esc(r.number)}">${esc(r.number)}</button>`],
+        ['לקוח',  r=>esc(r.name||'—')],
+        ['תאריך', r=>dtl(r.date)],
+        ['סכום ההזמנה', r=>typeof r.total==='number'?nis(r.total):'—'],
+      ], 'לכל ההזמנות יש חשבונית ספק.');
+    }catch(e){
+      dupEl.innerHTML = '<span class="badge bad">' + esc(e.message) + '</span>';
+    }
+  }
+  const supGo = document.getElementById('supGo'); if(supGo) supGo.onclick = loadSupplier;
 
   /* ---------- ניתוחים ---------- */
   const barRow = (label, val, max, extra) => `

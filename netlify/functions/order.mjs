@@ -25,7 +25,7 @@ export default async (req) => {
     number, first, last, name, phone, email,
     city, street, apartment, floor, lift,
     contact_pref, measure, measure_note, notes,
-    items, total, total_num, business_id,
+    items, total, total_num, shipping_num, business_id,
   } = b;
 
   const firstN = clean(first, 40);
@@ -72,6 +72,8 @@ export default async (req) => {
     })) : [],
     total:     clean(total, 60),
     total_num: typeof total_num === 'number' ? total_num : null,
+    shipping_num: typeof shipping_num === 'number' ? shipping_num : null,   // משלוח והרכבה — נגבה בבית
+    notes_log: [],
     cost_num:  null,   // עלות מהמפעל — מחושבת באדמין
     meta: { ip: ip(req), ua: clean(req.headers.get('user-agent'), 300) },
     log: [{ at: now, what: 'ההזמנה התקבלה מהאתר' }],
@@ -107,6 +109,7 @@ export default async (req) => {
       floor:   order.address.floor,
       total:   order.total,
       total_num: order.total_num,
+      shipping_num: order.shipping_num,
       cost_num:  null,
       items:   order.items.length,
       products: order.items.map(i => i.modelId).filter(Boolean),

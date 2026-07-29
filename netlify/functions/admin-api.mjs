@@ -7,7 +7,8 @@ import { store, json, normPhone } from './_lib.mjs';
  *   ?type=orders&q=&status=&from=&to=&limit=
  *   ?type=order&id=NC-260729-422
  *   ?type=order-status   (POST)  {id, status, note}
- *   ?type=order-update   (POST)  {id, customer{}, address{}, tax_id, admin_notes, cost_num}
+ *   ?type=order-update   (POST)  {id, customer{}, address{}, tax_id, admin_notes, cost_num, shipping_num}
+ *   ?type=order-note     (POST)  {id, text}            הוספת הערה ליומן
  *   ?type=customer&phone=  |  &email=      כרטיס לקוח מלא
  *   ?type=costs                             מפת עלויות מהמפעל
  *   ?type=cost-set       (POST)  {modelId, cost, note}
@@ -209,6 +210,9 @@ export default async (req) => {
     if (b.admin_notes !== undefined) o.admin_notes = clean(b.admin_notes, 2000);
     if (b.cost_num    !== undefined) o.cost_num = num(b.cost_num);
 
+    /* משלוח והרכבה — מגיע מהקטלוג, ניתן לדריסה כאן במקרה חריג */
+    if (b.shipping_num !== undefined) o.shipping_num = num(b.shipping_num);
+
     o.log = o.log || [];
     o.log.unshift({ at: new Date().toISOString(), what: 'הפרטים עודכנו באדמין' });
     await os.setJSON(id, o);
@@ -220,9 +224,28 @@ export default async (req) => {
       city: o.address.city, street: o.address.street,
       apartment: o.address.apartment, floor: o.address.floor,
       cost_num: o.cost_num,
+      shipping_num: o.shipping_num,
     });
 
     return json({ ok: true });
+  }
+
+  /* ---------- הוספת הערה ---------- */
+  if (type === 'order-note') {
+    if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
+    const b = await req.json().catch(() => ({}));
+    const id = clean(b.id, 40);
+    const text = clean(b.text, 1500);
+    if (!id || !text) return json({ error: 'חסר טקסט.' }, 400);
+
+    const o = await os.get(id, { type: 'json' });
+    if (!o) return json({ error: 'לא נמצאה.' }, 404);
+
+    o.notes_log = o.notes_log || [];
+    o.notes_log.unshift({ at: new Date().toISOString(), text });
+    await os.setJSON(id, o);
+
+    return json({ ok: true, notes_log: o.notes_log });
   }
 
   /* ---------- כרטיס לקוח ---------- */

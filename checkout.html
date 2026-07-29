@@ -301,6 +301,21 @@ $('#send').addEventListener('click', async () => {
   };
 
   try{
+    // 1. שמירה אצלנו — זה מה שמזין את מסך ההזמנות באדמין
+    const save = await fetch('/api/order', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        number:num, name:data.name, phone:data.phone, email:data.email,
+        city:data.city, street:data.street, floor:data.floor, lift:data.lift,
+        contact_pref:data.contact_pref, measure:data.measure,
+        measure_note:data.measure_note, notes:data.notes,
+        items, total:totalTxt, total_num: t
+      })
+    }).catch(()=>null);
+    if(!save || !save.ok) console.warn('order save failed');
+
+    // 2. התראה במייל דרך Netlify Forms
     const res = await fetch('/', {
       method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},

@@ -85,7 +85,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     <h2>מה קורה עכשיו</h2>
     <ol>
       <li><div><b>ניצור קשר</b><small>בתוך יום עסקים אחד, לאישור ההרכבה והפרטים.</small></div></li>
-      <li><div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div></li>
+      <li id="step2"><div><b>מתאמים מדידה</b><small>המידות הסופיות נקבעות בשטח, ורק אז נסגר המחיר.</small></div></li>
       <li><div><b>גבייה וייצור</b><small>אחרי אישור המחיר. הייצור מתחיל מיד לאחר מכן.</small></div></li>
       <li><div><b>אספקה והתקנה</b><small>עד 21 ימי עסקים — לא כולל שישי, שבת, ערבי חג וחגים.</small></div></li>
     </ol>
@@ -111,8 +111,16 @@ if(num){
   document.getElementById('num').textContent = num;
   document.title = 'הזמנה ' + num + ' · Natural Comfort';
 }else{
-  const last = ncCart.orders()[0];
-  document.getElementById('num').textContent = last ? last.number : '—';
+  const last0 = ncCart.orders()[0];
+  document.getElementById('num').textContent = last0 ? last0.number : '—';
+}
+
+/* מי שמסר מידות בעצמו לא מקבל שלב של תיאום מדידה */
+const last = ncCart.orders()[0];
+if(last && last.measure === 'הלקוח מוסר מידות'){
+  document.getElementById('step2').innerHTML =
+    '<div><b>מאשרים את המידות</b><small>נעבור איתכם על המידות שמסרתם לפני שנסגר המחיר. '
+  + 'רהיט שמיוצר לפי מידות שנמסרו על ידכם אינו ניתן להחזרה או להחלפה.</small></div>';
 }
 </script>
 </body>

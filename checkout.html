@@ -63,6 +63,10 @@ input,select,textarea{font-family:inherit;font-size:16px}
 .opt small{color:var(--ink-mute);font-size:13px}
 .opt:has(input:checked){border-color:var(--ink);background:#fff}
 
+.alert{background:#FDF6EE;border-inline-start:3px solid var(--oak);padding:14px 16px;
+  font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin:14px 0 4px}
+.alert b{color:var(--ink)}
+.hidden{display:none}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-soft);margin-top:6px}
 .consent input{margin-top:3px;accent-color:var(--ink);flex:none;width:16px;height:16px}
 
@@ -113,7 +117,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     <input type="text" name="bot-field">
     <input name="order_number"><input name="name"><input name="phone"><input name="email">
     <input name="city"><input name="street"><input name="floor"><input name="lift">
-    <input name="contact_pref"><textarea name="notes"></textarea>
+    <input name="contact_pref"><input name="measure"><textarea name="measure_note"></textarea><textarea name="notes"></textarea>
     <textarea name="order_items"></textarea><input name="order_total">
   </form>
 
@@ -152,6 +156,30 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       </section>
 
       <section class="card">
+        <h2>מידות</h2>
+        <div class="pay">
+          <label class="opt"><input type="radio" name="measure" value="מדידה מקצועית בבית" checked>
+            <span><b>מדידה מקצועית בבית</b><small>שירות בתשלום · המחיר מתואם בשיחה. אנחנו אחראים למידות.</small></span></label>
+          <label class="opt"><input type="radio" name="measure" value="הלקוח מוסר מידות">
+            <span><b>אני מוסר/ת את המידות בעצמי</b><small>בלי עלות מדידה. המידות באחריותכם.</small></span></label>
+        </div>
+
+        <div id="selfbox" class="hidden">
+          <div class="field" style="margin-top:16px">
+            <label for="f-meas">המידות שלכם <em>(רוחב × גובה × עומק, בס״מ)</em></label>
+            <textarea id="f-meas" placeholder="לדוגמה: רוחב 260 · גובה 250 · עומק 60. אפשר לפרט לכל פריט בנפרד."></textarea>
+          </div>
+          <p class="alert">
+            <b>שימו לב:</b> רהיט בהתאמה אישית מיוצר בדיוק לפי המידות שתמסרו, ולכן
+            <b>אינו ניתן להחזרה, להחלפה או לתיקון</b> אם המידות שנמסרו אינן נכונות.
+            אם יש ספק — עדיף לבחור מדידה מקצועית.
+          </p>
+          <label class="consent"><input type="checkbox" id="f-resp">
+            <span>אני מאשר/ת שהמידות שמסרתי נכונות, ושהאחריות עליהן היא עליי בלבד.</span></label>
+        </div>
+      </section>
+
+      <section class="card">
         <h2>איך נוח שנחזור אליכם</h2>
         <div class="pay">
           <label class="opt"><input type="radio" name="pref" value="טלפון" checked>
@@ -175,10 +203,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <div class="tot"><span>סה״כ</span><b id="tot">—</b></div>
       <button class="send" id="send" type="button">שליחת ההזמנה</button>
       <a class="back" href="/cart.html">חזרה לסל</a>
-      <p class="note">
-        המחיר באתר הוא הערכה לפי ההרכבה שבחרתם. המחיר הסופי נקבע אחרי מדידה בשטח.
-        זמן אספקה: עד 21 ימי עסקים (לא כולל שישי, שבת, ערבי חג וחגים).
-      </p>
+      <p class="note" id="sidenote"></p>
     </aside>
   </div>
 </main>
@@ -202,6 +227,22 @@ $('#lines').innerHTML = items.map(it => `
 const t = ncCart.total();
 $('#tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
 
+/* בחירת מדידה משנה גם את התיבה וגם את הבטחת המחיר בצד */
+const selfMeasure = () => document.querySelector('input[name=measure]:checked').value === 'הלקוח מוסר מידות';
+
+function syncMeasure(){
+  const self = selfMeasure();
+  $('#selfbox').classList.toggle('hidden', !self);
+  $('#sidenote').innerHTML = self
+    ? 'המחיר באתר הוא הערכה לפי ההרכבה שבחרתם, ויאושר בשיחה לפי המידות שמסרתם. '
+      + 'רהיט שמיוצר לפי מידות שנמסרו על ידכם אינו ניתן להחזרה או להחלפה. '
+      + 'זמן אספקה: עד 21 ימי עסקים (לא כולל שישי, שבת, ערבי חג וחגים).'
+    : 'המחיר באתר הוא הערכה לפי ההרכבה שבחרתם. המחיר הסופי נקבע אחרי מדידה בשטח. '
+      + 'זמן אספקה: עד 21 ימי עסקים (לא כולל שישי, שבת, ערבי חג וחגים).';
+}
+document.querySelectorAll('input[name=measure]').forEach(r => r.addEventListener('change', syncMeasure));
+syncMeasure();
+
 const err = m => { $('#err').textContent = m; $('#err').classList.add('on');
                    $('#err').scrollIntoView({block:'center',behavior:'smooth'}); };
 const clr = () => $('#err').classList.remove('on');
@@ -219,6 +260,8 @@ $('#send').addEventListener('click', async () => {
   if(!okMail(v('f-email'))){ $('#f-email').classList.add('bad'); return err('כתובת אימייל לא תקינה.'); }
   if(!v('f-city')){ $('#f-city').classList.add('bad'); return err('צריך למלא עיר.'); }
   if(!v('f-street')){ $('#f-street').classList.add('bad'); return err('צריך למלא רחוב ומספר.'); }
+  if(selfMeasure() && !$('#f-resp').checked)
+    return err('כדי להזמין לפי מידות שלכם צריך לאשר שהמידות נכונות ובאחריותכם.');
   if(!$('#f-terms').checked) return err('צריך לאשר את התקנון כדי לשלוח.');
 
   const btn = $('#send');
@@ -238,6 +281,8 @@ $('#send').addEventListener('click', async () => {
     floor:          v('f-floor'),
     lift:           $('#f-lift').value,
     contact_pref:   document.querySelector('input[name=pref]:checked').value,
+    measure:        document.querySelector('input[name=measure]:checked').value,
+    measure_note:   selfMeasure() ? v('f-meas') : '',
     notes:          v('f-notes'),
     order_items:    ncCart.orderText(items),
     order_total:    totalTxt
@@ -247,6 +292,7 @@ $('#send').addEventListener('click', async () => {
     number: num, date: new Date().toISOString(),
     name: data.name, phone: data.phone, email: data.email,
     address: data.street + ', ' + data.city,
+    measure: data.measure,
     total: totalTxt, items: items
   };
 
@@ -264,7 +310,8 @@ $('#send').addEventListener('click', async () => {
     order.sent = false;
     ncCart.saveOrder(order);
     const txt = `הזמנה ${num}\n${data.name} · ${data.phone}\n${data.street}, ${data.city}\n\n`
-              + data.order_items + `\n\nסה״כ: ${totalTxt}`;
+              + data.order_items + `\n\nסה״כ: ${totalTxt}\nמדידה: ${data.measure}`
+              + (data.measure_note ? `\nמידות שנמסרו: ${data.measure_note}` : '');
     window.location.href = 'https://wa.me/972524400030?text=' + encodeURIComponent(txt);
     return;
   }

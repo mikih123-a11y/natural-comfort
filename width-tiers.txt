@@ -1,0 +1,53 @@
+/* ===== 2 דלתות ===== */
+"width_tiers": {
+    "unit": "cm",
+    "step": 10,
+    "tiers": [
+      {
+        "from": 120,
+        "to": 160,
+        "price": 1899
+      }
+    ]
+  }
+
+/* ===== 3 דלתות ===== */
+"width_tiers": {
+    "unit": "cm",
+    "step": 10,
+    "tiers": [
+      {
+        "from": 180,
+        "to": 180,
+        "price": 1999
+      },
+      {
+        "from": 190,
+        "to": 240,
+        "price": 2499
+      },
+      {
+        "from": 250,
+        "to": 270,
+        "price": 2999
+      }
+    ]
+  }
+
+/* ===== 4 דלתות ===== */
+"width_tiers": {
+    "unit": "cm",
+    "step": 10,
+    "tiers": [
+      {
+        "from": 280,
+        "to": 320,
+        "price": null
+      },
+      {
+        "from": 330,
+        "to": 360,
+        "price": null
+      }
+    ]
+  }

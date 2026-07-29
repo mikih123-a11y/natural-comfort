@@ -49,6 +49,31 @@ ${l.imageUrl ? `<p style="margin:18px 0 6px;color:#8A837A;font-size:13px">ההד
 </div>`;
 
 const sinks = {
+  // 0. Netlify Forms — משתמש בערוץ ההתראות שכבר עובד באתר.
+  //    בלי חשבון חיצוני ובלי מפתחות. נשלח תמיד.
+  netlifyForm: async (l, p) => {
+    const base = process.env.URL || process.env.DEPLOY_PRIME_URL;
+    if (!base) return;
+    const body = new URLSearchParams({
+      'form-name': 'lead',
+      name:    l.name,
+      phone:   l.phone,
+      email:   l.email,
+      product: p?.name || l.productId || '—',
+      image:   l.imageUrl || '—',
+      source:  'הדמיה בחדר',
+      ip:      l.ip || '—',
+      notes:   `מידות: ${dimsOf(p)} · ${new Date().toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem' })}`,
+    }).toString();
+
+    const r = await fetch(base + '/', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body,
+    });
+    if (!r.ok) throw new Error('netlify form ' + r.status);
+  },
+
   // 1. CRM / Make / Zapier / כל endpoint
   webhook: async (l, p) => {
     if (!process.env.LEAD_WEBHOOK_URL) return;

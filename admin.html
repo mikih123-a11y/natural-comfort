@@ -65,6 +65,47 @@ table.tbl tr:hover td{background:#FCFBF9}
 .badge.bad{background:#FAEDEA;color:#8C3323}
 .badge.warn{background:#FBF0E4;color:#8A5B20}
 .badge.good{background:#EAF0EB;color:#3F6B4F}
+/* ===== סרגל עליון של האדמין ===== */
+.abar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:25}
+.abar .in{max-width:1240px;margin:0 auto;padding:12px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.abar input,.abar select{border:1px solid var(--line);padding:9px 12px;font-family:inherit;font-size:14px;background:#fff}
+.abar .grow{flex:1;min-width:220px}
+.abar .go{background:var(--ink);color:#fff;border:0;padding:10px 20px;font:600 14px inherit;cursor:pointer}
+.abar .go:hover{background:#000}
+
+/* ===== טבלת הזמנות ===== */
+.otbl td.num{font-family:var(--mono,monospace);font-weight:700;white-space:nowrap}
+.otbl td.money{white-space:nowrap;font-weight:600}
+.st{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.st-new{background:#FBF0E4;color:#8A5B20}
+.st-contacted{background:#E6EFF7;color:#25567F}
+.st-measuring{background:#EFE8F7;color:#5B3E86}
+.st-confirmed{background:#EAF0EB;color:#3F6B4F}
+.st-production{background:#FFF4D6;color:#7A5B00}
+.st-delivered{background:#E4F1E7;color:#2E6B41}
+.st-cancelled{background:#FAEDEA;color:#8C3323}
+
+.drawer{position:fixed;inset:0;background:rgba(20,28,26,.5);display:none;z-index:120}
+.drawer.on{display:block}
+.drawer .box{position:absolute;inset-block:0;inset-inline-start:0;width:min(620px,100%);
+  background:var(--paper,#FBFAF8);overflow-y:auto;box-shadow:0 0 40px rgba(0,0,0,.3)}
+.drawer .hd{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);
+  padding:16px 20px;display:flex;align-items:center;gap:12px}
+.drawer .hd h2{margin:0;font-size:20px}
+.drawer .hd .x{margin-inline-start:auto;border:0;background:none;font-size:24px;cursor:pointer;color:var(--ink-mute)}
+.drawer .bd{padding:20px}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:14px;margin-bottom:16px}
+.kv dt{color:var(--ink-mute)}
+.kv dd{margin:0}
+.oi{border:1px solid var(--line);background:#fff;padding:12px;margin-bottom:8px}
+.oi b{font-size:14.5px}
+.oi ul{margin:5px 0 0;padding-inline-start:16px;font-size:13px;color:var(--ink-mute)}
+
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center;font-size:13.5px}
+.bar .t{height:20px;background:#EFEBE4;position:relative;overflow:hidden}
+.bar .t i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--oak,#B8894E);display:block}
+
 .linkbtn{background:none;border:0;color:var(--oak,#B8894E);font:inherit;cursor:pointer;text-decoration:underline;padding:0}
 
 .topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
@@ -185,6 +226,18 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <h1>לוח בקרה</h1>
     <p class="lede">מצב הקטלוג והמדמה במבט אחד.</p>
 
+    <div class="panel" id="tokBox">
+      <h2>חיבור לנתונים</h2>
+      <div class="body">
+        <p>הזמנות, לידים וניתוחים נשלפים מהשרת ומוגנים בטוקן. מגדירים <span class="mono">STATS_TOKEN</span> ב-Netlify ומדביקים כאן פעם אחת.</p>
+        <div class="row c2">
+          <div><label>STATS_TOKEN</label><input type="password" id="statsToken" placeholder="הדביקו כאן"></div>
+          <div style="display:flex;align-items:flex-end"><button class="go" id="tokSave" style="width:100%">חיבור</button></div>
+        </div>
+        <div id="tokState" style="margin-top:10px"></div>
+      </div>
+    </div>
+
     <div class="kpis" id="kpis"></div>
 
     <div class="panel">
@@ -199,39 +252,69 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
   </div>
 </section>
 
-<!-- ---------- מסך: הזמנות ולידים ---------- -->
+<!-- ---------- מסך: הזמנות ---------- -->
+<section class="screen" id="sc-orders">
+  <div class="abar"><div class="in">
+    <input class="grow" id="oq" placeholder="חיפוש: שם · טלפון · מייל · מספר הזמנה · עיר">
+    <select id="ost">
+      <option value="">כל הסטטוסים</option>
+      <option value="new">התקבלה</option>
+      <option value="contacted">יצרנו קשר</option>
+      <option value="measuring">מדידה</option>
+      <option value="confirmed">אושרה</option>
+      <option value="production">בייצור</option>
+      <option value="delivered">נמסרה</option>
+      <option value="cancelled">בוטלה</option>
+    </select>
+    <input type="date" id="ofrom" title="מתאריך">
+    <input type="date" id="oto" title="עד תאריך">
+    <button class="go" id="ogo">חיפוש</button>
+  </div></div>
+
+  <div class="dash">
+    <h1>הזמנות</h1>
+    <p class="lede" id="osum">—</p>
+    <div class="panel"><div class="body" style="padding:0"><div id="otbl"></div></div></div>
+  </div>
+</section>
+
+<!-- ---------- מסך: ניתוחים ---------- -->
+<section class="screen" id="sc-analytics">
+  <div class="dash">
+    <h1>ניתוחים</h1>
+    <p class="lede">מאיפה מגיעות ההזמנות ומה נמכר. הבסיס לפרסום בפייסבוק ובגוגל.</p>
+
+    <div class="abar" style="border:1px solid var(--line);margin-bottom:16px"><div class="in" style="padding:12px 16px">
+      <select id="aDays">
+        <option value="30">30 יום</option>
+        <option value="90" selected>90 יום</option>
+        <option value="365">שנה</option>
+        <option value="730">שנתיים</option>
+      </select>
+      <button class="go" id="aGo">טעינה</button>
+    </div></div>
+
+    <div class="kpis" id="aKpis"></div>
+    <div class="panel"><h2>ערים · לפי מספר הזמנות</h2><div class="body"><div id="aCities"></div></div></div>
+    <div class="panel"><h2>הדגמים הנמכרים</h2><div class="body"><div id="aProducts"></div></div></div>
+    <div class="panel"><h2>לפי חודש</h2><div class="body" style="padding:0"><div id="aMonths"></div></div></div>
+  </div>
+</section>
+
+<!-- ---------- מסך: לידים והדמיה ---------- -->
 <section class="screen" id="sc-leads">
   <div class="dash">
-    <h1>הזמנות ולידים</h1>
-    <p class="lede">ההזמנות והלידים נשמרים אצל Netlify. מכאן קופצים ישר אליהם.</p>
+    <h1>לידים מההדמיה</h1>
+    <p class="lede">מי עשה הדמיה, לאיזה דגם, ומתי. כולם עברו אימות טלפון.</p>
 
     <div class="kpis" id="funnelKpis"></div>
 
-    <div class="panel">
-      <h2>משפך ההדמיה</h2>
-      <div class="body">
-        <p>נדרש <span class="mono">STATS_TOKEN</span> כדי לשלוף נתונים. מגדירים אותו ב-Netlify ומדביקים כאן.</p>
-        <div class="row c2">
-          <div>
-            <label>STATS_TOKEN</label>
-            <input type="password" id="statsToken" placeholder="הדביקו כאן">
-          </div>
-          <div>
-            <label>טווח בימים</label>
-            <input type="number" id="statsDays" value="30" min="1" max="90">
-          </div>
-        </div>
-        <button class="addline" id="loadStats" style="margin-top:10px">טעינת נתונים</button>
-        <div id="statsOut" style="margin-top:14px"></div>
-      </div>
+    <div class="panel"><h2>לידים</h2>
+      <div class="body" style="padding:0"><div id="leadTbl"></div></div>
     </div>
 
-    <div class="panel">
-      <h2>קישורים מהירים</h2>
-      <div class="body">
-        <p>הזמנות מהאתר ולידים מההדמיה יושבים בלוח הבקרה של Netlify.</p>
-        <a class="addline" id="lnkForms" href="#" target="_blank">פתיחת Forms ב-Netlify ↗</a>
-      </div>
+    <div class="panel"><h2>משפך ההדמיה</h2>
+      <div class="body"><div id="statsOut">—</div></div>
     </div>
   </div>
 </section>
@@ -456,8 +539,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <small>מערכת ניהול</small>
   </div>
   <nav>
-    <a data-sc="dash"     class="on"><span class="ic">▦</span> לוח בקרה</a>
-    <a data-sc="leads"><span class="ic">✉</span> הזמנות ולידים</a>
+    <a data-sc="dash" class="on"><span class="ic">▦</span> לוח בקרה</a>
+    <a data-sc="orders"><span class="ic">🧾</span> הזמנות <span class="cnt" id="navOrders">—</span></a>
+    <a data-sc="analytics"><span class="ic">📊</span> ניתוחים</a>
+    <a data-sc="leads"><span class="ic">✉</span> לידים מההדמיה</a>
     <a data-sc="products"><span class="ic">▤</span> מוצרים <span class="cnt" id="navCount">—</span></a>
     <a data-sc="health"><span class="ic">⚠</span> בריאות הנתונים <span class="cnt" id="navGaps">—</span></a>
   </nav>
@@ -468,6 +553,12 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
 </aside>
 
 </div><!-- /shell -->
+
+<div class="drawer" id="odrawer"><div class="box">
+  <div class="hd"><h2 id="odTitle">—</h2><button class="x" id="odX">&times;</button></div>
+  <div class="bd" id="odBody"></div>
+</div></div>
+
 
 <script>
 "use strict";
@@ -945,13 +1036,16 @@ $('#dlViz').onclick=()=>{
     $$$('.nav a[data-sc]').forEach(a => a.classList.toggle('on', a.dataset.sc === name));
     location.hash = name;
     window.scrollTo(0,0);
-    if(name === 'dash')   paintDash();
-    if(name === 'health') paintHealth();
+    if(name === 'dash')      paintDash();
+    if(name === 'health')    paintHealth();
+    if(name === 'orders')    loadOrders();
+    if(name === 'analytics') loadAnalytics();
+    if(name === 'leads')     loadLeads();
   }
   $$$('.nav a[data-sc]').forEach(a => a.onclick = () => go(a.dataset.sc));
   addEventListener('hashchange', () => {
     const h = location.hash.replace('#','');
-    if(['dash','leads','products','health'].includes(h)) go(h);
+    if(['dash','orders','analytics','leads','products','health'].includes(h)) go(h);
   });
 
   /* ---------- ניתוח הקטלוג ---------- */
@@ -1049,43 +1143,241 @@ $('#dlViz').onclick=()=>{
     }
   });
 
-  /* ---------- משפך ---------- */
-  const T_KEY = 'nc_stats_token';
+  /* ==========================================================
+     חיבור לשרת
+     ========================================================== */
+  const T_KEY = 'nc_admin_token';
+  let TOKEN = '';
+  try{ TOKEN = localStorage.getItem(T_KEY) || ''; }catch(e){}
+
   const tok = document.getElementById('statsToken');
-  try{ if(tok) tok.value = localStorage.getItem(T_KEY) || ''; }catch(e){}
+  if(tok) tok.value = TOKEN;
 
-  const lf = document.getElementById('lnkForms');
-  if(lf) lf.href = 'https://app.netlify.com/projects/nc-visualizer/forms';
+  const api = async (params, opts) => {
+    if(!TOKEN) throw new Error('חסר טוקן. הגדירו אותו בלוח הבקרה.');
+    const q = new URLSearchParams({ ...params, token: TOKEN }).toString();
+    const r = await fetch('/api/admin?' + q, opts);
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error || ('שגיאה ' + r.status));
+    return d;
+  };
 
-  const btn = document.getElementById('loadStats');
-  if(btn) btn.onclick = async () => {
-    const t = (tok.value||'').trim();
-    const days = document.getElementById('statsDays').value || 30;
-    const out = document.getElementById('statsOut');
-    if(!t){ out.innerHTML = '<span class="badge bad">חסר טוקן.</span>'; return; }
-    try{ localStorage.setItem(T_KEY, t); }catch(e){}
-    out.innerHTML = 'טוען…';
+  const tokState = document.getElementById('tokState');
+  const setTok = async () => {
+    TOKEN = (tok.value||'').trim();
+    try{ localStorage.setItem(T_KEY, TOKEN); }catch(e){}
+    tokState.innerHTML = 'בודק…';
     try{
-      const r = await fetch(`/api/stats?days=${days}&token=${encodeURIComponent(t)}`);
-      const d = await r.json();
-      if(!r.ok) throw new Error(d.error || 'שגיאה');
-      const f = d.funnel;
-      document.getElementById('funnelKpis').innerHTML = `
-        <div class="kpi"><b>${f.uploaded}</b><span>העלו תמונה</span></div>
-        <div class="kpi"><b>${f.completed}</b><span>הדמיות שהושלמו</span></div>
-        <div class="kpi ok"><b>${f.leads}</b><span>השאירו פרטים</span></div>
-        <div class="kpi ${f.abandoned_at_gate?'warn':''}"><b>${f.abandoned_at_gate}</b><span>נטשו בשער</span></div>`;
-      out.innerHTML =
-        '<table class="tbl"><thead><tr><th>שלב</th><th>כמות</th></tr></thead><tbody>' +
-        `<tr><td>העלאת תמונה</td><td>${f.uploaded}</td></tr>` +
-        `<tr><td>הדמיה הושלמה</td><td>${f.completed} <span class="badge good">${f.rate_upload_to_done}%</span></td></tr>` +
-        `<tr><td>השאירו פרטים</td><td>${f.leads} <span class="badge good">${f.rate_done_to_lead}%</span></td></tr>` +
-        `<tr><td>נסגרו (ידני)</td><td>${f.won} <span class="badge good">${f.rate_lead_to_won}%</span></td></tr>` +
-        '</tbody></table>';
+      const d = await api({ type:'orders', limit:1 });
+      tokState.innerHTML = '<span class="badge good">מחובר · ' + d.count + ' הזמנות במערכת</span>';
+      const n = document.getElementById('navOrders'); if(n) n.textContent = d.count;
     }catch(e){
-      out.innerHTML = `<span class="badge bad">${e.message}</span>`;
+      tokState.innerHTML = '<span class="badge bad">' + e.message + '</span>';
     }
   };
+  const tokBtn = document.getElementById('tokSave');
+  if(tokBtn) tokBtn.onclick = setTok;
+  if(TOKEN) setTok();
+
+  const esc = x => String(x==null?'':x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const dt  = iso => { try{ return new Date(iso).toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit',year:'2-digit'}); }catch(e){ return '—'; } };
+  const dtl = iso => { try{ return new Date(iso).toLocaleString('he-IL',{timeZone:'Asia/Jerusalem'}); }catch(e){ return '—'; } };
+
+  const ST = { new:'התקבלה', contacted:'יצרנו קשר', measuring:'מדידה', confirmed:'אושרה',
+               production:'בייצור', delivered:'נמסרה', cancelled:'בוטלה' };
+  const stTag = k => `<span class="st st-${k||'new'}">${ST[k||'new']||k}</span>`;
+
+  /* ---------- הזמנות ---------- */
+  async function loadOrders(){
+    const box = document.getElementById('otbl');
+    box.innerHTML = 'טוען…';
+    try{
+      const d = await api({
+        type:'orders',
+        q:      document.getElementById('oq').value || '',
+        status: document.getElementById('ost').value || '',
+        from:   document.getElementById('ofrom').value || '',
+        to:     document.getElementById('oto').value || '',
+      });
+      document.getElementById('osum').textContent = d.count + ' הזמנות תואמות';
+      const n = document.getElementById('navOrders'); if(n) n.textContent = d.count;
+
+      box.innerHTML = d.orders.length
+        ? '<table class="tbl otbl"><thead><tr><th>הזמנה</th><th>תאריך</th><th>לקוח</th><th>טלפון</th><th>עיר</th><th>פריטים</th><th>סכום</th><th>סטטוס</th></tr></thead><tbody>' +
+          d.orders.map(o => `<tr style="cursor:pointer" data-open="${esc(o.number)}">
+            <td class="num">${esc(o.number)}</td>
+            <td>${dt(o.date)}</td>
+            <td><b>${esc(o.name)}</b></td>
+            <td dir="ltr">${esc(o.phone)}</td>
+            <td>${esc(o.city||'—')}</td>
+            <td>${o.items||0}</td>
+            <td class="money">${esc(o.total||'—')}</td>
+            <td>${stTag(o.status)}</td></tr>`).join('') + '</tbody></table>'
+        : '<div style="padding:24px;color:var(--ink-mute)">אין הזמנות תואמות.</div>';
+    }catch(e){
+      box.innerHTML = '<div style="padding:24px"><span class="badge bad">' + esc(e.message) + '</span></div>';
+    }
+  }
+  ['ogo'].forEach(id => { const b=document.getElementById(id); if(b) b.onclick = loadOrders; });
+  const oq = document.getElementById('oq');
+  if(oq) oq.addEventListener('keydown', e => { if(e.key==='Enter') loadOrders(); });
+
+  /* ---------- פרטי הזמנה ---------- */
+  const drawer = document.getElementById('odrawer');
+  const closeDr = () => drawer.classList.remove('on');
+  document.getElementById('odX').onclick = closeDr;
+  drawer.addEventListener('click', e => { if(e.target === drawer) closeDr(); });
+  addEventListener('keydown', e => { if(e.key === 'Escape') closeDr(); });
+
+  async function openOrder(id){
+    drawer.classList.add('on');
+    document.getElementById('odTitle').textContent = id;
+    const b = document.getElementById('odBody');
+    b.innerHTML = 'טוען…';
+    try{
+      const { order:o } = await api({ type:'order', id });
+      const c = o.customer||{}, a = o.address||{};
+      b.innerHTML = `
+        <div style="margin-bottom:14px">${stTag(o.status)}
+          <select id="odSt" style="margin-inline-start:8px">
+            ${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k===o.status?'selected':''}>${v}</option>`).join('')}
+          </select>
+          <button class="addline" id="odSave">עדכון</button>
+        </div>
+
+        <dl class="kv">
+          <dt>לקוח</dt><dd><b>${esc(c.name)}</b></dd>
+          <dt>טלפון</dt><dd dir="ltr"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a> ·
+            <a href="https://wa.me/${esc(String(c.phone).replace('+',''))}" target="_blank">וואטסאפ</a></dd>
+          <dt>מייל</dt><dd><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></dd>
+          ${c.business_id?`<dt>ח.פ / ת.ז</dt><dd>${esc(c.business_id)}</dd>`:''}
+          <dt>כתובת</dt><dd>${esc(a.street)}, ${esc(a.city)}${a.floor?` · קומה ${esc(a.floor)}`:''}${a.lift?` · ${esc(a.lift)}`:''}</dd>
+          <dt>מדידה</dt><dd>${esc(o.measure||'—')}</dd>
+          ${o.measure_note?`<dt>מידות שנמסרו</dt><dd>${esc(o.measure_note)}</dd>`:''}
+          <dt>העדפת קשר</dt><dd>${esc(o.contact_pref||'—')}</dd>
+          ${o.notes?`<dt>הערות</dt><dd>${esc(o.notes)}</dd>`:''}
+          <dt>התקבלה</dt><dd>${dtl(o.date)}</dd>
+          <dt>IP</dt><dd dir="ltr">${esc((o.meta||{}).ip||'—')}</dd>
+        </dl>
+
+        <h3 style="font-size:16px;margin:0 0 8px">פריטים</h3>
+        ${(o.items||[]).map(it=>`<div class="oi">
+          <b>${esc(it.name)}</b> ×${it.qty}
+          <ul>${(it.config||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+          <div style="margin-top:6px;font-weight:600">${typeof it.price==='number'?('₪'+it.price.toLocaleString('he-IL')):'לפי התאמה'}</div>
+        </div>`).join('')}
+        <div style="text-align:start;font-size:17px;font-weight:700;margin-top:10px">סה״כ ${esc(o.total||'—')}</div>
+
+        <h3 style="font-size:16px;margin:22px 0 8px">יומן</h3>
+        <ul style="padding-inline-start:18px;font-size:13.5px;color:var(--ink-mute);line-height:1.9">
+          ${(o.log||[]).map(l=>`<li>${dtl(l.at)} — ${esc(l.what)}</li>`).join('')}
+        </ul>`;
+
+      document.getElementById('odSave').onclick = async () => {
+        const st = document.getElementById('odSt').value;
+        try{
+          await api({ type:'order-status' }, {
+            method:'POST',
+            headers:{'content-type':'application/json'},
+            body: JSON.stringify({ id, status: st })
+          });
+          openOrder(id); loadOrders();
+        }catch(e){ alert(e.message); }
+      };
+    }catch(e){
+      b.innerHTML = '<span class="badge bad">' + esc(e.message) + '</span>';
+    }
+  }
+  document.addEventListener('click', e => {
+    const tr = e.target.closest('[data-open]');
+    if(tr) openOrder(tr.dataset.open);
+  });
+
+  /* ---------- ניתוחים ---------- */
+  const barRow = (label, val, max, extra) => `
+    <div class="bar"><span>${esc(label)}</span>
+      <span class="t"><i style="width:${max?Math.round(val/max*100):0}%"></i></span>
+      <b>${val}${extra||''}</b></div>`;
+
+  async function loadAnalytics(){
+    const days = document.getElementById('aDays').value;
+    const cEl = document.getElementById('aCities');
+    cEl.innerHTML = 'טוען…';
+    try{
+      const d = await api({ type:'analytics', days });
+      document.getElementById('aKpis').innerHTML = `
+        <div class="kpi"><b>${d.orders}</b><span>הזמנות</span></div>
+        <div class="kpi"><b>₪${Number(d.revenue).toLocaleString('he-IL')}</b><span>מחזור</span></div>
+        <div class="kpi"><b>₪${Number(d.avg).toLocaleString('he-IL')}</b><span>הזמנה ממוצעת</span></div>
+        <div class="kpi"><b>${d.cities.length}</b><span>ערים</span></div>`;
+
+      const cmax = Math.max(1, ...d.cities.map(c=>c.orders));
+      cEl.innerHTML = d.cities.length
+        ? '<div class="bars">' + d.cities.map(c =>
+            barRow(c.name, c.orders, cmax, c.revenue?` · ₪${Number(c.revenue).toLocaleString('he-IL')}`:'')).join('') + '</div>'
+        : '<span style="color:var(--ink-mute)">אין נתונים עדיין.</span>';
+
+      const names = {};
+      (cat()?.models||[]).forEach(m => names[m.id] = m.name);
+      const pmax = Math.max(1, ...d.products.map(p=>p.n));
+      document.getElementById('aProducts').innerHTML = d.products.length
+        ? '<div class="bars">' + d.products.map(p =>
+            barRow(names[p.id] || p.id, p.n, pmax)).join('') + '</div>'
+        : '<span style="color:var(--ink-mute)">אין נתונים עדיין.</span>';
+
+      document.getElementById('aMonths').innerHTML = d.byMonth.length
+        ? '<table class="tbl"><thead><tr><th>חודש</th><th>הזמנות</th><th>מחזור</th></tr></thead><tbody>' +
+          d.byMonth.slice().reverse().map(m=>`<tr><td>${m.month}</td><td>${m.orders}</td>
+            <td>₪${Number(m.revenue).toLocaleString('he-IL')}</td></tr>`).join('') + '</tbody></table>'
+        : '<div style="padding:18px;color:var(--ink-mute)">אין נתונים עדיין.</div>';
+    }catch(e){
+      cEl.innerHTML = '<span class="badge bad">' + esc(e.message) + '</span>';
+    }
+  }
+  const aGo = document.getElementById('aGo'); if(aGo) aGo.onclick = loadAnalytics;
+
+  /* ---------- לידים ---------- */
+  async function loadLeads(){
+    const box = document.getElementById('leadTbl');
+    box.innerHTML = 'טוען…';
+    try{
+      const d = await api({ type:'leads', days:180 });
+      const names = {};
+      (cat()?.models||[]).forEach(m => names[m.id] = m.name);
+      box.innerHTML = d.leads.length
+        ? '<table class="tbl"><thead><tr><th>תאריך</th><th>שם</th><th>טלפון</th><th>מייל</th><th>דגם</th><th></th></tr></thead><tbody>' +
+          d.leads.map(l=>`<tr>
+            <td>${dt(l.consentAt)}</td>
+            <td><b>${esc(l.name)}</b></td>
+            <td dir="ltr"><a href="https://wa.me/${esc(String(l.phone).replace('+',''))}" target="_blank">${esc(l.phone)}</a></td>
+            <td>${esc(l.email)}</td>
+            <td>${esc(names[l.productId] || l.productId || '—')}</td>
+            <td>${l.imageUrl?`<a href="${esc(l.imageUrl)}" target="_blank">ההדמיה ↗</a>`:''}</td>
+          </tr>`).join('') + '</tbody></table>'
+        : '<div style="padding:24px;color:var(--ink-mute)">אין לידים עדיין.</div>';
+    }catch(e){
+      box.innerHTML = '<div style="padding:24px"><span class="badge bad">' + esc(e.message) + '</span></div>';
+    }
+
+    try{
+      const r = await fetch('/api/stats?days=90&token=' + encodeURIComponent(TOKEN));
+      const d = await r.json();
+      if(r.ok){
+        const f = d.funnel;
+        document.getElementById('funnelKpis').innerHTML = `
+          <div class="kpi"><b>${f.uploaded}</b><span>העלו תמונה</span></div>
+          <div class="kpi"><b>${f.completed}</b><span>הדמיות שהושלמו</span></div>
+          <div class="kpi ok"><b>${f.leads}</b><span>השאירו פרטים</span></div>
+          <div class="kpi ${f.abandoned_at_gate?'warn':''}"><b>${f.abandoned_at_gate}</b><span>נטשו בשער</span></div>`;
+        document.getElementById('statsOut').innerHTML =
+          '<table class="tbl"><tbody>' +
+          `<tr><td>העלאת תמונה</td><td>${f.uploaded}</td></tr>` +
+          `<tr><td>הדמיה הושלמה</td><td>${f.completed} <span class="badge good">${f.rate_upload_to_done}%</span></td></tr>` +
+          `<tr><td>השאירו פרטים</td><td>${f.leads} <span class="badge good">${f.rate_done_to_lead}%</span></td></tr>` +
+          '</tbody></table>';
+      }
+    }catch(e){}
+  }
 
   /* מצייר ברגע שהקטלוג נטען */
   const tick = setInterval(() => {

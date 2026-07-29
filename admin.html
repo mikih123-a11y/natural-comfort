@@ -1708,6 +1708,31 @@ $('#dlViz').onclick=()=>{
       const c = d.customer, t = d.totals || {};
       if(!c){ box.innerHTML = '<div class="panel"><div class="body" style="color:var(--ink-mute)">לא נמצא לקוח עם הפרטים האלה.</div></div>'; return; }
       const wa = String(c.phone||'').replace(/[^0-9]/g,'');
+      const loc = String(c.phone||'').replace(/^\+972/, '0');
+      const names = {};
+      (cat()?.models||[]).forEach(m => names[m.id] = m.name);
+      const mName = id => {
+        if(!id) return '—';
+        if(names[id]) return names[id];
+        const hit = Object.keys(names).filter(k => String(id).startsWith(k))
+                          .sort((a,b)=>b.length-a.length)[0];
+        return hit ? names[hit] : id;
+      };
+
+      const addr = [c.street, c.apartment?('דירה '+c.apartment):'', c.floor?('קומה '+c.floor):'', c.city]
+                     .filter(Boolean).join(' · ');
+
+      /* שורות מוכנות להדבקה בתוכנת החשבוניות */
+      const invoice = [
+        'שם: ' + (c.name||''),
+        (c.tax_id ? 'ת.ז: ' + c.tax_id : (c.business_id ? 'ח.פ: ' + c.business_id : 'ת.ז: —')),
+        'טלפון: ' + loc,
+        'מייל: ' + (c.email||''),
+        'כתובת: ' + addr,
+        '',
+        ...(d.orders||[]).map(r => 'הזמנה ' + r.number + ' · ' + dt(r.date) + ' · ' + (r.total||'—')),
+      ].join('\n');
+
       box.innerHTML = `
         <div class="kpis">
           <div class="kpi"><b>${t.orders||0}</b><span>הזמנות</span></div>
@@ -1719,13 +1744,16 @@ $('#dlViz').onclick=()=>{
         <div class="panel"><h2>פרטים</h2><div class="body">
           <dl class="kv">
             <dt>שם</dt><dd><b>${esc(c.name||'')}</b></dd>
-            <dt>טלפון</dt><dd dir="ltr"><a href="tel:${esc(c.phone)}">${esc(c.phone||'—')}</a>
+            <dt>טלפון</dt><dd dir="ltr"><a href="tel:${esc(c.phone)}">${esc(loc||'—')}</a>
               ${wa?` · <a href="https://wa.me/${esc(wa)}" target="_blank">וואטסאפ</a>`:''}</dd>
             <dt>מייל</dt><dd dir="ltr">${esc(c.email||'—')}</dd>
-            <dt>ת.ז / ח.פ</dt><dd dir="ltr">${esc(c.tax_id || c.business_id || '—')}</dd>
-            <dt>כתובת</dt><dd>${esc(c.street||'—')}${c.apartment?` דירה ${esc(c.apartment)}`:''}${c.floor?` · קומה ${esc(c.floor)}`:''}${c.city?`, ${esc(c.city)}`:''}</dd>
+            <dt>ת.ז / ח.פ</dt><dd dir="ltr">${esc(c.tax_id || c.business_id || '—')}
+              ${(!c.tax_id && !c.business_id)?'<span style="color:var(--ink-mute);font-size:12.5px"> · ממלאים בכרטיס ההזמנה</span>':''}</dd>
+            <dt>כתובת</dt><dd>${esc(addr||'—')}</dd>
             <dt>לקוח מאז</dt><dd>${t.since?dt(t.since):'—'}</dd>
           </dl>
+          <button class="go" id="cCopy" style="width:auto;padding:10px 20px;margin-top:6px">העתקה לחשבונית</button>
+          <span id="cCopyMsg" style="font-size:13px;color:var(--ink-mute);margin-inline-start:10px"></span>
         </div></div>
 
         <div class="panel"><h2>ההזמנות שלו</h2><div class="body" style="padding:0">
@@ -1741,10 +1769,24 @@ $('#dlViz').onclick=()=>{
         <div class="panel"><h2>ההדמיות שהוא עשה</h2><div class="body" style="padding:0">
           ${(d.visuals||[]).length
             ? '<table class="tbl"><thead><tr><th>תאריך</th><th>דגם</th><th></th></tr></thead><tbody>' +
-              d.visuals.map(x=>`<tr><td>${dt(x.at)}</td><td>${esc(x.productId||'—')}</td>
+              d.visuals.map(x=>`<tr><td>${dt(x.at)}</td><td>${esc(mName(x.productId))}</td>
                 <td>${x.imageUrl?`<a href="${esc(x.imageUrl)}" target="_blank">ההדמיה ↗</a>`:''}</td></tr>`).join('') + '</tbody></table>'
             : '<div style="padding:20px;color:var(--ink-mute)">לא עשה הדמיה.</div>'}
         </div></div>`;
+      const cc = document.getElementById('cCopy');
+      if(cc) cc.onclick = async () => {
+        const m = document.getElementById('cCopyMsg');
+        try{
+          await navigator.clipboard.writeText(invoice);
+          m.textContent = 'הועתק.';
+        }catch(e){
+          const ta = document.createElement('textarea');
+          ta.value = invoice; document.body.appendChild(ta); ta.select();
+          document.execCommand('copy'); ta.remove();
+          m.textContent = 'הועתק.';
+        }
+        setTimeout(()=>{ m.textContent=''; }, 2500);
+      };
     }catch(e){
       box.innerHTML = '<div class="panel"><div class="body"><span class="badge bad">' + esc(e.message) + '</span></div></div>';
     }

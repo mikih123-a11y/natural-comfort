@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ספריית קודש לסלון — איך בוחרים נכון | נטורל קומפורט</title>
+<meta name="description" content="ספריית קודש נמדדת קודם כל לפי הספרים שיהיו בה. מדריך לתכנון גובה מדפים, זכוכית מול פתוח, ומיקום בסלון — עם הדמיה על הקיר שלכם לפני ההזמנה.">
+<link rel="canonical" href="https://naturalcomfort.co.il/sacred-bookcase-living-room.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="ספריית קודש לסלון — איך בוחרים נכון">
+<meta property="og:description" content="תכנון גובה מדפים לפי הספרים, זכוכית מול פתוח, ומיקום בסלון.">
+<meta property="og:url" content="https://naturalcomfort.co.il/sacred-bookcase-living-room.html">
+
+<!-- ============================================================
+     ⚠️ לפני העלאה — להחליף קישורים לכתובות האמיתיות:
+        data-nc-link="sacred"     → עמוד ספריות קודש
+        data-nc-link="visualizer" → עמוד ההדמיה
+        data-nc-link="gallery"    → gallery.html
+        ✔ הקישורים כבר מעודכנים לכתובות האמיתיות: /viz/ , /gallery , /#shop
+
+     ⚠️ אין בעמוד מחירים, מידות בס"מ, או פסיקה הלכתית — במכוון.
+     ============================================================ -->
+
+<style>
+  :root{
+    --ink:#12283f;--ink-soft:#5b6b7c;--line:#e3e0d9;
+    --sand:#f7f5f1;--paper:#ffffff;--accent:#1b4a72;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:'Heebo','Assistant',system-ui,'Segoe UI',Arial,sans-serif;
+       line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+  a{color:var(--accent)}
+
+  .hero{background:var(--sand);border-bottom:1px solid var(--line);padding:56px 0 48px}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;
+           color:var(--accent);border:1px solid var(--line);background:var(--paper);
+           border-radius:999px;padding:6px 14px;margin-bottom:18px}
+  h1{font-size:clamp(28px,5vw,46px);line-height:1.15;font-weight:800;
+     margin:0 0 14px;letter-spacing:-.015em;max-width:20ch}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{font-size:clamp(16px,2.1vw,19px);color:var(--ink-soft);max-width:58ch;margin:0 0 26px}
+
+  .cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+       font-weight:700;font-size:16px;padding:14px 26px;border-radius:10px;
+       transition:transform .15s ease,background .15s ease}
+  .cta:hover{background:#153c5e;transform:translateY(-1px)}
+  .cta-note{display:block;margin-top:10px;font-size:13.5px;color:var(--ink-soft)}
+
+  section{padding:52px 0}
+  h2{font-size:clamp(22px,3.4vw,30px);font-weight:800;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{color:var(--ink-soft);margin:0 0 28px;max-width:62ch}
+
+  /* ---------- Signature: מפת מדפים ---------- */
+  .shelfmap{
+    display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:start;
+    background:var(--sand);border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+  }
+  .shelfmap svg{width:100%;height:auto;display:block}
+  .bands{list-style:none;margin:0;padding:0}
+  .bands li{padding:13px 0;border-bottom:1px solid var(--line)}
+  .bands li:last-child{border-bottom:none}
+  .bands b{display:block;font-size:16px;margin-bottom:2px}
+  .bands span{color:var(--ink-soft);font-size:14.5px}
+  .measure{
+    grid-column:1/-1;margin:2px 0 0;padding-top:16px;border-top:1px solid var(--line);
+    font-size:15.5px;color:var(--ink-soft);
+  }
+  .measure b{color:var(--ink)}
+
+  /* ---------- השוואה ---------- */
+  .versus{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);
+          border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .side{background:var(--paper);padding:24px 22px}
+  .side h3{margin:0 0 10px;font-size:19px;font-weight:700}
+  .side ul{margin:0;padding:0;list-style:none}
+  .side li{padding:6px 0;font-size:15px;color:var(--ink-soft);
+           display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
+  .side li i{font-style:normal;font-weight:800;flex:0 0 auto;line-height:1.5}
+  .side .plus i{color:var(--accent)}
+  .side .minus i{color:#a8836a}
+  .verdict{grid-column:1/-1;background:var(--sand);padding:18px 22px;
+           font-size:15.5px;color:var(--ink-soft)}
+  .verdict b{color:var(--ink)}
+
+  /* ---------- מיקום ---------- */
+  .place{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+         border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .place div{background:var(--sand);padding:22px 20px}
+  .place h3{margin:0 0 6px;font-size:17px;font-weight:700}
+  .place p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+  details{border-bottom:1px solid var(--line);padding:16px 0}
+  details summary{cursor:pointer;font-weight:700;font-size:16.5px;list-style:none;
+                  display:flex;justify-content:space-between;gap:14px}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:'+';color:var(--accent);font-weight:800;flex:0 0 auto}
+  details[open] summary::after{content:'–'}
+  details p{margin:10px 0 0;color:var(--ink-soft);font-size:15.5px;max-width:62ch}
+
+  .close-band{background:var(--sand);border-top:1px solid var(--line);padding:48px 0;text-align:center}
+  .close-band p{color:var(--ink-soft);margin:0 auto 22px;max-width:52ch}
+
+  @media (max-width:700px){
+    .shelfmap,.versus,.place{grid-template-columns:1fr}
+    .hero{padding:42px 0 38px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">מדריך · ספריות קודש</span>
+    <h1>ספרייה נמדדת <em>לפי הספרים</em> — לא לפי הקיר.</h1>
+    <p class="lede">
+      את רוחב הספרייה קובע הקיר, אבל את מה שיקרה בפועל קובעים גובהי המדפים.
+      ספרייה שתוכננה בלי להסתכל על הספרים תיגמר עם ש"ס שוכב על הצד.
+    </p>
+    <a class="cta" href="/viz/" data-nc-link="visualizer">ראו את הספרייה בסלון שלכם</a>
+    <span class="cta-note">תמונה מהטלפון. בלי הרשמה.</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>מתכננים מלמעלה למטה</h2>
+    <p class="sub">
+      חלוקת המדפים אינה אחידה, וזה לא פגם — זה התכנון. לכל סוג ספר גובה משלו,
+      וכשהחלוקה נכונה הספרייה נראית מסודרת מעצמה.
+    </p>
+
+    <div class="shelfmap">
+      <figure style="margin:0">
+        <svg viewBox="0 0 300 330" role="img" aria-label="חלוקת מדפים לפי סוגי ספרים">
+          <rect x="18" y="10" width="264" height="310" fill="none" stroke="#12283f" stroke-width="2.5"/>
+
+          <!-- קלים / נדיר -->
+          <rect x="20" y="12" width="260" height="46" fill="#1b4a72" opacity=".07"/>
+          <line x1="18" y1="58" x2="282" y2="58" stroke="#12283f" stroke-width="2"/>
+          <text x="266" y="40" font-size="12.5" fill="#12283f" font-family="Arial"
+                font-weight="bold" text-anchor="end">מדף עליון · שימוש נדיר</text>
+
+          <!-- ש"ס -->
+          <rect x="20" y="60" width="260" height="82" fill="#1b4a72" opacity=".18"/>
+          <line x1="18" y1="142" x2="282" y2="142" stroke="#12283f" stroke-width="2"/>
+          <text x="266" y="84" font-size="13" fill="#12283f" font-family="Arial"
+                font-weight="bold" text-anchor="end">הכרכים הגבוהים</text>
+          <text x="266" y="103" font-size="11.5" fill="#5b6b7c" font-family="Arial"
+                text-anchor="end">ש"ס, שולחן ערוך</text>
+          <g stroke="#1b4a72" stroke-width="6" opacity=".55">
+            <line x1="34" y1="70" x2="34" y2="138"/><line x1="46" y1="70" x2="46" y2="138"/>
+            <line x1="58" y1="70" x2="58" y2="138"/><line x1="70" y1="70" x2="70" y2="138"/>
+            <line x1="82" y1="70" x2="82" y2="138"/>
+          </g>
+
+          <!-- גובה בינוני -->
+          <rect x="20" y="144" width="260" height="62" fill="#1b4a72" opacity=".12"/>
+          <line x1="18" y1="206" x2="282" y2="206" stroke="#12283f" stroke-width="2"/>
+          <text x="266" y="168" font-size="13" fill="#12283f" font-family="Arial"
+                font-weight="bold" text-anchor="end">גובה בינוני</text>
+          <text x="266" y="186" font-size="11.5" fill="#5b6b7c" font-family="Arial"
+                text-anchor="end">חומשים, ספרי עיון</text>
+
+          <!-- גובה עיניים -->
+          <rect x="20" y="208" width="260" height="54" fill="#1b4a72" opacity=".22"/>
+          <line x1="18" y1="262" x2="282" y2="262" stroke="#12283f" stroke-width="2"/>
+          <text x="266" y="230" font-size="13" fill="#12283f" font-family="Arial"
+                font-weight="bold" text-anchor="end">גובה עיניים · יומיומי</text>
+          <text x="266" y="248" font-size="11.5" fill="#5b6b7c" font-family="Arial"
+                text-anchor="end">סידורים, תהילים</text>
+
+          <!-- תחתון סגור -->
+          <rect x="20" y="264" width="260" height="54" fill="#12283f" opacity=".13"/>
+          <line x1="150" y1="264" x2="150" y2="318" stroke="#12283f" stroke-width="1.5"/>
+          <text x="266" y="288" font-size="13" fill="#12283f" font-family="Arial"
+                font-weight="bold" text-anchor="end">בסיס סגור</text>
+          <text x="266" y="305" font-size="11.5" fill="#5b6b7c" font-family="Arial"
+                text-anchor="end">אחסון ותשמישי קדושה</text>
+        </svg>
+      </figure>
+
+      <ul class="bands">
+        <li>
+          <b>הכרכים הגבוהים קובעים ראשונים</b>
+          <span>הש"ס הוא בדרך כלל הגבוה בבית, והוא זה שמכתיב את הפס הרחב.
+                אם הוא לא נכנס — הכל מתפרק.</span>
+        </li>
+        <li>
+          <b>גובה עיניים שמור ליומיומי</b>
+          <span>סידורים, תהילים, מה שנשלף כמה פעמים ביום. לא הגיוני שזה יהיה
+                במדף שצריך אליו כיסא.</span>
+        </li>
+        <li>
+          <b>המדף העליון הוא אחסון</b>
+          <span>ספרים שנפתחים פעם בשנה. מנצל את הגובה בלי להפריע לשימוש השוטף.</span>
+        </li>
+        <li>
+          <b>בסיס סגור מוריד עומס מהעין</b>
+          <span>חלק תחתון סגור נותן מקום לדברים שלא צריכים להיראות,
+                והופך את הספרייה לפחות "כבדה" בסלון.</span>
+        </li>
+      </ul>
+
+      <p class="measure">
+        <b>לפני שמתחילים:</b> קחו את הכרך הגבוה ביותר שיש לכם בבית, מדדו אותו,
+        והוסיפו מרווח קל להוצאה נוחה. המספר הזה הוא נקודת המוצא של כל התכנון —
+        לא הרוחב של הקיר.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>זכוכית או פתוח?</h2>
+    <p class="sub">השאלה הכי נפוצה, ואין עליה תשובה אחת נכונה — יש שתי העדפות שונות.</p>
+
+    <div class="versus">
+      <div class="side">
+        <h3>דלתות זכוכית</h3>
+        <ul>
+          <li class="plus"><i>+</i><span>מגן מאבק — משמעותי בספרים שלא נפתחים תדיר</span></li>
+          <li class="plus"><i>+</i><span>מראה מסודר גם כשהספרים לא מיושרים</span></li>
+          <li class="plus"><i>+</i><span>שומר על כריכות ישנות לאורך שנים</span></li>
+          <li class="minus"><i>−</i><span>שליפה מהירה פחות נוחה</span></li>
+          <li class="minus"><i>−</i><span>מוסיף למחיר ולמשקל</span></li>
+        </ul>
+      </div>
+
+      <div class="side">
+        <h3>מדפים פתוחים</h3>
+        <ul>
+          <li class="plus"><i>+</i><span>שולפים ומחזירים ביד אחת</span></li>
+          <li class="plus"><i>+</i><span>הספרים עצמם הם העיצוב</span></li>
+          <li class="plus"><i>+</i><span>קל יותר, פחות נוכח בחלל</span></li>
+          <li class="minus"><i>−</i><span>אבק מצטבר ודורש ניקוי</span></li>
+          <li class="minus"><i>−</i><span>אי-סדר נראה מיד</span></li>
+        </ul>
+      </div>
+
+      <p class="verdict">
+        <b>הפתרון שרוב האנשים מגיעים אליו:</b> משולב — פתוח בגובה עיניים
+        למה שבשימוש יומיומי, זכוכית מעל לספרים שנשארים במקום.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>איפה בסלון</h2>
+    <p class="sub">שלושה שיקולים מעשיים לפני שמחליטים על קיר.</p>
+
+    <div class="place">
+      <div>
+        <h3>אור ישיר</h3>
+        <p>שמש ישירה מדהה כריכות לאורך זמן. קיר שאינו מול חלון גדול עדיף,
+           או דלתות זכוכית כשאין ברירה.</p>
+      </div>
+      <div>
+        <h3>הקיר הארוך</h3>
+        <p>ספרייה על הקיר הארוך של הסלון נראית כחלק מהמבנה. על קיר קצר
+           היא נראית כרהיט שהונח.</p>
+      </div>
+      <div>
+        <h3>שאלות של מיקום</h3>
+        <p>יש נוהגים בנוגע לקירות מסוימים בבית. אם זה רלוונטי אצלכם —
+           זו שאלה לרב, וכדאי לברר לפני שסוגרים על קיר.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>שאלות שחוזרות</h2>
+
+    <details open>
+      <summary>אפשר להתאים את גובה המדפים לספרים שלנו?</summary>
+      <p>
+        זה בדיוק הרעיון. ספרייה בהתאמה אישית מתוכננת סביב הספרים שיש בבית,
+        ולא סביב חלוקה אחידה שנקבעה מראש. שווה למדוד את הכרך הגבוה לפני השיחה.
+      </p>
+    </details>
+
+    <details>
+      <summary>איך בוחרים גודל בלי לדעת כמה ספרים יהיו בעוד עשר שנים?</summary>
+      <p>
+        אוסף ספרים גדל. עדיף לתכנן עם מרווח מלכתחילה מאשר להיאלץ להוסיף
+        יחידה שלא תתאים בגוון או בגובה. לרוב זה השיקול שאנשים מתחרטים עליו.
+      </p>
+    </details>
+
+    <details>
+      <summary>אפשר לראות איך זה נראה אצלנו לפני שמזמינים?</summary>
+      <p>
+        כן. מעלים תמונה של הקיר בסלון, בוחרים דגם וגימור, ומקבלים תמונה של
+        החדר עם הספרייה בתוכו. זו הדמיה חזותית להתרשמות בלבד —
+        המידות הסופיות נקבעות במדידה בשטח.
+      </p>
+    </details>
+
+    <details>
+      <summary>יש דוגמאות מבתים אמיתיים?</summary>
+      <p>
+        יש. <a href="/gallery" data-nc-link="gallery">בגלריית העבודות</a>
+        אפשר לראות ספריות שהותקנו אצל לקוחות, בגימורים ובחללים שונים.
+      </p>
+    </details>
+  </div>
+</section>
+
+<div class="close-band">
+  <div class="wrap">
+    <h2>תראו את זה על הקיר</h2>
+    <p>
+      לפני שמחליטים על גימור, גובה או מספר דלתות — תמונה אחת של הסלון
+      ואתם רואים את הספרייה בתוכו.
+    </p>
+    <a class="cta" href="/viz/" data-nc-link="visualizer">פתחו את ההדמיה</a>
+  </div>
+</div>
+
+</body>
+</html>

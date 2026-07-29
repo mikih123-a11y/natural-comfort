@@ -62,6 +62,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
 .render .rh .def.is{background:var(--oak);color:#fff}
 .render .rr{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:560px){.render .rr{grid-template-columns:1fr}}
+.tiers .t{display:grid;grid-template-columns:1fr 1fr 1.2fr auto;gap:8px;margin-bottom:7px;align-items:center}
+.tiers .t input{width:100%}
+.tierhead{display:grid;grid-template-columns:1fr 1fr 1.2fr auto;gap:8px;margin-bottom:5px;
+  font-size:11.5px;color:var(--ink-mute);font-weight:600}
 .feats .f{display:flex;gap:8px;margin-bottom:7px}
 .feats .f input{flex:1}
 .mini{border:1px solid var(--line);background:#fff;width:38px;flex:none;cursor:pointer;font-size:16px;color:var(--ink-soft)}
@@ -193,6 +197,29 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
         </div>
       </div>
       <p class="hint" style="margin-top:-6px">מידות ריקות → יוצג ללקוח "מידות לפי התאמה אישית". זה תקין.</p>
+
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+        <label style="display:flex;align-items:center;gap:9px;cursor:pointer">
+          <input type="checkbox" id="f_tiers_on" style="width:16px;height:16px">
+          <span>מדרגות מחיר לפי רוחב <span class="tag">לארונות הזזה</span></span>
+        </label>
+        <p class="hint" style="margin:6px 0 10px">
+          כשמפעילים, מופיע בעמוד המוצר בורר רוחב. המחיר נלקח מהמדרגה ולא משדה "מחיר" למעלה.
+          טווח שאין לו מדרגה יוצג כ"בהתאמה אישית".
+        </p>
+
+        <div id="tiersBox" style="display:none">
+          <div class="tierhead"><span>מרוחב ס״מ</span><span>עד רוחב ס״מ</span><span>מחיר ₪</span><span></span></div>
+          <div class="tiers" id="tiers"></div>
+          <button type="button" class="btn ghost" id="addTier" style="margin-top:6px">+ מדרגה</button>
+          <div class="row c2" style="margin-top:10px">
+            <div>
+              <label>קפיצות הבורר ס״מ</label>
+              <input type="number" id="f_tier_step" value="10" min="1" step="1">
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="row c2" style="margin-top:4px">
         <div>
@@ -487,6 +514,37 @@ function addFeat(v=''){
 $('#addFeat').onclick=()=>{addFeat();};
 function readFeats(){return $$('#feats .f input').map(i=>i.value.trim()).filter(Boolean)}
 
+/* ---------- מדרגות מחיר לפי רוחב ---------- */
+function addTier(t){
+  t = t || {};
+  const d = document.createElement('div');
+  d.className = 't';
+  d.innerHTML = '<input type="number" class="tf" min="0" step="10" placeholder="120" value="'+(t.from ?? '')+'">'
+              + '<input type="number" class="tt" min="0" step="10" placeholder="160" value="'+(t.to ?? '')+'">'
+              + '<input type="number" class="tp" min="0" step="1"  placeholder="ריק = בהתאמה" value="'+(t.price ?? '')+'">'
+              + '<button type="button" class="btn ghost tdel">✕</button>';
+  d.querySelector('.tdel').onclick = () => { d.remove(); sync(); };
+  d.querySelectorAll('input').forEach(i => i.addEventListener('input', sync));
+  $('#tiers').appendChild(d);
+}
+
+function readTiers(){
+  if(!$('#f_tiers_on').checked) return null;
+  const rows = $$('#tiers .t').map(r => {
+    const f = r.querySelector('.tf').value, t = r.querySelector('.tt').value,
+          p = r.querySelector('.tp').value;
+    if(f === '' || t === '') return null;
+    return { from:+f, to:+t, price: p === '' ? null : +p };
+  }).filter(Boolean);
+  if(!rows.length) return null;
+  rows.sort((a,b) => a.from - b.from);
+  return { unit:'cm', step:+($('#f_tier_step').value || 10), tiers: rows };
+}
+
+function tiersUI(on){
+  $('#tiersBox').style.display = on ? '' : 'none';
+}
+
 /* ---------- new / load ---------- */
 function newModel(){
   editingId=null;selFin=[];renderMap={};defaultFin=null;selLayouts=[];
@@ -496,6 +554,7 @@ function newModel(){
   ['f_name','f_id','f_family','f_code','f_price','f_w','f_h','f_d','f_ship'].forEach(k=>$('#'+k).value='');
   $('#f_line').selectedIndex=0; $('#f_cat').value='wardrobe'; $('#f_place').value='against_wall';
   $('#feats').innerHTML='';
+  $('#tiers').innerHTML=''; $('#f_tiers_on').checked=false; $('#f_tier_step').value=10; tiersUI(false);
   $$('#layGrid .lay').forEach(x=>x.classList.remove('on'));
   $$('.mitem').forEach(x=>x.classList.remove('on'));
   buildFinishes();buildRenders();sync();
@@ -519,6 +578,13 @@ function loadModel(id){
   $('#f_cat').value=m.category||'wardrobe'; $('#f_place').value=m.placement||'against_wall';
   // features
   $('#feats').innerHTML=''; (m.features||[]).forEach(f=>addFeat(f));
+  // מדרגות רוחב
+  const wt = m.width_tiers;
+  $('#tiers').innerHTML='';
+  $('#f_tiers_on').checked = !!(wt && wt.tiers && wt.tiers.length);
+  $('#f_tier_step').value = (wt && wt.step) || 10;
+  (wt && wt.tiers || []).forEach(t => addTier(t));
+  tiersUI($('#f_tiers_on').checked);
   // renders → finishes + map
   selFin=[]; renderMap={}; defaultFin=null;
   (m.renders||[]).forEach((r,i)=>{
@@ -548,7 +614,13 @@ function slug(s){
     .replace(/[א-ת]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
 }
 $('#f_line').addEventListener('change',()=>{buildFinishes();sync()});
-['f_family','f_code','f_price','f_w','f_h','f_d','f_ship','f_cat','f_place'].forEach(k=>$('#'+k).addEventListener('input',sync));
+['f_family','f_code','f_price','f_w','f_h','f_d','f_ship','f_cat','f_place','f_tier_step'].forEach(k=>$('#'+k).addEventListener('input',sync));
+$('#f_tiers_on').addEventListener('change',()=>{
+  tiersUI($('#f_tiers_on').checked);
+  if($('#f_tiers_on').checked && !$$('#tiers .t').length) addTier();
+  sync();
+});
+$('#addTier').addEventListener('click',()=>{ addTier(); sync(); });
 
 /* ---------- build the model object ---------- */
 function buildModel(){
@@ -585,6 +657,8 @@ function buildModel(){
   setOrDel('code',$('#f_code').value.trim());
   setOrDel('dims',dims);
   setOrDel('features',readFeats());
+  const wtiers = readTiers();
+  if(wtiers) m.width_tiers = wtiers; else delete m.width_tiers;
   setOrDel('layouts',selLayouts.slice());
   return m;
 }
@@ -633,8 +707,11 @@ function renderPreviewCard(m){
   $('#pvname').textContent = m.name || 'שם המוצר';
   $('#pvline').textContent = m.line || '';
   const nis = n => '₪'+Number(n).toLocaleString('he-IL');
-  $('#pvprice').innerHTML = m.price
-    ? nis(m.price)+'<small>כולל מע״מ</small>'
+  // תצוגה מקדימה: מדרגת הרוחב הראשונה גוברת על שדה המחיר, בדיוק כמו בעמוד המוצר
+  const t0 = m.width_tiers && m.width_tiers.tiers && m.width_tiers.tiers[0];
+  const shown = (t0 && typeof t0.price === 'number') ? t0.price : m.price;
+  $('#pvprice').innerHTML = shown
+    ? nis(shown) + '<small>' + (t0 ? 'מ-' + t0.from + ' ס״מ · כולל מע״מ' : 'כולל מע״מ') + '</small>'
     : '<span style="color:var(--ink-mute);font-weight:600">מחיר לפי התאמה</span>';
   // finish dots from the catalog swatches
   const fmap={}; (CAT&&CAT.finishes||[]).forEach(f=>{if(f&&f.id)fmap[f.id]=f;});

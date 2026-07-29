@@ -78,7 +78,10 @@ function matches(row, q) {
     .map(norm).join(' | ');
   if (txt.includes(t)) return true;
   if (d.length >= 4) {
-    if (digits(row.phone).includes(d)) return true;
+    /* 0525005600 · 972525005600 · 525005600 — כולם צריכים למצוא את אותו לקוח */
+    const p = digits(row.phone);
+    const tail = x => x.replace(/^972/, '').replace(/^0/, '');
+    if (p.includes(d) || tail(p).includes(tail(d))) return true;
     if (digits(row.tax_id).includes(d)) return true;
     if (digits(row.business_id).includes(d)) return true;
   }

@@ -23,19 +23,64 @@
 let DATA,active='all';const $=s=>document.querySelector(s);const rel=p=>(p||'').replace(/^\//,'');const fin=(id)=>DATA.finishes.find(f=>f.id===id);const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : 'מידות לפי התאמה אישית';
 function groupOf(m){const l=DATA.lines[m.line_id];return l&&l.group}
 function render(q=''){q=q.trim().toLowerCase();const list=DATA.models.filter(m=>(active==='all'||groupOf(m)===active||m.line_id===active)&&(!q||[m.name,m.line,m.dims?.w,m.dims?.h,...(m.finishes||[]).map(x=>fin(x)?.name)].join(' ').toLowerCase().includes(q)));$('#grid').innerHTML=list.map(m=>`<article class="card"><a href="product.html?id=${m.id}"><div class="card-img"><span class="badge">בהתאמה אישית</span><img id="img-${m.id}" src="${rel(m.renders[0].thumb)}" alt="${m.name}"><span class="quick">לפרטי הדגם ←</span></div></a><div class="card-body"><h3>${m.name}</h3><div class="meta">${dm(m)} · ניתן לשינוי במידה</div><div class="swatches">${m.renders.slice(0,6).map((r,i)=>{let f=fin(r.finish);return `<button class="swatch ${i?'':'on'}" style="background:${f?.swatch||'#ddd'}" data-model="${m.id}" data-src="${rel(r.thumb)}" title="${f?.name||''}"></button>`}).join('')}<span class="more">${m.renders.length} גימורים</span></div></div></article>`).join('')||'<p>לא נמצאו דגמים. נסו חיפוש אחר.</p>'}
+/* החלפת התמונות בכרטיסי הקטגוריות — עצירה מלאה כשהמשתמש ביקש בלי אנימציות */
+function startRotation(shots){
+  const still = () => document.documentElement.classList.contains('nc-still')
+    || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if(still()) return;
+
+  const imgs = [...document.querySelectorAll('[data-rot]')];
+  if(!imgs.length) return;
+  imgs.forEach(im => { im.style.transition = 'opacity .55s ease'; });
+
+  let hidden = false;
+  document.addEventListener('visibilitychange', () => { hidden = document.hidden; });
+
+  setInterval(() => {
+    if(hidden || still()) return;
+    const im = imgs[Math.floor(Math.random()*imgs.length)];   // כרטיס אחד בכל פעם
+    const list = shots[im.dataset.rot] || [];
+    if(list.length < 2) return;
+
+    let i = (+im.dataset.i + 1) % list.length;
+    const next = new Image();
+    next.onload = () => {
+      im.style.opacity = '0';
+      setTimeout(() => {
+        im.src = list[i];
+        im.dataset.i = i;
+        im.style.opacity = '1';
+      }, 550);
+    };
+    next.src = list[i];
+  }, 3200);
+}
+
 fetch('products/catalog.json').then(r=>r.json()).then(d=>{
   DATA=d;
   const count = g => d.models.filter(m=>groupOf(m)===g.id).length;
   const live  = (d.groups||[]).filter(g=>count(g)>0);   // קטגוריה ריקה גרועה מקטגוריה שלא קיימת
   $('#filters').innerHTML = live.map(g=>`<button class="filter" data-line="${g.id}">${g.name}</button>`).join('');
+  /* כל כרטיס קטגוריה מציג את כל הדגמים שבתוכה, לא רק את הראשון */
+  const shots = {};
+  live.forEach(g=>{
+    const imgs = d.models.filter(x=>groupOf(x)===g.id)
+                         .flatMap(x=>(x.renders||[]).map(r=>rel(r.image)))
+                         .filter(Boolean);
+    shots[g.id] = [...new Set(imgs)];
+  });
+
   $('#cats').innerHTML = live.map(g=>{
-    const m = d.models.find(x=>groupOf(x)===g.id);
+    const list = shots[g.id] || [];
+    const start = list.length ? Math.floor(Math.random()*list.length) : 0;
     const subs = g.lines.filter(l=>d.models.some(x=>x.line_id===l)).length;
     return `<a class="cat" href="category.html?group=${g.id}">
-      <img src="${rel(m?.renders[0].image)||'img/room-desk.jpg'}" alt="${g.name}">
+      <img data-rot="${g.id}" data-i="${start}" src="${list[start]||'img/room-desk.jpg'}" alt="${g.name}">
       <div class="cat-copy"><h3>${g.name}</h3>
       <span>${count(g)} דגמים${subs>1?` · ${subs} סוגים`:''} · לצפייה בקולקציה ←</span></div></a>`;
   }).join('');
+
+  startRotation(shots);
   render();
 });document.addEventListener('click',e=>{let f=e.target.closest('.filter');if(f){active=f.dataset.line;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('on',x===f));render($('#search').value)}let s=e.target.closest('.swatch');if(s){e.preventDefault();document.querySelectorAll(`[data-model="${s.dataset.model}"]`).forEach(x=>x.classList.remove('on'));s.classList.add('on');$(`#img-${s.dataset.model}`).src=s.dataset.src}});$('#search').addEventListener('input',e=>render(e.target.value));$('#searchBtn').onclick=()=>{$('#shop').scrollIntoView();setTimeout(()=>$('#search').focus(),500)};
 </script><script>if(location.protocol==='file:'){document.querySelectorAll('a[href^="/"]').forEach(a=>a.setAttribute('href',a.getAttribute('href').replace(/^\//,'')))}</script><script src="footer-upgrade.js" defer></script><script>

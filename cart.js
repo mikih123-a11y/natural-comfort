@@ -55,6 +55,7 @@
         price: (typeof item.price === 'number' && isFinite(item.price)) ? item.price : null,
         priceText: item.priceText || '',
         config: item.config || [],
+        repeat: !!item.repeat,          // הגיע מהזמנה קודמת
         qty: item.qty || 1,
         added: new Date().toISOString()
       });
@@ -92,6 +93,10 @@
       sum += list[i].price * (list[i].qty || 1);
     }
     return sum;
+  }
+
+  function hasRepeat() {
+    return items().some(function (x) { return x.repeat; });
   }
 
   function hasCustomPrice() {
@@ -156,7 +161,7 @@
 
   window.ncCart = {
     add: add, items: items, setQty: setQty, remove: remove, clear: clear,
-    count: count, total: total, hasCustomPrice: hasCustomPrice,
+    count: count, total: total, hasCustomPrice: hasCustomPrice, hasRepeat: hasRepeat,
     badge: badge, repaint: paintAll, nis: nis,
     orderNumber: orderNumber, saveOrder: saveOrder, orders: orders,
     orderText: orderText

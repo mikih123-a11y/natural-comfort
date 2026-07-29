@@ -56,6 +56,11 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .of .t b{font-family:var(--display);font-size:20px;font-weight:500;margin-inline-start:6px}
 .wa{border:1px solid var(--ink);padding:10px 18px;font-size:13.5px;font-weight:600}
 .wa:hover{background:var(--ink);color:var(--paper)}
+.again{background:var(--oak);color:#fff;border:0;padding:11px 20px;font-size:13.5px;
+  font-weight:600;font-family:inherit;cursor:pointer;transition:.15s}
+.again:hover{background:#a5793f}
+.again.done{background:var(--green)}
+.ofacts{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
 
 .empty{background:#fff;border:1px solid var(--line);padding:54px 24px;text-align:center}
 .empty h2{font-family:var(--display);font-size:24px;font-weight:500;margin-bottom:8px}
@@ -128,10 +133,39 @@ $('#list').innerHTML = list.map(o => {
     </div>
     <div class="of">
       <div class="t">סה״כ <b>${o.total || '—'}</b></div>
-      <a class="wa" href="https://wa.me/972524400030?text=${encodeURIComponent(txt)}">שאלה על ההזמנה</a>
+      <div class="ofacts">
+        <button class="again" type="button" data-again="${o.number}">הזמנה חוזרת</button>
+        <a class="wa" href="https://wa.me/972524400030?text=${encodeURIComponent(txt)}">שאלה על ההזמנה</a>
+      </div>
     </div>
   </article>`;
 }).join('');
+
+/* ---------- הזמנה חוזרת ---------- */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-again]');
+  if(!b) return;
+
+  const o = list.find(x => x.number === b.dataset.again);
+  if(!o || !(o.items||[]).length) return;
+
+  (o.items||[]).forEach(it => ncCart.add({
+    modelId:   it.modelId,
+    name:      it.name,
+    url:       it.url,
+    image:     it.image,
+    price:     typeof it.price === 'number' ? it.price : null,
+    priceText: it.priceText,
+    config:    it.config || [],
+    qty:       it.qty || 1,
+    repeat:    true
+  }));
+
+  b.removeAttribute('data-again');          // כדי שלחיצה שנייה לא תוסיף שוב
+  b.classList.add('done');
+  b.textContent = 'נוסף לסל · מעבר לסל';
+  b.onclick = () => location.href = '/cart.html';
+});
 </script>
 <script src="/site.js"></script>
 </body>

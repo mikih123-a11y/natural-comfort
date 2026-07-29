@@ -52,6 +52,8 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .qty button{width:32px;height:32px;font-size:17px;line-height:1}
 .qty button:hover{background:var(--panel)}
 .qty span{width:34px;text-align:center;font-weight:600;font-size:14px}
+.tagr{display:inline-block;font-size:11.5px;font-weight:700;color:var(--oak);
+  border:1px solid var(--line);border-radius:999px;padding:3px 9px;margin-bottom:6px}
 .rm{font-size:13px;color:var(--ink-mute);text-decoration:underline}
 .rm:hover{color:#8C3323}
 
@@ -104,6 +106,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="row tot"><span>סה״כ</span><b id="s-total">—</b></div>
       <a class="go" href="/checkout.html">מעבר לפרטי ההזמנה</a>
       <a class="keep" href="/#shop">להמשך בחירה</a>
+      <p class="note" id="rep" hidden style="background:#FDF6EE;border-inline-start:3px solid var(--oak);padding:11px 13px;margin-bottom:12px">
+        <b>שימו לב:</b> הסל כולל פריט מהזמנה קודמת. המחיר המוצג הוא זה שהיה בזמן ההזמנה
+        ההיא — נעדכן אתכם בשיחה אם המחירון או המפרט השתנו מאז.
+      </p>
       <p class="note">
         אין תשלום באתר. אחרי שליחת ההזמנה ניצור קשר לאישור הפרטים ולגבייה.
         <b>המידות באחריות הלקוח</b> — ודאו שהרהיט נכנס לחלל ושיש גישה להכנסה.
@@ -136,6 +142,7 @@ function draw(){
     <article class="item">
       <div class="ph">${it.image ? `<img src="${it.image}" alt="">` : ''}</div>
       <div>
+        ${it.repeat ? '<span class="tagr">מהזמנה קודמת</span>' : ''}
         <h3>${it.url ? `<a href="${it.url}">${it.name}</a>` : it.name}</h3>
         <ul class="cfg">${(it.config||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
       </div>
@@ -157,6 +164,7 @@ function draw(){
     </article>`).join('');
 
   const t = ncCart.total();
+  $('#rep').hidden = !ncCart.hasRepeat();
   $('#s-count').textContent = ncCart.count();
   $('#s-total').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
 }

@@ -8,7 +8,8 @@
      <script src="share.js"></script>
      <script>
        ncShare.init({
-         button: '#ncShareBtn',
+         button:     '#ncShareBtn',
+         copyButton: '#ncCopyBtn',
          logo:   'logo.png',
          site:   'naturalcomfort.co.il'
        });
@@ -23,6 +24,7 @@
 
   var cfg = {
     button: null,
+    copyButton: null,
     logo: 'logo.png',
     site: 'naturalcomfort.co.il',
     disclaimer: 'הדמיה · לא מידה סופית',
@@ -32,6 +34,7 @@
   var currentImage = null;
   var currentTitle = '';
   var btn = null;
+  var copyBtn = null;
   var logoImg = null;
   var busy = false;
 
@@ -147,12 +150,13 @@
   }
 
   /* הודעה קצרה על הכפתור עצמו — בלי חלונות קופצים */
-  function flash(msg, ms) {
-    if (!btn) return;
-    var keep = btn.dataset.ncLabel || btn.textContent;
-    btn.dataset.ncLabel = keep;
-    btn.textContent = msg;
-    setTimeout(function () { btn.textContent = keep; }, ms || 4000);
+  function flash(msg, ms, target) {
+    var el = target || btn;
+    if (!el) return;
+    var keep = el.dataset.ncLabel || el.textContent;
+    el.dataset.ncLabel = keep;
+    el.textContent = msg;
+    setTimeout(function () { el.textContent = keep; }, ms || 4000);
   }
 
   /* העתקה ללוח — מאפשרת הדבקה בוואטסאפ רגיל, ביזנס, או כל אפליקציה */
@@ -164,6 +168,27 @@
         navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(resolve, reject);
       }, 'image/png');
     });
+  }
+
+  /* טוען את ההדמיה וצורב עליה את המיתוג */
+  function prepare() {
+    return loadImage(currentImage, true)
+      .catch(function () { return loadImage(currentImage, false); })
+      .then(brand);
+  }
+
+  /* העתקה ללוח — להדבקה ב-Gmail, ביזנס, או כל מקום אחר */
+  function copy() {
+    if (busy || !currentImage) return;
+    if (copyBtn) { copyBtn.disabled = true; }
+    prepare()
+      .then(copyToClipboard)
+      .then(function () { flash('הועתק — הדביקו ב-Ctrl+V', 6000, copyBtn); })
+      .catch(function (err) {
+        console.warn('[ncShare] copy', err);
+        flash('ההעתקה נחסמה — השתמשו בשמירת התמונה', 6000, copyBtn);
+      })
+      .then(function () { if (copyBtn) copyBtn.disabled = false; });
   }
 
   function share() {
@@ -219,6 +244,15 @@
         btn.hidden = true;
       }
 
+      copyBtn = typeof cfg.copyButton === 'string'
+        ? document.querySelector(cfg.copyButton)
+        : cfg.copyButton;
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', copy);
+        copyBtn.hidden = true;
+      }
+
       if (cfg.logo) {
         loadImage(cfg.logo, true)
           .then(function (img) { logoImg = img; })
@@ -231,14 +265,17 @@
       currentImage = url;
       currentTitle = title || '';
       if (btn) btn.hidden = !url;
+      if (copyBtn) copyBtn.hidden = !url;
     },
 
     clear: function () {
       currentImage = null;
       currentTitle = '';
       if (btn) btn.hidden = true;
+      if (copyBtn) copyBtn.hidden = true;
     },
 
-    share: share
+    share: share,
+    copy: copy
   };
 })();

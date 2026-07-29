@@ -343,7 +343,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--champagne);outli
     <div class="kpis" id="funnelKpis"></div>
 
     <div class="panel"><h2>לידים</h2>
-      <div class="body" style="padding:0"><div id="leadTbl"></div></div>
+      <div class="body" style="padding:0 0 0">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--line);font-size:14px" id="leadSum">—</div>
+        <div id="leadTbl"></div>
+      </div>
     </div>
 
     <div class="panel"><h2>משפך ההדמיה</h2>
@@ -1609,20 +1612,50 @@ $('#dlViz').onclick=()=>{
     const box = document.getElementById('leadTbl');
     box.innerHTML = 'טוען…';
     try{
-      const d = await api({ type:'leads', days:180 });
+      const d = await api({ type:'leads', days:365 });
+
+      /* מזהה הליד כולל את הגימור — חותכים אותו כדי למצוא את הדגם */
       const names = {};
       (cat()?.models||[]).forEach(m => names[m.id] = m.name);
+      const modelName = id => {
+        if(!id) return '—';
+        if(names[id]) return names[id];
+        const parts = String(id).split('--')[0];
+        if(names[parts]) return names[parts];
+        const hit = Object.keys(names).filter(k => String(id).startsWith(k))
+                          .sort((a,b)=>b.length-a.length)[0];
+        return hit ? names[hit] : id;
+      };
+      const localPhone = p => String(p||'').replace(/^\+972/, '0');
+
+      document.getElementById('leadSum').innerHTML =
+        d.count + ' לידים · ' + d.converted + ' הזמינו (' + d.rate + '%) · '
+        + nis(d.revenue) + ' מחזור מהם';
+
       box.innerHTML = d.leads.length
-        ? '<table class="tbl"><thead><tr><th>תאריך</th><th>שם</th><th>טלפון</th><th>מייל</th><th>דגם</th><th></th></tr></thead><tbody>' +
+        ? '<table class="tbl"><thead><tr><th>תאריך</th><th>שם</th><th>טלפון</th><th>מייל</th><th>דגם</th><th>הזמין</th><th></th></tr></thead><tbody>' +
           d.leads.map(l=>`<tr>
             <td>${dt(l.consentAt)}</td>
             <td><b>${esc(l.name)}</b></td>
-            <td dir="ltr"><a href="https://wa.me/${esc(String(l.phone).replace('+',''))}" target="_blank">${esc(l.phone)}</a></td>
+            <td dir="ltr"><a href="https://wa.me/${esc(String(l.phone).replace('+',''))}" target="_blank">${esc(localPhone(l.phone))}</a></td>
             <td>${esc(l.email)}</td>
-            <td>${esc(names[l.productId] || l.productId || '—')}</td>
-            <td>${l.imageUrl?`<a href="${esc(l.imageUrl)}" target="_blank">ההדמיה ↗</a>`:''}</td>
+            <td>${esc(modelName(l.productId))}</td>
+            <td>${l.orders
+                  ? `<span class="st st-paid">${l.orders===1?'כן':l.orders+' הזמנות'}</span>
+                     <span style="font-size:12px;color:var(--ink-mute)"> ${nis(l.revenue)}</span>`
+                  : '<span style="color:var(--ink-mute)">—</span>'}</td>
+            <td>
+              ${l.imageUrl?`<a href="${esc(l.imageUrl)}" target="_blank">ההדמיה ↗</a> · `:''}
+              <a data-cust="${esc(l.phone||l.email||'')}" style="cursor:pointer;text-decoration:underline">כרטיס</a>
+            </td>
           </tr>`).join('') + '</tbody></table>'
         : '<div style="padding:24px;color:var(--ink-mute)">אין לידים עדיין.</div>';
+
+      box.querySelectorAll('[data-cust]').forEach(a => a.onclick = () => {
+        const f = document.getElementById('cq');
+        if(f) f.value = a.dataset.cust;
+        go('customers'); loadCustomer();
+      });
     }catch(e){
       box.innerHTML = '<div style="padding:24px"><span class="badge bad">' + esc(e.message) + '</span></div>';
     }

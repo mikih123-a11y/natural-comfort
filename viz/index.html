@@ -224,6 +224,7 @@ footer a{color:var(--ink-soft);text-decoration:none}
       <div class="row">
         <a class="btn2 solid" id="wa" href="#">רוצה הצעת מחיר לארון הזה</a>
         <button class="btn2" id="ncShareBtn" type="button" hidden>שליחה בוואטסאפ</button>
+        <button class="btn2" id="ncCopyBtn" type="button" hidden>העתקה למייל</button>
         <button class="btn2" id="dl">שמירת התמונה</button>
         <button class="btn2" id="again">הדמיה נוספת</button>
       </div>
@@ -259,7 +260,8 @@ const track = (stage, productId) => { try{
 const S = { room:null, product:null, jobId:null, session:crypto.randomUUID(), phone:null, catalog:[] };
 
 /* שיתוף ממותג — הלוגו נצרב על ההדמיה לפני השליחה */
-ncShare.init({ button:'#ncShareBtn', logo:'/logo.png', site:'naturalcomfort.co.il' });
+ncShare.init({ button:'#ncShareBtn', copyButton:'#ncCopyBtn',
+               logo:'/logo.png', site:'naturalcomfort.co.il' });
 
 /* ---------- catalog ---------- */
 fetch('catalog.json').then(r=>r.json()).then(d=>{

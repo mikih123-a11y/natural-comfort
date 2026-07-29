@@ -98,12 +98,13 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
   </section>
 
   <p class="warn">
-    ההזמנה נשמרת בדפדפן הזה תחת "ההזמנות שלי". אם תחליפו מכשיר או תנקו את היסטוריית
-    הדפדפן היא לא תופיע שם — לכן שווה לשלוח לעצמכם עותק בכפתור למעלה.
+    אפשר לעקוב אחרי ההזמנה בכל שלב מכל מכשיר — במסך <b>מעקב ההזמנה</b>, עם מספר ההזמנה
+    והטלפון שמסרתם. שווה גם לשלוח לעצמכם עותק במייל או בוואטסאפ.
   </p>
 
   <div class="acts">
-    <a class="b1" id="mail" href="#">שליחת עותק לעצמי במייל</a>
+    <a class="b1" id="track" href="/myorder.html">מעקב ההזמנה</a>
+    <a class="b2" id="mail" href="#">שליחת עותק לעצמי במייל</a>
     <a class="b2" id="wa" href="#">שמירת עותק בוואטסאפ</a>
     <a class="b2" href="/orders.html">ההזמנות שלי</a>
     <a class="b2" href="/#shop">להמשך עיון בקטלוג</a>
@@ -148,7 +149,18 @@ function copyText(o){
 }
 
 /* מי שמסר מידות בעצמו לא מקבל שלב של תיאום מדידה */
-const last = ncCart.orders()[0];
+const all  = ncCart.orders() || [];
+const last = (num && all.find(o => o.number === num)) || all[0];
+
+/* מעקב הזמנה — קישור עם המספר והטלפון מוזנים מראש, לחיצה אחת */
+(function(){
+  const el = document.getElementById('track');
+  if(!el) return;
+  const n = num || (last && last.number) || '';
+  const p = (last && last.phone) || '';
+  if(n && p) el.href = '/myorder.html?n=' + encodeURIComponent(n) + '&p=' + encodeURIComponent(p);
+  else if(n) el.href = '/myorder.html?n=' + encodeURIComponent(n);
+})();
 
 /* פייסבוק — רכישה. הערך הוא סכום ההזמנה בלי דמי המשלוח,
    כי המשלוח משולם למרכיב ולא נכנס אליך. */

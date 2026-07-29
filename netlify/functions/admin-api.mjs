@@ -11,6 +11,7 @@ import { readSession, bumpSessionVersion } from './_auth.mjs';
  *   ?type=order-update   (POST)  {id, customer{}, address{}, tax_id, admin_notes, cost_num, shipping_num}
  *   ?type=order-note     (POST)  {id, text}            הוספת הערה ליומן
  *   ?type=supplier                          חשבוניות ספק · כפילויות · חסרות · לא שולמו
+ *   ?type=marketing&days=365                מידע שיווקי — אזורים, צפיות, המרה
  *   ?type=customer&phone=  |  &email=      כרטיס לקוח מלא
  *   ?type=export&q=&status=&from=&to=       ייצוא הזמנות ל-CSV
  *   ?type=logout-all     (POST)             ניתוק כל המכשירים
@@ -55,6 +56,9 @@ const monthKeys = (n = MONTHS_BACK) => {
   }
   return out;
 };
+
+/* מפתחות מונה הצפיות — בלוב אחד לחודש */
+const metricKeys = (n = MONTHS_BACK) => monthKeys(n).map(k => 'm:' + k.slice(5));
 
 async function allIndex(os) {
   const parts = await Promise.all(
@@ -311,6 +315,43 @@ export default async (req) => {
     });
 
     return json({ ok: true });
+  }
+
+  /* ---------- מידע שיווקי ---------- */
+  if (type === 'marketing') {
+    const days  = Math.min(+(u.searchParams.get('days') || 365), 730);
+    const since = Date.now() - days * 864e5;
+    const idx   = (await allIndex(os)).filter(r => Date.parse(r.date) >= since);
+    const live  = idx.filter(r => r.status !== 'cancelled');
+
+    /* צפיות והוספות לסל — נאספות דרך /api/pv */
+    const ms    = store('metrics');
+    const parts = await Promise.all(
+      metricKeys().map(k => ms.get(k, { type: 'json' }).catch(() => null))
+    );
+    const metrics = {};
+    parts.filter(Boolean).forEach(m => {
+      Object.keys(m).forEach(id => {
+        const v = m[id] || {};
+        metrics[id] = metrics[id] || { view: 0, cart: 0, checkout: 0 };
+        metrics[id].view     += v.view     || 0;
+        metrics[id].cart     += v.cart     || 0;
+        metrics[id].checkout += v.checkout || 0;
+      });
+    });
+
+    return json({
+      days,
+      metrics,
+      tracking: Object.keys(metrics).length > 0,
+      cancelled: idx.length - live.length,
+      orders: live.slice(0, 3000).map(r => ({
+        city:     r.city || '',
+        products: r.products || [],
+        total:    typeof r.total_num === 'number' ? r.total_num : null,
+        date:     r.date || null,
+      })),
+    });
   }
 
   /* ---------- חשבוניות ספק ---------- */

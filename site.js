@@ -29,6 +29,10 @@
     + 'background:#1b4a72;color:#fff;display:grid;place-items:center;'
     + 'box-shadow:0 3px 12px rgba(0,0,0,.2);transition:transform .2s}'
     + '#nc-a11y-btn:hover{transform:translateY(-2px)}'
+    + 'html.nc-ck-open #nc-a11y-btn{bottom:150px}'
+    + 'html.nc-ck-open #nc-a11y{bottom:206px}'
+    + '@media(max-width:560px){html.nc-ck-open #nc-a11y-btn{bottom:190px}'
+    + 'html.nc-ck-open #nc-a11y{bottom:246px}}'
     + '#nc-a11y-btn svg{fill:currentColor}'
 
     /* ---- פאנל ---- */
@@ -203,6 +207,7 @@
     try { localStorage.setItem(C_KEY, v); } catch (e) {}
     var bar = document.getElementById('nc-ck');
     if (bar) bar.classList.remove('open');
+    document.documentElement.classList.remove('nc-ck-open');
     if (v === 'yes') runQueue(); else queue.length = 0;
   }
 
@@ -226,7 +231,10 @@
       +   '</div>'
       + '</div>';
     document.body.appendChild(bar);
-    setTimeout(function () { bar.classList.add('open'); }, 600);
+    setTimeout(function () {
+      bar.classList.add('open');
+      document.documentElement.classList.add('nc-ck-open');
+    }, 600);
     bar.addEventListener('click', function (e) {
       var b = e.target.closest('[data-c]');
       if (b) decide(b.dataset.c);

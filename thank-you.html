@@ -91,7 +91,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     </ol>
     <div id="shipbox" style="display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px">
       <div style="display:flex;justify-content:space-between;font-weight:600">
-        <span>משלוח והרכבה</span><b id="shipsum">—</b>
+        <span id="shiplbl">משלוח והרכבה</span><b id="shipsum">—</b>
       </div>
       <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:13px;color:var(--ink-mute);line-height:1.7"></ul>
     </div>
@@ -124,6 +124,16 @@ if(num){
   document.getElementById('num').textContent = last0 ? last0.number : '—';
 }
 
+/* תווית המשלוח של ההזמנה, לפי הפריטים שבה */
+function shipLabelOf(o){
+  const s = {};
+  (o && o.items || []).forEach(it => { if(typeof it.ship === 'number')
+    s[it.shipLabel || 'משלוח והרכבה'] = 1; });
+  const k = Object.keys(s);
+  if(!k.length) return 'משלוח והרכבה';
+  return k.length === 1 ? k[0] : 'משלוח, סבלות והרכבה';
+}
+
 /* עותק ללקוח — mailto ו-וואטסאפ עובדים בכל מכשיר, בלי שרת */
 function copyText(o){
   if(!o) return '';
@@ -134,13 +144,13 @@ function copyText(o){
     L.push('   מחיר: ' + (typeof it.price === 'number'
       ? ncCart.nis(it.price*(it.qty||1)) : (it.priceText || 'לפי התאמה')));
     if(typeof it.ship === 'number'){
-      L.push('   משלוח והרכבה: ' + ncCart.nis(it.ship*(it.qty||1)) + ' · לתשלום בבית למרכיב');
+      L.push('   ' + (it.shipLabel||'משלוח והרכבה') + ': ' + ncCart.nis(it.ship*(it.qty||1)) + ' · ' + (it.shipPaid||'משולם בבית למרכיב'));
     }
     L.push('');
   });
   L.push('סה״כ: ' + (o.total || '—'));
   if(typeof o.shipping === 'number'){
-    L.push('משלוח והרכבה: ' + ncCart.nis(o.shipping) + ' — משולם ישירות למרכיב בבית');
+    L.push(shipLabelOf(o) + ': ' + ncCart.nis(o.shipping) + ', משולם ישירות בבית');
   }
   if(o.measure) L.push('מידות: ' + o.measure);
   if(o.address) L.push('כתובת: ' + o.address);
@@ -192,6 +202,7 @@ if(last){
 }
 if(last && typeof last.shipping === 'number'){
   document.getElementById('shipbox').style.display = '';
+  document.getElementById('shiplbl').textContent = shipLabelOf(last);
   document.getElementById('shipsum').textContent = ncCart.nis(last.shipping);
   document.getElementById('shipnote').innerHTML =
     ncCart.shipNote().map(x => '<li>' + x + '</li>').join('');

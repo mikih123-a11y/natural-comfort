@@ -903,6 +903,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       price:     priceNum,
       priceText: priceTxt,
       ship:      (typeof m.delivery_install === 'number') ? m.delivery_install : null,
+      shipLabel: shipLbl,
+      shipPaid:  myLine.delivery_label ? 'משולם לשליח במסירה' : 'משולם בבית למרכיב',
       config:    buildConfig(),
       qty:       1
     });

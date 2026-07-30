@@ -102,7 +102,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <aside class="sum">
       <h2>סיכום</h2>
       <div class="row"><span>פריטים</span><span id="s-count">0</span></div>
-      <div class="row" id="shiprow"><span>משלוח והרכבה</span><span id="s-ship">משולם למרכיב</span></div>
+      <div class="row" id="shiprow"><span id="s-shiplbl">משלוח והרכבה</span><span id="s-ship">משולם בבית</span></div>
       <div class="row tot"><span>סה״כ</span><b id="s-total">—</b></div>
       <a class="go" href="/checkout.html">מעבר לפרטי ההזמנה</a>
       <a class="keep" href="/#shop">להמשך בחירה</a>
@@ -154,7 +154,7 @@ function draw(){
           ${it.qty > 1 && typeof it.price === 'number'
               ? `<small>${ncCart.nis(it.price)} ליחידה</small>` : ''}
           ${typeof it.ship === 'number'
-              ? `<small>משלוח והרכבה ${ncCart.nis(it.ship * (it.qty||1))} · לתשלום בבית למרכיב</small>` : ''}
+              ? `<small>${it.shipLabel||'משלוח והרכבה'} ${ncCart.nis(it.ship * (it.qty||1))} · ${it.shipPaid||'משולם בבית למרכיב'}</small>` : ''}
         </div>
         <div class="qty">
           <button data-inc="${it.sig}" aria-label="הוספה">+</button>
@@ -167,7 +167,8 @@ function draw(){
 
   const t = ncCart.total();
   const sh = ncCart.shipTotal();
-  $('#s-ship').textContent = sh !== null ? ncCart.nis(sh) + ' · למרכיב' : 'משולם למרכיב';
+  $('#s-shiplbl').textContent = ncCart.shipLabelAll();
+  $('#s-ship').textContent = sh !== null ? ncCart.nis(sh) + ' · בבית' : 'משולם בבית';
   $('#shipnote').innerHTML = ncCart.shipNote().map(x => `<li>${x}</li>`).join('');
   $('#rep').hidden = !ncCart.hasRepeat();
   $('#s-count').textContent = ncCart.count();

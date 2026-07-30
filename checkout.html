@@ -212,7 +212,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
       <div class="tot"><span>סה״כ</span><b id="tot">—</b></div>
       <div id="shipbox" class="hidden" style="border-top:1px solid var(--line);margin-top:10px;padding-top:10px">
         <div style="display:flex;justify-content:space-between;font-weight:600;font-size:14px">
-          <span>משלוח והרכבה</span><b id="shiptot">—</b>
+          <span id="shiplbl">משלוח והרכבה</span><b id="shiptot">—</b>
         </div>
         <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:12px;color:var(--ink-mute);line-height:1.7"></ul>
       </div>
@@ -237,7 +237,7 @@ $('#lines').innerHTML = items.map(it => `
     <div class="ph">${it.image ? `<img src="${it.image}" alt="">` : ''}</div>
     <div><b>${it.name}</b><small>${(it.config||[]).slice(0,2).join(' · ')}${it.qty>1?` · כמות ${it.qty}`:''}</small></div>
     <div class="m">${typeof it.price==='number' ? ncCart.nis(it.price*(it.qty||1)) : 'לפי התאמה'}
-      ${typeof it.ship==='number' ? `<small style="display:block;font-weight:400;font-size:11.5px;color:var(--ink-mute)">משלוח ${ncCart.nis(it.ship*(it.qty||1))} · בבית</small>` : ''}
+      ${typeof it.ship==='number' ? `<small style="display:block;font-weight:400;font-size:11.5px;color:var(--ink-mute)">${it.shipLabel||'משלוח'} ${ncCart.nis(it.ship*(it.qty||1))} · בבית</small>` : ''}
     </div>
   </div>`).join('');
 
@@ -247,6 +247,7 @@ $('#tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
 const shipT = ncCart.shipTotal();
 if (shipT !== null) {
   $('#shipbox').classList.remove('hidden');
+  $('#shiplbl').textContent = ncCart.shipLabelAll();
   $('#shiptot').textContent = ncCart.nis(shipT);
   $('#shipnote').innerHTML = ncCart.shipNote().map(x => `<li>${x}</li>`).join('');
 }
@@ -325,7 +326,7 @@ $('#send').addEventListener('click', async () => {
     notes:          v('f-notes'),
     order_items:    ncCart.orderText(items),
     order_total:    totalTxt,
-    order_shipping: shipT !== null ? ncCart.nis(shipT) + ' — משולם ישירות למרכיב' : 'לא צוין'
+    order_shipping: shipT !== null ? ncCart.shipLabelAll() + ' ' + ncCart.nis(shipT) + ', משולם ישירות בבית' : 'לא צוין'
   };
 
   const order = {

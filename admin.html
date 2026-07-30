@@ -1544,8 +1544,8 @@ $('#dlViz').onclick=()=>{
       const line = typeof it.price === 'number' ? money(it.price * q) : '—';
       const cfg  = (it.config || []).map(x => `<li>${esc(x)}</li>`).join('');
       const ship = s === null
-        ? `<div class="ship none">הובלה והרכבה: לא נקבעה · לתיאום מול המשרד</div>`
-        : `<div class="ship">הובלה והרכבה: ${money(s)} לפריט${q > 1 ? ` × ${q} = ${money(s * q)}` : ''} · משולם בבית למרכיב, אינו כלול במחיר המוצר</div>`;
+        ? `<div class="ship none">${esc(it.shipLabel || 'הובלה והרכבה')}: לא נקבעה · לתיאום מול המשרד</div>`
+        : `<div class="ship">${esc(it.shipLabel || 'הובלה והרכבה')}: ${money(s)} לפריט${q > 1 ? ` × ${q} = ${money(s * q)}` : ''} · ${esc(it.shipPaid || 'משולם בבית למרכיב')}, אינו כלול במחיר המוצר</div>`;
       return `<tr>
         <td class="prod"><b>${esc(it.name)}</b>${cfg ? `<ul>${cfg}</ul>` : ''}${ship}</td>
         <td class="num">${q}</td><td class="num">${unit}</td><td class="num">${line}</td></tr>`;
@@ -1812,7 +1812,7 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
           (it.config || []).forEach(x => L.push('   · ' + x));
           L.push('   מחיר: ' + (typeof it.price === 'number' ? money(it.price * q) : 'לפי התאמה אישית'));
           const s = shipOf(it);
-          if(s !== null) L.push('   הובלה והרכבה: ' + money(s * q) + ' · משולם בבית למרכיב');
+          if(s !== null) L.push('   ' + (it.shipLabel || 'הובלה והרכבה') + ': ' + money(s * q) + ' · ' + (it.shipPaid || 'משולם בבית למרכיב'));
           L.push('');
         });
         L.push('סה״כ מוצרים: ' + (o.total || '—'));

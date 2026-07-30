@@ -149,8 +149,18 @@ footer a{text-decoration:none}
     return null;
   }
 
+  function shipLabelOf(items){
+      var m = {};
+      (items||[]).forEach(function(it){ if(shipOf(it) !== null)
+        m[it.shipLabel || 'הובלה והרכבה'] = 1; });
+      var k = Object.keys(m);
+      if(!k.length) return 'הובלה והרכבה';
+      return k.length === 1 ? k[0] : 'משלוח, סבלות והרכבה';
+  }
+
   function render(d){
     var items = d.items || [];
+    var SLBL = shipLabelOf(items);
     var prodSum = 0, allPrices = items.length > 0;
     var shipSum = 0, anyShip = false, allShip = items.length > 0;
 
@@ -174,11 +184,12 @@ footer a{text-decoration:none}
     var rows = items.map(function(it){
       var s = shipOf(it);
       var cfg = (it.config||[]).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('');
+      var lbl = it.shipLabel || 'הובלה והרכבה';
       var ship = s === null
-        ? '<div class="ship">הובלה והרכבה: תיקבע בשיחת האישור.</div>'
-        : '<div class="ship">הובלה והרכבה: ' + money(s) + ' לפריט' +
+        ? '<div class="ship">' + esc(lbl) + ': תיקבע בשיחת האישור.</div>'
+        : '<div class="ship">' + esc(lbl) + ': ' + money(s) + ' לפריט' +
           (it.qty > 1 ? ' × ' + it.qty + ' = ' + money(s * it.qty) : '') +
-          ' · משולם בבית למרכיב, אינו כלול במחיר המוצר.</div>';
+          ' · ' + esc(it.shipPaid || 'משולם בבית למרכיב') + ', אינו כלול במחיר המוצר.</div>';
       return '<div class="it"><b>' + esc(it.name) + '</b>' +
         (it.qty > 1 ? ' × ' + it.qty : '') +
         (cfg ? '<ul>' + cfg + '</ul>' : '') +
@@ -204,11 +215,11 @@ footer a{text-decoration:none}
       '<div class="tot">' +
         '<div><span>סך המוצרים</span><b>' +
           (allPrices ? money(prodSum) : esc(d.total || 'בהתאמה אישית')) + '</b></div>' +
-        '<div><span>הובלה והרכבה<small>' +
+        '<div><span>' + esc(SLBL) + '<small>' +
           (orderLevel ? 'לכל ההזמנה' : 'סכום דמי ההובלה של כל הפריטים') +
           ' · משולם בבית למרכיב</small></span><b>' +
           (allShip ? money(shipSum) : (anyShip ? money(shipSum) + ' ומעלה' : 'ייקבע בשיחה')) + '</b></div>' +
-        '<div><span>סה״כ<small>מוצרים + הובלה והרכבה</small></span><b>' +
+        '<div><span>סה״כ<small>מוצרים + ' + esc(SLBL) + '</small></span><b>' +
           ((allPrices && allShip) ? money(prodSum + shipSum) : 'ייקבע בשיחת האישור') + '</b></div>' +
       '</div>' +
       '<h3>פרטי האספקה</h3>' +

@@ -55,6 +55,8 @@
         price: (typeof item.price === 'number' && isFinite(item.price)) ? item.price : null,
         priceText: item.priceText || '',
         ship: (typeof item.ship === 'number' && isFinite(item.ship)) ? item.ship : null,
+        shipLabel: item.shipLabel || 'משלוח והרכבה',
+        shipPaid: item.shipPaid || 'משולם בבית למרכיב',
         config: item.config || [],
         repeat: !!item.repeat,          // הגיע מהזמנה קודמת
         qty: item.qty || 1,
@@ -113,6 +115,17 @@
   ];
 
   function shipNote() { return SHIP_NOTE.slice(); }
+
+  /* תווית אחת לסל. אם יש גם ארון וגם מזרן — תווית משולבת. */
+  function shipLabelAll() {
+    var s = {};
+    items().forEach(function (x) {
+      if (typeof x.ship === 'number') s[x.shipLabel || 'משלוח והרכבה'] = 1;
+    });
+    var k = Object.keys(s);
+    if (!k.length) return 'משלוח והרכבה';
+    return k.length === 1 ? k[0] : 'משלוח, סבלות והרכבה';
+  }
 
   function hasRepeat() {
     return items().some(function (x) { return x.repeat; });
@@ -177,7 +190,7 @@
     L.push(t !== null ? 'סה״כ: ' + nis(t) : 'סה״כ: חלק מהפריטים מתומחרים לפי התאמה אישית');
     var sh = shipTotal();
     if (sh !== null) {
-      L.push('משלוח והרכבה: ' + nis(sh) + ' — משולם ישירות למרכיב בבית, לא כלול בסה״כ');
+      L.push(shipLabelAll() + ': ' + nis(sh) + ', משולם ישירות בבית ולא כלול בסה״כ');
     }
     return L.join('\n');
   }
@@ -185,6 +198,7 @@
   window.ncCart = {
     add: add, items: items, setQty: setQty, remove: remove, clear: clear,
     count: count, total: total, shipTotal: shipTotal, shipNote: shipNote,
+    shipLabelAll: shipLabelAll,
     hasCustomPrice: hasCustomPrice, hasRepeat: hasRepeat,
     badge: badge, repaint: paintAll, nis: nis,
     orderNumber: orderNumber, saveOrder: saveOrder, orders: orders,

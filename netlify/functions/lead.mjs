@@ -1,11 +1,11 @@
 import { store, json, normPhone, ip } from './_lib.mjs';
-import vizCatalog from '../../viz/catalog.json' with { type: 'json' };
+import vizCatalog from '../../viz/viz-catalog.json' with { type: 'json' };
 
 /**
  * הליד יוצא לכל יעד שמוגדר. מה שלא מוגדר — מדולג בשקט.
  * הכל במקביל, ואף כישלון לא חוסם את פתיחת ההדמיה ללקוח.
  *
- * תיקון: הקטלוג של המדמה הוא viz/catalog.json ובו המפתח `products`.
+ * תיקון: הקטלוג של המדמה הוא viz/viz-catalog.json ובו המפתח `products`.
  * הקובץ products/catalog.json הוא של החנות ובו המפתח `models` —
  * ייבוא ממנו הפיל את הפונקציה ולכן לידים לא נשמרו ולא נשלחו.
  */

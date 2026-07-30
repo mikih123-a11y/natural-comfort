@@ -271,6 +271,11 @@ footer a:hover{color:var(--ink)}
         <div class="sws" id="profs"></div>
       </div>
 
+      <div class="opt" id="size-wrap" style="display:none">
+        <h2>מידת המזרן<em id="szname">—</em></h2>
+        <div class="chips" id="sizes"></div>
+      </div>
+
       <div class="opt" id="constr-wrap" style="display:none">
         <h2>סוג הארון<em id="cname">—</em></h2>
         <div class="chips" id="constr"></div>
@@ -383,6 +388,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const canRaise = (m.category === 'wardrobe' || m.line_id === 'hazaza') && baseH < 270;
   let curH = 240;                                   // standard height
   let addons = 0;                                   // flat paid add-ons (₪)
+  let sizeAdd = 0;                                  // תוספת מידה, בשקלים
   let priceTxt = '';                                // המחיר כפי שהלקוח רואה אותו
   let priceNum = null;                              // אותו מחיר כמספר, או null לפי התאמה
   let updateWa = () => {};                          // מוחלף למטה, אחרי שכל הבוררים קיימים
@@ -463,8 +469,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     if (curH > 240) bits.push(`גובה ${(curH / 100).toFixed(2)} מ׳ · +${Math.round(hpct * 100)}%`);
     if (constrPct) bits.push(`${constrName} · +${Math.round(constrPct * 100)}%`);
     if (addons) bits.push(`תוספות ₪${addons}`);
+    if (sizeAdd) bits.push(`מידה · +₪${sizeAdd}`);
+    else if (m.size_note) bits.push(m.size_note);
     if (base) {
-      const p = (pct ? Math.round(base * (1 + pct) / 10) * 10 : base) + addons;
+      const p = (pct ? Math.round(base * (1 + pct) / 10) * 10 : base) + addons + sizeAdd;
       priceTxt = nis(p);
       priceNum = p;                                   // המספר עצמו — לסל
       $('#price').innerHTML = nis(p) + (bits.length ? `<small>${bits.join(' · ')}</small>` : '<small>כולל מע״מ</small>');
@@ -665,6 +673,20 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     onWidth();
   }
 
+  /* ---------- בורר מידה, לקווים שמגדירים מידות (מזרנים) ---------- */
+  /* רק קו שמגדיר מידות כאובייקטים עם תוספת מחיר. בקווים אחרים sizes הוא
+     מערך מספרים (מספר דלתות או רוחב) ומטופל בבורר אחר. */
+  const lineSizes = ((((d.lines || {})[m.line_id] || {}).size_options) || [])
+    .filter(z => z && typeof z === 'object' && typeof z.add === 'number');
+  if (lineSizes.length > 1) {
+    $('#size-wrap').style.display = '';
+    $('#sizes').innerHTML = lineSizes.map((z, i) =>
+      `<button class="chip" data-z="${i}" aria-pressed="${!i}">${z.label}${
+        z.add ? `<small>+₪${z.add}</small>` : ''}</button>`).join('');
+    $('#szname').textContent = lineSizes[0].label;
+    sizeAdd = lineSizes[0].add || 0;
+  }
+
   const allConstrs = (((d.constructions || {}).options) || []);
   const maxHOf = c => (typeof c.max_height === 'number' ? c.max_height : 270);
 
@@ -746,6 +768,17 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   }
 
   document.addEventListener('click', e => {
+    const cz = e.target.closest('.chip[data-z]');
+    if (cz) {
+      const z = lineSizes[+cz.dataset.z];
+      document.querySelectorAll('.chip[data-z]').forEach(b =>
+        b.setAttribute('aria-pressed', String(b === cz)));
+      sizeAdd = z.add || 0;
+      $('#szname').textContent = z.label;
+      renderPrice();
+      return;
+    }
+
     const ch = e.target.closest('.chip[data-c]');
     if (ch) {
       if (ch.disabled) return;
@@ -826,6 +859,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       const a = shown('.sw[data-a][aria-pressed="true"] span');
       if (a) L.push(`${$('#plbl').textContent}: ${a}`);
     }
+    if (visible('#size-wrap'))   L.push(`מידה: ${$('#szname').textContent}`);
     if (visible('#constr-wrap')) L.push(`סוג הארון: ${$('#cname').textContent}`);
     if (visible('#wid-wrap'))    L.push(`רוחב: ${$('#wval').textContent}`);
     if (visible('#hgt-wrap'))    L.push(`גובה: ${$('#hval').textContent}`);

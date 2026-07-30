@@ -1009,7 +1009,7 @@
     {
       "id": "nira-120",
       "name": "מיטת נירה · 120",
-      "line": "מיטות נוער · מיטה וחצי",
+      "line": "מיטות וחצי",
       "line_id": "mitot-vahetzi",
       "family": "נירה",
       "size": 120,
@@ -1115,7 +1115,7 @@
       "delivery_install": 400
     },
     {
-      "line": "מיטות נוער · מיטה וחצי",
+      "line": "מיטות וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1158,7 +1158,7 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות נוער · מיטה וחצי",
+      "line": "מיטות וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1208,7 +1208,7 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות נוער · מיטה וחצי",
+      "line": "מיטות וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1251,7 +1251,7 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות נוער · מיטה וחצי",
+      "line": "מיטות וחצי",
       "line_id": "mitot-vahetzi",
       "size": 120,
       "category": "bed",
@@ -1301,8 +1301,8 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות ילדים",
-      "line_id": "mitot-yeladim",
+      "line": "מיטות קומותיים",
+      "line_id": "mitot-komotayim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -1359,8 +1359,8 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות ילדים",
-      "line_id": "mitot-yeladim",
+      "line": "מיטות קומותיים",
+      "line_id": "mitot-komotayim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -1403,8 +1403,8 @@
       "delivery_install": 350
     },
     {
-      "line": "מיטות ילדים",
-      "line_id": "mitot-yeladim",
+      "line": "מיטות קומותיים",
+      "line_id": "mitot-komotayim",
       "size": 120,
       "category": "bed",
       "placement": "floor_center",
@@ -1824,7 +1824,7 @@
     {
       "id": "bed-fingers-hafrada",
       "name": "מיטת הפרדה · פינגרס",
-      "line": "מיטות לדתיים · בהפרדה",
+      "line": "מיטות בהפרדה",
       "line_id": "mitot-hafrada",
       "family": "פינגרס",
       "size": 160,
@@ -1884,8 +1884,8 @@
     {
       "id": "mita-opal",
       "name": "מיטת ילדים · דגם אופל",
-      "line": "מיטות ילדים",
-      "line_id": "mitot-yeladim",
+      "line": "מיטות יחיד",
+      "line_id": "mitot-yahid",
       "family": "מיטות ילדים",
       "size": 90,
       "category": "bed",
@@ -1982,7 +1982,7 @@
     {
       "id": "mizron-plaza",
       "name": "מזרן זוגי אורתופדי · דגם פלאזה Plaza",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "פלאזה",
       "size": 140,
@@ -2025,7 +2025,7 @@
     {
       "id": "mizron-regency",
       "name": "מזרן זוגי ללא קפיצים · דגם רג׳נסי Regency",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "רג׳נסי",
       "size": 140,
@@ -2068,7 +2068,7 @@
     {
       "id": "mizron-renaissance",
       "name": "מזרן זוגי · דגם רנסנס Renaissance",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "רנסנס",
       "size": 140,
@@ -2110,7 +2110,7 @@
     {
       "id": "mizron-holiday",
       "name": "מזרן זוגי ללא קפיצים · דגם הולידיי",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "הולידיי",
       "size": 140,
@@ -2153,7 +2153,7 @@
     {
       "id": "mizron-marriott",
       "name": "מזרן זוגי ללא קפיצים עם ויסקו · דגם מריוט Marriott",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "מריוט",
       "size": 140,
@@ -2197,7 +2197,7 @@
     {
       "id": "mizron-leonardo",
       "name": "מזרן זוגי ללא קפיצים עם ויסקו · דגם לאונרדו Leonardo",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "לאונרדו",
       "size": 140,
@@ -2241,7 +2241,7 @@
     {
       "id": "mizron-grand",
       "name": "מזרן זוגי יוקרתי ללא קפיצים עם ויסקו · דגם גרנד Grand",
-      "line": "מזרנים",
+      "line": "מזרנים זוגי",
       "line_id": "mizronim",
       "family": "גרנד",
       "size": 140,
@@ -2286,7 +2286,7 @@
     {
       "id": "mizron-yahid-plaza",
       "name": "מזרן יחיד אורתופדי · דגם פלאזה Plaza",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "פלאזה",
       "size": 80,
@@ -2327,7 +2327,7 @@
     {
       "id": "mizron-yahid-regency",
       "name": "מזרן יחיד ללא קפיצים · דגם רג׳נסי Regency",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "רג׳נסי",
       "size": 80,
@@ -2368,7 +2368,7 @@
     {
       "id": "mizron-yahid-holiday",
       "name": "מזרן יחיד ללא קפיצים · דגם הולידיי",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "הולידיי",
       "size": 80,
@@ -2409,7 +2409,7 @@
     {
       "id": "mizron-yahid-leonardo",
       "name": "מזרן יחיד ללא קפיצים עם ויסקו פנימי · דגם לאונרדו Leonardo",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "לאונרדו",
       "size": 80,
@@ -2451,7 +2451,7 @@
     {
       "id": "mizron-yahid-marriott",
       "name": "מזרן יחיד ללא קפיצים עם שכבת ויסקו · דגם מריוט Marriott",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "מריוט",
       "size": 80,
@@ -2493,7 +2493,7 @@
     {
       "id": "mizron-yahid-renaissance",
       "name": "מזרן יחיד עם שכבת ויסקו · דגם רנסנס Renaissance",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "רנסנס",
       "size": 80,
@@ -2534,7 +2534,7 @@
     {
       "id": "mizron-yahid-grand",
       "name": "מזרן יחיד מפיץ ריח · ללא קפיצים עם שכבת ויסקו עבה · דגם גרנד Grand",
-      "line": "מזרני יחיד",
+      "line": "מזרנים יחיד",
       "line_id": "mizronim-yahid",
       "family": "גרנד",
       "size": 80,
@@ -2773,36 +2773,24 @@
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
-      "group": "mitot"
+      "group": "mitot-zugiyot"
     },
     "mitot-hafrada": {
-      "name": "מיטות לדתיים · בהפרדה",
+      "name": "מיטות בהפרדה",
       "slug": "מיטות-הפרדה",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
-      "group": "mitot"
+      "group": "mitot-hafrada"
     },
     "mitot-vahetzi": {
-      "name": "מיטות נוער · מיטה וחצי",
+      "name": "מיטות וחצי",
       "slug": "מיטות-וחצי",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
-      "group": "mitot",
+      "group": "mitot-vahetzi",
       "sizes": [
-        120
-      ]
-    },
-    "mitot-yeladim": {
-      "name": "מיטות ילדים",
-      "slug": "מיטות-לילדים",
-      "size_axis": "width_cm",
-      "size_label": "{n} ס״מ",
-      "default_placement": "floor_center",
-      "group": "mitot",
-      "sizes": [
-        90,
         120
       ]
     },
@@ -2831,13 +2819,13 @@
       "group": "hadrei-shena"
     },
     "mizronim": {
-      "name": "מזרנים",
+      "name": "מזרנים זוגי",
       "slug": "מזרנים",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "on_bed_frame",
       "visualizable": false,
-      "group": "mizronim",
+      "group": "mizronim-zugi",
       "_sizes_note": "בסיס 140×190. תוספת 200 ₪ לכל 10 ס\"מ, ברוחב ובאורך, מצטבר. חריג שנקבע ידנית: 150×200 בתוספת 200 ₪ בלבד. מזרני יחיד הם קו נפרד שמתחיל ב-80×190 וטרם הוזן. השדה נקרא size_options ולא sizes, כדי שסרגל הסינון בקטגוריה לא ינסה לקרוא אותו.",
       "size_options": [
         {
@@ -2899,13 +2887,13 @@
       "group": "sifriyot-yeladim"
     },
     "mizronim-yahid": {
-      "name": "מזרני יחיד",
+      "name": "מזרנים יחיד",
       "slug": "מזרני-יחיד",
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "on_bed_frame",
       "visualizable": false,
-      "group": "mizronim",
+      "group": "mizronim-yahid",
       "delivery_label": "משלוח וסבלות",
       "delivery_note": "המזרן מגיע עד הבית. אין הרכבה במזרנים. התשלום משולם ישירות לשליח במעמד המסירה. תוספת 50 ₪ לקומה מהקומה השלישית ומעלה ללא מעלית. אין אספקה לאזור אילת והערבה.",
       "size_options": [
@@ -2939,64 +2927,92 @@
         }
       ],
       "_sizes_note": "בסיס 80×190. תוספות שנקבעו ידנית: 90×190 +200, 100×190 +300, 100×200 +400. לא לפי חישוב אוטומטי של 200 ₪ לכל 10 ס\"מ."
+    },
+    "mitot-komotayim": {
+      "name": "מיטות קומותיים",
+      "slug": "מיטות-קומותיים",
+      "size_axis": "width_cm",
+      "size_label": "{n} ס״מ",
+      "default_placement": "floor_center",
+      "group": "mitot-komotayim",
+      "sizes": [
+        90,
+        120
+      ]
+    },
+    "mitot-yahid": {
+      "name": "מיטות יחיד",
+      "slug": "מיטות-יחיד",
+      "size_axis": "width_cm",
+      "size_label": "{n} ס״מ",
+      "default_placement": "floor_center",
+      "group": "mitot-yahid",
+      "sizes": [
+        90,
+        120
+      ]
+    },
+    "mitot-yeladim-niftahot": {
+      "name": "מיטות לילדים נפתחות",
+      "slug": "מיטות-לילדים-נפתחות",
+      "size_axis": "width_cm",
+      "size_label": "{n} ס״מ",
+      "default_placement": "floor_center",
+      "group": "mitot-yeladim-niftahot",
+      "sizes": [
+        90,
+        120
+      ]
     }
   },
   "groups": [
     {
       "id": "aronot",
-      "name": "ארונות",
-      "slug": "ארונות",
-      "lines": [
-        "hazaza",
-        "bgadim",
-        "tv",
-        "meshulavim"
-      ]
+      "name": "ארונות"
     },
     {
       "id": "kodesh",
-      "name": "ספריות קודש",
-      "slug": "ספריות-קודש",
-      "lines": [
-        "kodesh"
-      ]
+      "name": "ספריות קודש"
     },
     {
       "id": "sifriyot-yeladim",
-      "name": "ספריות לילדים",
-      "slug": "ספריות-לילדים",
-      "lines": [
-        "sifriyot-yeladim"
-      ]
+      "name": "ספריות לילדים"
     },
     {
-      "id": "mitot",
-      "name": "מיטות",
-      "slug": "מיטות",
-      "lines": [
-        "mitot-yeladim",
-        "mitot-vahetzi",
-        "mitot-zugiyot",
-        "mitot-hafrada"
-      ]
+      "id": "mitot-yahid",
+      "name": "מיטות יחיד"
+    },
+    {
+      "id": "mitot-zugiyot",
+      "name": "מיטות זוגיות"
+    },
+    {
+      "id": "mitot-vahetzi",
+      "name": "מיטות וחצי"
+    },
+    {
+      "id": "mitot-yeladim-niftahot",
+      "name": "מיטות לילדים נפתחות"
+    },
+    {
+      "id": "mitot-komotayim",
+      "name": "מיטות קומותיים"
+    },
+    {
+      "id": "mitot-hafrada",
+      "name": "מיטות בהפרדה"
     },
     {
       "id": "hadrei-shena",
-      "name": "חדרי שינה",
-      "slug": "חדרי-שינה",
-      "lines": [
-        "hs-standard",
-        "hs-merupadim",
-        "hs-datiim"
-      ]
+      "name": "חדרי שינה"
     },
     {
-      "id": "mizronim",
-      "name": "מזרנים",
-      "slug": "מזרנים",
-      "lines": [
-        "mizronim"
-      ]
+      "id": "mizronim-zugi",
+      "name": "מזרנים זוגי"
+    },
+    {
+      "id": "mizronim-yahid",
+      "name": "מזרנים יחיד"
     }
   ],
   "upgrades": {

@@ -202,6 +202,14 @@ export default async (req) => {
     const o = await os.get(id, { type: 'json' });
     if (!o) return json({ error: 'לא נמצאה.' }, 404);
     o.status = normStatus(o.status);
+    /* פתיחת ההזמנה באדמין = קראת את ההודעות */
+    const hadUnread = o.cust_unread || 0;
+    if (hadUnread) {
+      o.cust_unread = 0;
+      await os.setJSON(id, o);
+      await patchIndex(os, o, { cust_unread: 0 });
+    }
+
     const costs = await loadCosts();
     const cost = orderCost(o, costs);
     const rev  = typeof o.total_num === 'number' ? o.total_num : null;
@@ -218,6 +226,7 @@ export default async (req) => {
 
     return json({
       order: o,
+      hadUnread,
       dupInvoice,
       cost,
       profit: (rev !== null && cost !== null) ? rev - cost : null,

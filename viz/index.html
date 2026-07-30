@@ -156,6 +156,14 @@ footer a:hover{color:var(--ink);text-decoration:underline}
 .fbot{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px}
 @media(max-width:700px){.fcols{grid-template-columns:1fr 1fr}}
 @media(max-width:440px){.fcols{grid-template-columns:1fr}}
+.shot{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.shot summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);list-style:none}
+.shot summary::-webkit-details-marker{display:none}
+.shot summary::before{content:"+ ";color:var(--champagne);font-weight:700}
+.shot[open] summary::before{content:"\2212 "}
+.shot ul{margin:10px 0 0;padding-inline-start:18px}
+.shot li{font-size:13px;color:var(--ink-mute);line-height:1.65;margin-bottom:5px}
+.shot li b{color:var(--ink-soft);font-weight:600}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
@@ -181,8 +189,8 @@ footer a:hover{color:var(--ink);text-decoration:underline}
 
   <div class="steps">
     <div class="card">
-      <h2>הקיר שלכם <b>01</b></h2>
-      <p class="hint">צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.</p>
+      <h2 id="shotTitle">הקיר שלכם <b>01</b></h2>
+      <p class="hint" id="shotHint">צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.</p>
       <div class="drop" id="drop" role="button" tabindex="0" aria-label="העלאת תמונת הקיר">
         <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <small>גררו תמונה או לחצו לבחירה</small>
@@ -190,11 +198,15 @@ footer a:hover{color:var(--ink);text-decoration:underline}
         <button class="redo" id="redo" hidden type="button">החלפת תמונה</button>
       </div>
       <input type="file" id="file" accept="image/*" hidden>
+      <details class="shot" id="shotBox">
+        <summary>איך לצלם נכון</summary>
+        <ul id="shotTips"></ul>
+      </details>
     </div>
 
     <div class="card">
       <h2>הארון <b>02</b></h2>
-      <p class="hint">אופל · 2 דלתות הזזה · חלון מסך משולב</p>
+      <p class="hint" id="prodHint">בחרו דגם מהרשימה. הגימור והמידות מופיעים ליד כל אחד.</p>
       <div class="picker" id="picker"></div>
     </div>
   </div>
@@ -303,6 +315,8 @@ ncShare.init({ button:'#ncShareBtn', copyButton:'#ncCopyBtn',
                logo:'/logo.png', site:'naturalcomfort.co.il' });
 
 /* ---------- catalog ---------- */
+shotGuide(null);
+
 fetch('viz-catalog.json').then(r=>r.json()).then(d=>{
   S.catalog = d.products;
 
@@ -321,7 +335,13 @@ fetch('viz-catalog.json').then(r=>r.json()).then(d=>{
 
   const choose = b => {
     document.querySelectorAll('.pick').forEach(x=>x.setAttribute('aria-pressed','false'));
-    b.setAttribute('aria-pressed','true'); S.product = b.dataset.id; ready();
+    b.setAttribute('aria-pressed','true'); S.product = b.dataset.id;
+    const prod = S.catalog.find(x => x.id === S.product);
+    shotGuide(prod);
+    const ph = $('#prodHint');
+    if(ph && prod) ph.textContent = [prod.line, prod.name, prod.finish]
+      .filter(Boolean).join(' · ');
+    ready();
   };
   $('#picker').onclick = e => {
     const b = e.target.closest('.pick'); if(b) choose(b);
@@ -372,6 +392,74 @@ function load(f){
   img.onerror = () => fail('לא הצלחנו לקרוא את התמונה. נסו קובץ אחר.');
   img.src = URL.createObjectURL(f);
 }
+
+/* ---------- הנחיות צילום לפי סוג המוצר ----------
+   ארון וספרייה הם מישור אנכי צמוד לקיר — צילום ישר של הקיר מספיק.
+   מיטה יושבת על הרצפה ותופסת שני מטר עומק — בלי רצפה בפריים
+   אין למודל איפה להעמיד אותה, והיא תצא מרחפת או מוקטנת. */
+const GUIDE = {
+  against_wall: {
+    title: 'הקיר שלכם',
+    hint:  'צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.',
+    tips: [
+      '<b>לעמוד מול מרכז הקיר</b>, לא מהצד. זווית מלוכסנת מותחת את הארון',
+      'שהקיר ייכנס שלם — <b>מהרצפה עד התקרה ומקצה לקצה</b>',
+      'לפנות מהקיר רהיטים, תמונות ווילונות. מה שיישאר בתמונה יישאר בהדמיה',
+      'המצלמה בגובה החזה, הטלפון ישר ולא מוטה למעלה או למטה',
+      'אור יום מהצד. בלי פלאש ובלי שמש ישירה על הקיר',
+    ],
+  },
+  in_niche: {
+    title: 'הנישה שלכם',
+    hint:  'צילום ישר לתוך הנישה, כך שנראים שני הצדדים והתקרה שלה.',
+    tips: [
+      '<b>לעמוד מול פתח הנישה</b> ולצלם ישר לתוכה',
+      'ששני הצדדים והתקרה של הנישה ייראו — משם נגזרת ההתאמה',
+      'לפנות את הנישה לגמרי',
+      'המצלמה בגובה החזה, הטלפון ישר',
+    ],
+  },
+  headboard_to_wall: {
+    title: 'החדר שלכם',
+    hint:  'צילום מפתח החדר, כך שנראים גם הקיר וגם הרצפה שלפניו.',
+    tips: [
+      '<b>לעמוד בפתח החדר</b> — זו הנקודה הרחוקה ביותר שיש',
+      'שייראה גם הקיר שהראש ייצמד אליו <b>וגם הרצפה שלפניו</b>. בלי רצפה אין למיטה על מה לשבת',
+      'המצלמה בגובה החזה, הטלפון אופקי',
+      '<b>בלי עדשה רחבה במיוחד.</b> היא מעקמת את החדר וההדמיה תלך אחרי העיקום',
+      '<b>בחדר קטן</b> — אם הקיר לא נכנס שלם, לצלם את הפינה שבה הראש ייצמד',
+    ],
+  },
+  on_bed_frame: {
+    title: 'המיטה שלכם',
+    hint:  'צילום המיטה הקיימת מהצד, כך שנראה כל המשטח.',
+    tips: [
+      '<b>לצלם את המיטה הקיימת</b> — המזרן יוחלף עליה',
+      'שכל אורך המיטה ייכנס לפריים, לא רק חצי',
+      'להסיר מצעים, כריות ושמיכות',
+      'לעמוד בקצה או בפינה, המצלמה בגובה החזה',
+    ],
+  },
+  floor_center: {
+    title: 'החדר שלכם',
+    hint:  'צילום שכולל את החלק הפנוי של הרצפה, מפתח החדר.',
+    tips: [
+      '<b>לעמוד בפתח החדר</b> ולצלם את החלק הפנוי',
+      'שהרצפה תיראה היטב — שם הרהיט יעמוד',
+      'המצלמה בגובה החזה, הטלפון אופקי',
+      'בלי עדשה רחבה במיוחד',
+    ],
+  },
+};
+
+function shotGuide(prod){
+  const g = GUIDE[(prod && prod.placement)] || GUIDE.against_wall;
+  const t = $('#shotTitle'), h = $('#shotHint'), ul = $('#shotTips');
+  if(t) t.innerHTML = g.title + ' <b>01</b>';
+  if(h) h.textContent = g.hint;
+  if(ul) ul.innerHTML = g.tips.map(x => '<li>' + x + '</li>').join('');
+}
+
 const ready = () => $('#go').disabled = !(S.room && S.product);
 
 /* ---------- generate ---------- */

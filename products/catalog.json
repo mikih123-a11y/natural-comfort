@@ -2323,7 +2323,12 @@
         "name": "הגבהה ל-2.70 מ׳",
         "desc": "ניצול מלא של גובה החדר",
         "price_note": "בתוספת מחיר",
-        "_todo_price": "כמה?"
+        "_todo_price": "כמה?",
+        "height": 270,
+        "requires_construction": [
+          "melamine",
+          "mdf"
+        ]
       },
       {
         "id": "drawers",
@@ -2361,22 +2366,25 @@
     ]
   },
   "constructions": {
-    "_note": "סוג בניית הארון — בחירת לקוח. מלמין = מחיר בסיס.",
+    "_note": "סוג בניית הארון — בחירת לקוח. מלמין = מחיר בסיס. max_height הוא הגובה המרבי שאפשר לייצר בבנייה הזו, בסנטימטרים. סנדוויץ׳ מוגבל ל-240 ולכן אינו מאפשר את שדרוג ההגבהה ל-2.70.",
     "options": [
       {
         "id": "melamine",
         "name": "מלמין",
-        "price_pct": 0
+        "price_pct": 0,
+        "max_height": 270
       },
       {
         "id": "mdf",
         "name": "MDF",
-        "price_pct": 0.2
+        "price_pct": 0.2,
+        "max_height": 270
       },
       {
         "id": "sandwich",
         "name": "סנדוויץ׳",
-        "price_pct": 0.4
+        "price_pct": 0.4,
+        "max_height": 240
       }
     ]
   },

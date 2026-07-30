@@ -102,6 +102,11 @@ export default async (req) => {
     total_num:    typeof o.total_num === 'number' ? o.total_num : null,
     shipping_num: typeof o.shipping_num === 'number' ? o.shipping_num : null,
 
+    /* ההודעות של הלקוח עצמו בלבד. הערות פנימיות לא יוצאות מכאן. */
+    messages: (o.notes_log || [])
+      .filter(n => n && n.by === 'customer')
+      .map(n => ({ at: n.at, text: n.text })),
+
     measure:      o.measure || null,
     measure_note: o.measure_note || null,
     notes:        o.notes || null,

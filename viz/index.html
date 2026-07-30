@@ -303,7 +303,7 @@ ncShare.init({ button:'#ncShareBtn', copyButton:'#ncCopyBtn',
                logo:'/logo.png', site:'naturalcomfort.co.il' });
 
 /* ---------- catalog ---------- */
-fetch('catalog.json').then(r=>r.json()).then(d=>{
+fetch('viz-catalog.json').then(r=>r.json()).then(d=>{
   S.catalog = d.products;
 
   // קיבוץ לפי קו — 26 מוצרים ברשימה שטוחה זה קיר

@@ -1,5 +1,5 @@
 import { store, json, guard } from './_lib.mjs';
-import catalog from '../../viz/catalog.json' with { type: 'json' };
+import catalog from '../../viz/viz-catalog.json' with { type: 'json' };
 
 const FAL = process.env.FAL_KEY;
 const MODEL = process.env.FAL_MODEL || 'fal-ai/nano-banana-pro/edit';

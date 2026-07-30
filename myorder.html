@@ -243,12 +243,16 @@ footer a{text-decoration:none}
 
     /* ---------- הודעה אלינו ---------- */
     var thread = function(list){
-      $('mthread').innerHTML = (list||[]).map(function(m){
+      if(!(list||[]).length){ $('mthread').innerHTML = ''; return; }
+      $('mthread').innerHTML = '<small style="display:block;color:var(--ink-mute);font-size:12.5px;margin:4px 0 8px">ההודעות ששלחתם</small>'
+        + (list||[]).map(function(m){
         var w = '';
         try { w = new Date(m.at).toLocaleString('he-IL'); } catch(e){}
         return '<div><small>' + esc(w) + '</small>' + esc(m.text) + '</div>';
       }).join('');
     };
+
+    thread(d.messages);
 
     $('msend').onclick = function(){
       var t = ($('mtext').value||'').trim();

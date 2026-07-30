@@ -1978,6 +1978,310 @@
         }
       ],
       "delivery_install": 350
+    },
+    {
+      "id": "mizron-plaza",
+      "name": "מזרן זוגי אורתופדי · דגם פלאזה Plaza",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "פלאזה",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 999,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי אורתופדי · דגם פלאזה Plaza"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "אורתופדי",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-plaza.jpg",
+          "thumb": "/products/thumbs/mizron-plaza.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-regency",
+      "name": "מזרן זוגי ללא קפיצים · דגם רג׳נסי Regency",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "רג׳נסי",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1699,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי ללא קפיצים · דגם רג׳נסי Regency"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "ללא קפיצים",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-regency.jpg",
+          "thumb": "/products/thumbs/mizron-regency.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-renaissance",
+      "name": "מזרן זוגי · דגם רנסנס Renaissance",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "רנסנס",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1799,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי · דגם רנסנס Renaissance"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-renaissance.jpg",
+          "thumb": "/products/thumbs/mizron-renaissance.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-holiday",
+      "name": "מזרן זוגי ללא קפיצים · דגם הולידיי",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "הולידיי",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1899,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי ללא קפיצים · דגם הולידיי"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "ללא קפיצים",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-holiday.jpg",
+          "thumb": "/products/thumbs/mizron-holiday.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-marriott",
+      "name": "מזרן זוגי ללא קפיצים עם ויסקו · דגם מריוט Marriott",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "מריוט",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1999,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי ללא קפיצים עם ויסקו · דגם מריוט Marriott"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "ללא קפיצים",
+        "שכבת ויסקו",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-marriott.jpg",
+          "thumb": "/products/thumbs/mizron-marriott.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-leonardo",
+      "name": "מזרן זוגי ללא קפיצים עם ויסקו · דגם לאונרדו Leonardo",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "לאונרדו",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 3299,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי ללא קפיצים עם ויסקו · דגם לאונרדו Leonardo"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "ללא קפיצים",
+        "שכבת ויסקו",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-leonardo.jpg",
+          "thumb": "/products/thumbs/mizron-leonardo.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-grand",
+      "name": "מזרן זוגי יוקרתי ללא קפיצים עם ויסקו · דגם גרנד Grand",
+      "line": "מזרנים",
+      "line_id": "mizronim",
+      "family": "גרנד",
+      "size": 140,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 3499,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "_todo_sizes": "מחירים ל-80×190 · 90×190 · 120×200 · 160×190 · 160×200 · 180×190 · 180×200 · 200×200",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן זוגי יוקרתי ללא קפיצים עם ויסקו · דגם גרנד Grand"
+      },
+      "features": [
+        "מידה 140×190 ס״מ",
+        "כל מידה גדולה מ-140×190 בתוספת מחיר, נסגרת בשיחת האישור",
+        "ללא קפיצים",
+        "שכבת ויסקו",
+        "דגם יוקרה",
+        "משלוח בלבד, בלי הרכבה"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-grand.jpg",
+          "thumb": "/products/thumbs/mizron-grand.jpg"
+        }
+      ],
+      "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
     }
   ],
   "handles": {
@@ -2241,7 +2545,52 @@
       "size_label": "{n} ס״מ",
       "default_placement": "on_bed_frame",
       "visualizable": false,
-      "group": "mizronim"
+      "group": "mizronim",
+      "sizes": [
+        {
+          "id": "140x190",
+          "label": "140×190",
+          "w": 140,
+          "l": 190,
+          "add": 0
+        },
+        {
+          "id": "150x200",
+          "label": "150×200",
+          "w": 150,
+          "l": 200,
+          "add": 200
+        },
+        {
+          "id": "160x190",
+          "label": "160×190",
+          "w": 160,
+          "l": 190,
+          "add": 400
+        },
+        {
+          "id": "160x200",
+          "label": "160×200",
+          "w": 160,
+          "l": 200,
+          "add": 600
+        },
+        {
+          "id": "180x190",
+          "label": "180×190",
+          "w": 180,
+          "l": 190,
+          "add": 800
+        },
+        {
+          "id": "180x200",
+          "label": "180×200",
+          "w": 180,
+          "l": 200,
+          "add": 1000
+        }
+      ],
+      "_sizes_note": "בסיס 140×190. תוספת 200 ₪ לכל 10 ס\"מ, ברוחב ובאורך, מצטבר. חריג שנקבע ידנית: 150×200 בתוספת 200 ₪ בלבד. מזרני יחיד הם קו נפרד שמתחיל ב-80×190 וטרם הוזן."
     },
     "sifriyot-yeladim": {
       "name": "ספריות לילדים",

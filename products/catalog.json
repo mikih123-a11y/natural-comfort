@@ -361,7 +361,8 @@
       ],
       "line_id": "kodesh",
       "size": 3,
-      "family": "ספריות קודש"
+      "family": "ספריות קודש",
+      "delivery_install": 300
     },
     {
       "line": "ספריות קודש",
@@ -411,7 +412,8 @@
       ],
       "line_id": "kodesh",
       "size": 3,
-      "family": "ספריות קודש"
+      "family": "ספריות קודש",
+      "delivery_install": 300
     },
     {
       "id": "kodesh-4dl-open",
@@ -468,7 +470,8 @@
           "thumb": "/products/thumbs/kodesh-4dl-open-shahor.jpg"
         }
       ],
-      "family": "ספריות קודש"
+      "family": "ספריות קודש",
+      "delivery_install": 400
     },
     {
       "id": "kodesh-6dl-eliyahu",
@@ -540,7 +543,8 @@
           "image": "/products/kodesh-6dl-eliyahu-mevuka.jpg",
           "thumb": "/products/thumbs/kodesh-6dl-eliyahu-mevuka.jpg"
         }
-      ]
+      ],
+      "delivery_install": 600
     },
     {
       "id": "kodesh-5dl-tveria",
@@ -618,7 +622,8 @@
           "image": "/products/kodesh-5dl-tveria-mevuka.jpg",
           "thumb": "/products/thumbs/kodesh-5dl-tveria-mevuka.jpg"
         }
-      ]
+      ],
+      "delivery_install": 500
     },
     {
       "id": "desk-160",
@@ -687,7 +692,8 @@
       "family": "ארונות הזזה",
       "layouts": [
         "LDESK"
-      ]
+      ],
+      "delivery_install": 400
     },
     {
       "id": "simple3-240",
@@ -756,7 +762,8 @@
       "layouts": [
         "L3A",
         "L3B"
-      ]
+      ],
+      "delivery_install": 600
     },
     {
       "id": "simple3-shlish-mirror",
@@ -891,7 +898,8 @@
       "family": "ארונות הזזה",
       "layouts": [
         "L4A"
-      ]
+      ],
+      "delivery_install": 800
     },
     {
       "id": "koren",
@@ -946,7 +954,8 @@
           "image": "/products/koren-7904.jpg",
           "thumb": "/products/thumbs/koren-7904.jpg"
         }
-      ]
+      ],
+      "delivery_install": 350
     },
     {
       "id": "pipa",
@@ -1503,7 +1512,8 @@
             "price": 1999
           }
         ]
-      }
+      },
+      "delivery_install": 400
     },
     {
       "id": "bed-zugit-140",

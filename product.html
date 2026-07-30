@@ -142,6 +142,9 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 .chip{border:1px solid var(--line);background:#fff;padding:9px 18px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:.15s var(--ease)}
 .chip:hover{background:var(--panel2,#f6f3ee)}
 .chip[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.chip small{display:block;font-size:10.5px;font-weight:400;opacity:.7;margin-top:1px}
+.chip:disabled{opacity:.42;cursor:not-allowed;background:#fff;text-decoration:line-through}
+.chip:disabled:hover{background:#fff}
 
 /* פעולות — אין סל. הטלפון הוא הקנייה. */
 /* ---- סל ---- */
@@ -662,13 +665,44 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     onWidth();
   }
 
-  const constrs = (((d.constructions || {}).options) || []);
+  const allConstrs = (((d.constructions || {}).options) || []);
+  const maxHOf = c => (typeof c.max_height === 'number' ? c.max_height : 270);
+
+  /* בנייה שלא מגיעה לגובה המינימלי של הדגם לא מוצגת בכלל.
+     לדוגמה: ארון שפורסם ב-2.70 לא יציג סנדוויץ׳, שמוגבל ל-2.40. */
+  const constrs = allConstrs.filter(c => maxHOf(c) >= (canRaise ? 240 : baseH));
+
+  let syncConstr = () => {};
   if (constrs.length && (m.category === 'wardrobe' || m.line_id === 'hazaza')) {
     $('#constr-wrap').style.display = '';
     $('#constr').innerHTML = constrs.map((c, i) =>
-      `<button class="chip" data-c="${i}" aria-pressed="${!i}">${c.name}</button>`).join('');
+      `<button class="chip" data-c="${i}" data-maxh="${maxHOf(c)}" aria-pressed="${!i}">${c.name}${
+        maxHOf(c) < 270 ? `<small>עד ${(maxHOf(c) / 100).toFixed(2)} מ׳</small>` : ''}</button>`).join('');
     constrName = constrs[0].name; constrPct = constrs[0].price_pct || 0;
     $('#cname').textContent = constrs[0].name;
+
+    /* בנייה שאינה מגיעה לגובה שנבחר — מנוטרלת.
+       אם היא הייתה הנבחרת, עוברים לראשונה שמותרת כדי שלא ייצא מחיר של תצורה שאין. */
+    syncConstr = () => {
+      let needSwitch = false;
+      document.querySelectorAll('.chip[data-c]').forEach(b => {
+        const ok = +b.dataset.maxh >= curH;
+        b.disabled = !ok;
+        b.setAttribute('aria-disabled', String(!ok));
+        b.title = ok ? '' : `אי אפשר לייצר מעל ${(+b.dataset.maxh / 100).toFixed(2)} מ׳`;
+        if (!ok && b.getAttribute('aria-pressed') === 'true') needSwitch = true;
+      });
+      if (needSwitch) {
+        const i = constrs.findIndex(c => maxHOf(c) >= curH);
+        if (i >= 0) {
+          document.querySelectorAll('.chip[data-c]').forEach(b =>
+            b.setAttribute('aria-pressed', String(+b.dataset.c === i)));
+          constrName = constrs[i].name; constrPct = constrs[i].price_pct || 0;
+          $('#cname').textContent = constrs[i].name;
+        }
+      }
+    };
+    syncConstr();
     renderPrice();
   }
 
@@ -704,6 +738,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       $('#hnote').textContent = curH > 240
         ? `הגבהה מ-2.40 מ׳ · +${Math.round(surPct(curH) * 100)}% למחיר הארון`
         : 'גובה סטנדרטי 2.40 מ׳ · ניתן להגביה עד 2.70 מ׳ (עד +40%)';
+      syncConstr();
       renderPrice();
       applyLayHeight();
     };
@@ -713,7 +748,14 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   document.addEventListener('click', e => {
     const ch = e.target.closest('.chip[data-c]');
     if (ch) {
+      if (ch.disabled) return;
       const c = constrs[+ch.dataset.c];
+      /* בחירת בנייה מוגבלת בגובה מורידה את הסליידר לתקרה שלה */
+      const mh = maxHOf(c);
+      if (canRaise && curH > mh) {
+        const hs2 = $('#hslider');
+        if (hs2) { hs2.value = mh; hs2.dispatchEvent(new Event('input')); }
+      }
       document.querySelectorAll('.chip[data-c]').forEach(b => b.setAttribute('aria-pressed', b === ch));
       constrName = c.name; constrPct = c.price_pct || 0;
       $('#cname').textContent = c.name;

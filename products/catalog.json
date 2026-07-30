@@ -2282,6 +2282,298 @@
         }
       ],
       "size_note": "המחיר למידה 140×190 · מידה גדולה יותר בתוספת מחיר"
+    },
+    {
+      "id": "mizron-yahid-plaza",
+      "name": "מזרן יחיד אורתופדי · דגם פלאזה Plaza",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "פלאזה",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 599,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד אורתופדי · דגם פלאזה Plaza"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "אורתופדי",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-plaza.jpg",
+          "thumb": "/products/mizron-yahid-plaza.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-regency",
+      "name": "מזרן יחיד ללא קפיצים · דגם רג׳נסי Regency",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "רג׳נסי",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 999,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד ללא קפיצים · דגם רג׳נסי Regency"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "ללא קפיצים",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-regency.jpg",
+          "thumb": "/products/mizron-yahid-regency.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-holiday",
+      "name": "מזרן יחיד ללא קפיצים · דגם הולידיי",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "הולידיי",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1199,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד ללא קפיצים · דגם הולידיי"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "ללא קפיצים",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-holiday.jpg",
+          "thumb": "/products/mizron-yahid-holiday.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-leonardo",
+      "name": "מזרן יחיד ללא קפיצים עם ויסקו פנימי · דגם לאונרדו Leonardo",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "לאונרדו",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1299,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד ללא קפיצים עם ויסקו פנימי · דגם לאונרדו Leonardo"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "ללא קפיצים",
+        "ויסקו פנימי",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-leonardo.jpg",
+          "thumb": "/products/mizron-yahid-leonardo.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-marriott",
+      "name": "מזרן יחיד ללא קפיצים עם שכבת ויסקו · דגם מריוט Marriott",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "מריוט",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1399,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד ללא קפיצים עם שכבת ויסקו · דגם מריוט Marriott"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "ללא קפיצים",
+        "שכבת ויסקו",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-marriott.jpg",
+          "thumb": "/products/mizron-yahid-marriott.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-renaissance",
+      "name": "מזרן יחיד עם שכבת ויסקו · דגם רנסנס Renaissance",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "רנסנס",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 1499,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד עם שכבת ויסקו · דגם רנסנס Renaissance"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "שכבת ויסקו",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-renaissance.jpg",
+          "thumb": "/products/mizron-yahid-renaissance.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mizron-yahid-grand",
+      "name": "מזרן יחיד מפיץ ריח · ללא קפיצים עם שכבת ויסקו עבה · דגם גרנד Grand",
+      "line": "מזרני יחיד",
+      "line_id": "mizronim-yahid",
+      "family": "גרנד",
+      "size": 80,
+      "category": "mattress",
+      "placement": "on_bed_frame",
+      "replaces": "mattress",
+      "handles": false,
+      "price": 2499,
+      "delivery_install": 200,
+      "lead_time_days": 21,
+      "dims": null,
+      "size_note": "המחיר למידה 80×190",
+      "_todo_specs": "גובה, מילוי וקשיות",
+      "identity": {
+        "door_count": 0,
+        "door_type": "none",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "מזרן יחיד מפיץ ריח · ללא קפיצים עם שכבת ויסקו עבה · דגם גרנד Grand"
+      },
+      "features": [
+        "מידה 80×190 ס״מ · 90×190 בתוספת 200 ₪ · 100×190 בתוספת 300 ₪ · 100×200 בתוספת 400 ₪",
+        "מפיץ ריח",
+        "ללא קפיצים",
+        "שכבת ויסקו עבה",
+        "דגם יוקרה",
+        "משלוח וסבלות · אין הרכבה במזרנים"
+      ],
+      "finishes": [
+        "std"
+      ],
+      "renders": [
+        {
+          "finish": "std",
+          "profile": "—",
+          "image": "/products/mizron-yahid-grand.jpg",
+          "thumb": "/products/mizron-yahid-grand.jpg"
+        }
+      ]
     }
   ],
   "handles": {
@@ -2605,6 +2897,48 @@
         2
       ],
       "group": "sifriyot-yeladim"
+    },
+    "mizronim-yahid": {
+      "name": "מזרני יחיד",
+      "slug": "מזרני-יחיד",
+      "size_axis": "width_cm",
+      "size_label": "{n} ס״מ",
+      "default_placement": "on_bed_frame",
+      "visualizable": false,
+      "group": "mizronim",
+      "delivery_label": "משלוח וסבלות",
+      "delivery_note": "המזרן מגיע עד הבית. אין הרכבה במזרנים. התשלום משולם ישירות לשליח במעמד המסירה. תוספת 50 ₪ לקומה מהקומה השלישית ומעלה ללא מעלית. אין אספקה לאזור אילת והערבה.",
+      "size_options": [
+        {
+          "id": "80x190",
+          "label": "80×190",
+          "w": 80,
+          "l": 190,
+          "add": 0
+        },
+        {
+          "id": "90x190",
+          "label": "90×190",
+          "w": 90,
+          "l": 190,
+          "add": 200
+        },
+        {
+          "id": "100x190",
+          "label": "100×190",
+          "w": 100,
+          "l": 190,
+          "add": 300
+        },
+        {
+          "id": "100x200",
+          "label": "100×200",
+          "w": 100,
+          "l": 200,
+          "add": 400
+        }
+      ],
+      "_sizes_note": "בסיס 80×190. תוספות שנקבעו ידנית: 90×190 +200, 100×190 +300, 100×200 +400. לא לפי חישוב אוטומטי של 200 ₪ לכל 10 ס\"מ."
     }
   },
   "groups": [

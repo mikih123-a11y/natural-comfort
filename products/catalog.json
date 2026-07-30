@@ -701,8 +701,7 @@
       "line": "ארונות הזזה",
       "line_id": "hazaza",
       "size": 2.4,
-      "price": 4290,
-      "price_note": "placeholder",
+      "price": 2499,
       "dims": {
         "w": 240,
         "h": 240,
@@ -763,7 +762,7 @@
         "L3A",
         "L3B"
       ],
-      "delivery_install": 600
+      "delivery_install": 500
     },
     {
       "id": "simple3-shlish-mirror",
@@ -2322,13 +2321,14 @@
         "id": "h270",
         "name": "הגבהה ל-2.70 מ׳",
         "desc": "ניצול מלא של גובה החדר",
-        "price_note": "בתוספת מחיר",
-        "_todo_price": "כמה?",
+        "price_note": "תוספת 40% למחיר הדגם",
         "height": 270,
         "requires_construction": [
           "melamine",
           "mdf"
-        ]
+        ],
+        "price_pct": 0.4,
+        "applies_when_base_height_max": 240
       },
       {
         "id": "drawers",

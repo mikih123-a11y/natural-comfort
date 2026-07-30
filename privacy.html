@@ -1,32 +1,120 @@
-<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>פרטיות ומחיקת מידע · Natural Comfort</title>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-<style>body{background:#FBFAF8;color:#211F1D;font-family:Assistant,sans-serif;font-weight:300;line-height:1.75;max-width:640px;margin:0 auto;padding:56px 24px}
-h1{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:32px;margin-bottom:8px}
-h2{font-family:"Frank Ruhl Libre",serif;font-weight:500;font-size:19px;margin:32px 0 6px}
-a{color:#B8894E}.m{color:#8A837A;font-size:13px}</style></head><body>
-<h1>פרטיות ומחיקת מידע</h1>
-<p class="m">Natural Comfort · מקבוצת קניה טובה · עודכן ביולי 2026</p>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פרטיות ומחיקת מידע · Natural Comfort</title>
+<meta name="description" content="מדיניות הפרטיות של Natural Comfort: איזה מידע נאסף, למה הוא משמש, כמה זמן הוא נשמר ואיך מבקשים למחוק אותו.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF8; --panel:#EFEBE4;
+  --champagne:#A79A88; --ink:#1B1917; --ink-soft:#2C2926; --ink-mute:#514B44;
+  --oak:#B8894E; --line:#E2DCD2;
+  --display:"Frank Ruhl Libre",Georgia,serif;
+  --body:"Assistant",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
+.top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--display);font-size:19px;font-weight:700;text-decoration:none}
+.brand span{color:var(--champagne);font-weight:400}
+.top .tel{color:var(--ink-soft);font-size:14px;text-decoration:none}
+.top nav{display:flex;align-items:center;gap:18px}
+.top .back{font-size:14.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.top .back:hover{border-color:var(--oak)}
+.backbig{display:inline-block;margin:34px 0 0;font-size:16px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:13px 26px;background:#fff}
+.backbig:hover{border-color:var(--oak)}
+.head{padding:52px 0 10px}
+.head .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);margin-bottom:10px}
+.head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
+.head p{color:var(--ink-soft);margin-top:10px;font-size:17.5px;line-height:1.7}
+.doc{padding:14px 0 80px}
+.doc h2{font-family:var(--display);font-size:26px;font-weight:500;margin:34px 0 10px;padding-top:20px;border-top:1px solid var(--line)}
+.doc h2:first-of-type{border-top:0;padding-top:0;margin-top:22px}
+.doc h3{font-size:18.5px;font-weight:700;margin:24px 0 8px}
+.doc p{margin:0 0 14px;font-size:17.5px;line-height:1.8;color:var(--ink)}
+.doc ul{margin:0 0 16px;padding-inline-start:22px;font-size:17.5px;line-height:1.8;color:var(--ink)}
+.doc li{margin-bottom:10px}
+.doc b{color:var(--ink)}
+.box{background:#fff;border:1px solid var(--line);padding:18px 20px;margin:16px 0}
+.box.warn{background:#FDF6EE;border-inline-start:3px solid var(--oak)}
+.toc{background:#fff;border:1px solid var(--line);padding:18px 20px;margin:22px 0 6px}
+.toc b{display:block;margin-bottom:8px;font-size:14px}
+.toc a{display:inline-block;margin:0 0 6px;font-size:15.5px;color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--line)}
+.toc a:hover{color:var(--ink)}
+.toc span{color:var(--line);margin:0 8px}
+.upd{font-size:14.5px;line-height:1.75;color:var(--ink-soft);margin-top:30px}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
+footer .wrap{max-width:1080px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{text-decoration:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <nav><a class="back" href="/">חזרה לאתר</a><a class="tel" href="tel:0796622666">079-6622666</a></nav>
+</div></header>
+<main class="wrap">
+  <div class="head">
+    <div class="kick">Privacy</div>
+    <h1>פרטיות ומחיקת מידע</h1>
+    <p>איזה מידע נאסף באתר, למה הוא משמש, כמה זמן הוא נשמר ואיך מבקשים למחוק אותו.</p>
+  </div>
 
-<h2>מה נאסף</h2>
-<p>תמונת החדר שאתם מעלים, השם, הטלפון והאימייל שמסרתם, והארון שבחרתם. בנוסף נשמרים כתובת IP וסוג הדפדפן לצורכי אבטחה ומניעת שימוש לרעה.</p>
+  <div class="doc">
 
-<h2>למה</h2>
-<p>תמונת החדר משמשת אך ורק להפקת ההדמיה שביקשתם. פרטי הקשר משמשים ליצירת קשר בנוגע להדמיה ולמוצרי החברה — וזאת רק לאחר שסימנתם את תיבת ההסכמה. איננו מוכרים, משכירים או מעבירים את המידע לצדדים שלישיים לצורכי שיווק.</p>
+    <h2 id="collect">מה נאסף</h2>
+    <p>תמונת החדר שאתם מעלים, השם, הטלפון והאימייל שמסרתם, והארון שבחרתם.
+      בנוסף נשמרים כתובת IP וסוג הדפדפן לצורכי אבטחה ומניעת שימוש לרעה.</p>
 
-<h2>כמה זמן</h2>
-<p>תמונת החדר וההדמיה נמחקות אוטומטית תוך 30 יום. פרטי הקשר נשמרים כל עוד ההסכמה בתוקף.</p>
+    <h2 id="why">למה</h2>
+    <p>תמונת החדר משמשת אך ורק להפקת ההדמיה שביקשתם. פרטי הקשר משמשים ליצירת קשר
+      בנוגע להדמיה ולמוצרי החברה, וזאת רק לאחר שסימנתם את תיבת ההסכמה.
+      <b>איננו מוכרים, משכירים או מעבירים את המידע לצדדים שלישיים לצורכי שיווק.</b></p>
 
-<h2>מי מעבד</h2>
-<p>ההדמיה מופקת באמצעות ספקי בינה מלאכותית חיצוניים, שמעבדים את התמונה לצורך הבקשה בלבד. האתר מתארח ב-Netlify.</p>
+    <h2 id="retention">כמה זמן</h2>
+    <p>תמונת החדר וההדמיה נמחקות אוטומטית תוך 30 יום.
+      פרטי הקשר נשמרים כל עוד ההסכמה בתוקף.</p>
 
-<h2>הזכויות שלכם</h2>
-<p>אתם רשאים לעיין במידע, לתקן אותו, לבקש את מחיקתו ולחזור בכם מההסכמה בכל עת — בלי לנמק. פנייה אחת מספיקה, ונטפל בה תוך 14 יום.</p>
-<p><b>למחיקה או לכל שאלה:</b><br>
-וואטסאפ <a href="https://wa.me/972524400030">052-4400030</a> · טלפון 079-6622666</p>
+    <h2 id="processors">מי מעבד</h2>
+    <p>ההדמיה מופקת באמצעות ספקי בינה מלאכותית חיצוניים, שמעבדים את התמונה לצורך
+      הבקשה בלבד. האתר מתארח ב-Netlify.</p>
 
-<h2>חשוב לדעת</h2>
-<p>ההדמיה היא המחשה בלבד. הגוון, התאורה והפרופורציות עשויים להיראות שונה בפועל, והמידות המדויקות נקבעות במדידה באתר הלקוח.</p>
+    <h2 id="rights">הזכויות שלכם</h2>
+    <p>אתם רשאים לעיין במידע, לתקן אותו, לבקש את מחיקתו ולחזור בכם מההסכמה בכל עת,
+      בלי לנמק. פנייה אחת מספיקה, ונטפל בה תוך 14 יום.</p>
+    <div class="box warn">
+      <p style="margin:0"><b>למחיקה או לכל שאלה:</b><br>
+      וואטסאפ <a href="https://wa.me/972524400030">052-4400030</a> ·
+      טלפון <a href="tel:0796622666">079-6622666</a> ·
+      דואר אלקטרוני <a href="mailto:mikiH123@gmail.com">mikiH123@gmail.com</a></p>
+    </div>
 
-<p class="m" style="margin-top:40px"><a href="/">חזרה למדמה</a></p>
-</body></html>
+    <h2 id="viz">על ההדמיה</h2>
+    <p>ההדמיה היא המחשה בלבד. הגוון, התאורה והפרופורציות עשויים להיראות שונה בפועל,
+      והמידות המדויקות נקבעות במדידה באתר הלקוח.</p>
+
+    <h2 id="cookies">עוגיות</h2>
+    <p>האתר משתמש בעוגיות הכרחיות לתפעול, ובעוגיות מדידה שנטענות רק לאחר אישור
+      בהודעת העוגיות. אפשר להמשיך בלי עוגיות המדידה והאתר יעבוד רגיל.</p>
+
+    <p class="upd">מסמך זה מנוסח בלשון רבים מטעמי נוחות בלבד ומופנה לכל המגדרים.
+      החברה רשאית לעדכן אותו מעת לעת, והנוסח המחייב הוא זה המפורסם בעמוד זה.
+      עודכן ביולי 2026.</p>
+
+    <a class="backbig" href="/">חזרה לאתר</a>
+  </div>
+</main>
+<footer><div class="wrap">
+  <div>© Natural Comfort · מקבוצת קניה טובה</div>
+  <div><a href="/about.html">אודות</a> · <a href="/terms.html">תקנון</a> · <a href="/privacy.html">פרטיות</a> · <a href="/accessibility.html">נגישות</a></div>
+</div></footer>
+<script src="/site.js"></script>
+</body>
+</html>

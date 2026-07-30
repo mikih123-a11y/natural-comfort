@@ -365,6 +365,9 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     || { id: id || '-', name: id || 'גימור', swatch: '#cccccc', code: '' };
   const idn = m.identity || {};
   const rends = m.renders || [];
+  const myLine  = (d.lines || {})[m.line_id] || {};
+  const shipLbl = myLine.delivery_label || 'משלוח והרכבה';
+  const shipTxt = myLine.delivery_note  || null;
   // ניווט לפי עולמות. עולם בלי מוצרים לא מוצג — אין יותר טאבים שמובילים לדף ריק.
   const groupOf = x => ((d.lines || {})[x.line_id] || {}).group;
   const myGroup = groupOf(m);
@@ -676,10 +679,6 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   /* ---------- בורר מידה, לקווים שמגדירים מידות (מזרנים) ---------- */
   /* רק קו שמגדיר מידות כאובייקטים עם תוספת מחיר. בקווים אחרים sizes הוא
      מערך מספרים (מספר דלתות או רוחב) ומטופל בבורר אחר. */
-  const myLine  = (d.lines || {})[m.line_id] || {};
-  const shipLbl = myLine.delivery_label || 'משלוח והרכבה';
-  const shipTxt = myLine.delivery_note  || null;
-
   const lineSizes = ((((d.lines || {})[m.line_id] || {}).size_options) || [])
     .filter(z => z && typeof z === 'object' && typeof z.add === 'number');
   if (lineSizes.length > 1) {

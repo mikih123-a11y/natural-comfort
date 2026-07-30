@@ -19,6 +19,8 @@ const PLACEMENT = {
   floor_center: 'standing on the floor in the open part of the room, not pushed against any wall.',
   on_bed_frame: 'resting on top of the existing bed frame, replacing whatever is currently on it.',
   in_niche:     'built into the alcove or recess, fitted wall to wall within it.',
+  // מיטה: הראש לקיר, הגוף נמשך אל תוך החדר על הרצפה
+  headboard_to_wall: 'standing on the floor with the headboard flat against the wall, the bed extending forward into the room across the floor, both long sides visible.',
 };
 
 function buildPrompt(p) {

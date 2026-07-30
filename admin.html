@@ -1466,7 +1466,7 @@ $('#dlViz').onclick=()=>{
             const prof = (typeof o.total_num==='number' && typeof o.cost_num==='number')
               ? o.total_num - o.cost_num : null;
             return `<tr style="cursor:pointer" data-open="${esc(o.number)}">
-            <td class="num">${esc(o.number)}</td>
+            <td class="num">${esc(o.number)}${o.cust_unread ? ' <span class="badge good" title="הודעה מהלקוח">הודעה</span>' : ''}</td>
             <td>${dt(o.date)}</td>
             <td><b>${esc(o.name)}</b></td>
             <td dir="ltr">${esc(tel(o.phone))}</td>
@@ -1682,6 +1682,10 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
           <div class="f wide"><label>הערה פנימית (לא נראית ללקוח)</label><input id="e-note" value="${esc(o.admin_notes||'')}"></div>
         </div>
 
+        ${d.hadUnread ? `<div class="oi" style="background:#F4F7F5;border-inline-start:3px solid #3F6B4F;margin-bottom:12px">
+          <b>${d.hadUnread === 1 ? 'הודעה חדשה מהלקוח' : d.hadUnread + ' הודעות חדשות מהלקוח'}</b> — למטה, ביומן ההערות.
+        </div>` : ''}
+
         <h3 style="font-size:16px;margin:0 0 8px">חשבונית ספק</h3>
         ${(d.dupInvoice||[]).length ? `<div class="oi" style="background:#fbeaea;border-inline-start:3px solid #c0392b;margin-bottom:10px">
           <b>אותה חשבונית מופיעה על עוד ${d.dupInvoice.length} הזמנות — ייתכן חיוב כפול.</b>
@@ -1733,8 +1737,10 @@ ${o.notes ? `<div class="terms"><b>הערות הלקוח:</b> ${esc(o.notes)}</d
           <input id="e-newnote" placeholder="הערה חדשה…" style="flex:1;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:4px">
           <button class="addline" id="odAddNote">הוספה</button>
         </div>
-        <div id="odNotes">${(o.notes_log||[]).map(n=>`<div class="oi" style="padding:10px">
-          <div style="font-size:12px;color:var(--ink-mute)">${dtl(n.at)}</div>${esc(n.text)}</div>`).join('')
+        <div id="odNotes">${(o.notes_log||[]).map(n=>{
+          const mine = n.by === 'customer';
+          return `<div class="oi" style="padding:10px${mine?';background:#F4F7F5;border-inline-start:3px solid #3F6B4F':''}">
+          <div style="font-size:12px;color:var(--ink-mute)">${dtl(n.at)}${mine?' · <b style="color:#3F6B4F">הודעה מהלקוח</b>':''}</div>${esc(n.text)}</div>`;}).join('')
           || '<div style="color:var(--ink-mute);font-size:13.5px">אין הערות.</div>'}</div>
 
         <h3 style="font-size:16px;margin:22px 0 8px">יומן</h3>

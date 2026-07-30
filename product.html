@@ -443,10 +443,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום — דברו איתנו.']);
     }
 
-    N.push(['משלוח והרכבה',
+    N.push([shipLbl,
       (m.delivery_install ? `₪${m.delivery_install}. ` : '')
-      + (window.ncCart && ncCart.shipNote ? ncCart.shipNote().join(' ') :
-         'מחיר המשלוח כולל הרכבה מקצועית בבית הלקוח. התשלום משולם ישירות למרכיב.')]);
+      + (shipTxt || (window.ncCart && ncCart.shipNote ? ncCart.shipNote().join(' ') :
+         'מחיר המשלוח כולל הרכבה מקצועית בבית הלקוח. התשלום משולם ישירות למרכיב.'))]);
 
     $('#ntslist').innerHTML = N.map(([h, t]) => `<li><span><b>${h}:</b> ${t}</span></li>`).join('');
     $('#nts').style.display = '';
@@ -500,7 +500,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   else $('#made').textContent = 'נבנה להזמנה';
   if (m.delivery_install) {
     $('#ship').style.display='';
-    $('#ship').innerHTML = `משלוח והרכבה ₪${m.delivery_install} <span>· משולם בבית למרכיב</span>`;
+    $('#ship').innerHTML = `${shipLbl} ₪${m.delivery_install} <span>· ${myLine.delivery_label ? 'משולם לשליח במסירה' : 'משולם בבית למרכיב'}</span>`;
   }
   $('#feats').innerHTML = (m.features || []).map(f => `<li>${f}</li>`).join('');
   const slide = idn.door_type === 'sliding';
@@ -676,14 +676,18 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   /* ---------- בורר מידה, לקווים שמגדירים מידות (מזרנים) ---------- */
   /* רק קו שמגדיר מידות כאובייקטים עם תוספת מחיר. בקווים אחרים sizes הוא
      מערך מספרים (מספר דלתות או רוחב) ומטופל בבורר אחר. */
+  const myLine  = (d.lines || {})[m.line_id] || {};
+  const shipLbl = myLine.delivery_label || 'משלוח והרכבה';
+  const shipTxt = myLine.delivery_note  || null;
+
   const lineSizes = ((((d.lines || {})[m.line_id] || {}).size_options) || [])
     .filter(z => z && typeof z === 'object' && typeof z.add === 'number');
   if (lineSizes.length > 1) {
     $('#size-wrap').style.display = '';
     $('#sizes').innerHTML = lineSizes.map((z, i) =>
-      `<button class="chip" data-z="${i}" aria-pressed="${!i}">${z.label}${
+      `<button class="chip" data-z="${i}" aria-pressed="${!i}"><bdi dir="ltr">${z.label}</bdi>${
         z.add ? `<small>+₪${z.add}</small>` : ''}</button>`).join('');
-    $('#szname').textContent = lineSizes[0].label;
+    $('#szname').innerHTML = `<bdi dir="ltr">${lineSizes[0].label}</bdi>`;
     sizeAdd = lineSizes[0].add || 0;
   }
 
@@ -774,7 +778,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       document.querySelectorAll('.chip[data-z]').forEach(b =>
         b.setAttribute('aria-pressed', String(b === cz)));
       sizeAdd = z.add || 0;
-      $('#szname').textContent = z.label;
+      $('#szname').innerHTML = `<bdi dir="ltr">${z.label}</bdi>`;
       renderPrice();
       return;
     }

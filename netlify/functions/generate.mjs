@@ -84,15 +84,41 @@ function nearestAspect(a) {
   return Object.entries(opts).sort((x, y) => Math.abs(x[1]-a) - Math.abs(y[1]-a))[0][0];
 }
 
-async function falRun(body) {
-  const r = await fetch(`https://fal.run/${MODEL}`, {
+/**
+ * שליחה לתור של fal במקום המתנה סינכרונית.
+ * פונקציה רגילה בנטליפיי נחתכת ב-30 שניות וההדמיה לוקחת יותר,
+ * ולכן אנחנו מוסרים את העבודה, חוזרים מיד, ושואלים אחר כך אם היא מוכנה.
+ * שומרים את הכתובות כפי שהתקבלו ולא בונים אותן, כי לדגם עם נתיב
+ * מלא כמו nano-banana-pro/edit הכתובות אינן נגזרות ישירות מהשם.
+ */
+async function falSubmit(body) {
+  const r = await fetch(`https://queue.fal.run/${MODEL}`, {
     method: 'POST',
     headers: { Authorization: `Key ${FAL}`, 'content-type': 'application/json' },
     body: JSON.stringify(body),
   });
+  if (!r.ok) throw new Error(`fal submit ${r.status}: ${(await r.text()).slice(0, 200)}`);
+  const q = await r.json();
+  if (!q.status_url || !q.response_url) throw new Error('fal לא החזיר כתובות תור');
+  return q;
+}
+
+async function falGet(url) {
+  const r = await fetch(url, { headers: { Authorization: `Key ${FAL}` } });
   if (!r.ok) throw new Error(`fal ${r.status}: ${(await r.text()).slice(0, 200)}`);
   return r.json();
 }
+
+/* גוף הבקשה זהה בכל ניסיון חוץ מה-seed, שמשתנה כדי לא לחזור על אותה שגיאה */
+const falBody = (prompt, room, prodImg, ar) => ({
+  prompt,
+  image_urls: [room, prodImg],   // 1 = החדר, 2 = המוצר
+  num_images: 1,
+  output_format: 'jpeg',
+  resolution: '2K',
+  aspect_ratio: ar,
+  seed: Math.floor(Math.random() * 1e9),
+});
 
 /**
  * שכבת האימות. עולה גרושים, וזה מה שמונע ארון עם 3 דלתות במקום 2.
@@ -136,9 +162,89 @@ Reject if door count differs, finish is wrong, the closet floats/clips, or the r
   catch { return { verdict: 'skip' }; }
 }
 
+/* ---------- שלבים שמוצגים ללקוח. אמיתיים, לא הצגה ---------- */
+const STAGE = {
+  queued:   'ממתין בתור',
+  working:  'מרכיב את הרהיט בחדר שלכם',
+  verify:   'בודק שהתוצאה נאמנה לדגם',
+  retry:    'התוצאה לא הייתה מדויקת. מנסה שוב',
+};
+
+/* ---------- שליחת עבודה חדשה לתור ---------- */
+async function submitJob({ room, p, ar, prompt, session, jobs, jobId, attempt }) {
+  const q = await falSubmit(falBody(prompt, room, p._absImage, ar));
+  await jobs.setJSON(jobId, {
+    statusUrl: q.status_url, responseUrl: q.response_url,
+    productId: p.id, session, room, ar, prompt,
+    attempt, state: 'queued', url: null, verified: false, report: null,
+    createdAt: Date.now(),
+    // מחיקה אוטומטית — תמונת חדר של אדם היא מידע אישי
+    expiresAt: Date.now() + 30 * 864e5,
+  });
+  return jobId;
+}
+
 export default async (req, ctx) => {
-  if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
   if (!FAL) return json({ error: 'FAL_KEY חסר. הגדירו אותו ב-Netlify → Environment variables.' }, 500);
+  const jobs = store('jobs');
+
+  /* ============ בדיקת מצב ============ */
+  if (req.method === 'GET') {
+    const u = new URL(req.url);
+    const jobId = u.searchParams.get('jobId') || '';
+    const session = u.searchParams.get('session') || '';
+    if (!jobId || !session) return json({ error: 'חסרים נתונים.' }, 400);
+
+    const j = await jobs.get(jobId, { type: 'json' }).catch(() => null);
+    if (!j || j.session !== session) return json({ error: 'עבודה לא נמצאה.' }, 404);
+    if (j.state === 'done')   return json({ jobId, status: 'ready', ready: true });
+    if (j.state === 'failed') return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
+
+    let st;
+    try { st = await falGet(j.statusUrl); }
+    catch (e) { return json({ status: 'working', stage: STAGE.working }); }
+
+    const s = st.status;
+    if (s === 'IN_QUEUE')    return json({ status: 'working', stage: STAGE.queued });
+    if (s === 'IN_PROGRESS') return json({ status: 'working', stage: STAGE.working });
+    if (s !== 'COMPLETED')   return json({ status: 'working', stage: STAGE.working });
+
+    /* הסתיים אצל fal — מושכים את התוצאה ובודקים אותה */
+    let url = null;
+    try {
+      const out = await falGet(j.responseUrl);
+      url = out.images?.[0]?.url || out.image?.url || null;
+    } catch (e) { console.error('[generate] response', e.message); }
+
+    if (!url) {
+      j.state = 'failed';
+      await jobs.setJSON(jobId, j);
+      return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
+    }
+
+    const report = await verify(url, catalog.products.find(x => x.id === j.productId) || {});
+
+    /* נפסל ונשארו ניסיונות — שולחים עוד אחד ומדווחים שממשיכים */
+    if (report && report.verdict === 'reject' && j.attempt < MAX_TRIES) {
+      console.warn(`[verify] ניסיון ${j.attempt} נפסל: ${report.reason}`);
+      const p = catalog.products.find(x => x.id === j.productId);
+      const site = process.env.URL || new URL(req.url).origin;
+      p._absImage = site + p.image;
+      try {
+        await submitJob({ room: j.room, p, ar: j.ar, prompt: j.prompt,
+                          session, jobs, jobId, attempt: j.attempt + 1 });
+        return json({ status: 'working', stage: STAGE.retry });
+      } catch (e) { console.error('[generate] retry', e.message); }
+    }
+
+    j.state = 'done'; j.url = url; j.report = report;
+    await jobs.setJSON(jobId, j);
+    // ה-URL לא חוזר עד שיש ליד. השער הוא שרת-צד, לא CSS.
+    return json({ jobId, status: 'ready', ready: true });
+  }
+
+  /* ============ פתיחת עבודה ============ */
+  if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
 
   const { room, productId, session, aspect } = await req.json().catch(() => ({}));
   if (!room || !productId || !session) return json({ error: 'חסרים נתונים.' }, 400);
@@ -152,49 +258,18 @@ export default async (req, ctx) => {
   const site = process.env.URL || new URL(req.url).origin;
   p._absImage = site + p.image;
 
-  const jobs = store('jobs');
   const jobId = crypto.randomUUID();
-  const prompt = buildPrompt(p);
   // יחס התמונה נעול ליחס של תמונת החדר. auto נותן למודל רשות למסגר מחדש.
   const ar = nearestAspect(aspect);
 
-  let last = null, report = null;
-  for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
-    try {
-      const out = await falRun({
-        prompt,
-        image_urls: [room, p._absImage],   // 1 = החדר, 2 = המוצר
-        num_images: 1,
-        output_format: 'jpeg',
-        resolution: '2K',
-        aspect_ratio: ar,
-        // seed משתנה בכל ניסיון כדי לא לקבל את אותה שגיאה שוב
-        seed: Math.floor(Math.random() * 1e9),
-      });
-      const url = out.images?.[0]?.url || out.image?.url;
-      if (!url) throw new Error('fal לא החזיר תמונה');
-      last = url;
-
-      report = await verify(url, p);
-      if (report.verdict !== 'reject') break;
-      console.warn(`[verify] ניסיון ${attempt} נפסל: ${report.reason}`);
-    } catch (e) {
-      console.error('[generate]', e.message);
-      if (attempt === MAX_TRIES) return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
-    }
+  try {
+    await submitJob({ room, p, ar, prompt: buildPrompt(p), session, jobs, jobId, attempt: 1 });
+  } catch (e) {
+    console.error('[generate] submit', e.message);
+    return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
   }
-  if (!last) return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
 
-  await jobs.setJSON(jobId, {
-    url: last, productId, session,
-    verified: false, report,
-    createdAt: Date.now(),
-    // מחיקה אוטומטית — תמונת חדר של אדם היא מידע אישי
-    expiresAt: Date.now() + 30 * 864e5,
-  });
-
-  // ה-URL לא חוזר עד שיש ליד. השער הוא שרת-צד, לא CSS.
-  return json({ jobId, ready: true });
+  return json({ jobId, status: 'queued', stage: STAGE.queued });
 };
 
 export const config = { path: '/api/generate' };

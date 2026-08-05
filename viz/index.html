@@ -522,6 +522,7 @@ $('#go').onclick = async () => {
       body:JSON.stringify({room:S.room, productId:S.product, session:S.session, aspect:S.aspect})});
     const d0 = await r.json();
     if(!r.ok) throw new Error(d0.error || 'הייצור נכשל');
+    if(typeof d0.seed === 'number') S.seed = d0.seed;   /* אותה נקודת מבט להשוואת גימורים */
     if(d0.stage) $('#dl-sub').textContent = d0.stage + '…';
 
     const d = await pollJob(d0.jobId);
@@ -569,7 +570,7 @@ function buildCompare(url){
    רץ רק אחרי שהסשן אומת, כך ש-reveal פותח כל הדמיה נוספת. */
 async function runJob(productId, onStage){
   const r = await fetch('/api/generate',{method:'POST',headers:{'content-type':'application/json'},
-    body:JSON.stringify({room:S.room, productId, session:S.session, aspect:S.aspect})});
+    body:JSON.stringify({room:S.room, productId, session:S.session, aspect:S.aspect, seed:S.seed})});
   const d0 = await r.json();
   if(!r.ok) throw new Error(d0.error || 'הייצור נכשל');
   if(d0.stage && onStage) onStage(d0.stage);

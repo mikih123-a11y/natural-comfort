@@ -145,6 +145,19 @@ input{font-family:inherit;font-size:16px}
 .since b{font-family:var(--display);font-size:19px;font-weight:700;color:var(--champagne)}
 .since span{font-size:13.5px;color:var(--ink-mute);font-weight:300}
 
+/* ── השוואת גימורים ── */
+.fins{margin:28px 0 0;display:none}
+.fins.on{display:block}
+.fingrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fin{position:relative;border:1px solid var(--line);background:var(--panel);overflow:hidden;padding:0;display:block;width:100%}
+.fin img{width:100%;height:100%;object-fit:cover}
+.fin[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.fin .cap{position:absolute;bottom:0;inset-inline:0;background:rgba(33,31,29,.78);color:#EFEBE4;
+          font-size:12px;font-weight:600;padding:6px 8px;backdrop-filter:blur(4px);text-align:center}
+.fin .wait{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+           gap:10px;font-size:12px;color:var(--ink-mute);font-weight:300;text-align:center;padding:10px}
+.fin .wait.bad{color:#8C3323}
+
 /* ── footer ── */
 footer{border-top:1px solid var(--line);margin-top:80px;padding:36px 0 24px;font-size:13px;color:var(--ink-mute);font-weight:300}
 .fcols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
@@ -254,8 +267,15 @@ footer a:hover{color:var(--ink);text-decoration:underline}
         <a class="btn2 solid" id="wa" href="#">רוצה הצעת מחיר לארון הזה</a>
         <button class="btn2" id="ncShareBtn" type="button" hidden>שליחה בוואטסאפ</button>
         <button class="btn2" id="ncCopyBtn" type="button" hidden>העתקה למייל</button>
+        <button class="btn2" id="finsBtn" type="button" hidden>השוואת גימורים</button>
         <button class="btn2" id="dl">שמירת התמונה</button>
         <button class="btn2" id="again">הדמיה נוספת</button>
+      </div>
+
+      <div class="fins" id="fins">
+        <div class="cmp-h">אותו חדר · גימורים שונים</div>
+        <div class="fingrid" id="finGrid"></div>
+        <p class="disc">לחיצה על גימור מציגה אותו למעלה ומעדכנת את ההשוואה.</p>
       </div>
 
       <div class="cmp" id="cmp">
@@ -467,9 +487,10 @@ const ready = () => $('#go').disabled = !(S.room && S.product);
    כך אין תלות בתקרת הזמן של הפונקציה, ואפשר להציג שלבים אמיתיים. */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-async function pollJob(jobId){
+async function pollJob(jobId, onStage){
   const started = Date.now();
   let lastStage = '';
+  onStage = onStage || (s => { $('#dl-sub').textContent = s + '…'; });
   while (Date.now() - started < 5 * 60 * 1000) {
     await sleep(1500);
     let d;
@@ -485,7 +506,7 @@ async function pollJob(jobId){
     if(d.ready) return d;
     if(d.stage && d.stage !== lastStage){
       lastStage = d.stage;
-      $('#dl-sub').textContent = d.stage + '…';
+      onStage(d.stage);
     }
   }
   throw new Error('ההדמיה לוקחת יותר מהצפוי');
@@ -520,6 +541,104 @@ $('#go').onclick = async () => {
     $('#go').disabled = false;
   }
 };
+
+/* ---------- הדמיה פעילה: שיתוף, וואטסאפ, שמירה ---------- */
+function applyResult(url, p){
+  S.resultUrl = url;
+  ncShare.setImage(url, p ? p.name : '');
+  $('#wa').href = 'https://wa.me/972524400030?text=' +
+    encodeURIComponent(`היי, עשיתי הדמיה של ${p ? p.name : 'ארון'} בחדר שלי ואשמח להצעת מחיר.`);
+  $('#dl').onclick = () => {
+    const a = document.createElement('a');
+    a.href = url; a.download = 'natural-comfort-הדמיה.jpg'; a.click();
+  };
+}
+
+/* סליידר לפני/אחרי — התמונה שהעלו מול ההדמיה */
+function buildCompare(url){
+  try{
+    $('#cmpBox').innerHTML = '';
+    ncCompare.create($('#cmpBox'), S.room, url,
+      { labelBefore:'החדר שלכם', labelAfter:'עם הארון' });
+    $('#cmp').classList.add('on');
+  }catch(e){ console.warn('compare', e); }
+}
+
+/* ---------- השוואת גימורים ---------- */
+/* אותו חדר, אותו מסגור, אותו דגם — רק הגימור מתחלף.
+   רץ רק אחרי שהסשן אומת, כך ש-reveal פותח כל הדמיה נוספת. */
+async function runJob(productId, onStage){
+  const r = await fetch('/api/generate',{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({room:S.room, productId, session:S.session, aspect:S.aspect})});
+  const d0 = await r.json();
+  if(!r.ok) throw new Error(d0.error || 'הייצור נכשל');
+  if(d0.stage && onStage) onStage(d0.stage);
+  await pollJob(d0.jobId, onStage || (()=>{}));
+  const rv = await fetch(`/api/reveal?jobId=${d0.jobId}&session=${S.session}`);
+  const rd = await rv.json();
+  if(!rv.ok) throw new Error(rd.error || 'הפתיחה נכשלה');
+  return rd.url;
+}
+
+function setupFinishes(prod){
+  if(!prod || !prod.model) return;
+  const sibs = S.catalog.filter(x => x.model === prod.model);
+  if(sibs.length < 2) return;
+  // הנוכחי ראשון, ואחריו עד שלושה נוספים — ארבעה משבצות
+  const list = [prod, ...sibs.filter(x => x.id !== prod.id)].slice(0,4);
+  const b = $('#finsBtn');
+  b.hidden = false;
+  b.textContent = `השוואת ${list.length} גימורים`;
+  b.onclick = () => { b.hidden = true; startFinishes(list); };
+}
+
+function startFinishes(list){
+  $('#fins').classList.add('on');
+  track('finishes_start', S.product);
+  const grid = $('#finGrid');
+  grid.innerHTML = list.map((p,i)=>`
+    <button class="fin" type="button" data-id="${p.id}" data-i="${i}"
+            aria-pressed="${i===0}" style="aspect-ratio:${S.aspect||4/3}">
+      ${i===0 ? `<img src="${S.resultUrl}" alt="${p.finish}">` :
+                `<div class="wait"><div class="spin"></div><span>מכינים…</span></div>`}
+      <span class="cap">${p.finish || p.name}</span>
+    </button>`).join('');
+
+  const urls = { 0: S.resultUrl };
+
+  grid.onclick = e => {
+    const t = e.target.closest('.fin'); if(!t) return;
+    const i = +t.dataset.i, url = urls[i]; if(!url) return;
+    grid.querySelectorAll('.fin').forEach(x=>x.setAttribute('aria-pressed','false'));
+    t.setAttribute('aria-pressed','true');
+    const p = list[i];
+    S.product = p.id;
+    $('#result').src = url;
+    applyResult(url, p);
+    buildCompare(url);
+    track('finish_select', p.id);
+    $('#doorbox').scrollIntoView({block:'center',behavior:'smooth'});
+  };
+
+  list.slice(1).forEach((p,k)=>{
+    const i = k+1;
+    const cell = grid.querySelector(`.fin[data-i="${i}"]`);
+    const setWait = txt => {
+      const w = cell.querySelector('.wait span'); if(w) w.textContent = txt;
+    };
+    runJob(p.id, s => setWait(s + '…'))
+      .then(url => {
+        urls[i] = url;
+        cell.innerHTML = `<img src="${url}" alt="${p.finish}">` +
+                         `<span class="cap">${p.finish || p.name}</span>`;
+        if(Object.keys(urls).length === list.length) track('finishes_done', S.product);
+      })
+      .catch(err => {
+        cell.innerHTML = `<div class="wait bad"><span>${err.message}</span></div>` +
+                         `<span class="cap">${p.finish || p.name}</span>`;
+      });
+  });
+}
 
 /* ---------- gate ---------- */
 const err = m => { $('#err').textContent = m; $('#err').classList.add('on'); };
@@ -576,23 +695,18 @@ $('#verify-otp').onclick = async () => {
     const rd = await rv.json();
     if(!rv.ok) throw new Error(rd.error||'הפתיחה נכשלה');
 
+    S.resultUrl = rd.url;
     $('#result').src = rd.url; $('#result').hidden = false; $('#badge').hidden = false;
     $('#result').onload = () => {
       $('#doorbox').classList.add('open');
       track('reveal', S.product);
       $('#gate').classList.remove('on');
       setTimeout(()=>{ $('#after').classList.add('on'); $('#doorbox').scrollIntoView({block:'center',behavior:'smooth'}); }, 900);
-      // סליידר לפני/אחרי — התמונה שהעלו מול ההדמיה
-      try{
-        ncCompare.create($('#cmpBox'), S.room, rd.url,
-          { labelBefore:'החדר שלכם', labelAfter:'עם הארון' });
-        $('#cmp').classList.add('on');
-      }catch(e){ console.warn('compare', e); }
+      buildCompare(rd.url);
     };
     const p = S.catalog.find(x=>x.id===S.product);
-    ncShare.setImage(rd.url, p ? p.name : '');
-    $('#wa').href = `https://wa.me/972524400030?text=${encodeURIComponent(`היי, עשיתי הדמיה של ${p.name} בסלון שלי ואשמח להצעת מחיר.`)}`;
-    $('#dl').onclick = () => { const a=document.createElement('a'); a.href=rd.url; a.download='natural-comfort-הדמיה.jpg'; a.click(); };
+    applyResult(rd.url, p);
+    setupFinishes(p);
     $('#again').onclick = () => location.reload();
   }catch(e){ err(e.message); }
   b.disabled=false; b.textContent='פתחו את ההדמיה';

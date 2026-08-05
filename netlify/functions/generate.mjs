@@ -109,15 +109,17 @@ async function falGet(url) {
   return r.json();
 }
 
-/* גוף הבקשה זהה בכל ניסיון חוץ מה-seed, שמשתנה כדי לא לחזור על אותה שגיאה */
-const falBody = (prompt, room, prodImg, ar) => ({
+/* גוף הבקשה זהה בכל ניסיון חוץ מה-seed, שמשתנה כדי לא לחזור על אותה שגיאה.
+   בהשוואת גימורים דווקא כן שולחים seed קבוע, כדי שכל הגימורים
+   ייצאו מאותה נקודת מבט ואפשר יהיה להשוות ביניהם. */
+const falBody = (prompt, room, prodImg, ar, seed) => ({
   prompt,
   image_urls: [room, prodImg],   // 1 = החדר, 2 = המוצר
   num_images: 1,
   output_format: 'jpeg',
   resolution: '2K',
   aspect_ratio: ar,
-  seed: Math.floor(Math.random() * 1e9),
+  seed,
 });
 
 /**
@@ -171,11 +173,11 @@ const STAGE = {
 };
 
 /* ---------- שליחת עבודה חדשה לתור ---------- */
-async function submitJob({ room, p, ar, prompt, session, jobs, jobId, attempt }) {
-  const q = await falSubmit(falBody(prompt, room, p._absImage, ar));
+async function submitJob({ room, p, ar, prompt, session, jobs, jobId, attempt, seed }) {
+  const q = await falSubmit(falBody(prompt, room, p._absImage, ar, seed));
   await jobs.setJSON(jobId, {
     statusUrl: q.status_url, responseUrl: q.response_url,
-    productId: p.id, session, room, ar, prompt,
+    productId: p.id, session, room, ar, prompt, seed,
     attempt, state: 'queued', url: null, verified: false, report: null,
     createdAt: Date.now(),
     // מחיקה אוטומטית — תמונת חדר של אדם היא מידע אישי
@@ -232,7 +234,8 @@ export default async (req, ctx) => {
       p._absImage = site + p.image;
       try {
         await submitJob({ room: j.room, p, ar: j.ar, prompt: j.prompt,
-                          session, jobs, jobId, attempt: j.attempt + 1 });
+                          session, jobs, jobId, attempt: j.attempt + 1,
+                          seed: Math.floor(Math.random() * 1e9) });
         return json({ status: 'working', stage: STAGE.retry });
       } catch (e) { console.error('[generate] retry', e.message); }
     }
@@ -246,7 +249,7 @@ export default async (req, ctx) => {
   /* ============ פתיחת עבודה ============ */
   if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
 
-  const { room, productId, session, aspect } = await req.json().catch(() => ({}));
+  const { room, productId, session, aspect, seed } = await req.json().catch(() => ({}));
   if (!room || !productId || !session) return json({ error: 'חסרים נתונים.' }, 400);
 
   const blocked = await guard(req, session);
@@ -261,15 +264,18 @@ export default async (req, ctx) => {
   const jobId = crypto.randomUUID();
   // יחס התמונה נעול ליחס של תמונת החדר. auto נותן למודל רשות למסגר מחדש.
   const ar = nearestAspect(aspect);
+  // seed מהלקוח = השוואת גימורים באותה נקודת מבט. אחרת אקראי.
+  const useSeed = Number.isInteger(seed) ? seed : Math.floor(Math.random() * 1e9);
 
   try {
-    await submitJob({ room, p, ar, prompt: buildPrompt(p), session, jobs, jobId, attempt: 1 });
+    await submitJob({ room, p, ar, prompt: buildPrompt(p), session, jobs, jobId,
+                      attempt: 1, seed: useSeed });
   } catch (e) {
     console.error('[generate] submit', e.message);
     return json({ error: 'הייצור נכשל. נסו שוב.' }, 502);
   }
 
-  return json({ jobId, status: 'queued', stage: STAGE.queued });
+  return json({ jobId, status: 'queued', stage: STAGE.queued, seed: useSeed });
 };
 
 export const config = { path: '/api/generate' };

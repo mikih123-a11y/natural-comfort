@@ -128,8 +128,11 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   if (!groupId && !lineId) groupId = 'kodesh';
   if (!groupId && lineId)  groupId = (d.lines[lineId] || {}).group;
   const group = (d.groups || []).find(g => g.id === groupId);
-  // תתי-קטגוריות שיש בהן משהו
-  const subs  = group ? group.lines.filter(l => d.models.some(m => m.line_id === l)) : [];
+  // תתי-הקטגוריות נגזרות מהדגמים עצמם, לא מרשימה בקבוצה.
+  // ככה הוספת דגם חדש לא דורשת עדכון נוסף בקטלוג.
+  const lineGroup = id => (d.lines[id] || {}).group;
+  const order = (group && group.lines) || Object.keys(d.lines || {});
+  const subs = order.filter(l => lineGroup(l) === groupId && d.models.some(m => m.line_id === l));
   if (!lineId && subs.length === 1) lineId = subs[0];
   const line = d.lines[lineId] || d.lines[subs[0]] || {};
   const fin = id => (d.finishes || []).find(f => f.id === id);

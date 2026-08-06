@@ -386,7 +386,7 @@
         "_desc": "ויטרינה עליונה 3 דלתות זכוכית · בסיס 2 דלתות + 3 מגירות מרכזיות"
       },
       "id": "kodesh-3dl-b",
-      "name": "ספריית קודש 3 דלתות + מגירות · דגם B",
+      "name": "ספריית קודש 3 דלתות + מגירות · דגם אליהו",
       "price": 3799,
       "price_note": "placeholder — למלא",
       "finishes": [
@@ -545,6 +545,84 @@
         }
       ],
       "delivery_install": 600
+    },
+    {
+      "id": "kodesh-4dl-eliyahu",
+      "name": "ספריית קודש 4 דלתות · דגם אליהו",
+      "line": "ספריות קודש",
+      "line_id": "kodesh",
+      "family": "ספריות קודש",
+      "size": 4,
+      "category": "bookshelf",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": true,
+      "price": 3499,
+      "dims": {
+        "w": 160,
+        "h": 245,
+        "d": 30
+      },
+      "lead_time_days": 21,
+      "identity": {
+        "door_count": 4,
+        "door_type": "hinged",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "glass_doors": true,
+        "_desc": "ויטרינה עליונה 4 דלתות זכוכית · בסיס 2 דלתות + 3 מגירות מרכזיות · בסיס במה"
+      },
+      "features": [
+        "ויטרינה עליונה · 4 דלתות זכוכית",
+        "בסיס · 2 דלתות + 3 מגירות",
+        "בסיס במה להעמקה ויציבות",
+        "גוף סנדוויץ׳ בציפוי פורמייקה",
+        "מדפי MDF בעובי 28 מ״מ",
+        "ידיות מעוצבות · ניתן לבחור דגם",
+        "קרניז מוגבה · רגליות אלומיניום"
+      ],
+      "finishes": [
+        "lavan",
+        "shamenet",
+        "mulban",
+        "5180",
+        "mevuka",
+        "7903",
+        "7904"
+      ],
+      "renders": [
+        {
+          "finish": "shamenet",
+          "profile": "—",
+          "image": "/products/kodesh-4dl-eliyahu-shamenet.jpg",
+          "thumb": "/products/thumbs/kodesh-4dl-eliyahu-shamenet.jpg"
+        },
+        {
+          "finish": "lavan",
+          "profile": "—",
+          "image": "/products/kodesh-4dl-eliyahu-lavan.jpg",
+          "thumb": "/products/thumbs/kodesh-4dl-eliyahu-lavan.jpg"
+        },
+        {
+          "finish": "5180",
+          "profile": "—",
+          "image": "/products/kodesh-4dl-eliyahu-5180.jpg",
+          "thumb": "/products/thumbs/kodesh-4dl-eliyahu-5180.jpg"
+        },
+        {
+          "finish": "mevuka",
+          "profile": "—",
+          "image": "/products/kodesh-4dl-eliyahu-mevuka.jpg",
+          "thumb": "/products/thumbs/kodesh-4dl-eliyahu-mevuka.jpg"
+        },
+        {
+          "finish": "7903",
+          "profile": "—",
+          "image": "/products/kodesh-4dl-eliyahu-7903.jpg",
+          "thumb": "/products/thumbs/kodesh-4dl-eliyahu-7903.jpg"
+        }
+      ],
+      "delivery_install": 400
     },
     {
       "id": "kodesh-5dl-tveria",
@@ -3115,6 +3193,22 @@
         "image": "/products/gallery-alon-mevuka.jpg",
         "thumb": "/products/thumbs/gallery-alon-mevuka.jpg",
         "model": "desk-160"
+      },
+      {
+        "id": "g-eliyahu-shamenet",
+        "finish": "שמנת",
+        "caption": "ספריית קודש דגם אליהו · 3 דלתות",
+        "image": "/products/gallery-eliyahu-shamenet.jpg",
+        "thumb": "/products/thumbs/gallery-eliyahu-shamenet.jpg",
+        "model": "kodesh-3dl-b"
+      },
+      {
+        "id": "g-eliyahu-lavan",
+        "finish": "לבן",
+        "caption": "ספריית קודש דגם אליהו · 5 דלתות",
+        "image": "/products/gallery-eliyahu-lavan.jpg",
+        "thumb": "/products/thumbs/gallery-eliyahu-lavan.jpg",
+        "model": null
       }
     ]
   }

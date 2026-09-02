@@ -48,6 +48,9 @@
     + 'padding:8px 20px 40px;border-top:1px solid #e6e2da;font-family:"Assistant","Heebo",system-ui,sans-serif}'
     + '.nc-menu a{display:flex;align-items:center;min-height:56px;font-size:18px;color:#211f1d;text-decoration:none;border-bottom:1px solid #eee9e0}'
     + '.nc-menu a[aria-current]{font-weight:700}'
+    + '.nc-menu .nc-menu-cats{margin-top:22px}'
+    + '.nc-menu .nc-menu-cats h3{font-size:12px;letter-spacing:.16em;color:#9b8870;font-weight:600;margin:0 0 4px}'
+    + '.nc-menu .nc-menu-cats a{min-height:50px;font-size:17px}'
     + '.nc-menu .nc-menu-contact{margin-top:18px;display:grid;gap:10px}'
     + '.nc-menu .nc-menu-contact a{border:1px solid #211f1d;justify-content:center;min-height:50px;font-weight:600;border-bottom:1px solid #211f1d}'
     + '.nc-menu .nc-menu-contact a.wa{background:#211f1d;color:#fbfaf7}'
@@ -69,10 +72,25 @@
     var cur = l[0].indexOf('#') === -1 && here2 === l[0] ? ' aria-current="page"' : '';
     return '<a href="' + l[0] + '"' + cur + '>' + l[1] + '</a>';
   }).join('')
+    + '<div class="nc-menu-cats" id="nc-menu-cats" hidden><h3>קטגוריות</h3></div>'
     + '<div class="nc-menu-contact">'
     + '<a class="wa" href="/#contact">ייעוץ אישי</a>'
     + '</div>';
   header.insertAdjacentElement('afterend', menu);
+
+  // הקטגוריות מהקטלוג, רק כאלה שיש בהן דגמים. אותו חישוב כמו בדף הבית.
+  fetch('/products/catalog.json').then(function (r) { return r.json(); }).then(function (d) {
+    var groupOf = function (m) { return ((d.lines || {})[m.line_id] || {}).group; };
+    var live = (d.groups || []).filter(function (g) { return (d.models || []).some(function (m) { return groupOf(m) === g.id; }); });
+    if (!live.length) return;
+    var box = document.getElementById('nc-menu-cats');
+    var q = new URLSearchParams(location.search).get('group');
+    box.innerHTML = '<h3>קטגוריות</h3>' + live.map(function (g) {
+      var cur = location.pathname === '/category.html' && q === g.id ? ' aria-current="page"' : '';
+      return '<a href="/category.html?group=' + encodeURIComponent(g.id) + '"' + cur + '>' + g.name + '</a>';
+    }).join('');
+    box.hidden = false;
+  }).catch(function () {});
 
   function place() {
     var r = header.getBoundingClientRect();

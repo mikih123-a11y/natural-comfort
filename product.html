@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Natural Comfort · ריהוט בהתאמה אישית</title>
 <meta name="description" content="ריהוט בהתאמה אישית. נבנה למידות שלכם.">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBFAF8">
+<link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Natural">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
@@ -44,7 +48,8 @@ main.wrap,footer .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
   .pd{grid-template-columns:1fr;gap:0}
   .pcol,.ccol{display:contents}
   .head{order:-6;margin-bottom:8px}.shot{order:-5}.thumbs{order:-4}.vizcard{order:-3;margin-bottom:8px}
-  .acts{order:1}.spec{order:2}.real{order:3}
+  /* במובייל כפתורי הרכישה בסוף, אחרי הבחירות, "מה כלול" והמפרט. מי שרק מסתכל לא נדחף להזמין. */
+  .spec{order:1}.acts{order:2;margin-bottom:8px}.real{order:3}
 }
 
 /* גלריה */
@@ -178,6 +183,16 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,2.8vw,36px);l
 .b2{display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--ink);padding:16px;font-size:15px;font-weight:600;transition:.15s}
 .b2:hover{background:var(--ink);color:var(--paper)}
 .b1 svg,.b2 svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none;transition:transform .2s var(--ease)}
+/* שיתוף מוצר. הקישור נלקח מהכתובת הנוכחית, שכבר כוללת דגם וגוון. */
+.share{margin-top:6px}
+.shbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:44px;border:1px solid var(--line);background:#fff;font-size:15px;font-weight:600;color:var(--ink);transition:.15s}
+.shbtn:hover,.shbtn[aria-expanded=true]{border-color:var(--ink)}
+.shbtn svg{fill:none;stroke:currentColor;stroke-width:1.6}
+.shmenu{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.shmenu a,.shmenu button{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--ink);text-align:center;padding:0 8px}
+.shmenu a:hover,.shmenu button:hover{border-color:var(--ink)}
+.shok{font-size:14px;color:#3F6B4F;text-align:center;margin-top:8px;min-height:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .hint{font-size:14px;color:var(--ink-soft);font-weight:400;text-align:center;margin-top:4px}
 
 /* תמונות מהתקנות אצל לקוחות. הדגמה — לא הבטחה. */
@@ -250,6 +265,18 @@ footer a:hover{color:var(--ink)}
           שלחו הזמנה בוואטסאפ
         </a>
         <p class="hint">המידות באחריות הלקוח · ההובלה, הסבלות וההרכבה משולמים למתקין בבית.</p>
+        <div class="share">
+          <button class="shbtn" id="shareBtn" type="button" aria-expanded="false" aria-controls="shareMenu">
+            <svg width="17" height="17" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+            שתפו את המוצר
+          </button>
+          <div class="shmenu" id="shareMenu" hidden>
+            <a id="shWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+            <a id="shFb" href="#" target="_blank" rel="noopener">Facebook</a>
+            <button id="shCopy" type="button">העתקת קישור</button>
+          </div>
+          <p class="shok" id="shareOk" aria-live="polite"></p>
+        </div>
       </div>
 
 
@@ -982,6 +1009,41 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   console.error('catalog load / render error:', err);
 });
 </script>
-<script src="/site.js"></script>
+<script>
+/* שיתוף מוצר. עצמאי מקוד המוצר: לא נוגע במחיר, בסל או בהדמיה. */
+(function(){
+  var btn = document.getElementById('shareBtn'), menu = document.getElementById('shareMenu'),
+      ok = document.getElementById('shareOk');
+  if (!btn) return;
+  var link = function(){ return location.href.split('#')[0]; };
+  var title = function(){ return (document.querySelector('#name') || {}).textContent || document.title; };
+  var say = function(t){ ok.textContent = t; setTimeout(function(){ ok.textContent = ''; }, 4000); };
+  var open = function(v){
+    menu.hidden = !v; btn.setAttribute('aria-expanded', v ? 'true' : 'false');
+    if (v) {
+      var u = link(), t = title();
+      document.getElementById('shWa').href = 'https://wa.me/?text=' + encodeURIComponent(t + '\n' + u);
+      document.getElementById('shFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(u);
+      menu.querySelector('a').focus();
+    }
+  };
+  btn.addEventListener('click', function(){
+    if (navigator.share) {
+      navigator.share({ title: title(), text: title() + ' · Natural Comfort', url: link() }).catch(function(){});
+      return;
+    }
+    open(menu.hidden);
+  });
+  document.getElementById('shCopy').addEventListener('click', function(){
+    var u = link();
+    var done = function(){ say('הקישור הועתק'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(done, function(){ prompt('העתיקו את הקישור:', u); });
+    else prompt('העתיקו את הקישור:', u);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !menu.hidden) { open(false); btn.focus(); } });
+  document.addEventListener('click', function(e){ if (!menu.hidden && !e.target.closest('.share')) open(false); });
+})();
+</script>
+<script src="/pwa.js" defer></script>
 </body>
 </html>

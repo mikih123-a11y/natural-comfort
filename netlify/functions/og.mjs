@@ -79,7 +79,7 @@ export default async (req) => {
     if (imgUrl) {
       try {
         const img = await loadImage(imgUrl);
-        const pad = 26;
+        const pad = 12;
         const s = Math.min((box.w - pad * 2) / img.width, (box.h - pad * 2) / img.height);
         const dw = img.width * s, dh = img.height * s;
         ctx.drawImage(img, box.x + (box.w - dw) / 2, box.y + (box.h - dh) / 2, dw, dh);
@@ -123,7 +123,7 @@ export default async (req) => {
     if (typeof m.price === 'number') {
       ctx.fillStyle = C.ink;
       ctx.font = `700 58px ${SERIF}`;
-      ctx.fillText('החל מ־₪' + m.price.toLocaleString('he-IL'), R, 556);
+      ctx.fillText('החל מ־' + m.price.toLocaleString('he-IL') + ' ₪', R, 556);
     }
 
     const png = await canvas.encode('png');

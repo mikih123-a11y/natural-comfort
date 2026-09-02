@@ -4,8 +4,8 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@netlify/blobs"]
-  included_files = ["viz/catalog.json"]
+  external_node_modules = ["@netlify/blobs", "@napi-rs/canvas"]
+  included_files = ["viz/catalog.json", "netlify/functions/og-fonts/*"]
 
 [functions.generate]
   timeout = 120

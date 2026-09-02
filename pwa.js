@@ -49,11 +49,16 @@
   }
   function unmount() { if (box) { box.remove(); box = null; } }
 
-  // אנדרואיד / כרום / אדג': רק כשהדפדפן מציע התקנה
+  // הכפתור מוצג רק בטלפון ובטאבלט. במחשב לא מציעים התקנה.
+  var mobile = /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent)
+    || (navigator.maxTouchPoints > 1 && window.matchMedia('(pointer: coarse)').matches);
+
+  // אנדרואיד / כרום: רק כשהדפדפן מציע התקנה
   var deferred = null;
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferred = e;
+    if (!mobile) return;
     mount('התקינו את Natural Comfort', function () {
       if (!deferred) return;
       deferred.prompt();

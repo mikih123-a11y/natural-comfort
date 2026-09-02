@@ -44,18 +44,18 @@ input{font-family:inherit;font-size:16px}
 @media(max-width:520px){.topwa{font-size:13px}}
 
 /* ── hero ── */
-.hero{padding:72px 0 40px;text-align:center}
-.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--champagne);font-weight:600;margin-bottom:20px}
-.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,7vw,68px);line-height:1.06;letter-spacing:-.02em}
+.hero{padding:44px 0 28px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--champagne);font-weight:600;margin-bottom:13px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,5.4vw,52px);line-height:1.07;letter-spacing:-.02em}
 .hero h1 em{font-style:normal;color:var(--champagne)}
-.hero p{margin:20px auto 0;max-width:440px;font-size:17px;color:var(--ink-soft);font-weight:300}
+.hero p{margin:14px auto 0;max-width:440px;font-size:16px;color:var(--ink-soft);font-weight:300}
 
 /* ── steps ── */
-.steps{display:grid;gap:20px;grid-template-columns:1fr 1fr;margin:44px 0 0}
+.steps{display:grid;gap:20px;grid-template-columns:1fr 1fr;margin:30px 0 0;align-items:start}
 @media(max-width:760px){.steps{grid-template-columns:1fr}}
 .card{background:#fff;border:1px solid var(--line);border-radius:2px;padding:24px}
 .card h2{font-family:var(--display);font-size:19px;font-weight:500;margin-bottom:4px}
-.card h2 b{color:var(--champagne);font-weight:400;margin-left:8px;font-size:15px}
+.card h2 b{color:var(--champagne);font-weight:600;margin-inline-end:9px;font-size:13px;letter-spacing:.04em}
 .card .hint{font-size:13px;color:var(--ink-mute);margin-bottom:18px;font-weight:300}
 
 /* upload */
@@ -67,7 +67,7 @@ input{font-family:inherit;font-size:16px}
 .drop .redo{position:absolute;bottom:10px;inset-inline-start:10px;background:rgba(33,31,29,.82);color:#fff;font-size:12px;padding:5px 12px;border-radius:2px;backdrop-filter:blur(4px)}
 
 /* picker */
-.picker{display:grid;gap:22px}
+.picker{display:grid;gap:22px;max-height:580px;overflow-y:auto;padding-inline-end:6px;scrollbar-width:thin;overscroll-behavior:contain}.picker::-webkit-scrollbar{width:5px}.picker::-webkit-scrollbar-thumb{background:var(--champagne-lt);border-radius:3px}@media(max-width:760px){.picker{max-height:none;overflow:visible;padding-inline-end:0}}
 .grp{display:grid;gap:10px}
 .grp-h{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);padding-bottom:6px;border-bottom:1px solid var(--line)}
 .pick{display:flex;gap:14px;align-items:center;border:1px solid var(--line);background:var(--paper);padding:10px;text-align:start;transition:.15s var(--ease)}
@@ -197,12 +197,12 @@ footer a:hover{color:var(--ink);text-decoration:underline}
   <section class="hero">
     <div class="eyebrow">הדמיה מיידית</div>
     <h1>הארון הזה.<br><em>בחדר שלך.</em></h1>
-    <p>צלמו את הקיר בטלפון, בחרו ארון מהקטלוג, וראו איך הוא באמת יושב אצלכם — לפני שהזמנתם.</p>
+    <p>צלמו את הקיר בטלפון, בחרו ארון מהקטלוג, וראו איך הוא באמת יושב אצלכם, לפני שהזמנתם.</p>
   </section>
 
   <div class="steps">
     <div class="card">
-      <h2 id="shotTitle">הקיר שלכם <b>01</b></h2>
+      <h2 id="shotTitle"><b>שלב 1</b> הקיר שלכם</h2>
       <p class="hint" id="shotHint">צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.</p>
       <div class="drop" id="drop" role="button" tabindex="0" aria-label="העלאת תמונת הקיר">
         <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -218,7 +218,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     </div>
 
     <div class="card">
-      <h2>הארון <b>02</b></h2>
+      <h2><b>שלב 2</b> בחרו רהיט</h2>
       <p class="hint" id="prodHint">בחרו דגם מהרשימה. הגימור והמידות מופיעים ליד כל אחד.</p>
       <div class="picker" id="picker"></div>
     </div>

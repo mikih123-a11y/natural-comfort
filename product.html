@@ -50,6 +50,9 @@ main.wrap,footer .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
   .head{order:-6;margin-bottom:8px}.shot{order:-5}.thumbs{order:-4}.vizcard{order:-3;margin-bottom:8px}
   /* במובייל כפתורי הרכישה בסוף, אחרי הבחירות, "מה כלול" והמפרט. מי שרק מסתכל לא נדחף להזמין. */
   .spec{order:1}.acts{order:2;margin-bottom:8px}.real{order:3}
+  /* הכפתורים גוללים עם העמוד. מבטל כל הצמדה לתחתית המסך שמגיעה מקבצי עיצוב אחרים. */
+  .acts,.acts .b0,.acts .b2{position:static!important;bottom:auto!important;top:auto!important;box-shadow:none!important;z-index:auto!important}
+  body{padding-bottom:0!important}
 }
 
 /* גלריה */

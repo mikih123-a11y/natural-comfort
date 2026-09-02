@@ -33,7 +33,6 @@
       + '<a class="logo" href="/">Natural Comfort<small>CUSTOM FURNITURE</small></a>'
       + '<div class="tools">' + cart
       + '<a class="icon" href="/#shop" aria-label="חיפוש בקטלוג">⌕</a>'
-      + '<a class="icon" href="tel:0796622666" aria-label="טלפון">☎</a>'
       + '</div></div></header>';
   }
 
@@ -71,8 +70,7 @@
     return '<a href="' + l[0] + '"' + cur + '>' + l[1] + '</a>';
   }).join('')
     + '<div class="nc-menu-contact">'
-    + '<a href="tel:0796622666">התקשרו: 079-6622666</a>'
-    + '<a class="wa" href="https://wa.me/972524400030">שיחה בוואטסאפ</a>'
+    + '<a class="wa" href="/#contact">ייעוץ אישי</a>'
     + '</div>';
   header.insertAdjacentElement('afterend', menu);
 

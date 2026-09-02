@@ -49,7 +49,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.024em;margin-top:10px}
 .head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:400}
 
-.filt{margin:32px 0 30px;display:flex;align-items:center;gap:30px;overflow-x:auto;scrollbar-width:none;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.filt{margin:32px 0 30px;display:flex;align-items:center;justify-content:center;gap:30px;overflow-x:auto;scrollbar-width:none;padding-bottom:11px;border-bottom:1px solid var(--line)}
 .filt::-webkit-scrollbar{display:none}
 .fx{padding:0 0 3px;border:0;background:none;font-size:16px;color:var(--ink-mute);white-space:nowrap;flex:none;border-bottom:1.5px solid transparent;transition:color .2s;min-height:32px}
 .fx:hover{color:var(--ink)}
@@ -63,7 +63,10 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .card .ph{aspect-ratio:3/4;overflow:hidden;background:var(--panel);position:relative}
 .card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .card:hover .ph img{transform:scale(1.03)}
-.card .zoom{position:absolute;bottom:12px;inset-inline-end:12px;background:rgba(33,31,29,.85);color:#fff;font-size:13.5px;font-weight:600;padding:7px 12px}
+.card .zoom{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .25s var(--ease);background:rgba(33,31,29,.18);pointer-events:none}
+.card .zoom i{width:52px;height:52px;border-radius:50%;background:rgba(251,250,248,.94);display:grid;place-items:center;font-style:normal;font-size:22px;color:var(--ink)}
+.card:hover .zoom,.card:focus-visible .zoom{opacity:1}
+@media(hover:none){.card .zoom{display:none}}
 .card .b{padding:16px 18px 18px;border-top:1px solid var(--line)}
 .card b{display:block;font-family:var(--display);font-size:17px;font-weight:500}
 .card small{display:block;font-size:14.5px;color:var(--ink-soft);font-weight:400;margin-top:4px}
@@ -142,9 +145,9 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#filt').innerHTML = opts.map((f, i) =>
     `<button class="fx" data-f="${f}" aria-pressed="${!i}">${f === 'all' ? 'הכול' : f}</button>`).join('');
 
-  const card = it => `<button class="card" data-id="${it.id}">
+  const card = it => `<button class="card" data-id="${it.id}" aria-label="הגדלת תמונה: ${[it.caption, it.finish && ('גימור ' + it.finish)].filter(Boolean).join(', ')}">
       <div class="ph"><img src="${it.thumb}" alt="${[it.caption, it.finish && ('גימור ' + it.finish)].filter(Boolean).join(', ') || 'עבודה אצל לקוח'}" loading="lazy">
-        <span class="zoom">לחצו להגדלה</span></div>
+        <span class="zoom" aria-hidden="true"><i>⌕</i></span></div>
       <div class="b"><b>${it.finish || ''}</b><small>${it.caption || ''}</small></div>
     </button>`;
 

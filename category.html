@@ -48,6 +48,18 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .sz:hover:not([disabled]){color:var(--ink)}
 .sz[aria-pressed=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--champagne-txt)}
 .sz[disabled]{color:var(--champagne-lt);cursor:not-allowed}
+@media(max-width:640px){
+  main.wrap{padding:0 20px}
+  .crumb{padding-top:16px}
+  .head{padding:16px 0 4px}
+  .head p{font-size:16px}
+  .filt{margin:22px 0 22px}
+  .filt h2{font-size:15px;margin-bottom:6px}
+  /* במקום גלילה אופקית שנחתכת: הטאבים נשברים לשורות */
+  .sizes{flex-wrap:wrap;overflow:visible;gap:0 24px;padding-bottom:4px}
+  .sz{min-height:44px;font-size:16px;padding:0 0 2px}
+  .grid{padding-bottom:48px}
+}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:80px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}}

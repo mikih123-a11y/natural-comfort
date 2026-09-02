@@ -4,7 +4,7 @@
    מה לא נשמר לעולם: הזמנות, סל, פרטי לקוח, אדמין, פונקציות, POST.
    כדי לשחרר עדכון: להעלות מספר גרסה חדש ב-VERSION. */
 
-const VERSION = 'nc-2026-09-02b';
+const VERSION = 'nc-2026-09-02c';
 const SHELL = `${VERSION}-shell`;
 const PAGES = `${VERSION}-pages`;
 const IMAGES = `${VERSION}-images`;
@@ -44,15 +44,17 @@ self.addEventListener('fetch', (e) => {
   const isHTML = req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html');
   const isCatalog = /\.json$/.test(url.pathname);
   const isImage = /\.(png|jpe?g|webp|avif|svg|gif)$/i.test(url.pathname);
-  const isShell = /\.(css|js|woff2?|ttf|webmanifest)$/i.test(url.pathname);
+  const isCode = /\.(css|js|webmanifest)$/i.test(url.pathname);
+  const isShell = /\.(woff2?|ttf)$/i.test(url.pathname);
 
-  if (isHTML || isCatalog) {
+  /* HTML, קטלוג, CSS ו-JS: תמיד מהרשת. כך כל העלאה נראית מיד, וה-cache משמש רק בלי קליטה. */
+  if (isHTML || isCatalog || isCode) {
     /* network-first: תמיד העדכני ביותר, גיבוי מה-cache רק כשאין רשת */
     e.respondWith(
       fetch(req).then((res) => {
         if (res.ok && !url.search.includes('source=')) {
           const copy = res.clone();
-          caches.open(PAGES).then((c) => c.put(req, copy));
+          caches.open(isCode ? SHELL : PAGES).then((c) => c.put(req, copy));
         }
         return res;
       }).catch(() => caches.match(req).then((hit) => hit || (isHTML ? caches.match('/') : undefined)))

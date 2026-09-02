@@ -92,7 +92,8 @@ fetch('products/catalog.json').then(r=>r.json()).then(d=>{
   $('#cats').innerHTML = live.map(g=>{
     const list = shots[g.id] || [];
     const start = list.length ? Math.floor(Math.random()*list.length) : 0;
-    const subs = g.lines.filter(l=>d.models.some(x=>x.line_id===l)).length;
+    /* מספר הסוגים נספר מהדגמים עצמם. קבוצה בלי רשימת lines לא מפילה את הדף. */
+    const subs = new Set(d.models.filter(x=>groupOf(x)===g.id).map(x=>x.line_id)).size;
     return `<a class="cat" href="category.html?group=${g.id}">
       <img data-rot="${g.id}" data-i="${start}" src="${list[start]||'img/demo-after.jpg'}" alt="${g.name}">
       <div class="cat-copy"><h3>${g.name}</h3>

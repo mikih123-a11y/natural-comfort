@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Natural Comfort — ריהוט בהתאמה אישית</title>
+<title>Natural Comfort · ריהוט בהתאמה אישית</title>
 <meta name="description" content="ריהוט בהתאמה אישית. נבנה למידות שלכם.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/premium-inner.css">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/site-header.css">
+<link rel="stylesheet" href="/premium-inner.css">
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4; --panel-2:#E4DED3;
@@ -27,21 +28,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 :focus-visible{outline:2px solid var(--oak);outline-offset:3px}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
-.top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
-.top .brand,.top .tel{flex:none}
-.brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
-.brand span{color:var(--champagne);font-weight:400}
-.nav{display:flex;flex-wrap:nowrap;gap:18px;font-size:13.5px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
-.nav::-webkit-scrollbar{display:none}
-.nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
-.nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
-.nav a:hover,.nav a[aria-current]{color:var(--ink)}
-.nav a:hover::after,.nav a[aria-current]::after{width:100%}
-.tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
-.tel:hover{background:#000}
-.tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
-@media(max-width:900px){.nav{display:none}}
+/* הכותרת המשותפת: site-header.css */
 
 .crumb{font-size:13px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
 .crumb a:hover{color:var(--ink)}
@@ -156,11 +143,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,42px);l
 
 /* פעולות — אין סל. הטלפון הוא הקנייה. */
 /* ---- סל ---- */
-.cartlink{position:relative;display:flex;align-items:center;justify-content:center;
-  width:42px;height:42px;border:1px solid var(--line);background:#fff;flex:none;
-  margin-inline-end:10px;transition:.2s var(--ease)}
-.cartlink:hover{border-color:var(--ink)}
-.cartlink svg{fill:none;stroke:var(--ink);stroke-width:1.5}
+.icon.cart{position:relative}
 .nc-badge{position:absolute;top:-7px;inset-inline-start:-7px;min-width:19px;height:19px;
   border-radius:999px;background:var(--oak);color:#fff;font-size:11px;font-weight:700;
   display:grid;place-items:center;padding:0 5px}
@@ -221,18 +204,8 @@ footer a:hover{color:var(--ink)}
 </head>
 <body>
 
-<header class="top"><div class="wrap">
-  <a href="/" class="brand">Natural<span>Comfort</span></a>
-  <nav class="nav" id="nav"></nav>
-  <a class="cartlink" href="/cart.html" id="cartLink" aria-label="סל ההזמנה">
-    <svg width="17" height="17" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="nc-badge" hidden>0</span>
-  </a>
-  <a class="tel" href="tel:079-6622666">
-    <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    079-6622666
-  </a>
-</div></header>
+<div id="nc-header" data-cart="1"></div>
+<script src="/site-header.js"></script>
 
 <main class="wrap">
   <div class="crumb"><a href="/">בית</a><i>·</i><a id="crumb-cat" href="#">—</a><i>·</i><span id="crumb-name">—</span></div>
@@ -382,13 +355,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const myLine  = (d.lines || {})[m.line_id] || {};
   const shipLbl = myLine.delivery_label || 'משלוח והרכבה';
   const shipTxt = myLine.delivery_note  || null;
-  // ניווט לפי עולמות. עולם בלי מוצרים לא מוצג — אין יותר טאבים שמובילים לדף ריק.
   const groupOf = x => ((d.lines || {})[x.line_id] || {}).group;
-  const myGroup = groupOf(m);
-  $('#nav').innerHTML = (d.groups || [])
-    .filter(g => d.models.some(x => groupOf(x) === g.id))
-    .map(g => `<a href="/category.html?group=${g.id}"${g.id === myGroup ? ' aria-current="page"' : ''}>${g.name}</a>`)
-    .join('') + '<a href="/gallery.html">גלריה</a>';
 
   // כותרת ותיאור לכל מוצר. אם מולאו ידנית ב-seo בקטלוג — הם גוברים.
   const seo = m.seo || {};
@@ -437,7 +404,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
 
         if (/קאנט/.test(nm)) {
           N.push([`קאנט אלומיניום למדף${gav}`,
-            'פס אלומיניום בקצה המדף — מגן על הקצה ונותן גימור נקי.']);
+            'פס אלומיניום בקצה המדף. מגן על הקצה ונותן גימור נקי.']);
         } else if (/בסיס/.test(nm)) {
           N.push([`בסיס אלומיניום${gav}`,
             'פרופיל אלומיניום מובנה בתחתית הארון, יוצר הגנה מפני רטיבות ומונע נפיחות של הלוח התחתון.']);
@@ -457,7 +424,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
                        .some(x => /בסיס/.test(x.textContent));
       if (!alBase) N.push(['בסיס הארון', 'רגלי במה. בסיס אלומיניום אטום לרטיבות זמין בתוספת תשלום.']);
       N.push(['מנגנון הדלתות', 'כולל מנגנוני טריקה שקטה בכל הדלתות.']);
-      N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום — דברו איתנו.']);
+      N.push(['פנים הארון', 'לבן. ניתן לבחור צבע פנים אחר בתוספת תשלום, דברו איתנו.']);
     }
 
     N.push([shipLbl,
@@ -702,7 +669,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       const t = tierFor(curW);
       $('#wnote').textContent = t
         ? `טווח ${t.from}–${t.to} ס״מ · מחיר אחיד בטווח. רוחב אחר? נבנה בדיוק למידה שלכם.`
-        : 'רוחב מחוץ לטווח המחירון — נבנה בהתאמה אישית, דברו איתנו.';
+        : 'רוחב מחוץ לטווח המחירון. נבנה בהתאמה אישית, דברו איתנו.';
       renderPrice();
     };
     ws.addEventListener('input', onWidth);

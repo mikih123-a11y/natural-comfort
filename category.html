@@ -216,7 +216,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     $('#grid').innerHTML = list.length
       ? list.map(card).join('')
       : `<div class="empty"><b>אין עדיין דגם ב${label(s)}</b>
-           אנחנו בונים למידה. <a href="https://wa.me/972524400030">דברו איתנו</a> ונתאים.</div>`;
+           אנחנו בונים למידה. <a href="tel:0796622666">התקשרו</a> ונתאים.</div>`;
     history.replaceState(null, '', byType
       ? `?group=${groupId}${s === 'all' ? '' : '&line=' + s}`
       : `?line=${lineId}${s === 'all' ? '' : '&size=' + s}`);

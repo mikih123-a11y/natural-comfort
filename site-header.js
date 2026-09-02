@@ -27,7 +27,7 @@
       : '';
 
     slot.outerHTML =
-      '<div class="notice">ייעוץ אישי · ייצור ישראלי · התאמה אישית מלאה</div>'
+      '<div class="notice">רהיטים בהתאמה אישית</div>'
       + '<header class="header"><div class="wrap">'
       + '<nav class="nav">' + nav + '</nav>'
       + '<a class="logo" href="/">Natural Comfort<small>CUSTOM FURNITURE</small></a>'

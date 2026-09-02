@@ -48,6 +48,23 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .sz:hover:not([disabled]){color:var(--ink)}
 .sz[aria-pressed=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--champagne-txt)}
 .sz[disabled]{color:var(--champagne-lt);cursor:not-allowed}
+
+/* בורר מובייל (מוסתר בדסקטופ) */
+.pick{display:none;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:0 16px;
+  border:1px solid var(--line);background:#fff;font-size:16px;color:var(--ink);text-align:start}
+.pick b{font-weight:600}
+.pick .chev{font-size:18px;color:var(--ink-mute);flex:none}
+.sheet{border:0;padding:0;margin:auto 0 0;width:100%;max-width:100%;background:var(--paper);color:var(--ink);
+  border-radius:14px 14px 0 0;box-shadow:0 -10px 40px #0003}
+.sheet::backdrop{background:rgba(33,31,29,.45)}
+.sheet .sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px}
+.sheet .sh-head h2{font-family:var(--display);font-size:20px;font-weight:500}
+.sheet .sh-close{min-width:44px;min-height:44px;font-size:22px;color:var(--ink-mute)}
+.sheet ul{list-style:none;padding:4px 8px 22px}
+.sheet li button{display:flex;align-items:center;gap:14px;width:100%;min-height:52px;padding:0 12px;font-size:17px;color:var(--ink);text-align:start;border-radius:8px}
+.sheet li button[aria-checked=true]{color:var(--champagne-txt);font-weight:600;background:var(--panel)}
+.sheet li button .ck{width:22px;flex:none;text-align:center}
+.sheet li button:focus-visible{outline:3px solid var(--ink);outline-offset:-3px}
 @media(max-width:640px){
   main.wrap{padding:0 20px}
   .crumb{padding-top:16px}
@@ -55,11 +72,9 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
   .head p{font-size:16px}
   .filt{margin:22px 0 22px}
   .filt h2{font-size:15px;margin-bottom:6px}
-  /* שורה אחת נגללת לצדדים, בלי שבירה. קצה שמאלי דהוי רומז שיש עוד. */
-  .sizes{flex-wrap:nowrap;overflow-x:auto;gap:0 24px;padding-bottom:6px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
-    mask-image:linear-gradient(to left,#000 calc(100% - 48px),transparent);-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 48px),transparent)}
-  .sizes::after{content:"";flex:none;width:40px}
-  .sz{min-height:44px;font-size:16px;padding:0 0 2px;white-space:nowrap}
+  /* במובייל: במקום טאבים, בורר אחד ברוחב מלא שפותח חלון תחתון */
+  .sizes{display:none}
+  .pick{display:flex}
   .grid{padding-bottom:48px}
 }
 
@@ -98,7 +113,14 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
   <div class="filt">
     <h2 id="flabel">—</h2>
     <div class="sizes" id="sizes"></div>
+    <button class="pick" id="pick" type="button" aria-haspopup="dialog" aria-controls="sheet">
+      <span><span id="pick-axis">סוג</span>: <b id="pick-val">הכל</b></span><span class="chev" aria-hidden="true">⌄</span>
+    </button>
   </div>
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+    <div class="sh-head"><h2 id="sheet-title">סוג</h2><button class="sh-close" type="button" id="sheet-close" aria-label="סגירה">✕</button></div>
+    <ul id="sheet-list" role="radiogroup"></ul>
+  </dialog>
 
   <div class="grid" id="grid"></div>
 </main>
@@ -157,6 +179,11 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const shown = opts.filter(has);
   $('#sizes').innerHTML = shown.map(s =>
     `<button class="sz" data-i="${opts.indexOf(s)}" data-s="${s}" aria-pressed="${s === 'all'}">${label(s)}</button>`).join('');
+  // אותן אפשרויות בחלון התחתון של המובייל
+  $('#sheet-list').innerHTML = shown.map(s =>
+    `<li><button type="button" role="radio" data-i="${opts.indexOf(s)}" aria-checked="${s === 'all'}"><span class="ck" aria-hidden="true">${s === 'all' ? '✓' : ''}</span>${label(s)}</button></li>`).join('');
+  $('#pick-axis').textContent = $('#flabel').textContent;
+  $('#sheet-title').textContent = $('#flabel').textContent;
 
   const card = m => {
     const dots = (m.finishes || []).slice(0, 6).map(id => {
@@ -177,6 +204,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const show = i => {
     const s = opts[i];
     document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+    document.querySelectorAll('#sheet-list [role=radio]').forEach(b => {
+      const sel = +b.dataset.i === i; b.setAttribute('aria-checked', sel); b.querySelector('.ck').textContent = sel ? '✓' : '';
+    });
+    $('#pick-val').textContent = label(s);
     const on = document.querySelector('.sz[aria-pressed="true"]');
     if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
     const list = s === 'all' ? mine
@@ -194,6 +225,15 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#sizes').onclick = e => {
     const b = e.target.closest('.sz');
     if (b && !b.disabled) show(+b.dataset.i);
+  };
+  const sheet = $('#sheet');
+  $('#pick').onclick = () => { sheet.showModal(); (sheet.querySelector('[aria-checked=true]') || sheet.querySelector('[role=radio]')).focus(); };
+  $('#sheet-close').onclick = () => sheet.close();
+  sheet.onclick = e => { if (e.target === sheet) sheet.close(); };
+  $('#sheet-list').onclick = e => {
+    const b = e.target.closest('[role=radio]');
+    if (!b) return;
+    show(+b.dataset.i); sheet.close(); $('#pick').focus();
   };
 
   const ws = q.get('size');

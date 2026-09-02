@@ -30,8 +30,11 @@ export default async (request, context) => {
   const line = m.line || ((cat.lines || {})[m.line_id] || {}).name || '';
   const seo = m.seo || {};
 
+  // תמונת השיתוף 1200×630 מצוירת בפונקציה og.mjs. אם אין רינדור, נופלים לתמונת הרינדור.
   const abs = (p) => (p ? new URL(p, url.origin).href : '');
-  const image = abs(r && r.image);
+  const image = r
+    ? `${url.origin}/og-product.png?id=${encodeURIComponent(m.id)}&finish=${encodeURIComponent(r.finish)}`
+    : abs(r && r.image);
   const canonical = `${url.origin}/product.html?id=${encodeURIComponent(m.id)}`
     + (r ? `&finish=${encodeURIComponent(r.finish)}` : '');
 
@@ -53,6 +56,9 @@ export default async (request, context) => {
     `<meta property="og:url" content="${esc(canonical)}">`,
     image ? `<meta property="og:image" content="${esc(image)}">` : '',
     image ? `<meta property="og:image:alt" content="${esc(m.name)}">` : '',
+    image ? `<meta property="og:image:width" content="1200">` : '',
+    image ? `<meta property="og:image:height" content="630">` : '',
+    image ? `<meta property="og:image:type" content="image/png">` : '',
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${esc(title)}">`,
     `<meta name="twitter:description" content="${esc(description)}">`,

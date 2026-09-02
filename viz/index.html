@@ -8,6 +8,11 @@
 <meta property="og:title" content="הארון הזה. בחדר שלך.">
 <meta property="og:description" content="צלמו קיר. בחרו ארון. תראו איך זה יושב אצלכם.">
 <meta property="og:type" content="website">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBFAF8">
+<link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
+<link rel="stylesheet" href="/site-header.css">
+<link rel="stylesheet" href="/footer-upgrade.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
@@ -28,20 +33,10 @@ img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 input{font-family:inherit;font-size:16px}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+main.wrap,body>.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
 /* ── header ── */
-.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.92);backdrop-filter:blur(8px);z-index:50}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em;
-       color:var(--ink);text-decoration:none;flex:none}
-.brand span{color:var(--champagne-txt);font-weight:400}
-.top a{color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:500}
-.top a:hover{color:var(--ink)}
-.topnav{display:flex;gap:22px;margin-inline-end:auto;margin-inline-start:30px}
-.topwa{flex:none}
-@media(max-width:820px){.topnav{display:none}}
-@media(max-width:520px){.topwa{font-size:14px}}
+/* הכותרת המשותפת: site-header.css. הפוטר המשותף: footer-upgrade.css */
 
 /* ── hero ── */
 .hero{padding:44px 0 28px;text-align:center}
@@ -159,15 +154,7 @@ input{font-family:inherit;font-size:16px}
 .fin .wait.bad{color:#8C3323}
 
 /* ── footer ── */
-footer{border-top:1px solid var(--line);margin-top:80px;padding:40px 0 28px;font-size:15.5px;color:var(--ink-soft);font-weight:400;line-height:1.7}
-.fcols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.fcol{display:flex;flex-direction:column;gap:4px}
-.fcol h4{font-family:var(--display);font-size:15px;letter-spacing:.08em;text-transform:uppercase;
-         color:var(--ink-soft);font-weight:600;margin-bottom:4px}.fcol a{font-size:15.5px;color:var(--ink-soft);line-height:1.6;padding:6px 0}.fcol a:hover{color:var(--ink)}
-footer a{color:var(--ink-soft);text-decoration:none;font-size:15.5px}
-footer a:hover{color:var(--ink);text-decoration:underline}
-.fbot{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-soft)}
-@media(max-width:700px){.fcols{grid-template-columns:1fr 1fr}}
+.footer{margin-top:60px}
 @media(max-width:440px){.fcols{grid-template-columns:1fr}}
 .shot{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .shot summary{cursor:pointer;font-size:14.5px;font-weight:600;color:var(--ink-soft);list-style:none}
@@ -182,15 +169,8 @@ footer a:hover{color:var(--ink);text-decoration:underline}
 </head>
 <body>
 
-<header class="top"><div class="wrap">
-  <a class="brand" href="/">Natural<span>Comfort</span></a>
-  <nav class="topnav">
-    <a href="/#shop">כל הדגמים</a>
-    <a href="/gallery">גלריה</a>
-    <a href="/#contact">ייעוץ אישי</a>
-  </nav>
-  <a class="topwa" href="https://wa.me/972524400030">דברו איתנו · 052-4400030</a>
-</div></header>
+<div id="nc-header"></div>
+<script src="/site-header.js"></script>
 
 <main class="wrap">
 
@@ -292,32 +272,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
   <p class="since"><b>משנת 2006</b><span>מייצרים ריהוט בהתאמה אישית בישראל</span></p>
 </div>
 
-<footer>
-  <div class="wrap fcols">
-    <div class="fcol">
-      <h4>הקטלוג</h4>
-      <a href="/">דף הבית</a>
-      <a href="/#shop">כל הדגמים</a>
-      <a href="/#collections">קולקציות</a>
-      <a href="/gallery">גלריית עבודות</a>
-    </div>
-    <div class="fcol">
-      <h4>מדריכים</h4>
-      <a href="/before-move-in.html">ריהוט לפני איכלוס</a>
-      <a href="/small-bedroom-wardrobe.html">ארון לחדר שינה קטן</a>
-      <a href="/sacred-bookcase-living-room.html">ספריית קודש לסלון</a>
-      <a href="/shared-kids-room.html">חדר ילדים משותף</a>
-    </div>
-    <div class="fcol">
-      <h4>דברו איתנו</h4>
-      <a href="tel:0796622666">079-6622666</a>
-      <a href="https://wa.me/972524400030">וואטסאפ · 052-4400030</a>
-      <a href="/privacy.html">פרטיות ומחיקת מידע</a>
-      <a href="/accessibility.html">הצהרת נגישות</a>
-    </div>
-  </div>
-  <div class="wrap fbot">© Natural Comfort · נטורל קומפורט בע"מ</div>
-</footer>
+<footer class="footer"></footer>
 
 <script src="/compare.js"></script>
 <script src="/share.js"></script>
@@ -330,14 +285,14 @@ const track = (stage, productId) => { try{
 }catch(e){} };
 const S = { room:null, product:null, jobId:null, session:crypto.randomUUID(), phone:null, catalog:[] };
 
-/* שיתוף ממותג — הלוגו נצרב על ההדמיה לפני השליחה */
+/* שיתוף ממותג, הלוגו נצרב על ההדמיה לפני השליחה */
 ncShare.init({ button:'#ncShareBtn', copyButton:'#ncCopyBtn',
                logo:'/logo.png', site:'naturalcomfort.co.il' });
 
 /* ---------- catalog ---------- */
 /* ---------- הנחיות צילום לפי סוג המוצר ----------
-   ארון וספרייה הם מישור אנכי צמוד לקיר — צילום ישר של הקיר מספיק.
-   מיטה יושבת על הרצפה ותופסת שני מטר עומק — בלי רצפה בפריים
+   ארון וספרייה הם מישור אנכי צמוד לקיר, צילום ישר של הקיר מספיק.
+   מיטה יושבת על הרצפה ותופסת שני מטר עומק, בלי רצפה בפריים
    אין למודל איפה להעמיד אותה, והיא תצא מרחפת או מוקטנת. */
 const GUIDE = {
   against_wall: {
@@ -345,7 +300,7 @@ const GUIDE = {
     hint:  'צילום ישר של הקיר הריק, לאורך כולו. אור יום עדיף.',
     tips: [
       '<b>לעמוד מול מרכז הקיר</b>, לא מהצד. זווית מלוכסנת מותחת את הארון',
-      'שהקיר ייכנס שלם — <b>מהרצפה עד התקרה ומקצה לקצה</b>',
+      'שהקיר ייכנס שלם, <b>מהרצפה עד התקרה ומקצה לקצה</b>',
       'לפנות מהקיר רהיטים, תמונות ווילונות. מה שיישאר בתמונה יישאר בהדמיה',
       'המצלמה בגובה החזה, הטלפון ישר ולא מוטה למעלה או למטה',
       'אור יום מהצד. בלי פלאש ובלי שמש ישירה על הקיר',
@@ -356,7 +311,7 @@ const GUIDE = {
     hint:  'צילום ישר לתוך הנישה, כך שנראים שני הצדדים והתקרה שלה.',
     tips: [
       '<b>לעמוד מול פתח הנישה</b> ולצלם ישר לתוכה',
-      'ששני הצדדים והתקרה של הנישה ייראו — משם נגזרת ההתאמה',
+      'ששני הצדדים והתקרה של הנישה ייראו, משם נגזרת ההתאמה',
       'לפנות את הנישה לגמרי',
       'המצלמה בגובה החזה, הטלפון ישר',
     ],
@@ -365,18 +320,18 @@ const GUIDE = {
     title: 'החדר שלכם',
     hint:  'צילום מפתח החדר, כך שנראים גם הקיר וגם הרצפה שלפניו.',
     tips: [
-      '<b>לעמוד בפתח החדר</b> — זו הנקודה הרחוקה ביותר שיש',
+      '<b>לעמוד בפתח החדר</b>, זו הנקודה הרחוקה ביותר שיש',
       'שייראה גם הקיר שהראש ייצמד אליו <b>וגם הרצפה שלפניו</b>. בלי רצפה אין למיטה על מה לשבת',
       'המצלמה בגובה החזה, הטלפון אופקי',
       '<b>בלי עדשה רחבה במיוחד.</b> היא מעקמת את החדר וההדמיה תלך אחרי העיקום',
-      '<b>בחדר קטן</b> — אם הקיר לא נכנס שלם, לצלם את הפינה שבה הראש ייצמד',
+      '<b>בחדר קטן</b>, אם הקיר לא נכנס שלם, לצלם את הפינה שבה הראש ייצמד',
     ],
   },
   on_bed_frame: {
     title: 'המיטה שלכם',
     hint:  'צילום המיטה הקיימת מהצד, כך שנראה כל המשטח.',
     tips: [
-      '<b>לצלם את המיטה הקיימת</b> — המזרן יוחלף עליה',
+      '<b>לצלם את המיטה הקיימת</b>, המזרן יוחלף עליה',
       'שכל אורך המיטה ייכנס לפריים, לא רק חצי',
       'להסיר מצעים, כריות ושמיכות',
       'לעמוד בקצה או בפינה, המצלמה בגובה החזה',
@@ -387,7 +342,7 @@ const GUIDE = {
     hint:  'צילום שכולל את החלק הפנוי של הרצפה, מפתח החדר.',
     tips: [
       '<b>לעמוד בפתח החדר</b> ולצלם את החלק הפנוי',
-      'שהרצפה תיראה היטב — שם הרהיט יעמוד',
+      'שהרצפה תיראה היטב, שם הרהיט יעמוד',
       'המצלמה בגובה החזה, הטלפון אופקי',
       'בלי עדשה רחבה במיוחד',
     ],
@@ -407,7 +362,7 @@ shotGuide(null);
 fetch('viz-catalog.json').then(r=>r.json()).then(d=>{
   S.catalog = d.products;
 
-  // קיבוץ לפי קו — 26 מוצרים ברשימה שטוחה זה קיר
+  // קיבוץ לפי קו, 26 מוצרים ברשימה שטוחה זה קיר
   const lines = [...new Set(d.products.map(p=>p.line))];
   $('#picker').innerHTML = lines.map(ln=>`
     <div class="grp">
@@ -434,7 +389,7 @@ fetch('viz-catalog.json').then(r=>r.json()).then(d=>{
     const b = e.target.closest('.pick'); if(b) choose(b);
   };
 
-  // הגיע מדף מוצר עם דגם וגימור — בוחרים אוטומטית
+  // הגיע מדף מוצר עם דגם וגימור, בוחרים אוטומטית
   const q = new URLSearchParams(location.search);
   const model = q.get('model'), finish = q.get('finish');
   if(model){
@@ -458,7 +413,7 @@ drop.addEventListener('drop', e => e.dataTransfer.files[0] && load(e.dataTransfe
 file.onchange = () => file.files[0] && load(file.files[0]);
 
 function load(f){
-  if(!f.type.startsWith('image/')) return fail('צריך קובץ תמונה — JPG או PNG.');
+  if(!f.type.startsWith('image/')) return fail('צריך קובץ תמונה: JPG או PNG.');
   if(f.size > 12e6) return fail('התמונה גדולה מ-12MB. צלמו שוב או הקטינו.');
   const img = new Image();
   img.onload = () => {
@@ -501,7 +456,7 @@ async function pollJob(jobId, onStage){
       if(!r.ok) throw new Error(d.error || 'הייצור נכשל');
     }catch(e){
       if(String(e.message).includes('נכשל')) throw e;
-      continue;                      /* תקלת רשת רגעית — ממשיכים לשאול */
+      continue;                      /* תקלת רשת רגעית, ממשיכים לשאול */
     }
     if(d.ready) return d;
     if(d.stage && d.stage !== lastStage){
@@ -538,7 +493,7 @@ $('#go').onclick = async () => {
     track('generate_fail', S.product);
     $('#spin').style.display='none';
     $('#dl-title').textContent = 'משהו נתקע';
-    $('#dl-sub').textContent = e.message + ' — נסו שוב בעוד רגע.';
+    $('#dl-sub').textContent = e.message + '. נסו שוב בעוד רגע.';
     $('#go').disabled = false;
   }
 };
@@ -555,7 +510,7 @@ function applyResult(url, p){
   };
 }
 
-/* סליידר לפני/אחרי — התמונה שהעלו מול ההדמיה */
+/* סליידר לפני/אחרי, התמונה שהעלו מול ההדמיה */
 function buildCompare(url){
   try{
     $('#cmpBox').innerHTML = '';
@@ -566,7 +521,7 @@ function buildCompare(url){
 }
 
 /* ---------- השוואת גימורים ---------- */
-/* אותו חדר, אותו מסגור, אותו דגם — רק הגימור מתחלף.
+/* אותו חדר, אותו מסגור, אותו דגם, רק הגימור מתחלף.
    רץ רק אחרי שהסשן אומת, כך ש-reveal פותח כל הדמיה נוספת. */
 async function runJob(productId, onStage){
   const r = await fetch('/api/generate',{method:'POST',headers:{'content-type':'application/json'},
@@ -585,7 +540,7 @@ function setupFinishes(prod){
   if(!prod || !prod.model) return;
   const sibs = S.catalog.filter(x => x.model === prod.model);
   if(sibs.length < 2) return;
-  // הנוכחי ראשון, ואחריו עד שלושה נוספים — ארבעה משבצות
+  // הנוכחי ראשון, ואחריו עד שלושה נוספים, ארבעה משבצות
   const list = [prod, ...sibs.filter(x => x.id !== prod.id)].slice(0,4);
   const b = $('#finsBtn');
   b.hidden = false;
@@ -714,5 +669,7 @@ $('#verify-otp').onclick = async () => {
 };
 </script>
 <script src="/site.js"></script>
+<script src="/footer-upgrade.js" defer></script>
+<script src="/pwa.js" defer></script>
 </body>
 </html>

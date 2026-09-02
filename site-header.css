@@ -26,7 +26,16 @@
 .header a:focus-visible,.header button:focus-visible{outline:3px solid #17201d;outline-offset:3px}
 @media(max-width:900px){
   .header{height:66px}
-  .header .wrap{width:min(100% - 32px,1380px);grid-template-columns:1fr auto}
-  .header .logo{text-align:right;font-size:23px}
+  .header .wrap{width:min(100% - 16px,1380px);grid-template-columns:1fr auto;gap:8px}
+  .header .logo{text-align:right;font-size:22px;white-space:nowrap;letter-spacing:-.5px;min-width:0;overflow:hidden}
+  .header .logo small{font-size:8px;letter-spacing:3px}
   .header .nav{display:none}
+  /* בטלפון נשארים: המבורגר, סל (אם יש), טלפון. חיפוש דרך התפריט. */
+  .header .tools{gap:6px}
+  .header .icon{width:40px;height:40px;font-size:17px}
+  .header .icon[aria-label="חיפוש בקטלוג"]{display:none}
+}
+@media(max-width:380px){
+  .header .logo{font-size:19px}
+  .header .logo small{display:none}
 }

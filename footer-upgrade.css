@@ -8,8 +8,8 @@
   .footer-cta{padding:44px 0 32px;gap:22px}
   .footer-cta h2{font-size:32px}
   .footer-cta p{font-size:16px;color:#d6cfc5}
-  .footer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .footer-actions a{text-align:center;padding:0 10px;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .footer-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .footer-actions a{text-align:center;padding:0 16px;min-height:50px;display:flex;align-items:center;justify-content:center;font-size:17px;white-space:nowrap}
   .footer-grid{display:block;padding:8px 0 24px}
   .footer-brand{padding:24px 0 8px}
   .footer-brand .logo{display:none}
@@ -17,7 +17,8 @@
   .footer-contact{gap:0;font-size:16px}
   .footer-contact a{display:flex;align-items:center;min-height:44px}
   .footer-col{border-top:1px solid #ffffff1a}
-  .footer-col:last-of-type{border-bottom:1px solid #ffffff1a}
+  .footer-col:nth-of-type(3){border-bottom:1px solid #ffffff1a}
+  .footer-about{display:none}
   .footer-col summary{pointer-events:auto;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:52px;padding:4px 0}
   .footer-col summary:focus-visible{outline:3px solid #f6f1e9;outline-offset:-3px}
   .footer-col summary h3{margin:0;font-size:16px;letter-spacing:.06em;color:#eee8df;text-transform:none;font-weight:600}
@@ -30,7 +31,9 @@
   .footer-trust div{padding:14px 10px}
   .footer-trust b{font-size:15px}
   .footer-trust span{font-size:13px;color:#a9a39b}
-  .footer-bottom{display:block;padding:26px 0 112px;font-size:14px;color:#a9a39b}
+  .footer-bottom{display:block;padding:26px 0 130px;font-size:14px;color:#a9a39b}
+  .nc-install{margin:8px 0 26px!important}
+  .nc-install button{width:100%;min-height:50px!important;font-size:16px!important}
   .footer-mini-logo{display:inline-block;font:500 22px/1 var(--serif);color:#fff;margin-bottom:14px}
   .footer-legal{margin-top:14px;gap:0 18px}
   .footer-legal a{font-size:16px;min-height:44px;display:inline-flex;align-items:center;color:#d6cfc5}

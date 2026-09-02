@@ -44,7 +44,10 @@
     } else {
       b.addEventListener('click', onClick);
     }
-    (foot.querySelector('.wrap') || foot).appendChild(box);
+    // בפוטר המשותף: מעל שורת הזכויות והקישורים. אחרת: בסוף הפוטר.
+    var bottom = foot.querySelector('.footer-bottom');
+    if (bottom) bottom.parentNode.insertBefore(box, bottom);
+    else (foot.querySelector('.wrap') || foot).appendChild(box);
     return box;
   }
   function unmount() { if (box) { box.remove(); box = null; } }

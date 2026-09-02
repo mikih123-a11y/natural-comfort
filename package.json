@@ -2,5 +2,8 @@
   "name": "nc-visualizer",
   "private": true,
   "type": "module",
-  "dependencies": { "@netlify/blobs": "^8.1.0" }
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "@napi-rs/canvas": "^0.1.60"
+  }
 }

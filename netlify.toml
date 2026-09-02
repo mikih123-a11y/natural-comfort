@@ -1,11 +1,17 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  command = "npm install"
 
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@netlify/blobs", "@napi-rs/canvas"]
-  included_files = ["viz/catalog.json", "netlify/functions/og-fonts/*"]
+  included_files = [
+    "viz/catalog.json",
+    "netlify/functions/og-fonts/*",
+    "node_modules/@napi-rs/canvas/**",
+    "node_modules/@napi-rs/canvas-linux-x64-gnu/**"
+  ]
 
 [functions.generate]
   timeout = 120

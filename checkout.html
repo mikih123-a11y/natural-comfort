@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site-header.css">
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4;
@@ -23,89 +24,98 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 input,select,textarea{font-family:inherit;font-size:16px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+main.wrap,.intro,footer .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 
-.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700}
-.brand span{color:var(--champagne);font-weight:400}
-.top .tel{color:var(--ink-soft);font-size:14px}
+/* כותרת מצומצמת: מחלקות site-header.css, קישור אחד */
 
 .steps{display:flex;gap:10px;align-items:center;justify-content:center;padding:22px 0 0;
-  font-size:13px;color:var(--ink-mute)}
+  font-size:15px;color:var(--ink-soft)}
+.steps a{text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
 .steps b{color:var(--ink)}
 .steps i{font-style:normal;color:var(--champagne-lt,#C9BFAE)}
 
-.head{padding:26px 0 24px;text-align:center}
-.head h1{font-family:var(--display);font-size:clamp(28px,4.6vw,42px);font-weight:700;letter-spacing:-.02em}
-.head p{color:var(--ink-mute);margin-top:6px;font-size:15px}
+.co-head{padding:18px 0 30px;text-align:center}
+.co-head h1{font-family:var(--display);font-size:clamp(30px,3.6vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.co-head p{color:var(--ink-soft);margin-top:8px;font-size:16px}
 
 .layout{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start;padding-bottom:70px}
 @media(max-width:880px){.layout{grid-template-columns:1fr}.side{order:-1}}
 
 .card{background:#fff;border:1px solid var(--line);padding:24px;margin-bottom:14px}
-.card h2{font-family:var(--display);font-size:20px;font-weight:500;margin-bottom:16px}
+.card h2{font-family:var(--display);font-size:22px;font-weight:500;margin-bottom:16px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:560px){.grid2{grid-template-columns:1fr}}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:5px}
+.field label{display:block;font-size:15px;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
 .field label em{font-style:normal;color:var(--ink-mute);font-weight:400}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#fff;
-  padding:13px 14px;transition:.15s}
+.field input,.field select,.field textarea{width:100%;min-height:48px;border:1px solid var(--line);background:#fff;
+  padding:12px 14px;transition:.15s;color:var(--ink)}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--champagne);outline:none}
-.field input.bad,.field select.bad{border-color:#B4432E;background:#FDF7F5}
+.field input.bad,.field select.bad,.field [aria-invalid=true]{border-color:#B4432E;background:#FDF7F5}
 .field textarea{min-height:96px;resize:vertical}
 
 .pay{display:grid;gap:10px}
-.opt{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--line);padding:14px;cursor:pointer}
-.opt input{margin-top:4px;accent-color:var(--ink);flex:none;width:16px;height:16px}
-.opt b{display:block;font-size:15px}
-.opt small{color:var(--ink-mute);font-size:13px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);padding:14px 16px;min-height:44px;cursor:pointer}
+.opt input{margin-top:3px;accent-color:var(--ink);flex:none;width:20px;height:20px}
+.opt b{display:block;font-size:16px}
+.opt small{color:var(--ink-soft);font-size:14px}
 .opt:has(input:checked){border-color:var(--ink);background:#fff}
 
 .alert{background:#FDF6EE;border-inline-start:3px solid var(--oak);padding:14px 16px;
-  font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin:14px 0 4px}
+  font-size:15px;color:var(--ink-soft);line-height:1.55;margin:14px 0 4px}
 .alert b{color:var(--ink)}
 .hidden{display:none}
-.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-soft);margin-top:6px}
-.consent input{margin-top:3px;accent-color:var(--ink);flex:none;width:16px;height:16px}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--ink-soft);margin-top:8px;min-height:44px;cursor:pointer}
+.consent input{margin-top:2px;accent-color:var(--ink);flex:none;width:20px;height:20px}
 
 .err{background:#FAEDEA;border-inline-start:3px solid #B4432E;color:#8C3323;padding:11px 14px;
-  font-size:13.5px;margin-bottom:14px;display:none}
+  font-size:15px;margin-bottom:14px;display:none}
 .err.on{display:block}
 
-.side{background:#fff;border:1px solid var(--line);padding:22px;position:sticky;top:88px}
-.side h2{font-family:var(--display);font-size:19px;font-weight:500;margin-bottom:14px}
-.li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.side{background:#fff;border:1px solid var(--line);padding:22px;position:sticky;top:112px;align-self:start}
+@media(max-width:880px){.side{position:static}}
+.side h2{font-family:var(--display);font-size:21px;font-weight:500;margin-bottom:14px}
+.li{display:grid;grid-template-columns:60px 1fr auto;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
 .li:last-of-type{border-bottom:0}
-.li .ph{width:52px;height:52px;background:var(--panel);overflow:hidden}
+.li .ph{width:60px;height:60px;background:var(--panel);overflow:hidden}
 .li .ph img{width:100%;height:100%;object-fit:contain}
-.li b{font-size:14px;font-weight:600;display:block;line-height:1.35}
-.li small{font-size:12px;color:var(--ink-mute);display:block}
-.li .m{font-size:13.5px;font-weight:600;white-space:nowrap}
-.tot{display:flex;justify-content:space-between;border-top:1px solid var(--line);
-  margin-top:10px;padding-top:14px;font-size:16px;font-weight:600}
-.tot b{font-family:var(--display);font-size:23px;font-weight:500}
+.li b{font-size:15px;font-weight:600;display:block;line-height:1.35}
+.li small{font-size:14px;color:var(--ink-soft);display:block}
+.li .m{font-size:15px;font-weight:600;white-space:nowrap;text-align:start}
+.row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;font-size:16px;color:var(--ink-soft)}
+.row span:last-child{color:var(--ink);white-space:nowrap}
+.row .sub{display:block;font-size:14px;color:var(--ink-soft);margin-top:2px;white-space:normal}
+.row.pay{font-size:15px;padding-top:4px}
+.tot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);
+  margin-top:8px;padding-top:14px;font-size:17px;font-weight:600}
+.tot b{font-family:var(--display);font-size:24px;font-weight:500}
+.rows{border-top:1px solid var(--line);margin-top:10px;padding-top:6px}
+.more{margin-top:10px;font-size:14px}
+.more summary{cursor:pointer;color:var(--ink);text-decoration:underline;min-height:44px;display:flex;align-items:center;list-style:none}
+.more summary::-webkit-details-marker{display:none}
 .send{display:block;width:100%;text-align:center;background:var(--oak);color:#fff;
   padding:17px;font-size:16px;font-weight:600;margin-top:16px;transition:.2s var(--ease)}
 .send:hover{background:#a5793f}
 .send:disabled{background:var(--panel);color:var(--ink-mute);cursor:not-allowed}
-.note{font-size:12.5px;color:var(--ink-mute);margin-top:14px;line-height:1.55}
-.back{display:block;text-align:center;margin-top:11px;font-size:14px;color:var(--ink-mute);text-decoration:underline}
+.note{font-size:14px;color:var(--ink-soft);margin-top:14px;line-height:1.55}
+.back{display:block;text-align:center;margin-top:8px;font-size:15px;color:var(--ink-soft);text-decoration:underline;min-height:44px;line-height:44px}
 
-footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:16px;color:var(--ink-soft)}
 </style>
 </head>
 <body>
 
-<header class="top"><div class="wrap">
-  <a class="brand" href="/">Natural<span>Comfort</span></a>
-  <a class="tel" href="tel:0796622666">079-6622666</a>
+<div class="notice">ייעוץ אישי · ייצור ישראלי · התאמה אישית מלאה</div>
+<header class="header"><div class="wrap">
+  <nav class="nav"><a href="/cart.html">חזרה לסל</a></nav>
+  <a class="logo" href="/">Natural Comfort<small>CUSTOM FURNITURE</small></a>
+  <div class="tools"><a class="icon" href="tel:0796622666" aria-label="טלפון">☎</a></div>
 </div></header>
 
-<div class="wrap">
+<div class="intro">
   <div class="steps"><a href="/cart.html">סל</a> <i>←</i> <b>פרטי ההזמנה</b> <i>←</i> <span>אישור</span></div>
-  <div class="head">
+  <div class="co-head">
     <h1>פרטי ההזמנה</h1>
     <p>אין תשלום באתר. נחזור אליכם לאישור, לתיאום מדידה ולגבייה.</p>
   </div>
@@ -124,7 +134,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
 
   <div class="layout">
     <div>
-      <div class="err" id="err"></div>
+      <div class="err" id="err" role="alert"></div>
 
       <section class="card">
         <h2>מי מזמין</h2>
@@ -181,7 +191,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
             <b>שימו לב:</b> רהיט בהתאמה אישית מיוצר בדיוק לפי המידות שתמסרו, ולכן
             <b>אינו ניתן להחזרה, להחלפה או לתיקון</b> אם המידות שנמסרו אינן נכונות.
             באחריותכם גם לוודא שהרהיט נכנס לחלל ושיש גישה להכנסתו (מדרגות, מעלית, פתח דלת).
-            אם יש ספק — עדיף לבחור מדידה מקצועית.
+            אם יש ספק, עדיף לבחור מדידה מקצועית.
           </p>
           <label class="consent"><input type="checkbox" id="f-resp">
             <span>אני מאשר/ת שהמידות שמסרתי נכונות, ושהאחריות עליהן היא עליי בלבד.</span></label>
@@ -209,13 +219,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(
     <aside class="side">
       <h2>ההזמנה שלכם</h2>
       <div id="lines"></div>
-      <div class="tot"><span>סה״כ</span><b id="tot">—</b></div>
-      <div id="shipbox" class="hidden" style="border-top:1px solid var(--line);margin-top:10px;padding-top:10px">
-        <div style="display:flex;justify-content:space-between;font-weight:600;font-size:14px">
-          <span id="shiplbl">משלוח והרכבה</span><b id="shiptot">—</b>
-        </div>
-        <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:12px;color:var(--ink-mute);line-height:1.7"></ul>
+      <div class="rows">
+        <div class="row"><span>מחיר הרהיט</span><span id="items-tot">—</span></div>
+        <div class="row" id="shipbox" hidden><span><span id="shiplbl">משלוח והרכבה</span><small class="sub">לתשלום בבית למרכיב</small></span><span id="shiptot">—</span></div>
       </div>
+      <div class="tot"><span>סה״כ עלות ההזמנה</span><b id="tot">—</b></div>
+      <div class="row pay"><span>לתשלום באתר עכשיו</span><span>₪0</span></div>
+      <details class="more" id="shipmore" hidden>
+        <summary>תנאי המשלוח וההרכבה</summary>
+        <ul id="shipnote" style="margin:8px 0 0;padding-inline-start:16px;font-size:14px;color:var(--ink-soft);line-height:1.7"></ul>
+      </details>
       <button class="send" id="send" type="button">שליחת ההזמנה</button>
       <a class="back" href="/cart.html">חזרה לסל</a>
       <p class="note" id="sidenote"></p>
@@ -237,16 +250,18 @@ $('#lines').innerHTML = items.map(it => `
     <div class="ph">${it.image ? `<img src="${it.image}" alt="">` : ''}</div>
     <div><b>${it.name}</b><small>${(it.config||[]).slice(0,2).join(' · ')}${it.qty>1?` · כמות ${it.qty}`:''}</small></div>
     <div class="m">${typeof it.price==='number' ? ncCart.nis(it.price*(it.qty||1)) : 'לפי התאמה'}
-      ${typeof it.ship==='number' ? `<small style="display:block;font-weight:400;font-size:11.5px;color:var(--ink-mute)">${it.shipLabel||'משלוח'} ${ncCart.nis(it.ship*(it.qty||1))} · בבית</small>` : ''}
+      ${typeof it.ship==='number' ? `<small style="display:block;font-weight:400;font-size:13.5px;color:var(--ink-soft)">${it.shipLabel||'משלוח'} ${ncCart.nis(it.ship*(it.qty||1))} · בבית</small>` : ''}
     </div>
   </div>`).join('');
 
 const t = ncCart.total();
-$('#tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
-
 const shipT = ncCart.shipTotal();
+// סה״כ עלות ההזמנה = רהיט + משלוח והרכבה, כמו בסל. הנתונים שנשלחים לא השתנו.
+$('#items-tot').textContent = t !== null ? ncCart.nis(t) : 'לפי התאמה';
+$('#tot').textContent = t !== null ? ncCart.nis(t + (shipT || 0)) : 'לפי התאמה';
 if (shipT !== null) {
-  $('#shipbox').classList.remove('hidden');
+  $('#shipbox').hidden = false;
+  $('#shipmore').hidden = false;
   $('#shiplbl').textContent = ncCart.shipLabelAll();
   $('#shiptot').textContent = ncCart.nis(shipT);
   $('#shipnote').innerHTML = ncCart.shipNote().map(x => `<li>${x}</li>`).join('');
@@ -288,15 +303,16 @@ const okMail  = m => /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(m);
 
 $('#send').addEventListener('click', async () => {
   clr();
-  ['f-first','f-last','f-phone','f-email','f-city','f-street'].forEach(i=>$('#'+i).classList.remove('bad'));
+  ['f-first','f-last','f-phone','f-email','f-city','f-street'].forEach(i=>{ $('#'+i).classList.remove('bad'); $('#'+i).removeAttribute('aria-invalid'); });
+  const bad = id => { $('#'+id).classList.add('bad'); $('#'+id).setAttribute('aria-invalid','true'); $('#'+id).focus(); };
 
   const v = id => $('#'+id).value.trim();
-  if(v('f-first').length < 2){ $('#f-first').classList.add('bad'); return err('צריך שם פרטי.'); }
-  if(v('f-last').length < 2){ $('#f-last').classList.add('bad'); return err('צריך שם משפחה.'); }
-  if(!okPhone(v('f-phone'))){ $('#f-phone').classList.add('bad'); return err('מספר נייד ישראלי לא תקין. לדוגמה 0501234567.'); }
-  if(!okMail(v('f-email'))){ $('#f-email').classList.add('bad'); return err('כתובת אימייל לא תקינה.'); }
-  if(!v('f-city')){ $('#f-city').classList.add('bad'); return err('צריך למלא עיר.'); }
-  if(!v('f-street')){ $('#f-street').classList.add('bad'); return err('צריך למלא רחוב ומספר.'); }
+  if(v('f-first').length < 2){ bad('f-first'); return err('צריך שם פרטי.'); }
+  if(v('f-last').length < 2){ bad('f-last'); return err('צריך שם משפחה.'); }
+  if(!okPhone(v('f-phone'))){ bad('f-phone'); return err('מספר נייד ישראלי לא תקין. לדוגמה 0501234567.'); }
+  if(!okMail(v('f-email'))){ bad('f-email'); return err('כתובת אימייל לא תקינה.'); }
+  if(!v('f-city')){ bad('f-city'); return err('צריך למלא עיר.'); }
+  if(!v('f-street')){ bad('f-street'); return err('צריך למלא רחוב ומספר.'); }
   if(selfMeasure() && !$('#f-resp').checked)
     return err('כדי להזמין לפי מידות שלכם צריך לאשר שהמידות נכונות ובאחריותכם.');
   if(!$('#f-terms').checked) return err('צריך לאשר את התקנון כדי לשלוח.');

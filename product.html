@@ -38,11 +38,12 @@ main.wrap,footer .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 /* עמודת המוצר נשארת מול הלקוח בזמן שהוא בוחר. נעצרת לפני "אצל לקוחות". */
 .pcol{position:sticky;top:96px}
 @media(max-height:760px){.pcol{position:static}}
-.head{margin-top:18px}
+.head{margin-bottom:16px}
+.head .price{margin-top:12px}
 @media(max-width:900px){
   .pd{grid-template-columns:1fr;gap:0}
   .pcol,.ccol{display:contents}
-  .shot{order:-6}.thumbs{order:-5}.head{order:-4;margin-bottom:8px}.vizcard{order:-3;margin-bottom:8px}
+  .head{order:-6;margin-bottom:8px}.shot{order:-5}.thumbs{order:-4}.vizcard{order:-3;margin-bottom:8px}
   .acts{order:1}.spec{order:2}.real{order:3}
 }
 
@@ -222,9 +223,6 @@ footer a:hover{color:var(--ink)}
 
   <div class="pd">
     <div class="pcol">
-      <div class="shot" id="shot"><div class="tag">הדמיה</div><div class="zoomhint">לחצו להגדלה</div></div>
-      <div class="thumbs" id="thumbs"></div>
-
       <div class="head">
       <div class="line" id="line">—</div>
       <h1 id="name">—</h1>
@@ -234,6 +232,9 @@ footer a:hover{color:var(--ink)}
       <p class="ship" id="ship" style="display:none"></p>
       <p class="made" id="made">—</p>
       </div>
+      <div class="shot" id="shot"><div class="tag">הדמיה</div><div class="zoomhint">לחצו להגדלה</div></div>
+      <div class="thumbs" id="thumbs"></div>
+
 
       <div class="acts">
         <button class="b0" id="addCart" type="button">

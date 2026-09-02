@@ -39,6 +39,8 @@
   .nc-install{margin:8px 0 26px!important}
   .nc-install button{width:100%;min-height:50px!important;font-size:16px!important}
   .footer-mini-logo{display:inline-block;font:500 22px/1 var(--serif);color:#fff;margin-bottom:14px}
+  .footer-copy span{display:block;line-height:1.7}
+  .footer-copy .sep{display:none}
   .footer-legal{margin-top:14px;gap:0 18px}
   .footer-legal a{font-size:16px;min-height:44px;display:inline-flex;align-items:center;color:#d6cfc5}
 }

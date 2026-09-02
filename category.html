@@ -55,9 +55,11 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
   .head p{font-size:16px}
   .filt{margin:22px 0 22px}
   .filt h2{font-size:15px;margin-bottom:6px}
-  /* במקום גלילה אופקית שנחתכת: הטאבים נשברים לשורות */
-  .sizes{flex-wrap:wrap;overflow:visible;gap:0 24px;padding-bottom:4px}
-  .sz{min-height:44px;font-size:16px;padding:0 0 2px}
+  /* שורה אחת נגללת לצדדים, בלי שבירה. קצה שמאלי דהוי רומז שיש עוד. */
+  .sizes{flex-wrap:nowrap;overflow-x:auto;gap:0 24px;padding-bottom:6px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+    mask-image:linear-gradient(to left,#000 calc(100% - 48px),transparent);-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 48px),transparent)}
+  .sizes::after{content:"";flex:none;width:40px}
+  .sz{min-height:44px;font-size:16px;padding:0 0 2px;white-space:nowrap}
   .grid{padding-bottom:48px}
 }
 
@@ -144,8 +146,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const byType = subs.length > 1 && !q.get('line');
   $('#flabel').textContent = byType ? 'סוג' : ($('#flabel').textContent);
   const opts  = byType ? ['all', ...subs] : ['all', ...(line.sizes || [])];
+  // שמות קצרים לטאבים בלבד. ערכי הקטגוריות והכרטיסים לא משתנים.
+  const SHORT = { 'ארונות משולבים · ספרייה': 'משולבים וספריות' };
   const label = s => s === 'all' ? 'הכל'
-                   : byType ? d.lines[s].name
+                   : byType ? (SHORT[d.lines[s].name] || d.lines[s].name)
                    : (line.size_label || '{n}').replace('{n}', s);
   const has   = s => s === 'all' || (byType ? mine.some(m => m.line_id === s) : mine.some(m => m.size === s));
 
@@ -173,6 +177,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const show = i => {
     const s = opts[i];
     document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+    const on = document.querySelector('.sz[aria-pressed="true"]');
+    if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
     const list = s === 'all' ? mine
                : byType ? mine.filter(m => m.line_id === s)
                : mine.filter(m => m.size === s);

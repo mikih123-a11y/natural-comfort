@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site-header.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBFAF8">
+<link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4;
@@ -19,19 +23,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-.wrap{max-width:820px;margin:0 auto;padding:0 24px}
-.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
-.top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700;text-decoration:none}
-.brand span{color:var(--champagne);font-weight:400}
-.top .tel{color:var(--ink-soft);font-size:14px;text-decoration:none}
-.top nav{display:flex;align-items:center;gap:18px}
-.top .back{font-size:14.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
-.top .back:hover{border-color:var(--oak)}
+main.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+/* הכותרת המשותפת: site-header.css */
 .backbig{display:inline-block;margin:34px 0 0;font-size:16px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:13px 26px;background:#fff}
 .backbig:hover{border-color:var(--oak)}
 .head{padding:52px 0 10px}
-.head .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);margin-bottom:10px}
 .head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
 .head p{color:var(--ink-soft);margin-top:10px;font-size:17.5px;line-height:1.7}
 .doc{padding:14px 0 80px}
@@ -50,19 +46,17 @@ a{color:inherit}
 .toc a:hover{color:var(--ink)}
 .toc span{color:var(--line);margin:0 8px}
 .upd{font-size:14.5px;line-height:1.75;color:var(--ink-soft);margin-top:30px}
-footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
-footer .wrap{max-width:1080px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:16px;color:var(--ink-soft)}
+footer .wrap{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{min-height:44px;display:inline-flex;align-items:center}
 footer a{text-decoration:none}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
-  <a class="brand" href="/">Natural<span>Comfort</span></a>
-  <nav><a class="back" href="/">חזרה לאתר</a><a class="tel" href="tel:0796622666">079-6622666</a></nav>
-</div></header>
+<div id="nc-header"></div>
+<script src="/site-header.js"></script>
 <main class="wrap">
   <div class="head">
-    <div class="kick">Terms</div>
     <h1>תקנון האתר</h1>
     <p>תנאי השימוש והרכישה באתר Natural Comfort. שימוש באתר או שליחת הזמנה מהווים הסכמה לתנאים שלהלן.</p>
   </div>
@@ -143,7 +137,7 @@ footer a{text-decoration:none}
     <h2 id="cancel">9. ביטול עסקה</h2>
     <ul>
       <li>ניתן לבטל הזמנה בתוך <b>2 ימי עסקים</b> ממועד אישור ההזמנה, כל עוד לא החל תהליך הייצור.</li>
-      <li>הביטול ייעשה בטלפון, בוואטסאפ או בדואר אלקטרוני.</li>
+      <li>הביטול ייעשה בטלפון או בדואר אלקטרוני.</li>
       <li>דמי ביטול: עד 5% מסכום העסקה או 100 ₪, הנמוך מביניהם.</li>
       <li><b>לא ניתן לבטל הזמנה של מוצר בהתאמה אישית</b> (מידה, צבע, ריפוד או חלוקה פנימית) לאחר 48 שעות מאישור ההזמנה, או לאחר שהייצור החל, לפי המוקדם.</li>
       <li>לא ניתן לבטל רכישת מוצרים שנפתחו, נפגמו או יוצרו במיוחד לפי דרישת הלקוח.</li>
@@ -188,7 +182,6 @@ footer a{text-decoration:none}
     <h2 id="contact">16. יצירת קשר</h2>
     <ul>
       <li>טלפון: <a href="tel:0796622666">079-6622666</a></li>
-      <li>וואטסאפ: <a href="https://wa.me/972524400030">052-4400030</a></li>
       <li>דואר אלקטרוני: <a href="mailto:mikiH123@gmail.com">mikiH123@gmail.com</a></li>
       <li>שעות פעילות: ימים א׳–ה׳, 08:30–16:00</li>
     </ul>
@@ -201,6 +194,6 @@ footer a{text-decoration:none}
   <div>© Natural Comfort · מקבוצת קניה טובה</div>
   <div><a href="/about.html">אודות</a> · <a href="/terms.html">תקנון</a> · <a href="/privacy.html">פרטיות</a> · <a href="/accessibility.html">נגישות</a></div>
 </div></footer>
-<script src="/site.js"></script>
+<script src="/site.js"></script><script src="/pwa.js" defer></script>
 </body>
 </html>

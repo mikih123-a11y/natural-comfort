@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site-header.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FBFAF8">
+<link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png">
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4;
@@ -19,16 +23,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:var(--oak)}
-.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+main.wrap{max-width:820px;margin:0 auto;padding:0 24px}
 
-.top{border-bottom:1px solid var(--line)}
-.top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700;color:var(--ink);text-decoration:none}
-.brand span{color:var(--champagne);font-weight:400}
-.top .tel{color:var(--ink-soft);font-size:14px;text-decoration:none}
-.top nav{display:flex;align-items:center;gap:18px}
-.top .back{font-size:14.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
-.top .back:hover{border-color:var(--oak)}
+/* הכותרת המשותפת: site-header.css */
 .backbig{display:inline-block;margin:30px 0 0;font-size:16px;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:13px 26px;background:#fff}
 .backbig:hover{border-color:var(--oak)}
 
@@ -52,21 +49,19 @@ li{margin-bottom:10px}
   font-size:16px;color:var(--ink-soft);margin:14px 0}
 
 footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 60px;
-  font-size:14.5px;color:var(--ink-soft);text-align:center}
-footer a{color:var(--ink-soft);text-decoration:none;margin:0 8px}
+  font-size:16px;color:var(--ink-soft);text-align:center}
+footer .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+footer a{color:var(--ink-soft);text-decoration:none;margin:0 8px;min-height:44px;display:inline-flex;align-items:center}
 </style>
 </head>
 <body>
 
-<header class="top"><div class="wrap">
-  <a class="brand" href="/">Natural<span>Comfort</span></a>
-  <nav><a class="back" href="/">חזרה לאתר</a><a class="tel" href="tel:0796622666">079-6622666</a></nav>
-</div></header>
+<div id="nc-header"></div>
+<script src="/site-header.js"></script>
 
 <main class="wrap">
   <div class="head">
     <h1>הצהרת נגישות</h1>
-    <p class="upd">עודכן ביולי 2026</p>
   </div>
 
   <section>
@@ -123,7 +118,7 @@ footer a{color:var(--ink-soft);text-decoration:none;margin:0 8px}
   <section>
     <h2>הנגשת השירות</h2>
     <p>
-      מעבר לאתר, אנחנו זמינים לכל פנייה גם בטלפון ובוואטסאפ, ונשמח לסייע בבחירת מוצר,
+      מעבר לאתר, אנחנו זמינים לכל פנייה גם בטלפון, ונשמח לסייע בבחירת מוצר,
       בהרכבת הזמנה ובמסירת מידע, ללא צורך בשימוש באתר.
     </p>
   </section>
@@ -139,7 +134,6 @@ footer a{color:var(--ink-soft);text-decoration:none;margin:0 8px}
       <h3>רכז/ת הנגישות</h3>
       <p><b>שם:</b> מיקי חיים</p>
       <p><b>טלפון:</b> <a href="tel:0796622666">079-6622666</a></p>
-      <p><b>וואטסאפ:</b> <a href="https://wa.me/972524400030">052-4400030</a></p>
       <p><b>דוא״ל:</b> <a href="mailto:mikiH123@gmail.com">mikiH123@gmail.com</a></p>
     </div>
 
@@ -171,6 +165,6 @@ footer a{color:var(--ink-soft);text-decoration:none;margin:0 8px}
   </div>
 </footer>
 
-<script src="/site.js"></script>
+<script src="/site.js"></script><script src="/pwa.js" defer></script>
 </body>
 </html>

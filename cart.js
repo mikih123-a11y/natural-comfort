@@ -1,5 +1,5 @@
 /* ===========================================================
-   Natural Comfort — סל הזמנות
+   Natural Comfort: סל הזמנות
    נשמר בדפדפן של הלקוח (localStorage). בלי שרת.
 
    שימוש:
@@ -31,7 +31,7 @@
   function items() { return read(KEY_CART, []); }
   function save(list) { write(KEY_CART, list); paintAll(); }
 
-  /* מזהה ייחודי להרכבה — אותו דגם בגימור אחר הוא שורה נפרדת */
+  /* מזהה ייחודי להרכבה: אותו דגם בגימור אחר הוא שורה נפרדת */
   function signature(it) {
     return [it.modelId, (it.config || []).join('|')].join('::');
   }
@@ -56,7 +56,7 @@
         priceText: item.priceText || '',
         ship: (typeof item.ship === 'number' && isFinite(item.ship)) ? item.ship : null,
         shipLabel: item.shipLabel || 'משלוח והרכבה',
-        shipPaid: item.shipPaid || 'משולם בבית למרכיב',
+        shipPaid: item.shipPaid || 'לתשלום בבית למרכיב',
         config: item.config || [],
         repeat: !!item.repeat,          // הגיע מהזמנה קודמת
         qty: item.qty || 1,
@@ -88,7 +88,7 @@
     return items().reduce(function (n, x) { return n + (x.qty || 1); }, 0);
   }
 
-  /* מחזיר null אם יש ולו פריט אחד בלי מחיר — לא מציגים סכום חלקי */
+  /* מחזיר null אם יש ולו פריט אחד בלי מחיר: לא מציגים סכום חלקי */
   function total() {
     var list = items(), sum = 0;
     for (var i = 0; i < list.length; i++) {
@@ -98,7 +98,7 @@
     return sum;
   }
 
-  /* דמי משלוח והרכבה — מחיר קבוע לכל דגם, לא מתווסף למחיר המוצר */
+  /* דמי משלוח והרכבה: מחיר קבוע לכל דגם, לא מתווסף למחיר המוצר */
   function shipTotal() {
     var list = items(), sum = 0, known = false;
     for (var i = 0; i < list.length; i++) {
@@ -109,14 +109,14 @@
 
   var SHIP_NOTE = [
     'מחיר המשלוח כולל הרכבה מקצועית בבית הלקוח. התשלום משולם ישירות למרכיב.',
-    'הרמת המוצר לקומה שלישית ומעלה ללא מעלית — תוספת 50 ₪ לקומה.',
+    'הרמת המוצר לקומה שלישית ומעלה ללא מעלית: תוספת 50 ₪ לקומה.',
     'במקרה של צורך בשירותי מנוף חיצוניים, הלקוח משלם את הסכום הנדרש.',
     'אין אספקה לאזור אילת והערבה. אזורים מעבר לקו הירוק מצריכים אישור מראש.'
   ];
 
   function shipNote() { return SHIP_NOTE.slice(); }
 
-  /* תווית אחת לסל. אם יש גם ארון וגם מזרן — תווית משולבת. */
+  /* תווית אחת לסל. אם יש גם ארון וגם מזרן: תווית משולבת. */
   function shipLabelAll() {
     var s = {};
     items().forEach(function (x) {
@@ -174,7 +174,7 @@
 
   function orders() { return read(KEY_ORDERS, []); }
 
-  /* ---------- טקסט ההזמנה — נשלח אליך ומוצג ללקוח ---------- */
+  /* ---------- טקסט ההזמנה: נשלח אליך ומוצג ללקוח ---------- */
   function orderText(list) {
     var L = [];
     (list || items()).forEach(function (it, i) {
@@ -186,12 +186,15 @@
       if (it.url) L.push('   ' + it.url);
       L.push('');
     });
+    /* אותו סיכום כמו בסל: רהיט, משלוח והרכבה, סה״כ עלות ההזמנה */
     var t = total();
-    L.push(t !== null ? 'סה״כ: ' + nis(t) : 'סה״כ: חלק מהפריטים מתומחרים לפי התאמה אישית');
     var sh = shipTotal();
+    L.push(t !== null ? 'מחיר הרהיט: ' + nis(t) : 'מחיר הרהיט: חלק מהפריטים מתומחרים לפי התאמה אישית');
     if (sh !== null) {
-      L.push(shipLabelAll() + ': ' + nis(sh) + ', משולם ישירות בבית ולא כלול בסה״כ');
+      L.push(shipLabelAll() + ': ' + nis(sh) + ' (לתשלום בבית למרכיב)');
     }
+    L.push(t !== null ? 'סה״כ עלות ההזמנה: ' + nis(t + (sh || 0)) : 'סה״כ עלות ההזמנה: לפי התאמה');
+    L.push('לתשלום באתר: ₪0');
     return L.join('\n');
   }
 

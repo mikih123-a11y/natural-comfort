@@ -3141,6 +3141,16 @@
           "כסוף": "/products/thumbs/addon-alu-edge-silver.jpg",
           "לבן": "/products/thumbs/addon-alu-edge-white.jpg"
         }
+      },
+      {
+        "id": "extra-rail",
+        "name": "מוט תלייה נוסף",
+        "desc": "מוט תלייה נוסף בתוך הארון · מכפיל את שטח התלייה בתא",
+        "price": 50,
+        "ui": "addon",
+        "categories": [
+          "wardrobe"
+        ]
       }
     ]
   },
@@ -3199,7 +3209,7 @@
         "finish": "שמנת",
         "caption": "ספריית קודש דגם אליהו · 3 דלתות",
         "image": "/products/gallery-eliyahu-shamenet.jpg",
-        "thumb": "/products/thumbs/gallery-eliyahu-shamenet.jpg",
+        "thumb": "/products/thumbs/thumb-gallery-eliyahu-shamenet.jpg",
         "model": "kodesh-3dl-b"
       },
       {
@@ -3207,7 +3217,7 @@
         "finish": "לבן",
         "caption": "ספריית קודש דגם אליהו · 5 דלתות",
         "image": "/products/gallery-eliyahu-lavan.jpg",
-        "thumb": "/products/thumbs/gallery-eliyahu-lavan.jpg",
+        "thumb": "/products/thumbs/thumb-gallery-eliyahu-lavan.jpg",
         "model": null
       }
     ]

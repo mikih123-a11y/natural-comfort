@@ -4,7 +4,7 @@
    מה לא נשמר לעולם: הזמנות, סל, פרטי לקוח, אדמין, פונקציות, POST.
    כדי לשחרר עדכון: להעלות מספר גרסה חדש ב-VERSION. */
 
-const VERSION = 'nc-2026-09-02a';
+const VERSION = 'nc-2026-09-02b';
 const SHELL = `${VERSION}-shell`;
 const PAGES = `${VERSION}-pages`;
 const IMAGES = `${VERSION}-images`;
@@ -65,7 +65,10 @@ self.addEventListener('fetch', (e) => {
     e.respondWith(
       caches.match(req).then((hit) => {
         const net = fetch(req).then((res) => {
-          if (res.ok) caches.open(isImage ? IMAGES : SHELL).then((c) => c.put(req, res.clone()));
+          if (res.ok) {
+            const copy = res.clone(); // לשכפל לפני שהדף צורך את התגובה
+            caches.open(isImage ? IMAGES : SHELL).then((c) => c.put(req, copy));
+          }
           return res;
         }).catch(() => hit);
         return hit || net;

@@ -8,7 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/premium-inner.css">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/site-header.css">
+<link rel="stylesheet" href="/footer-upgrade.css">
+<link rel="stylesheet" href="/premium-inner.css">
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4; --champagne:#A79A88; --champagne-lt:#C9BFAE;
@@ -22,23 +24,8 @@ img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+main.wrap,footer .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
-.top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
-.top .brand,.top .tel{flex:none}
-.brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
-.brand span{color:var(--champagne-txt);font-weight:400}
-.nav{display:flex;flex-wrap:nowrap;gap:22px;font-size:16px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
-.nav::-webkit-scrollbar{display:none}
-.nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
-.nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
-.nav a:hover,.nav a[aria-current]{color:var(--ink)}
-.nav a:hover::after,.nav a[aria-current]::after{width:100%}
-.tel{display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:14.5px;font-weight:600;white-space:nowrap;transition:.2s var(--ease)}
-.tel:hover{background:#000}
-.tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
-@media(max-width:900px){.nav{display:none}}
 
 .crumb{font-size:15px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
 .crumb a:hover{color:var(--ink)}
@@ -51,7 +38,6 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 /* מסנן גודל — ציר הגודל של הקו. על המסילה, כמו כל בורר באתר. */
 .filt{margin:30px 0 34px}
 .filt h2{font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:10px}
-.track,.slider{display:none}
 .sizes{display:flex;align-items:center;gap:28px;overflow-x:auto;scrollbar-width:none;padding-bottom:11px;border-bottom:1px solid var(--line)}
 .sizes::-webkit-scrollbar{display:none}
 .sz{padding:0 0 3px;border:0;background:none;font-size:16px;color:var(--ink-mute);white-space:nowrap;flex:none;min-height:34px;border-bottom:1.5px solid transparent;transition:color .2s}
@@ -79,22 +65,26 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .empty b{font-family:var(--display);font-size:20px;font-weight:500;color:var(--ink);display:block;margin-bottom:8px}
 .empty a{color:var(--oak);text-decoration:underline}
 
-footer{border-top:1px solid var(--line);padding:32px 0;font-size:15.5px;color:var(--ink-soft);font-weight:400}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.fl{display:flex;gap:20px;flex-wrap:wrap}
-footer a:hover{color:var(--ink)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="top"><div class="wrap">
-  <a href="/" class="brand">Natural<span>Comfort</span></a>
-  <nav class="nav" id="nav"></nav>
-  <a class="tel" href="tel:079-6622666">
-    <svg width="15" height="15" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    079-6622666
-  </a>
+<div class="notice">ייעוץ אישי · ייצור ישראלי · התאמה אישית מלאה</div>
+<header class="header"><div class="wrap">
+  <nav class="nav">
+    <a href="/#collections">קולקציות</a>
+    <a href="/#shop">כל הדגמים</a>
+    <a href="/gallery.html">גלריה</a>
+    <a href="/viz/">הדמיה בחדר</a>
+    <a href="/myorder.html">מעקב הזמנה</a>
+    <a href="/#contact">ייעוץ אישי</a>
+  </nav>
+  <a class="logo" href="/">Natural Comfort<small>CUSTOM FURNITURE</small></a>
+  <div class="tools">
+    <a class="icon" href="/#shop" aria-label="חיפוש בקטלוג">⌕</a>
+    <a class="icon" href="tel:0796622666" aria-label="טלפון">☎</a>
+  </div>
 </div></header>
 
 <main class="wrap">
@@ -103,17 +93,13 @@ footer a:hover{color:var(--ink)}
 
   <div class="filt">
     <h2 id="flabel">—</h2>
-    <div class="track"><div class="slider" id="slider"></div></div>
     <div class="sizes" id="sizes"></div>
   </div>
 
   <div class="grid" id="grid"></div>
 </main>
 
-<footer><div class="wrap">
-  <div>© 2026 Natural Comfort</div>
-  <div class="fl"><a href="/אודות/">אודות</a><a href="/תקנון/">תקנון</a><a href="/privacy.html">פרטיות</a><a href="/נגישות/">נגישות</a></div>
-</div></footer>
+<footer class="footer"></footer>
 
 <script>
 const $ = s => document.querySelector(s);
@@ -138,8 +124,6 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   // ניווט מהעולמות — ריקים לא מוצגים
   const groupOf = m => d.lines[m.line_id] && d.lines[m.line_id].group;
   const alive   = g => d.models.some(m => groupOf(m) === g.id);
-  $('#nav').innerHTML = (d.groups || []).filter(alive)
-    .map(g => `<a href="?group=${g.id}"${g.id === groupId ? ' aria-current="page"' : ''}>${g.name}</a>`).join('');
 
   const heading = (group && subs.length > 1 && !q.get('line')) ? group.name : (line.name || group.name);
   $('#crumb').textContent = heading;
@@ -163,9 +147,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
                    : (line.size_label || '{n}').replace('{n}', s);
   const has   = s => s === 'all' || (byType ? mine.some(m => m.line_id === s) : mine.some(m => m.size === s));
 
-  $('#sizes').innerHTML = opts.map((s, i) =>
-    `<button class="sz" data-i="${i}" data-s="${s}" aria-pressed="${!i}" ${has(s) ? '' : 'disabled'}>${label(s)}</button>`).join('');
-  $('#slider').style.width = (100 / opts.length) + '%';
+  // אפשרות בלי דגמים לא מוצגת. טאב שאי אפשר ללחוץ עליו נראה כמו תקלה.
+  const shown = opts.filter(has);
+  $('#sizes').innerHTML = shown.map(s =>
+    `<button class="sz" data-i="${opts.indexOf(s)}" data-s="${s}" aria-pressed="${s === 'all'}">${label(s)}</button>`).join('');
 
   const card = m => {
     const dots = (m.finishes || []).slice(0, 6).map(id => {
@@ -186,7 +171,6 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   const show = i => {
     const s = opts[i];
     document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
-    $('#slider').style.insetInlineStart = (i * 100 / opts.length) + '%';
     const list = s === 'all' ? mine
                : byType ? mine.filter(m => m.line_id === s)
                : mine.filter(m => m.size === s);
@@ -208,5 +192,6 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   show(Math.max(0, opts.findIndex(s => String(s) === ws)));
 });
 </script>
+<script src="/footer-upgrade.js" defer></script>
 </body>
 </html>

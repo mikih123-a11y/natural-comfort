@@ -12,7 +12,7 @@
 <style>
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4; --champagne:#A79A88; --champagne-lt:#C9BFAE;
-  --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F; --oak:#B8894E; --line:#E2DCD2;
+  --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F; --oak:#B8894E; --champagne-txt:#8A6E42; --line:#E2DCD2;
   --display:"Frank Ruhl Libre",Georgia,serif; --body:"Assistant",system-ui,sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
@@ -21,15 +21,15 @@ body{background:var(--paper);color:var(--ink);font-family:var(--body);line-heigh
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
-:focus-visible{outline:2px solid var(--oak);outline-offset:3px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
 .top{position:sticky;top:0;z-index:60;background:rgba(251,250,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;height:72px;gap:16px}
 .top .brand,.top .tel{flex:none}
 .brand{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.015em;white-space:nowrap}
-.brand span{color:var(--champagne);font-weight:400}
-.nav{display:flex;flex-wrap:nowrap;gap:18px;font-size:13.5px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
+.brand span{color:var(--champagne-txt);font-weight:400}
+.nav{display:flex;flex-wrap:nowrap;gap:22px;font-size:16px;color:var(--ink-soft);flex:1;justify-content:center;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;margin:0 12px}
 .nav::-webkit-scrollbar{display:none}
 .nav a{position:relative;padding:4px 0;white-space:nowrap;flex:none}
 .nav a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:1.5px;background:var(--champagne);transition:width .28s var(--ease)}
@@ -40,7 +40,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .tel svg{fill:none;stroke:currentColor;stroke-width:1.6;flex:none}
 @media(max-width:900px){.nav{display:none}}
 
-.crumb{font-size:13px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
+.crumb{font-size:15px;color:var(--ink-soft);font-weight:400;padding:22px 0 0}
 .crumb a:hover{color:var(--ink)}
 .crumb i{font-style:normal;margin:0 8px;color:var(--champagne-lt)}
 
@@ -49,16 +49,15 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:400}
 
 /* מסנן גודל — ציר הגודל של הקו. על המסילה, כמו כל בורר באתר. */
-.filt{margin:36px 0 40px}
-.filt h2{font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:12px}
-.track{position:relative;height:2px;background:var(--line);margin-bottom:16px}
-.slider{position:absolute;top:-1px;height:4px;background:var(--champagne);transition:all .35s var(--ease);inset-inline-start:0}
-.sizes{display:flex;gap:8px;flex-wrap:wrap}
-.sz{padding:9px 20px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;transition:.15s var(--ease);white-space:nowrap}
-.sz:hover{border-color:var(--champagne-lt)}
-.sz[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.sz[disabled]{opacity:.32;cursor:not-allowed;font-weight:300}
-.sz[disabled]:hover{border-color:var(--line)}
+.filt{margin:30px 0 34px}
+.filt h2{font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:10px}
+.track,.slider{display:none}
+.sizes{display:flex;align-items:center;gap:28px;overflow-x:auto;scrollbar-width:none;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sizes::-webkit-scrollbar{display:none}
+.sz{padding:0 0 3px;border:0;background:none;font-size:16px;color:var(--ink-mute);white-space:nowrap;flex:none;min-height:34px;border-bottom:1.5px solid transparent;transition:color .2s}
+.sz:hover:not([disabled]){color:var(--ink)}
+.sz[aria-pressed=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--champagne-txt)}
+.sz[disabled]{color:var(--champagne-lt);cursor:not-allowed}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:80px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}}
@@ -71,7 +70,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .card .sz-tag{position:absolute;top:12px;inset-inline-start:12px;background:var(--panel);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 10px}
 .card .b{padding:18px 20px 20px;border-top:1px solid var(--line)}
 .card h3{font-family:var(--display);font-size:18px;font-weight:500;line-height:1.25}
-.card .dm{font-size:12.5px;color:var(--ink-soft);font-weight:400;margin-top:3px}
+.card .dm{font-size:14px;color:var(--ink-soft);font-weight:400;margin-top:3px}
 .card .pr{font-family:var(--display);font-size:21px;font-weight:500;margin-top:10px;letter-spacing:-.02em}
 .dots{display:flex;gap:5px;margin-top:12px}
 .dots i{width:15px;height:15px;border-radius:50%;border:1px solid var(--line);display:block}
@@ -80,7 +79,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .empty b{font-family:var(--display);font-size:20px;font-weight:500;color:var(--ink);display:block;margin-bottom:8px}
 .empty a{color:var(--oak);text-decoration:underline}
 
-footer{border-top:1px solid var(--line);padding:32px 0;font-size:13px;color:var(--ink-soft);font-weight:400}
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:15.5px;color:var(--ink-soft);font-weight:400}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .fl{display:flex;gap:20px;flex-wrap:wrap}
 footer a:hover{color:var(--ink)}
@@ -129,7 +128,6 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   if (!groupId && lineId)  groupId = (d.lines[lineId] || {}).group;
   const group = (d.groups || []).find(g => g.id === groupId);
   // תתי-הקטגוריות נגזרות מהדגמים עצמם, לא מרשימה בקבוצה.
-  // ככה הוספת דגם חדש לא דורשת עדכון נוסף בקטלוג.
   const lineGroup = id => (d.lines[id] || {}).group;
   const order = (group && group.lines) || Object.keys(d.lines || {});
   const subs = order.filter(l => lineGroup(l) === groupId && d.models.some(m => m.line_id === l));

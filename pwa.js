@@ -20,7 +20,7 @@
     });
   }
 
-  var css = '.nc-install{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;margin-top:18px}'
+  var css = '.nc-install{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;margin:18px 0 28px}'
     + '.nc-install button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;'
     + 'border:1px solid currentColor;background:transparent;color:inherit;font:600 15px/1 inherit;font-family:inherit;cursor:pointer;border-radius:0}'
     + '.nc-install button:hover{opacity:.8}'

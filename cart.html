@@ -30,9 +30,9 @@ main.wrap,footer .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
 /* כותרת מצומצמת לסל: אותם מחלקות וגבהים מ-site-header.css, בלי ששת הקישורים */
 
-.head{padding:44px 0 22px}
-.head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
-.head p{color:var(--ink-soft);margin-top:6px;font-size:16px}
+.cart-head{padding:40px 0 22px;display:block}
+.cart-head h1{display:block;font-family:var(--display);font-size:clamp(28px,3.4vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:0}
+.cart-head p{color:var(--ink-soft);margin-top:8px;font-size:16px}
 
 .layout{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start;padding-bottom:70px}
 @media(max-width:860px){.layout{grid-template-columns:1fr}}
@@ -56,7 +56,8 @@ main.wrap,footer .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 .rm{font-size:15px;color:var(--ink-soft);text-decoration:underline;min-height:44px;padding:0 6px;display:inline-flex;align-items:center}
 .rm:hover{color:#8C3323}
 
-.sum{background:#fff;border:1px solid var(--line);padding:22px;position:sticky;top:112px}
+.sum{background:#fff;border:1px solid var(--line);padding:22px;position:sticky;top:112px;align-self:start}
+@media(max-width:860px){.sum{position:static}}
 .sum h2{font-family:var(--display);font-size:20px;font-weight:500;margin-bottom:14px}
 .row{display:flex;justify-content:space-between;gap:14px;padding:8px 0;font-size:16px;color:var(--ink-soft)}
 .row span:last-child{color:var(--ink);white-space:nowrap}
@@ -95,7 +96,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </div></header>
 
 <main class="wrap">
-  <div class="head">
+  <div class="cart-head">
     <h1>סל ההזמנה שלכם</h1>
     <p id="sub">—</p>
   </div>

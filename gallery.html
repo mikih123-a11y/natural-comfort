@@ -55,8 +55,13 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .fx:hover{color:var(--ink)}
 .fx[aria-pressed=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--champagne-txt)}
 
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding-bottom:70px}
-@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;padding-bottom:70px}
+.grid > .card{grid-column:span 2}
+.grid[data-rem="2"] > .card:nth-last-child(-n+2){grid-column:span 3}
+.grid[data-rem="1"] > .card:last-child{grid-column:2 / span 4}
+.grid > .empty{grid-column:1/-1}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:16px}
+  .grid > .card,.grid[data-rem="2"] > .card:nth-last-child(-n+2),.grid[data-rem="1"] > .card:last-child{grid-column:auto}}
 @media(max-width:560px){.grid{grid-template-columns:1fr}}
 .card{border:1px solid var(--line);background:#fff;overflow:hidden;text-align:start;width:100%;transition:.25s var(--ease)}
 .card:hover{border-color:var(--champagne-lt);transform:translateY(-3px)}
@@ -156,6 +161,8 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     const list = f === 'all' ? items : items.filter(i => i.finish === f);
     $('#grid').innerHTML = list.length ? list.map(card).join('')
       : '<div class="empty">אין עדיין תמונה בגימור הזה.</div>';
+    // כמה תמונות נשארות בשורה האחרונה. בלי זה נפער חור בצד.
+    $('#grid').dataset.rem = list.length ? String(list.length % 3) : '0';
   };
   show('all');
 

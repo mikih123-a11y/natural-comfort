@@ -13,83 +13,82 @@
 :root{
   --paper:#FBFAF8; --panel:#EFEBE4;
   --champagne:#A79A88; --ink:#211F1D; --ink-soft:#3B3733; --ink-mute:#5F584F;
-  --oak:#B8894E; --line:#E2DCD2;
+  --oak:#B8894E; --champagne-txt:#8A6E42; --line:#E2DCD2;
   --display:"Frank Ruhl Libre",Georgia,serif;
   --body:"Assistant",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}main{flex:1}:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 a{color:inherit}
 .wrap{max-width:860px;margin:0 auto;padding:0 24px}
 .top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,250,248,.94);backdrop-filter:blur(8px);z-index:50}
 .top .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{font-family:var(--display);font-size:19px;font-weight:700;text-decoration:none}
-.brand span{color:var(--champagne);font-weight:400}
-.top .tel{color:var(--ink-soft);font-size:14px;text-decoration:none}
-.head{padding:52px 0 10px}
-.head .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--champagne);margin-bottom:10px}
+.brand{font-family:var(--display);font-size:22px;font-weight:700;text-decoration:none}
+.brand span{color:var(--champagne-txt);font-weight:400}
+.top .tel{color:var(--ink);font-size:16px;font-weight:500;text-decoration:none}.top .back{color:var(--ink-soft);font-size:16px;text-decoration:none;margin-inline-end:auto;padding-inline-start:26px}.top .back:hover{color:var(--ink)}
+.head{padding:44px 0 10px}
 .head h1{font-family:var(--display);font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em}
-.head p{color:var(--ink-mute);margin-top:8px;font-size:15.5px}
+.head p{color:var(--ink-soft);margin-top:10px;font-size:17px;max-width:560px}
 main{padding-bottom:80px}
 
 /* טופס */
-.card{background:#fff;border:1px solid var(--line);padding:22px;margin:24px 0}
+.card{background:#fff;border:1px solid var(--line);padding:26px;margin:24px 0;box-shadow:0 1px 3px #17201d0a}
 .row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
 .fld{flex:1;min-width:210px}
-.fld label{display:block;font-size:13px;color:var(--ink-mute);margin-bottom:5px}
-.fld input{width:100%;font:inherit;font-size:15.5px;padding:11px 13px;border:1px solid var(--line);background:var(--paper);border-radius:2px}
-.fld input:focus{outline:0;border-color:var(--oak)}
-.btn{background:var(--ink);color:#fff;border:0;font:600 15px var(--body);padding:12px 30px;cursor:pointer;border-radius:2px}
+.fld label{display:block;font-size:15px;font-weight:600;color:var(--ink-soft);margin-bottom:7px}
+.fld input{width:100%;font:inherit;font-size:16px;min-height:52px;padding:13px 15px;border:1px solid var(--line);background:var(--paper);border-radius:2px;direction:ltr;text-align:start}
+.fld input:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 2px #211f1d22}.fld input[aria-invalid=true]{border-color:#C0392B;background:#FDF5F4}
+.btn{background:var(--ink);color:#fff;border:0;font:600 16px var(--body);min-height:48px;padding:14px 34px;cursor:pointer;border-radius:2px}
 .btn:hover{background:#000}
 .btn[disabled]{opacity:.5;cursor:default}
-.hint{font-size:13.5px;color:var(--ink-mute);margin-top:10px}
-.err{background:#FBEAEA;border-inline-start:3px solid #C0392B;padding:12px 15px;margin-top:14px;font-size:14.5px}
+.hint{font-size:15px;color:var(--ink-soft);margin-top:14px;line-height:1.65}.hint a{color:var(--ink);font-weight:600}
+.err{background:#FBEAEA;border-inline-start:3px solid #C0392B;padding:13px 16px;margin-top:16px;font-size:15.5px;color:#7A2318}
 
 /* תוצאה */
 #out{display:none}
 .sum{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
      border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}
 .sum h2{font-family:var(--display);font-size:24px;font-weight:700}
-.sum .meta{font-size:13.5px;color:var(--ink-mute)}
+.sum .meta{font-size:15px;color:var(--ink-soft);direction:ltr;text-align:start}
 .pill{display:inline-block;background:var(--panel);padding:6px 15px;font-size:14px;font-weight:600;border-radius:2px}
 .pill.bad{background:#FBEAEA;color:#8C3323}
 
 /* שרשרת סטטוס */
 .flow{display:flex;gap:6px;margin:0 0 24px;flex-wrap:wrap}
-.flow div{flex:1;min-width:92px;text-align:center;font-size:12.5px;color:var(--ink-mute);
+.flow div{flex:1;min-width:92px;text-align:center;font-size:14px;color:var(--ink-soft);
           padding:9px 4px;background:#fff;border:1px solid var(--line)}
 .flow div.done{background:var(--panel);color:var(--ink-soft)}
 .flow div.cur{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
 
 .it{border:1px solid var(--line);background:#fff;padding:16px 18px;margin-bottom:12px}
 .it b{font-size:16px}
-.it ul{margin:7px 0 0;padding-inline-start:19px;font-size:14px;color:var(--ink-mute)}
+.it ul{margin:7px 0 0;padding-inline-start:19px;font-size:15px;color:var(--ink-soft)}
 .it .pr{margin-top:9px;font-weight:600}
-.ship{margin-top:9px;font-size:13.5px;color:var(--ink-soft);background:#FDF6EE;
+.ship{margin-top:9px;font-size:15px;color:var(--ink-soft);background:#FDF6EE;
       border-inline-start:3px solid var(--oak);padding:8px 11px}
 .tot{background:#fff;border:1px solid var(--line);padding:16px 18px;margin-top:6px}
 .tot div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
 .tot div:last-child{border-bottom:0;border-top:2px solid var(--ink);font-weight:700;font-size:17px;margin-top:5px;padding-top:11px}
-.tot small{display:block;color:var(--ink-mute);font-weight:400;font-size:12px}
+.tot small{display:block;color:var(--ink-soft);font-weight:400;font-size:14px}
 h3{font-family:var(--display);font-size:19px;font-weight:500;margin:30px 0 10px}
-.kv{background:#fff;border:1px solid var(--line);padding:16px 18px;font-size:14.5px}
+.kv{background:#fff;border:1px solid var(--line);padding:16px 18px;font-size:15.5px}
 .kv div{padding:5px 0}
-.kv span{color:var(--ink-mute);display:inline-block;min-width:130px}
-.terms{font-size:13.5px;color:var(--ink-mute);line-height:1.85;margin-top:26px;
+.kv span{color:var(--ink-soft);display:inline-block;min-width:130px}
+.terms{font-size:15px;color:var(--ink-soft);line-height:1.85;margin-top:26px;
        border-top:1px solid var(--line);padding-top:16px}
 .msg{background:#fff;border:1px solid var(--line);padding:18px;margin-top:8px}
 .msg textarea{width:100%;font:inherit;font-size:15px;padding:11px 13px;border:1px solid var(--line);
   background:var(--paper);border-radius:2px;resize:vertical;min-height:92px}
-.msg textarea:focus{outline:0;border-color:var(--oak)}
+.msg textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 2px #211f1d22}
 .msg .go{margin-top:10px}
 .msg .ok{background:#EAF0EB;border-inline-start:3px solid #3F6B4F;padding:11px 14px;
   font-size:14.5px;margin-top:12px}
 .thread{margin-top:14px}
 .thread div{border-inline-start:3px solid var(--champagne);background:var(--panel);
   padding:10px 13px;margin-bottom:8px;font-size:14.5px}
-.thread small{display:block;color:var(--ink-mute);font-size:12.5px;margin-bottom:3px}
+.thread small{display:block;color:var(--ink-soft);font-size:14px;margin-bottom:3px}
 .terms b{color:var(--ink)}
-footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--ink-mute)}
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:15px;color:var(--ink-soft)}
 footer .wrap{max-width:1080px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 footer a{text-decoration:none}
 </style>
@@ -97,12 +96,12 @@ footer a{text-decoration:none}
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="/">Natural<span>Comfort</span></a>
+  <a class="back" href="/">חזרה לאתר</a>
   <a class="tel" href="tel:0796622666">079-6622666</a>
 </div></header>
 
 <main class="wrap">
   <div class="head">
-    <div class="kick">Order</div>
     <h1>מעקב הזמנה</h1>
     <p>מזינים את מספר ההזמנה ואת הטלפון שנמסר בה. בלי הרשמה ובלי סיסמה.</p>
   </div>
@@ -110,14 +109,14 @@ footer a{text-decoration:none}
   <div class="card" id="form">
     <div class="row">
       <div class="fld"><label for="n">מספר הזמנה</label>
-        <input id="n" dir="ltr" placeholder="NC-260729-422" autocomplete="off"></div>
+        <input id="n" dir="ltr" placeholder="NC-260729-422" autocomplete="off" aria-describedby="orderhint"></div>
       <div class="fld"><label for="p">טלפון</label>
-        <input id="p" dir="ltr" inputmode="tel" placeholder="050-0000000" autocomplete="tel"></div>
+        <input id="p" dir="ltr" inputmode="tel" placeholder="050-0000000" autocomplete="tel" aria-describedby="orderhint"></div>
     </div>
-    <button class="btn" id="go">הצגת ההזמנה</button>
-    <div class="hint">מספר ההזמנה נשלח אליכם באישור ההזמנה. לא מוצאים אותו? חייגו
+    <button class="btn" id="go">איתור ההזמנה</button>
+    <div class="hint" id="orderhint">מספר ההזמנה נשלח אליכם באישור ההזמנה. לא מוצאים אותו? חייגו
       <a href="tel:0796622666">079-6622666</a> או כתבו ב<a href="https://wa.me/972524400030">וואטסאפ</a>.</div>
-    <div class="err" id="err" style="display:none"></div>
+    <div class="err" id="err" role="alert" aria-live="polite" style="display:none"></div>
   </div>
 
   <div id="out"></div>
@@ -287,12 +286,23 @@ footer a{text-decoration:none}
     };
   }
 
+  function mark(on){ ['n','p'].forEach(function(id){
+    if(on) $(id).setAttribute('aria-invalid','true'); else $(id).removeAttribute('aria-invalid');
+  }); }
+
   function look(){
     var n = ($('n').value||'').trim();
     var p = ($('p').value||'').trim();
     var e = $('err');
     e.style.display = 'none';
-    if(!n || !p){ e.textContent = 'יש להזין מספר הזמנה וטלפון.'; e.style.display = 'block'; return; }
+    mark(false);
+    if(!n || !p){
+      e.textContent = 'יש להזין מספר הזמנה וטלפון.'; e.style.display = 'block';
+      if(!n) $('n').setAttribute('aria-invalid','true');
+      if(!p) $('p').setAttribute('aria-invalid','true');
+      ($('n').value ? $('p') : $('n')).focus();
+      return;
+    }
 
     $('go').disabled = true;
     $('go').textContent = 'בודק…';
@@ -300,11 +310,11 @@ footer a{text-decoration:none}
     fetch('/api/my-order?number=' + encodeURIComponent(n) + '&phone=' + encodeURIComponent(p))
       .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
       .then(function(res){
-        if(!res.ok){ e.textContent = res.j.error || 'שגיאה.'; e.style.display = 'block'; return; }
+        if(!res.ok){ e.textContent = res.j.error || 'שגיאה.'; e.style.display = 'block'; mark(true); return; }
         render(res.j);
       })
       .catch(function(){ e.textContent = 'שגיאת רשת. נסו שוב.'; e.style.display = 'block'; })
-      .then(function(){ $('go').disabled = false; $('go').textContent = 'הצגת ההזמנה'; });
+      .then(function(){ $('go').disabled = false; $('go').textContent = 'איתור ההזמנה'; });
   }
 
   $('go').onclick = look;

@@ -318,6 +318,15 @@ footer a:hover{color:var(--ink)}
         <div class="chips" id="sizes"></div>
       </div>
 
+      <div class="opt" id="side-wrap" style="display:none">
+        <h2>צד השולחן<em id="sname">ימין</em></h2>
+        <div class="chips" id="side">
+          <button class="chip" type="button" data-side="ימין" aria-pressed="true">שולחן בצד ימין</button>
+          <button class="chip" type="button" data-side="שמאל" aria-pressed="false">שולחן בצד שמאל</button>
+        </div>
+        <div class="hnote">בחירת מפרט, ללא תוספת מחיר. הצד נקבע כשעומדים מול הארון.</div>
+      </div>
+
       <div class="opt" id="constr-wrap" style="display:none">
         <h2>סוג הארון<em id="cname">—</em></h2>
         <div class="chips" id="constr"></div>
@@ -735,6 +744,16 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     sizeAdd = lineSizes[0].add || 0;
   }
 
+  /* ארונות עם שולחן: בוחרים באיזה צד השולחן. מפרט בלבד, בלי מחיר. */
+  if (m.side_choice) {
+    $('#side-wrap').style.display = '';
+    $('#side').addEventListener('click', e => {
+      const b = e.target.closest('.chip[data-side]'); if (!b) return;
+      document.querySelectorAll('#side .chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+      $('#sname').textContent = b.dataset.side;
+    });
+  }
+
   const allConstrs = (((d.constructions || {}).options) || []);
   const maxHOf = c => (typeof c.max_height === 'number' ? c.max_height : 270);
 
@@ -909,6 +928,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     }
     if (visible('#size-wrap'))   L.push(`מידה: ${$('#szname').textContent}`);
     if (visible('#constr-wrap')) L.push(`סוג הארון: ${$('#cname').textContent}`);
+    if (visible('#side-wrap'))   L.push(`צד השולחן: ${$('#sname').textContent}`);
     if (visible('#wid-wrap'))    L.push(`רוחב: ${$('#wval').textContent}`);
     if (visible('#hgt-wrap'))    L.push(`גובה: ${$('#hval').textContent}`);
     const lay = document.querySelector('.lay[aria-pressed="true"] b');

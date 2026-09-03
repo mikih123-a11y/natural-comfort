@@ -774,6 +774,66 @@
       "delivery_install": 400
     },
     {
+      "id": "ayalon-240",
+      "name": "ארון בגדים עם שולחן עבודה · דגם איילון",
+      "line": "ארונות משולבים · ספרייה",
+      "line_id": "meshulavim",
+      "size": 2.4,
+      "price": 3499,
+      "dims": {
+        "w": 240,
+        "h": 238,
+        "d": 55
+      },
+      "lead_time_days": 21,
+      "category": "combo",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": true,
+      "finishes": [
+        "lavan",
+        "shamenet"
+      ],
+      "_note": "ארון 160 עם 4 דלתות פתיחה + שולחן עבודה 80 עם מגירה ושלושה מדפים פתוחים מעליו. MDF בציפוי פורמייקה, המחיר קבוע ולכן category=combo (בלי בורר מלמין/MDF/סנדוויץ׳).",
+      "identity": {
+        "door_count": 4,
+        "door_type": "hinged",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "ארון 4 דלתות פתיחה · שולחן עבודה צידי עם מגירה · שלושה מדפים פתוחים"
+      },
+      "features": [
+        "ארון בגדים 160 ס״מ עם 4 דלתות פתיחה",
+        "צד אחד: 5 תאי מדפים",
+        "צד שני: זוג מדפים ומוט תלייה לתלייה ארוכה",
+        "שולחן עבודה צידי 80 ס״מ בגובה סטנדרטי, עם מגירה",
+        "שלושה מדפים פתוחים מעל השולחן",
+        "עשוי MDF בציפוי פורמייקה עמידה",
+        "אפשר לשלב צבע גוף, דלתות ומגירה בהתאמה אישית"
+      ],
+      "renders": [
+        {
+          "finish": "lavan",
+          "profile": "acc-none",
+          "image": "/products/ayalon-240-white.jpg",
+          "thumb": "/products/thumbs/thumb-ayalon-240-white.jpg"
+        },
+        {
+          "finish": "shamenet",
+          "profile": "acc-none",
+          "image": "/products/ayalon-240-cream.jpg",
+          "thumb": "/products/thumbs/thumb-ayalon-240-cream.jpg"
+        }
+      ],
+      "family": "ארונות משולבים",
+      "layouts": [],
+      "delivery_install": 500,
+      "seo": {
+        "title": "ארון בגדים עם שולחן עבודה דגם איילון · Natural Comfort",
+        "description": "ארון 4 דלתות פתיחה 160 ס״מ עם שולחן עבודה 80 ס״מ, מגירה ושלושה מדפים פתוחים. 240×238×55 ס״מ, לבן או שמנת. 3,499 ₪ + 500 ₪ משלוח והרכבה."
+      }
+    },
+    {
       "id": "simple3-240",
       "name": "סימפל · 3 דלתות הזזה + מראה",
       "line": "ארונות הזזה",

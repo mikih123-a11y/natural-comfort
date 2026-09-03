@@ -3453,6 +3453,14 @@
         "image": "/products/gallery-eliyahu-lavan.jpg",
         "thumb": "/products/thumbs/thumb-gallery-eliyahu-lavan.jpg",
         "model": null
+      },
+      {
+        "id": "g-lavan-desk",
+        "finish": "לבן",
+        "caption": "ארון משולב עם שולחן ומדפים, בזמן ההתקנה",
+        "image": "/products/gallery-lavan-desk.jpg",
+        "thumb": "/products/thumbs/gallery-lavan-desk.jpg",
+        "model": null
       }
     ]
   }

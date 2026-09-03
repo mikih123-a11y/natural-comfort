@@ -709,8 +709,7 @@
       "line": "ארונות משולבים · ספרייה",
       "line_id": "meshulavim",
       "size": 1.6,
-      "price": 4990,
-      "price_note": "placeholder",
+      "price": 2490,
       "dims": {
         "w": 160,
         "h": 240,
@@ -771,7 +770,8 @@
       "layouts": [
         "LDESK"
       ],
-      "delivery_install": 400
+      "delivery_install": 400,
+      "side_choice": true
     },
     {
       "id": "ayalon-240",
@@ -831,7 +831,8 @@
       "seo": {
         "title": "ארון בגדים עם שולחן עבודה דגם איילון · Natural Comfort",
         "description": "ארון 4 דלתות פתיחה 160 ס״מ עם שולחן עבודה 80 ס״מ, מגירה ושלושה מדפים פתוחים. 240×238×55 ס״מ, לבן או שמנת. 3,499 ₪ + 500 ₪ משלוח והרכבה."
-      }
+      },
+      "side_choice": true
     },
     {
       "id": "simple3-240",

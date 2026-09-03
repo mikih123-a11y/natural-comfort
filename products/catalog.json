@@ -851,7 +851,6 @@
       "placement": "against_wall",
       "replaces": null,
       "handles": true,
-      "side_choice": true,
       "finishes": [
         "shahor",
         "alon"

@@ -835,6 +835,94 @@
       "side_choice": true
     },
     {
+      "id": "tomer-160",
+      "name": "ארון משולב ספרייה לחדר ילדים ונוער · דגם תומר",
+      "line": "ארונות משולבים · ספרייה",
+      "line_id": "meshulavim",
+      "size": 1.6,
+      "price": 2499,
+      "dims": {
+        "w": 160,
+        "h": 240,
+        "d": 55
+      },
+      "lead_time_days": 21,
+      "category": "combo",
+      "placement": "against_wall",
+      "replaces": null,
+      "handles": true,
+      "side_choice": true,
+      "finishes": [
+        "shahor",
+        "alon"
+      ],
+      "_note": "MDF, מחיר קבוע (category=combo, בלי בורר בנייה). תוספות ספציפיות לדגם ב-addons. הגבהה עד 2.70 לפי הצעת מחיר, לא תומחרה.",
+      "identity": {
+        "door_count": 4,
+        "door_type": "hinged",
+        "panel_seams_per_door": 0,
+        "frame_color": "none",
+        "_desc": "שתי דלתות צד 40 ס״מ · שולחן 80 ס״מ במרכז · שתי דלתות עליונות ומדפים פתוחים"
+      },
+      "features": [
+        "צד שמאל: דלת אחת ברוחב 40 ס״מ",
+        "צד ימין: דלת אחת ברוחב 40 ס״מ",
+        "אמצע: שולחן עבודה ברוחב 80 ס״מ, בגובה 77 ס״מ, עם מגירה",
+        "מעל השולחן: שתי דלתות קטנות להמשכיות הארון ומדפים פתוחים",
+        "עשוי MDF איכותי",
+        "ניתן להגביה עד 2.70 מ׳ במידה מיוחדת, לפי הצעת מחיר",
+        "ייתכנו סטיות של עד 2% במידות"
+      ],
+      "addons": [
+        {
+          "id": "tomer-drawers",
+          "name": "זוג מגירות פנימיות",
+          "desc": "יחידת מגירות בתוך הארון",
+          "price": 400
+        },
+        {
+          "id": "tomer-color-mix",
+          "name": "שילוב צבע בדלתות ובמגירות",
+          "desc": "צבע שונה לדלתות ולמגירות מצבע הגוף",
+          "price": 100,
+          "colors": [
+            "לבן",
+            "שמנת",
+            "מולבן",
+            "שיטה",
+            "שחור",
+            "שיש שחור",
+            "שיש לבן",
+            "בטון בהיר",
+            "בטון כהה",
+            "סהרה",
+            "אלון מבוקע"
+          ]
+        }
+      ],
+      "renders": [
+        {
+          "finish": "shahor",
+          "profile": "acc-none",
+          "image": "/products/tomer-160-shahor.jpg",
+          "thumb": "/products/thumbs/thumb-tomer-160-shahor.jpg"
+        },
+        {
+          "finish": "alon",
+          "profile": "acc-none",
+          "image": "/products/tomer-160-alon.jpg",
+          "thumb": "/products/thumbs/thumb-tomer-160-alon.jpg"
+        }
+      ],
+      "family": "ארונות משולבים",
+      "layouts": [],
+      "delivery_install": 400,
+      "seo": {
+        "title": "ארון משולב ספרייה לחדר ילדים ונוער דגם תומר · Natural Comfort",
+        "description": "ארון 160 ס״מ עם שולחן עבודה 80 ס״מ במרכז, מגירה, דלתות עליונות ומדפים פתוחים. 160×240×55 ס״מ, MDF. 2,499 ₪ + 400 ₪ משלוח והרכבה."
+      }
+    },
+    {
       "id": "simple3-240",
       "name": "סימפל · 3 דלתות הזזה + מראה",
       "line": "ארונות הזזה",

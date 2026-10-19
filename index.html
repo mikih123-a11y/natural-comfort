@@ -20,6 +20,46 @@
   .mobilebar{display:none !important}
   body{padding-bottom:0 !important}
 }
+/* ---------- סינון ומיון בקטלוג ---------- */
+.shop-layout{display:grid;grid-template-columns:260px 1fr;gap:30px;align-items:start}
+.side{background:#fff;border:1px solid var(--line);padding:4px 18px 12px;position:sticky;top:104px}
+.fg{border-bottom:1px solid var(--line);padding:12px 0}.fg:last-child{border-bottom:0}
+.fg summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:44px;font-size:16px;font-weight:600;color:var(--ink)}
+.fg summary::-webkit-details-marker{display:none}
+.fg summary::after{content:"−";font-size:20px;color:var(--muted);width:30px;text-align:center}
+.fg:not([open]) summary::after{content:"+"}
+.fg .opts{display:grid;gap:2px;padding-top:2px}
+.fg label.o{display:flex;align-items:center;gap:12px;min-height:44px;font-size:16px;color:var(--ink);cursor:pointer}
+.fg label.o input{width:20px;height:20px;accent-color:var(--ink);flex:none;margin:0}
+.fg label.o .n{color:var(--muted);font-size:14px;margin-inline-start:auto}
+.fg label.o.off{color:#b9b2a6;cursor:default}
+.rng{position:relative;height:44px;margin:4px 6px 0}
+.rng input[type=range]{position:absolute;inset-inline:0;top:14px;width:100%;height:4px;-webkit-appearance:none;appearance:none;background:transparent;pointer-events:none;margin:0}
+.rng .bar{position:absolute;inset-inline:0;top:19px;height:4px;background:var(--line);border-radius:2px}
+.rng .fill{position:absolute;top:19px;height:4px;background:var(--ink);border-radius:2px}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 1px 5px #0003;pointer-events:auto;cursor:pointer}
+.rng input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 1px 5px #0003;pointer-events:auto;cursor:pointer}
+.rng-lbl{display:flex;justify-content:space-between;font-size:15px;color:var(--muted);margin-top:2px}
+.clear{display:block;width:100%;min-height:44px;margin-top:10px;border:1px solid var(--line);background:#fff;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer}
+.bar2{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 16px}
+.bar2 .cnt{font-size:16px;color:var(--muted)}
+.sortw{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted)}
+.sortw select{min-height:44px;border:1px solid var(--line);background:#fff;padding:0 12px;font:inherit;font-size:16px;color:var(--ink)}
+.active{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.active:empty{display:none}
+.active button{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;background:#fff;border:1px solid var(--line);font-size:15px;color:var(--ink);cursor:pointer}
+.active button.x{background:none;border:0;text-decoration:underline;color:var(--muted)}
+.pick{display:none;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;border:1px solid var(--ink);background:#fff;font-size:16px;font-weight:600;color:var(--ink);margin:0 0 14px;cursor:pointer}
+.sheet{border:0;padding:0;margin:auto 0 0;width:100%;max-width:100%;max-height:88vh;background:#fbfaf7;color:var(--ink);border-radius:14px 14px 0 0;box-shadow:0 -10px 40px #0003}
+.sheet::backdrop{background:rgba(33,31,29,.45)}
+.sheet .sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px;position:sticky;top:0;background:#fbfaf7}
+.sheet .sh-head h2{font:500 20px var(--serif);margin:0}
+.sheet .sh-close{min-width:44px;min-height:44px;font-size:22px;color:var(--muted);background:none;border:0}
+.sheet .sh-body{padding:0 20px 16px}
+.sheet .sh-foot{position:sticky;bottom:0;background:#fbfaf7;padding:10px 20px 18px;border-top:1px solid var(--line)}
+.sheet .sh-foot button{width:100%;min-height:50px;background:var(--ink);color:#fff;font-size:16px;font-weight:600;border:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:900px){.shop-layout{grid-template-columns:1fr;gap:0}.side{display:none}.pick{display:flex}.sheet .side{display:block;position:static;border:0;padding:0}}
 </style></head><body><div class="notice">רהיטים בהתאמה אישית</div><header class="header"><div class="wrap"><nav class="nav"><a href="#collections">קולקציות</a><a href="#shop">כל הדגמים</a><a href="/gallery.html">גלריה</a><a href="/viz/">הדמיה בחדר</a><a href="/myorder.html">מעקב הזמנה</a><a href="#contact">ייעוץ אישי</a></nav><a class="logo" href="/">Natural Comfort<small>CUSTOM FURNITURE</small></a><div class="tools"><button class="icon" id="searchBtn" aria-label="חיפוש">⌕</button></div></div></header><main><section class="hero"><div class="wrap"><div class="hero-content"><h1>הרהיט שלכם.<br>בדיוק במידה.</h1><p>לא עוד ניחושים. בוחרים דגם, מחליפים צבעים ורואים איך הוא נראה בחדר שלכם, עוד לפני הייצור.</p><div class="actions"><a class="btn light" href="/viz/">נסו הדמיה בחדר ←</a><a class="btn" href="#shop">גלו את הקולקציה</a></div></div></div></section><section class="ba" id="before-after"><div class="wrap">
   <div>
     
@@ -36,13 +76,47 @@
     <div class="tag b">הקיר שלכם</div><div class="tag a">עם הארון</div>
   </div>
 </div></section>
-<div class="proof"><div class="wrap"><div><b>התאמה אישית מלאה</b><span>מידות, צבעים וחלוקה פנימית</span></div><div><b>רואים לפני שמזמינים</b><span>הדמיה בתוך החדר שלכם</span></div><div><b>מדידה מקצועית בבית</b><span>אופציונלי · בתשלום</span></div><div><b>ייצור ישראלי</b><span>ליווי אישי עד ההתקנה</span></div></div></div><section id="collections"><div class="wrap"><div class="section-head"><div><h2>מתחילים מהחדר</h2></div><p>קטגוריות ברורות שמובילות אתכם מהר לפתרון הנכון, בלי ללכת לאיבוד בעשרות מוצרים דומים.</p></div><div class="cats" id="cats"></div></div></section><section class="shop" id="shop"><div class="wrap"><div class="section-head"><div><h2>כל הדגמים</h2></div><p>בחרו קטגוריה, חפשו לפי שם והחליפו גימור ישירות מתוך הקטלוג.</p></div><div class="shopbar"><div class="search"><input id="search" placeholder="איזה רהיט אתם מחפשים?"></div><nav class="filterbar"><button class="filter on" data-line="all">הכול</button><div id="filters"></div><div class="more-wrap" id="moreWrap" hidden><button class="more-btn" id="moreBtn" type="button" aria-expanded="false">עוד קטגוריות +</button><div class="more-menu" id="moreMenu"></div></div></nav></div><div class="grid" id="grid"></div><div id="gridnote"></div></div></section><section class="visual"><div class="wrap"><div><h2>תראו את זה<br>לפני שזה קורה.</h2><p>צלמו קיר פנוי, בחרו דגם וגימור, וקבלו המחשה של הרהיט בתוך החלל האמיתי שלכם.</p><div class="steps"><div class="step"><span>מצלמים את הקיר</span></div><div class="step"><span>בוחרים דגם וצבע</span></div><div class="step"><span>רואים אותו בחדר</span></div></div><div class="actions"><a class="btn light" href="/viz/">התחילו הדמיה עכשיו ←</a></div></div></div></section></main><footer class="footer" id="contact"><div class="wrap"><div class="logo">Natural Comfort<small>CUSTOM FURNITURE</small></div><div>ייעוץ אישי: <a href="tel:0796622666">079-6622666</a></div><div>© 2026 Natural Comfort · מקבוצת קניה טובה<br><a href="/myorder.html">מעקב הזמנה</a> · <a href="/about.html">אודות</a> · <a href="/terms.html">תקנון</a> · <a href="/privacy.html">פרטיות</a> · <a href="/accessibility.html">נגישות</a></div></div></footer><script>
+<div class="proof"><div class="wrap"><div><b>התאמה אישית מלאה</b><span>מידות, צבעים וחלוקה פנימית</span></div><div><b>רואים לפני שמזמינים</b><span>הדמיה בתוך החדר שלכם</span></div><div><b>מדידה מקצועית בבית</b><span>אופציונלי · בתשלום</span></div><div><b>ייצור ישראלי</b><span>ליווי אישי עד ההתקנה</span></div></div></div><section id="collections"><div class="wrap"><div class="section-head"><div><h2>מתחילים מהחדר</h2></div><p>קטגוריות ברורות שמובילות אתכם מהר לפתרון הנכון, בלי ללכת לאיבוד בעשרות מוצרים דומים.</p></div><div class="cats" id="cats"></div></div></section><section class="shop" id="shop"><div class="wrap"><div class="section-head"><div><h2>כל הדגמים</h2></div><p>בחרו קטגוריה, חפשו לפי שם והחליפו גימור ישירות מתוך הקטלוג.</p></div><div class="shopbar"><div class="search"><input id="search" placeholder="איזה רהיט אתם מחפשים?"></div><nav class="filterbar"><button class="filter on" data-line="all">הכול</button><div id="filters"></div><div class="more-wrap" id="moreWrap" hidden><button class="more-btn" id="moreBtn" type="button" aria-expanded="false">עוד קטגוריות +</button><div class="more-menu" id="moreMenu"></div></div></nav></div><button class="pick" id="pick" type="button" aria-haspopup="dialog" aria-controls="sheet">סינון ומיון <span id="pick-n"></span></button>
+<div class="shop-layout"><aside class="side" id="side" aria-label="סינון"></aside><div>
+<div class="bar2"><div class="cnt" id="cnt" aria-live="polite"></div><label class="sortw">מיון לפי <select id="sort"><option value="rec">מומלץ</option><option value="price-asc">מחיר: מהנמוך לגבוה</option><option value="price-desc">מחיר: מהגבוה לנמוך</option><option value="size-asc">רוחב: מהקטן לגדול</option><option value="size-desc">רוחב: מהגדול לקטן</option></select></label></div>
+<div class="active" id="active"></div>
+<div class="grid" id="grid"></div><div id="gridnote"></div></div></div>
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title"><div class="sh-head"><h2 id="sheet-title">סינון ומיון</h2><button class="sh-close" type="button" id="sheet-close" aria-label="סגירה">✕</button></div><div class="sh-body" id="sheet-body"></div><div class="sh-foot"><button type="button" id="sheet-apply">הצגת התוצאות</button></div></dialog>
+</div></section><section class="visual"><div class="wrap"><div><h2>תראו את זה<br>לפני שזה קורה.</h2><p>צלמו קיר פנוי, בחרו דגם וגימור, וקבלו המחשה של הרהיט בתוך החלל האמיתי שלכם.</p><div class="steps"><div class="step"><span>מצלמים את הקיר</span></div><div class="step"><span>בוחרים דגם וצבע</span></div><div class="step"><span>רואים אותו בחדר</span></div></div><div class="actions"><a class="btn light" href="/viz/">התחילו הדמיה עכשיו ←</a></div></div></div></section></main><footer class="footer" id="contact"><div class="wrap"><div class="logo">Natural Comfort<small>CUSTOM FURNITURE</small></div><div>ייעוץ אישי: <a href="tel:0796622666">079-6622666</a></div><div>© 2026 Natural Comfort · מקבוצת קניה טובה<br><a href="/myorder.html">מעקב הזמנה</a> · <a href="/about.html">אודות</a> · <a href="/terms.html">תקנון</a> · <a href="/privacy.html">פרטיות</a> · <a href="/accessibility.html">נגישות</a></div></div></footer><script>
 let DATA,active='all',showAll=false,PICK=null;
 /* דגם מייצג אחד לכל קו, נבחר פעם אחת בכל טעינת עמוד — ולכן מתחלף בכל כניסה */
 function buildPick(){PICK={};Object.keys(DATA.lines).forEach(lid=>{const ms=DATA.models.filter(m=>m.line_id===lid);if(ms.length)PICK[lid]=ms[Math.floor(Math.random()*ms.length)].id;});}
 const $=s=>document.querySelector(s);const rel=p=>(p||'').replace(/^\//,'');const fin=(id)=>DATA.finishes.find(f=>f.id===id);const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : 'מידות לפי התאמה אישית';
 function groupOf(m){const l=DATA.lines[m.line_id];return l&&l.group}
-function render(q=''){q=q.trim().toLowerCase();const featured=(active==='all'&&!q&&!showAll);const list=featured?Object.keys(PICK).map(lid=>DATA.models.find(m=>m.id===PICK[lid])).filter(Boolean):DATA.models.filter(m=>(active==='all'||groupOf(m)===active||m.line_id===active)&&(!q||[m.name,m.line,m.dims?.w,m.dims?.h,...(m.finishes||[]).map(x=>fin(x)?.name)].join(' ').toLowerCase().includes(q)));const gn=$('#gridnote');if(gn)gn.innerHTML=featured?`<p>מוצג דגם אחד מכל קטגוריה, ומתחלף בכל כניסה לאתר. <button data-showall="1">הצגת כל ${DATA.models.length} הדגמים</button></p>`:'';$('#grid').innerHTML=list.map(m=>`<article class="card"><a href="product.html?id=${m.id}"><div class="card-img"><img id="img-${m.id}" src="${rel(m.renders[0].thumb)}" alt="${m.name}"><span class="quick">לפרטי הדגם ←</span></div></a><div class="card-body"><h3>${m.name}</h3><div class="meta">${dm(m)} · ניתן לשינוי במידה</div><div class="swatches">${m.renders.slice(0,6).map((r,i)=>{let f=fin(r.finish);return `<button class="swatch ${i?'':'on'}" style="background:${f?.swatch||'#ddd'}" data-model="${m.id}" data-src="${rel(r.thumb)}" title="${f?.name||''}"></button>`}).join('')}<span class="more">${m.renders.length} גימורים</span></div></div></article>`).join('')||'<p>לא נמצאו דגמים. נסו חיפוש אחר.</p>'}
+/* ---------- סינון ומיון ---------- */
+const F={size:[],fin:[],min:null,max:null,sort:'rec'};
+const STEP=50;let PMIN=0,PMAX=0;
+const wOf=m=>m.dims?m.dims.w:0;
+const hasFilters=()=>F.size.length||F.fin.length||F.min!==null||F.max!==null||F.sort!=='rec';
+function base(q){q=q.trim().toLowerCase();return DATA.models.filter(m=>(active==='all'||groupOf(m)===active||m.line_id===active)&&(!q||[m.name,m.line,m.dims?.w,m.dims?.h,...(m.finishes||[]).map(x=>fin(x)?.name)].join(' ').toLowerCase().includes(q)))}
+const matchExcept=(m,skip)=>(skip==='size'||!F.size.length||F.size.includes(String(wOf(m))))&&(skip==='fin'||!F.fin.length||(m.finishes||[]).some(f=>F.fin.includes(f)))&&(skip==='price'||F.min===null||(typeof m.price==='number'&&m.price>=F.min))&&(skip==='price'||F.max===null||(typeof m.price==='number'&&m.price<=F.max));
+function buildSide(q){const pool=base(q||'');const cnt=(skip,pred)=>pool.filter(m=>matchExcept(m,skip)&&pred(m)).length;const H=[];
+  const prices=pool.map(m=>m.price).filter(p=>typeof p==='number');PMIN=prices.length?Math.floor(Math.min(...prices)/STEP)*STEP:0;PMAX=prices.length?Math.ceil(Math.max(...prices)/STEP)*STEP:0;
+  const ws=[...new Set(pool.map(wOf).filter(Boolean))].sort((a,b)=>a-b);
+  if(ws.length>1)H.push(`<details class="fg" open><summary>רוחב</summary><div class="opts">${ws.map(w=>{const n=cnt('size',m=>wOf(m)===w);return `<label class="o${n?'':' off'}"><input type="checkbox" data-k="size" value="${w}"${F.size.includes(String(w))?' checked':''}${n?'':' disabled'}>${w} ס״מ<span class="n">(${n})</span></label>`}).join('')}</div></details>`);
+  if(PMAX>PMIN){const lo=F.min===null?PMIN:F.min,hi=F.max===null?PMAX:F.max;H.push(`<details class="fg" open><summary>מחיר</summary><div class="rng"><div class="bar"></div><div class="fill" id="rfill"></div><input type="range" id="rmin" min="${PMIN}" max="${PMAX}" step="${STEP}" value="${lo}" aria-label="מחיר מינימלי"><input type="range" id="rmax" min="${PMIN}" max="${PMAX}" step="${STEP}" value="${hi}" aria-label="מחיר מקסימלי"></div><div class="rng-lbl"><span id="rlo">₪${lo.toLocaleString('he-IL')}</span><span id="rhi">₪${hi.toLocaleString('he-IL')}</span></div></details>`)}
+  const fs=[...new Set(pool.flatMap(m=>m.finishes||[]))].map(fin).filter(Boolean);
+  if(fs.length>1)H.push(`<details class="fg"${F.fin.length?' open':''}><summary>גימור</summary><div class="opts">${fs.map(f=>{const n=cnt('fin',m=>(m.finishes||[]).includes(f.id));return `<label class="o${n?'':' off'}"><input type="checkbox" data-k="fin" value="${f.id}"${F.fin.includes(f.id)?' checked':''}${n?'':' disabled'}><i style="display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid var(--line);background:${f.swatch}"></i>${f.name}<span class="n">(${n})</span></label>`}).join('')}</div></details>`);
+  H.push('<button class="clear" id="clear" type="button">ניקוי כל הסינונים</button>');
+  $('#side').innerHTML=H.join('');paintRange();}
+function paintRange(){const a=$('#rmin'),b=$('#rmax');if(!a)return;let lo=+a.value,hi=+b.value;if(lo>hi)[lo,hi]=[hi,lo];const p=v=>(v-PMIN)/(PMAX-PMIN)*100;$('#rfill').style.insetInlineStart=p(lo)+'%';$('#rfill').style.width=(p(hi)-p(lo))+'%';$('#rlo').textContent='₪'+lo.toLocaleString('he-IL');$('#rhi').textContent='₪'+hi.toLocaleString('he-IL');}
+function chips(){const C=[];F.size.forEach(w=>C.push(['size',w,w+' ס״מ']));F.fin.forEach(f=>C.push(['fin',f,fin(f)?.name||f]));if(F.min!==null||F.max!==null)C.push(['price','',`₪${(F.min===null?PMIN:F.min).toLocaleString('he-IL')} עד ₪${(F.max===null?PMAX:F.max).toLocaleString('he-IL')}`]);
+  $('#active').innerHTML=C.length?C.map(([k,v,l])=>`<button type="button" data-rm="${k}" data-v="${v}">${l} <span aria-hidden="true">✕</span><span class="sr-only"> הסרה</span></button>`).join('')+'<button type="button" class="x" data-rm="all">נקה הכל</button>':'';$('#pick-n').textContent=C.length?`(${C.length})`:'';}
+function render(q=''){q=q.trim().toLowerCase();const featured=(active==='all'&&!q&&!showAll&&!hasFilters());
+  let list=featured?Object.keys(PICK).map(lid=>DATA.models.find(m=>m.id===PICK[lid])).filter(Boolean):base(q).filter(m=>matchExcept(m,null));
+  const pv=m=>typeof m.price==='number'?m.price:null;
+  if(F.sort==='price-asc')list.sort((a,b)=>(pv(a)??Infinity)-(pv(b)??Infinity));
+  if(F.sort==='price-desc')list.sort((a,b)=>(pv(b)??-1)-(pv(a)??-1));
+  if(F.sort==='size-asc')list.sort((a,b)=>wOf(a)-wOf(b));
+  if(F.sort==='size-desc')list.sort((a,b)=>wOf(b)-wOf(a));
+  const gn=$('#gridnote');if(gn)gn.innerHTML=featured?`<p>מוצג דגם אחד מכל קטגוריה, ומתחלף בכל כניסה לאתר. <button data-showall="1">הצגת כל ${DATA.models.length} הדגמים</button></p>`:'';
+  $('#cnt').textContent=featured?'דגמים נבחרים':(list.length===1?'דגם אחד':`${list.length} דגמים`);chips();
+  $('#grid').innerHTML=list.map(m=>`<article class="card"><a href="product.html?id=${m.id}"><div class="card-img"><img id="img-${m.id}" src="${rel(m.renders[0].thumb)}" alt="${m.name}"><span class="quick">לפרטי הדגם ←</span></div></a><div class="card-body"><h3>${m.name}</h3><div class="meta">${dm(m)} · ניתן לשינוי במידה</div><div class="swatches">${m.renders.slice(0,6).map((r,i)=>{let f=fin(r.finish);return `<button class="swatch ${i?'':'on'}" style="background:${f?.swatch||'#ddd'}" data-model="${m.id}" data-src="${rel(r.thumb)}" title="${f?.name||''}"></button>`}).join('')}<span class="more">${m.renders.length} גימורים</span></div></div></article>`).join('')||'<p>לא נמצאו דגמים. נסו להסיר חלק מהסינונים.</p>'}
 /* החלפת התמונות בכרטיסי הקטגוריות — עצירה מלאה כשהמשתמש ביקש בלי אנימציות */
 function startRotation(shots){
   const still = () => document.documentElement.classList.contains('nc-still')
@@ -125,11 +199,25 @@ fetch('products/catalog.json').then(r=>r.json()).then(d=>{
 
   startRotation(shots);
   buildPick();
+  buildSide('');
   /* הגעה מחיפוש בכותרת: /?q=... מציג את כל התוצאות בקטלוג */
   const q0 = new URLSearchParams(location.search).get('q');
   if (q0) { $('#search').value = q0; showAll = true; render(q0); setTimeout(() => $('#shop').scrollIntoView(), 50); }
   else render();
-});document.addEventListener('click',e=>{if(e.target.closest('[data-showall]')){showAll=true;render($('#search').value);return}let f=e.target.closest('.filter');if(f){active=f.dataset.line;showAll=(active==='all');document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('on',x===f));render($('#search').value)}let s=e.target.closest('.swatch');if(s){e.preventDefault();document.querySelectorAll(`[data-model="${s.dataset.model}"]`).forEach(x=>x.classList.remove('on'));s.classList.add('on');$(`#img-${s.dataset.model}`).src=s.dataset.src}});$('#search').addEventListener('input',e=>render(e.target.value));$('#searchBtn').onclick=()=>{$('#shop').scrollIntoView();setTimeout(()=>$('#search').focus(),500)};
+});document.addEventListener('click',e=>{if(e.target.closest('[data-showall]')){showAll=true;render($('#search').value);return}let f=e.target.closest('.filter');if(f){active=f.dataset.line;showAll=(active==='all');document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('on',x===f));buildSide($('#search').value);render($('#search').value)}let s=e.target.closest('.swatch');if(s){e.preventDefault();document.querySelectorAll(`[data-model="${s.dataset.model}"]`).forEach(x=>x.classList.remove('on'));s.classList.add('on');$(`#img-${s.dataset.model}`).src=s.dataset.src}});$('#search').addEventListener('input',e=>{buildSide(e.target.value);render(e.target.value)});$('#searchBtn').onclick=()=>{$('#shop').scrollIntoView();setTimeout(()=>$('#search').focus(),500)};
+document.addEventListener('change',e=>{const c=e.target.closest('#side input[type=checkbox]');const q=$('#search').value;
+  if(c){const k=c.dataset.k,v=c.value;F[k]=c.checked?[...F[k],v]:F[k].filter(x=>x!==v);buildSide(q);render(q);return}
+  if(e.target.id==='rmin'||e.target.id==='rmax'){let lo=+$('#rmin').value,hi=+$('#rmax').value;if(lo>hi)[lo,hi]=[hi,lo];F.min=lo>PMIN?lo:null;F.max=hi<PMAX?hi:null;buildSide(q);render(q)}});
+document.addEventListener('input',e=>{if(e.target.id==='rmin'||e.target.id==='rmax')paintRange()});
+$('#sort').addEventListener('change',e=>{F.sort=e.target.value;render($('#search').value)});
+document.addEventListener('click',e=>{const q=$('#search').value;
+  if(e.target.closest('#clear')){F.size=[];F.fin=[];F.min=F.max=null;buildSide(q);render(q);return}
+  const rm=e.target.closest('#active [data-rm]');if(rm){const k=rm.dataset.rm,v=rm.dataset.v;if(k==='all'){F.size=[];F.fin=[];F.min=F.max=null}else if(k==='price'){F.min=F.max=null}else F[k]=F[k].filter(x=>x!==v);buildSide(q);render(q)}});
+(function(){const sheet=$('#sheet'),side=$('#side'),lay=document.querySelector('.shop-layout');if(!sheet)return;
+  $('#pick').onclick=()=>{$('#sheet-body').appendChild(side);sheet.showModal()};
+  const close=()=>{sheet.close();lay.insertBefore(side,lay.firstChild);$('#pick').focus()};
+  $('#sheet-close').onclick=close;$('#sheet-apply').onclick=close;sheet.addEventListener('click',e=>{if(e.target===sheet)close()});
+  sheet.addEventListener('close',()=>{if(side.parentNode!==lay)lay.insertBefore(side,lay.firstChild)});})();
 </script><script>if(location.protocol==='file:'){document.querySelectorAll('a[href^="/"]').forEach(a=>a.setAttribute('href',a.getAttribute('href').replace(/^\//,'')))}</script><script src="footer-upgrade.js" defer></script><script>
 /* תצוגה מקדימה של גימור במעבר עכבר — בלי להיכנס לעמוד המוצר.
    הבחירה בלחיצה נשארת; המעבר רק מציץ וחוזר. */

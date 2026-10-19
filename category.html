@@ -210,8 +210,10 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#sort').value = F.sort;
 
   const prices = mine.map(m => m.price).filter(p => typeof p === 'number');
-  const PMIN = prices.length ? Math.min(...prices) : 0, PMAX = prices.length ? Math.max(...prices) : 0;
   const STEP = 50;
+  // קצוות הסליידר מעוגלים כלפי חוץ, כך שהמחיר הגבוה ביותר תמיד בטווח
+  const PMIN = prices.length ? Math.floor(Math.min(...prices) / STEP) * STEP : 0;
+  const PMAX = prices.length ? Math.ceil(Math.max(...prices) / STEP) * STEP : 0;
 
   const matchExcept = (m, skip) =>
     (skip === 'type' || !F.type.length || F.type.includes(m.line_id)) &&

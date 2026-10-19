@@ -1873,7 +1873,57 @@
           "thumb": "/products/thumbs/zugit-shahor.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-shokolad-140",
@@ -1930,7 +1980,57 @@
           "thumb": "/products/thumbs/shokolad-shahor.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-herods-140",
@@ -1980,7 +2080,57 @@
           "thumb": "/products/thumbs/herods-shahor.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-mita1-140",
@@ -2037,7 +2187,57 @@
           "thumb": "/products/thumbs/mita1-shamenet.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-cloud-140",
@@ -2081,7 +2281,57 @@
           "thumb": "/products/thumbs/cloud-shahor.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-rafael-140",
@@ -2131,7 +2381,57 @@
           "thumb": "/products/thumbs/rafael-afor.jpg"
         }
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-box",
+          "name": "ארגז מצעים",
+          "desc": "ארגז אחסון מתחת למיטה",
+          "price": 799
+        },
+        {
+          "id": "bed-mattress",
+          "name": "מזרן פלאזה אורתופדי",
+          "desc": "מזרן זוגי דגם פלאזה, במידה שבחרתם למיטה. ללא מזרן המיטה מגיעה ריקה",
+          "variants": [
+            {
+              "name": "140×190",
+              "price": 999
+            },
+            {
+              "name": "150×200",
+              "price": 1199
+            },
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bed-fingers-hafrada",
@@ -2191,7 +2491,52 @@
         "/products/fingers-shahor-open.jpg",
         "/products/fingers-krem-open.jpg"
       ],
-      "delivery_install": 350
+      "delivery_install": 350,
+      "choices": [
+        {
+          "id": "fabric",
+          "label": "בד הריפוד",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "קטיפה",
+            "אריג"
+          ]
+        },
+        {
+          "id": "split",
+          "label": "סוג ההפרדה",
+          "note": "בחירת מפרט, ללא תוספת מחיר",
+          "options": [
+            "הפרדה מלאה, 2 ראשים נפרדים",
+            "ראש שלם, חזית חצויה"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "bed-mattress",
+          "name": "זוג מזרני פלאזה אורתופדיים",
+          "desc": "שני מזרני יחיד דגם פלאזה, במידה שבחרתם למיטה. המחיר לזוג לפי מידת המיטה הכוללת",
+          "variants": [
+            {
+              "name": "160×190",
+              "price": 1399
+            },
+            {
+              "name": "160×200",
+              "price": 1599
+            },
+            {
+              "name": "180×190",
+              "price": 1799
+            },
+            {
+              "name": "180×200",
+              "price": 1999
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "mita-opal",
@@ -3085,7 +3430,52 @@
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
-      "group": "mitot-zugiyot"
+      "group": "mitot-zugiyot",
+      "size_options": [
+        {
+          "id": "140x190",
+          "label": "140×190",
+          "w": 140,
+          "l": 190,
+          "add": 0
+        },
+        {
+          "id": "150x200",
+          "label": "150×200",
+          "w": 150,
+          "l": 200,
+          "add": 200
+        },
+        {
+          "id": "160x190",
+          "label": "160×190",
+          "w": 160,
+          "l": 190,
+          "add": 400
+        },
+        {
+          "id": "160x200",
+          "label": "160×200",
+          "w": 160,
+          "l": 200,
+          "add": 600
+        },
+        {
+          "id": "180x190",
+          "label": "180×190",
+          "w": 180,
+          "l": 190,
+          "add": 800
+        },
+        {
+          "id": "180x200",
+          "label": "180×200",
+          "w": 180,
+          "l": 200,
+          "add": 1000
+        }
+      ],
+      "_sizes_note": "בסיס 140×190. תוספת 200 ₪ לכל 10 ס״מ ברוחב ובאורך, מצטבר, כמו במזרנים."
     },
     "mitot-hafrada": {
       "name": "מיטות בהפרדה",
@@ -3093,7 +3483,38 @@
       "size_axis": "width_cm",
       "size_label": "{n} ס״מ",
       "default_placement": "floor_center",
-      "group": "mitot-hafrada"
+      "group": "mitot-hafrada",
+      "size_options": [
+        {
+          "id": "160x190",
+          "label": "160×190",
+          "w": 160,
+          "l": 190,
+          "add": 0
+        },
+        {
+          "id": "160x200",
+          "label": "160×200",
+          "w": 160,
+          "l": 200,
+          "add": 200
+        },
+        {
+          "id": "180x190",
+          "label": "180×190",
+          "w": 180,
+          "l": 190,
+          "add": 400
+        },
+        {
+          "id": "180x200",
+          "label": "180×200",
+          "w": 180,
+          "l": 200,
+          "add": 600
+        }
+      ],
+      "_sizes_note": "בסיס 160×190 (2×80). תוספת 200 ₪ לכל 10 ס״מ, מצטבר."
     },
     "mitot-vahetzi": {
       "name": "מיטות וחצי",

@@ -125,7 +125,10 @@ fetch('products/catalog.json').then(r=>r.json()).then(d=>{
 
   startRotation(shots);
   buildPick();
-  render();
+  /* הגעה מחיפוש בכותרת: /?q=... מציג את כל התוצאות בקטלוג */
+  const q0 = new URLSearchParams(location.search).get('q');
+  if (q0) { $('#search').value = q0; showAll = true; render(q0); setTimeout(() => $('#shop').scrollIntoView(), 50); }
+  else render();
 });document.addEventListener('click',e=>{if(e.target.closest('[data-showall]')){showAll=true;render($('#search').value);return}let f=e.target.closest('.filter');if(f){active=f.dataset.line;showAll=(active==='all');document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('on',x===f));render($('#search').value)}let s=e.target.closest('.swatch');if(s){e.preventDefault();document.querySelectorAll(`[data-model="${s.dataset.model}"]`).forEach(x=>x.classList.remove('on'));s.classList.add('on');$(`#img-${s.dataset.model}`).src=s.dataset.src}});$('#search').addEventListener('input',e=>render(e.target.value));$('#searchBtn').onclick=()=>{$('#shop').scrollIntoView();setTimeout(()=>$('#search').focus(),500)};
 </script><script>if(location.protocol==='file:'){document.querySelectorAll('a[href^="/"]').forEach(a=>a.setAttribute('href',a.getAttribute('href').replace(/^\//,'')))}</script><script src="footer-upgrade.js" defer></script><script>
 /* תצוגה מקדימה של גימור במעבר עכבר — בלי להיכנס לעמוד המוצר.

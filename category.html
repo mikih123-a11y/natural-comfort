@@ -39,43 +39,64 @@ main.wrap,footer .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.08;letter-spacing:-.024em}
 .head p{margin-top:14px;color:var(--ink-soft);font-size:16.5px;font-weight:400}
 
-/* מסנן גודל — ציר הגודל של הקו. על המסילה, כמו כל בורר באתר. */
-.filt{margin:30px 0 34px}
-.filt h2{font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:10px}
-.sizes{display:flex;align-items:center;gap:28px;overflow-x:auto;scrollbar-width:none;padding-bottom:11px;border-bottom:1px solid var(--line)}
-.sizes::-webkit-scrollbar{display:none}
-.sz{padding:0 0 3px;border:0;background:none;font-size:16px;color:var(--ink-mute);white-space:nowrap;flex:none;min-height:34px;border-bottom:1.5px solid transparent;transition:color .2s}
-.sz:hover:not([disabled]){color:var(--ink)}
-.sz[aria-pressed=true]{color:var(--ink);font-weight:600;border-bottom-color:var(--champagne-txt)}
-.sz[disabled]{color:var(--champagne-lt);cursor:not-allowed}
-
-/* בורר מובייל (מוסתר בדסקטופ) */
-.pick{display:none;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:0 16px;
-  border:1px solid var(--line);background:#fff;font-size:16px;color:var(--ink);text-align:start}
-.pick b{font-weight:600}
-.pick .chev{font-size:18px;color:var(--ink-mute);flex:none}
-.sheet{border:0;padding:0;margin:auto 0 0;width:100%;max-width:100%;background:var(--paper);color:var(--ink);
-  border-radius:14px 14px 0 0;box-shadow:0 -10px 40px #0003}
+/* ---------- סינון ומיון ---------- */
+.layout{display:grid;grid-template-columns:270px 1fr;gap:34px;align-items:start;margin-top:26px;padding-bottom:80px}
+.side{background:#fff;border:1px solid var(--line);padding:6px 20px 14px;position:sticky;top:112px}
+.fg{border-bottom:1px solid var(--line);padding:14px 0}
+.fg:last-child{border-bottom:0}
+.fg summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:44px;font-size:16px;font-weight:600;color:var(--ink)}
+.fg summary::-webkit-details-marker{display:none}
+.fg summary::after{content:"−";font-size:20px;color:var(--ink-mute);width:30px;text-align:center}
+.fg:not([open]) summary::after{content:"+"}
+.fg .opts{display:grid;gap:2px;padding-top:4px}
+.fg label.o{display:flex;align-items:center;gap:12px;min-height:44px;font-size:16px;color:var(--ink);cursor:pointer}
+.fg label.o input{width:20px;height:20px;accent-color:var(--ink);flex:none;margin:0}
+.fg label.o .n{color:var(--ink-mute);font-size:14px;margin-inline-start:auto}
+.fg label.o.off{color:var(--champagne-lt);cursor:default}
+.fg .chips2{display:flex;flex-wrap:wrap;gap:8px;padding-top:6px}
+.fg .chips2 label{border:1px solid var(--line);background:#fff;min-height:44px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;font-size:15px;cursor:pointer}
+.fg .chips2 label input{position:absolute;opacity:0;width:0;height:0}
+.fg .chips2 label.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fg .chips2 label .n{font-size:13px;opacity:.75}
+/* טווח מחיר: שני סליידרים זה על זה */
+.rng{position:relative;height:44px;margin:4px 6px 0}
+.rng input[type=range]{position:absolute;inset-inline:0;top:14px;width:100%;height:4px;-webkit-appearance:none;appearance:none;background:transparent;pointer-events:none;margin:0}
+.rng .bar{position:absolute;inset-inline:0;top:19px;height:4px;background:var(--line);border-radius:2px}
+.rng .fill{position:absolute;top:19px;height:4px;background:var(--ink);border-radius:2px}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 1px 5px #0003;pointer-events:auto;cursor:pointer}
+.rng input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 1px 5px #0003;pointer-events:auto;cursor:pointer}
+.rng-lbl{display:flex;justify-content:space-between;font-size:15px;color:var(--ink-soft);margin-top:2px}
+.clear{display:block;width:100%;min-height:44px;margin-top:10px;border:1px solid var(--line);font-size:15px;font-weight:600;color:var(--ink)}
+.clear:hover{border-color:var(--ink)}
+/* שורת כלים מעל הגריד */
+.bar2{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.bar2 .cnt{font-size:16px;color:var(--ink-soft)}
+.sortw{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink-soft)}
+.sortw select{min-height:44px;border:1px solid var(--line);background:#fff;padding:0 12px;font:inherit;font-size:16px;color:var(--ink)}
+.active{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 18px}
+.active button{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;background:var(--panel);font-size:15px;color:var(--ink)}
+.active button.x{background:none;text-decoration:underline;color:var(--ink-soft)}
+.pick{display:none;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;border:1px solid var(--ink);background:#fff;font-size:16px;font-weight:600;color:var(--ink);margin:18px 0 6px}
+.sheet{border:0;padding:0;margin:auto 0 0;width:100%;max-width:100%;max-height:88vh;background:var(--paper);color:var(--ink);border-radius:14px 14px 0 0;box-shadow:0 -10px 40px #0003}
 .sheet::backdrop{background:rgba(33,31,29,.45)}
-.sheet .sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px}
+.sheet .sh-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px;position:sticky;top:0;background:var(--paper)}
 .sheet .sh-head h2{font-family:var(--display);font-size:20px;font-weight:500}
 .sheet .sh-close{min-width:44px;min-height:44px;font-size:22px;color:var(--ink-mute)}
-.sheet ul{list-style:none;padding:4px 8px 22px}
-.sheet li button{display:flex;align-items:center;gap:14px;width:100%;min-height:52px;padding:0 12px;font-size:17px;color:var(--ink);text-align:start;border-radius:8px}
-.sheet li button[aria-checked=true]{color:var(--champagne-txt);font-weight:600;background:var(--panel)}
-.sheet li button .ck{width:22px;flex:none;text-align:center}
-.sheet li button:focus-visible{outline:3px solid var(--ink);outline-offset:-3px}
+.sheet .sh-body{padding:0 20px 16px}
+.sheet .sh-foot{position:sticky;bottom:0;background:var(--paper);padding:10px 20px 18px;border-top:1px solid var(--line)}
+.sheet .sh-foot button{width:100%;min-height:50px;background:var(--ink);color:var(--paper);font-size:16px;font-weight:600}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  .side{display:none}
+  .pick{display:flex}
+  .sheet .side{display:block;position:static;border:0;padding:0}
+}
 @media(max-width:640px){
   main.wrap{padding:0 20px}
   .crumb{padding-top:16px}
   .head{padding:16px 0 4px}
   .head p{font-size:16px}
-  .filt{margin:22px 0 22px}
-  .filt h2{font-size:15px;margin-bottom:6px}
-  /* במובייל: במקום טאבים, בורר אחד ברוחב מלא שפותח חלון תחתון */
-  .sizes{display:none}
-  .pick{display:flex}
-  .grid{padding-bottom:48px}
+  .layout{padding-bottom:48px}
 }
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:80px}
@@ -97,6 +118,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
 .empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--ink-mute)}
 .empty b{font-family:var(--display);font-size:20px;font-weight:500;color:var(--ink);display:block;margin-bottom:8px}
 .empty a{color:var(--oak);text-decoration:underline}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -110,19 +132,32 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.4vw,50px);l
   <div class="crumb"><a href="/">בית</a><i>·</i><span id="crumb">—</span></div>
   <div class="head"><h1 id="title">—</h1><p id="sub">—</p></div>
 
-  <div class="filt">
-    <h2 id="flabel">—</h2>
-    <div class="sizes" id="sizes"></div>
-    <button class="pick" id="pick" type="button" aria-haspopup="dialog" aria-controls="sheet">
-      <span><span id="pick-axis">סוג</span>: <b id="pick-val">הכל</b></span><span class="chev" aria-hidden="true">⌄</span>
-    </button>
+  <button class="pick" id="pick" type="button" aria-haspopup="dialog" aria-controls="sheet">סינון ומיון <span id="pick-n"></span></button>
+
+  <div class="layout">
+    <aside class="side" id="side" aria-label="סינון"></aside>
+    <div>
+      <div class="bar2">
+        <div class="cnt" id="cnt" aria-live="polite"></div>
+        <label class="sortw">מיון לפי
+          <select id="sort">
+            <option value="rec">מומלץ</option>
+            <option value="price-asc">מחיר: מהנמוך לגבוה</option>
+            <option value="price-desc">מחיר: מהגבוה לנמוך</option>
+            <option value="size-asc">גודל: מהקטן לגדול</option>
+            <option value="size-desc">גודל: מהגדול לקטן</option>
+          </select>
+        </label>
+      </div>
+      <div class="active" id="active"></div>
+      <div class="grid" id="grid"></div>
+    </div>
   </div>
   <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
-    <div class="sh-head"><h2 id="sheet-title">סוג</h2><button class="sh-close" type="button" id="sheet-close" aria-label="סגירה">✕</button></div>
-    <ul id="sheet-list" role="radiogroup"></ul>
+    <div class="sh-head"><h2 id="sheet-title">סינון ומיון</h2><button class="sh-close" type="button" id="sheet-close" aria-label="סגירה">✕</button></div>
+    <div class="sh-body" id="sheet-body"></div>
+    <div class="sh-foot"><button type="button" id="sheet-apply">הצגת התוצאות</button></div>
   </dialog>
-
-  <div class="grid" id="grid"></div>
 </main>
 
 <footer class="footer"></footer>
@@ -162,82 +197,158 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   $('#sub').textContent = line.size_axis === 'doors'
     ? 'נבנות למידות הקיר שלכם. בחרו מספר דלתות ומשם מדברים.'
     : 'נבנים למידות הקיר שלכם. בחרו רוחב ומשם מדברים.';
-  $('#flabel').textContent = line.size_axis === 'doors' ? 'מספר דלתות' : 'רוחב';
 
-  // כמה סוגים בעולם → מסננים לפי סוג. סוג אחד → מסננים לפי מידה.
   const byType = subs.length > 1 && !q.get('line');
-  $('#flabel').textContent = byType ? 'סוג' : ($('#flabel').textContent);
-  const opts  = byType ? ['all', ...subs] : ['all', ...(line.sizes || [])];
-  // שמות קצרים לטאבים בלבד. ערכי הקטגוריות והכרטיסים לא משתנים.
   const SHORT = { 'ארונות משולבים · ספרייה': 'משולבים וספריות' };
-  const label = s => s === 'all' ? 'הכל'
-                   : byType ? (SHORT[d.lines[s].name] || d.lines[s].name)
-                   : (line.size_label || '{n}').replace('{n}', s);
-  const has   = s => s === 'all' || (byType ? mine.some(m => m.line_id === s) : mine.some(m => m.size === s));
+  const sizeLabel = (ln, v) => ((d.lines[ln] || line).size_label || '{n}').replace('{n}', v);
+  const sizeOf = m => typeof m.size === 'number' ? m.size : (m.dims ? m.dims.w / 100 : 0);
 
-  // אפשרות בלי דגמים לא מוצגת. טאב שאי אפשר ללחוץ עליו נראה כמו תקלה.
-  const shown = opts.filter(has);
-  $('#sizes').innerHTML = shown.map(s =>
-    `<button class="sz" data-i="${opts.indexOf(s)}" data-s="${s}" aria-pressed="${s === 'all'}">${label(s)}</button>`).join('');
-  // אותן אפשרויות בחלון התחתון של המובייל
-  $('#sheet-list').innerHTML = shown.map(s =>
-    `<li><button type="button" role="radio" data-i="${opts.indexOf(s)}" aria-checked="${s === 'all'}"><span class="ck" aria-hidden="true">${s === 'all' ? '✓' : ''}</span>${label(s)}</button></li>`).join('');
-  $('#pick-axis').textContent = $('#flabel').textContent;
-  $('#sheet-title').textContent = $('#flabel').textContent;
+  /* ---------- מצב הסינון, נשמר בכתובת ---------- */
+  const F = { type: q.get('line') && byType ? [q.get('line')] : [], size: q.get('size') ? [q.get('size')] : [],
+              fin: (q.get('fin') || '').split(',').filter(Boolean), door: (q.get('door') || '').split(',').filter(Boolean),
+              min: +q.get('min') || null, max: +q.get('max') || null, sort: q.get('sort') || 'rec' };
+  $('#sort').value = F.sort;
 
+  const prices = mine.map(m => m.price).filter(p => typeof p === 'number');
+  const PMIN = prices.length ? Math.min(...prices) : 0, PMAX = prices.length ? Math.max(...prices) : 0;
+  const STEP = 50;
+
+  const matchExcept = (m, skip) =>
+    (skip === 'type' || !F.type.length || F.type.includes(m.line_id)) &&
+    (skip === 'size' || !F.size.length || F.size.includes(String(sizeOf(m)))) &&
+    (skip === 'fin'  || !F.fin.length  || (m.finishes || []).some(f => F.fin.includes(f))) &&
+    (skip === 'door' || !F.door.length || F.door.includes((m.identity || {}).door_type || '')) &&
+    (skip === 'price' || (F.min === null || (typeof m.price === 'number' && m.price >= F.min))) &&
+    (skip === 'price' || (F.max === null || (typeof m.price === 'number' && m.price <= F.max)));
+  const countIf = (skip, pred) => mine.filter(m => matchExcept(m, skip) && pred(m)).length;
+
+  const DOORS = { sliding: 'דלתות הזזה', hinged: 'דלתות פתיחה' };
+
+  /* ---------- בניית הפאנל ---------- */
+  const group_ = (title, body, open = true) => `<details class="fg"${open ? ' open' : ''}><summary>${title}</summary>${body}</details>`;
+  const check = (key, val, lbl, n) =>
+    `<label class="o${n ? '' : ' off'}"><input type="checkbox" data-k="${key}" value="${val}"${F[key].includes(String(val)) ? ' checked' : ''}${n ? '' : ' disabled'}>${lbl}<span class="n">(${n})</span></label>`;
+
+  function buildSide() {
+    const H = [];
+    if (byType) H.push(group_('סוג', `<div class="opts">${subs.map(l =>
+      check('type', l, SHORT[d.lines[l].name] || d.lines[l].name, countIf('type', m => m.line_id === l))).join('')}</div>`));
+    const sizes = [...new Set(mine.map(sizeOf).filter(Boolean))].sort((a, b) => a - b);
+    if (sizes.length > 1) H.push(group_(line.size_axis === 'doors' ? 'מספר דלתות' : 'רוחב',
+      `<div class="chips2">${sizes.map(v => { const n = countIf('size', m => sizeOf(m) === v);
+        return `<label class="${F.size.includes(String(v)) ? 'on' : ''}"><input type="checkbox" data-k="size" value="${v}"${F.size.includes(String(v)) ? ' checked' : ''}${n ? '' : ' disabled'}>${sizeLabel(mine.find(m => sizeOf(m) === v).line_id, v)}<span class="n">(${n})</span></label>`; }).join('')}</div>`));
+    const doors = [...new Set(mine.map(m => (m.identity || {}).door_type).filter(Boolean))];
+    if (doors.length > 1) H.push(group_('סוג דלתות', `<div class="opts">${doors.map(t =>
+      check('door', t, DOORS[t] || t, countIf('door', m => (m.identity || {}).door_type === t))).join('')}</div>`));
+    if (PMAX > PMIN) {
+      const lo = F.min === null ? PMIN : F.min, hi = F.max === null ? PMAX : F.max;
+      H.push(group_('מחיר', `<div class="rng"><div class="bar"></div><div class="fill" id="rfill"></div>
+        <input type="range" id="rmin" min="${PMIN}" max="${PMAX}" step="${STEP}" value="${lo}" aria-label="מחיר מינימלי">
+        <input type="range" id="rmax" min="${PMIN}" max="${PMAX}" step="${STEP}" value="${hi}" aria-label="מחיר מקסימלי"></div>
+        <div class="rng-lbl"><span id="rlo">${nis(lo)}</span><span id="rhi">${nis(hi)}</span></div>`));
+    }
+    const finsAll = [...new Set(mine.flatMap(m => m.finishes || []))].map(fin).filter(Boolean);
+    if (finsAll.length > 1) H.push(group_('גימור', `<div class="opts">${finsAll.map(f =>
+      check('fin', f.id, `<i style="display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid var(--line);background:${f.swatch}"></i>${f.name}`,
+        countIf('fin', m => (m.finishes || []).includes(f.id)))).join('')}</div>`, false));
+    H.push('<button class="clear" id="clear" type="button">ניקוי כל הסינונים</button>');
+    $('#side').innerHTML = H.join('');
+    paintRange();
+  }
+
+  function paintRange() {
+    const a = $('#rmin'), b = $('#rmax'); if (!a) return;
+    let lo = +a.value, hi = +b.value; if (lo > hi) [lo, hi] = [hi, lo];
+    const p = v => (v - PMIN) / (PMAX - PMIN) * 100;
+    $('#rfill').style.insetInlineStart = p(lo) + '%'; $('#rfill').style.width = (p(hi) - p(lo)) + '%';
+    $('#rlo').textContent = nis(lo); $('#rhi').textContent = nis(hi);
+  }
+
+  /* ---------- רינדור ---------- */
   const card = m => {
-    const dots = (m.finishes || []).slice(0, 6).map(id => {
-      const f = fin(id); return f ? `<i style="background:${f.swatch}"></i>` : '';
-    }).join('');
+    const dots = (m.finishes || []).slice(0, 6).map(id => { const f = fin(id); return f ? `<i style="background:${f.swatch}"></i>` : ''; }).join('');
     const extra = (m.finishes || []).length > 6 ? `<span>+${m.finishes.length - 6}</span>` : '';
     return `<a class="card" href="/product.html?id=${m.id}">
-      <div class="ph"><span class="sz-tag">${byType ? d.lines[m.line_id].name : label(m.size)}</span>
+      <div class="ph"><span class="sz-tag">${byType ? d.lines[m.line_id].name : sizeLabel(m.line_id, sizeOf(m))}</span>
         ${(m.renders && m.renders[0]) ? `<img src="${m.renders[0].thumb}" alt="${m.name}" loading="lazy">` : ''}</div>
-      <div class="b">
-        <h3>${m.name}</h3>
-        <div class="dm">${dm(m)}</div>
-        <div class="pr">${m.price ? nis(m.price) : 'מחיר לפי התאמה'}</div>
-        <div class="dots">${dots}${extra}</div>
-      </div></a>`;
+      <div class="b"><h3>${m.name}</h3><div class="dm">${dm(m)}</div>
+        <div class="pr">${m.price ? nis(m.price) : 'מחיר לפי התאמה'}</div><div class="dots">${dots}${extra}</div></div></a>`;
   };
 
-  const show = i => {
-    const s = opts[i];
-    document.querySelectorAll('.sz').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
-    document.querySelectorAll('#sheet-list [role=radio]').forEach(b => {
-      const sel = +b.dataset.i === i; b.setAttribute('aria-checked', sel); b.querySelector('.ck').textContent = sel ? '✓' : '';
-    });
-    $('#pick-val').textContent = label(s);
-    const on = document.querySelector('.sz[aria-pressed="true"]');
-    if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    const list = s === 'all' ? mine
-               : byType ? mine.filter(m => m.line_id === s)
-               : mine.filter(m => m.size === s);
-    $('#grid').innerHTML = list.length
-      ? list.map(card).join('')
-      : `<div class="empty"><b>אין עדיין דגם ב${label(s)}</b>
-           אנחנו בונים למידה. <a href="tel:0796622666">התקשרו</a> ונתאים.</div>`;
-    history.replaceState(null, '', byType
-      ? `?group=${groupId}${s === 'all' ? '' : '&line=' + s}`
-      : `?line=${lineId}${s === 'all' ? '' : '&size=' + s}`);
-  };
+  function chips() {
+    const C = [];
+    F.type.forEach(l => C.push(['type', l, SHORT[d.lines[l].name] || d.lines[l].name]));
+    F.size.forEach(v => C.push(['size', v, sizeLabel((mine.find(m => String(sizeOf(m)) === v) || {}).line_id, v)]));
+    F.door.forEach(t => C.push(['door', t, DOORS[t] || t]));
+    F.fin.forEach(f => C.push(['fin', f, (fin(f) || {}).name || f]));
+    if (F.min !== null || F.max !== null) C.push(['price', '', `${nis(F.min === null ? PMIN : F.min)} עד ${nis(F.max === null ? PMAX : F.max)}`]);
+    $('#active').innerHTML = C.length
+      ? C.map(([k, v, l]) => `<button type="button" data-rm="${k}" data-v="${v}">${l} <span aria-hidden="true">✕</span><span class="sr-only"> הסרה</span></button>`).join('')
+        + '<button type="button" class="x" data-rm="all">נקה הכל</button>' : '';
+    $('#pick-n').textContent = C.length ? `(${C.length})` : '';
+  }
 
-  $('#sizes').onclick = e => {
-    const b = e.target.closest('.sz');
-    if (b && !b.disabled) show(+b.dataset.i);
-  };
-  const sheet = $('#sheet');
-  $('#pick').onclick = () => { sheet.showModal(); (sheet.querySelector('[aria-checked=true]') || sheet.querySelector('[role=radio]')).focus(); };
-  $('#sheet-close').onclick = () => sheet.close();
-  sheet.onclick = e => { if (e.target === sheet) sheet.close(); };
-  $('#sheet-list').onclick = e => {
-    const b = e.target.closest('[role=radio]');
-    if (!b) return;
-    show(+b.dataset.i); sheet.close(); $('#pick').focus();
-  };
+  function render() {
+    let list = mine.filter(m => matchExcept(m, null));
+    const pv = m => typeof m.price === 'number' ? m.price : Infinity;
+    if (F.sort === 'price-asc')  list.sort((a, b) => pv(a) - pv(b));
+    if (F.sort === 'price-desc') list.sort((a, b) => (pv(b) === Infinity ? -1 : pv(b)) - (pv(a) === Infinity ? -1 : pv(a)));
+    if (F.sort === 'size-asc')   list.sort((a, b) => sizeOf(a) - sizeOf(b));
+    if (F.sort === 'size-desc')  list.sort((a, b) => sizeOf(b) - sizeOf(a));
+    $('#grid').innerHTML = list.length ? list.map(card).join('')
+      : `<div class="empty"><b>לא נמצאו דגמים בסינון הזה</b>נסו להסיר חלק מהסינונים, או <a href="tel:0796622666">התקשרו</a> ונתאים.</div>`;
+    $('#cnt').textContent = list.length === 1 ? 'דגם אחד' : `${list.length} דגמים`;
+    chips();
+    const p = new URLSearchParams();
+    if (q.get('line') && !byType) p.set('line', lineId); else p.set('group', groupId);
+    if (F.type.length === 1 && byType) p.set('line', F.type[0]); else if (F.type.length > 1) p.set('types', F.type.join(','));
+    if (F.size.length) p.set('size', F.size.join(','));
+    if (F.fin.length) p.set('fin', F.fin.join(','));
+    if (F.door.length) p.set('door', F.door.join(','));
+    if (F.min !== null) p.set('min', F.min); if (F.max !== null) p.set('max', F.max);
+    if (F.sort !== 'rec') p.set('sort', F.sort);
+    history.replaceState(null, '', '?' + p.toString());
+  }
+  if (q.get('types')) F.type = q.get('types').split(',');
+  if (q.get('size')) F.size = q.get('size').split(',');
 
-  const ws = q.get('size');
-  show(Math.max(0, opts.findIndex(s => String(s) === ws)));
+  buildSide(); render();
+
+  /* ---------- אירועים ---------- */
+  document.addEventListener('change', e => {
+    const c = e.target.closest('#side input[type=checkbox]');
+    if (c) {
+      const k = c.dataset.k, v = c.value;
+      F[k] = c.checked ? [...F[k], v] : F[k].filter(x => x !== v);
+      buildSide(); render(); return;
+    }
+    if (e.target.id === 'rmin' || e.target.id === 'rmax') {
+      let lo = +$('#rmin').value, hi = +$('#rmax').value; if (lo > hi) [lo, hi] = [hi, lo];
+      F.min = lo > PMIN ? lo : null; F.max = hi < PMAX ? hi : null;
+      buildSide(); render();
+    }
+  });
+  document.addEventListener('input', e => { if (e.target.id === 'rmin' || e.target.id === 'rmax') paintRange(); });
+  $('#sort').addEventListener('change', e => { F.sort = e.target.value; render(); });
+  document.addEventListener('click', e => {
+    if (e.target.closest('#clear')) { F.type = []; F.size = []; F.fin = []; F.door = []; F.min = F.max = null; buildSide(); render(); return; }
+    const rm = e.target.closest('#active [data-rm]');
+    if (rm) {
+      const k = rm.dataset.rm, v = rm.dataset.v;
+      if (k === 'all') { F.type = []; F.size = []; F.fin = []; F.door = []; F.min = F.max = null; }
+      else if (k === 'price') { F.min = F.max = null; }
+      else F[k] = F[k].filter(x => x !== v);
+      buildSide(); render();
+    }
+  });
+
+  /* ---------- מובייל: אותו פאנל בתוך חלון תחתון ---------- */
+  const sheet = $('#sheet'), side = $('#side'), layout = $('.layout');
+  $('#pick').onclick = () => { $('#sheet-body').appendChild(side); sheet.showModal(); };
+  const closeSheet = () => { sheet.close(); layout.insertBefore(side, layout.firstChild); $('#pick').focus(); };
+  $('#sheet-close').onclick = closeSheet; $('#sheet-apply').onclick = closeSheet;
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); });
+  sheet.addEventListener('close', () => { if (side.parentNode !== layout) layout.insertBefore(side, layout.firstChild); });
 });
 </script>
 <script src="/footer-upgrade.js" defer></script>

@@ -119,7 +119,19 @@
   var trigger = header.querySelector('.icon[aria-label^="חיפוש"]') || document.getElementById('searchBtn');
   if (!trigger) return;
 
-  var css = '.nc-search{position:fixed;inset:0;top:var(--nc-search-top,84px);z-index:48;background:rgba(251,250,247,.98);overflow:auto;'
+  // דסקטופ: שדה חיפוש קצר במקום העיגול. מובייל: העיגול נשאר.
+  var field = document.createElement('button');
+  field.type = 'button'; field.className = 'nc-sfield'; field.id = 'nc-sfield';
+  field.setAttribute('aria-label', 'חיפוש באתר');
+  field.innerHTML = '<span>⌕</span><em>חיפוש דגם, גימור, רוחב</em>';
+  trigger.insertAdjacentElement('afterend', field);
+
+  var css = '.nc-sfield{display:flex;align-items:center;gap:10px;min-width:230px;height:44px;padding:0 14px;border:1px solid #ded6cc;border-radius:22px;background:#fff;color:#5f584f;cursor:pointer;font-family:inherit}'
+    + '.nc-sfield span{font-size:18px;color:#29231e}.nc-sfield em{font-style:normal;font-size:14px;white-space:nowrap}'
+    + '.nc-sfield:hover{border-color:#29231e}'
+    + '@media(min-width:901px){.header .icon[aria-label^="חיפוש"],#searchBtn{display:none!important}}'
+    + '@media(max-width:900px){.nc-sfield{display:none}}'
+    + '.nc-search{position:fixed;inset:0;top:var(--nc-search-top,84px);z-index:48;background:rgba(251,250,247,.98);overflow:auto;'
     + 'border-top:1px solid #e6e2da;font-family:"Assistant","Heebo",system-ui,sans-serif;color:#211f1d}'
     + '.nc-search .in{max-width:760px;margin:0 auto;padding:28px 20px 60px}'
     + '.nc-search form{position:relative}'
@@ -127,6 +139,9 @@
     + '.nc-search input:focus{outline:3px solid #211f1d;outline-offset:2px}'
     + '.nc-search .go{position:absolute;inset-inline-start:0;top:0;width:54px;height:56px;display:grid;place-items:center;font-size:24px;color:#5f584f;background:none;border:0;cursor:pointer}'
     + '.nc-search .hint{margin:10px 2px 0;font-size:14px;color:#5f584f}'
+    + '.nc-search .cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}'
+    + '.nc-search .cats button{min-height:40px;padding:0 14px;border:1px solid #ded6cc;background:#fff;font:inherit;font-size:15px;color:#211f1d;cursor:pointer}'
+    + '.nc-search .cats button[aria-selected=true]{background:#211f1d;color:#fbfaf7;border-color:#211f1d}'
     + '.nc-search .count{margin:22px 2px 8px;font-size:14px;color:#5f584f}'
     + '.nc-search ul{list-style:none;margin:0;padding:0}'
     + '.nc-search li a{display:grid;grid-template-columns:72px 1fr auto;gap:16px;align-items:center;min-height:64px;padding:8px 6px;border-bottom:1px solid #eee9e0;color:#211f1d;text-decoration:none}'
@@ -149,6 +164,7 @@
     + '<form id="nc-search-form" autocomplete="off"><input id="nc-search-q" type="search" placeholder="מה אתם מחפשים? למשל: ארון 240, ספריית קודש, שמנת" aria-label="חיפוש באתר">'
     + '<button class="go" type="submit" aria-label="חיפוש">⌕</button></form>'
     + '<div class="hint">אפשר לחפש לפי שם דגם, קטגוריה, גימור, רוחב בס״מ או מספר דלתות</div>'
+    + '<div class="cats" id="nc-search-cats" role="tablist" aria-label="סינון לפי קטגוריה"></div>'
     + '<div class="count" id="nc-search-count" aria-live="polite"></div>'
     + '<ul id="nc-search-list"></ul>'
     + '<div id="nc-search-more"></div>'
@@ -159,7 +175,7 @@
   var list  = panel.querySelector('#nc-search-list');
   var count = panel.querySelector('#nc-search-count');
   var more  = panel.querySelector('#nc-search-more');
-  var DATA = null;
+  var DATA = null, CAT = 'all';
 
   function load() {
     if (DATA) return Promise.resolve(DATA);
@@ -187,11 +203,25 @@
     });
   }
 
+  function buildCats() {
+    var box = panel.querySelector('#nc-search-cats');
+    if (box.children.length) return;
+    var groupOf = function (m) { return ((DATA.lines || {})[m.line_id] || {}).group; };
+    var live = (DATA.groups || []).filter(function (g) { return (DATA.models || []).some(function (m) { return groupOf(m) === g.id; }); });
+    box.innerHTML = '<button type="button" role="tab" data-g="all" aria-selected="true">הכול</button>'
+      + live.map(function (g) { return '<button type="button" role="tab" data-g="' + g.id + '" aria-selected="false">' + g.name + '</button>'; }).join('');
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-g]'); if (!b) return;
+      CAT = b.dataset.g;
+      box.querySelectorAll('[data-g]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+      render(input.value);
+    });
+  }
   function search(q) {
     q = norm(q);
-    if (!q) return [];
+    var idx = index(DATA).filter(function (it) { return CAT === 'all' || ((DATA.lines || {})[it.m.line_id] || {}).group === CAT; });
+    if (!q) return CAT === 'all' ? [] : idx;   // קטגוריה בלי מילת חיפוש: כל הדגמים בקטגוריה
     var toks = q.split(' ').filter(Boolean);
-    var idx = index(DATA);
     return idx.map(function (it) {
       var score = 0;
       for (var i = 0; i < toks.length; i++) {
@@ -212,7 +242,7 @@
 
   function render(q) {
     var res = search(q);
-    if (!norm(q)) { list.innerHTML = ''; count.textContent = ''; more.innerHTML = ''; return; }
+    if (!norm(q) && CAT === 'all') { list.innerHTML = ''; count.textContent = ''; more.innerHTML = ''; return; }
     count.textContent = res.length ? (res.length === 1 ? 'תוצאה אחת' : res.length + ' תוצאות') : '';
     if (!res.length) {
       list.innerHTML = '';
@@ -245,10 +275,11 @@
     panel.hidden = !v;
     document.body.classList.toggle('nc-search-open', v);
     trigger.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (v) { load().then(function () { render(input.value); }); input.focus(); }
+    if (v) { load().then(function () { buildCats(); render(input.value); }); input.focus(); }
   }
   trigger.setAttribute('aria-controls', 'nc-search'); trigger.setAttribute('aria-expanded', 'false');
   trigger.addEventListener('click', function (e) { e.preventDefault(); e.stopImmediatePropagation(); open(panel.hidden); }, true);
+  field.addEventListener('click', function () { open(panel.hidden); });
   if (trigger.id === 'searchBtn') trigger.onclick = null;
 
   var timer;

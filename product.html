@@ -318,6 +318,8 @@ footer a:hover{color:var(--ink)}
         <div class="chips" id="sizes"></div>
       </div>
 
+      <div id="choices"></div>
+
       <div class="opt" id="side-wrap" style="display:none">
         <h2>צד השולחן<em id="sname">ימין</em></h2>
         <div class="chips" id="side">
@@ -393,7 +395,7 @@ footer a:hover{color:var(--ink)}
 <script src="/cart.js"></script>
 <script>
 const $ = s => document.querySelector(s);
-const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : 'מידות לפי התאמה אישית';
+const dm = m => m.dims ? `${m.dims.w} × ${m.dims.h} × ${m.dims.d} ס״מ` : (m.category === 'bed' || m.category === 'mattress') ? 'לבחירת מידה' : 'מידות לפי התאמה אישית';
 
 const nis = n => '₪' + n.toLocaleString('he-IL');
 
@@ -550,7 +552,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     slide ? ['מסילה', 'אלומיניום כסוף'] : null,
     idn.glass_doors ? ['זכוכית', 'דלתות ויטרינה עליונות'] : null,
     m.handles ? ['ידיות', 'לבחירה מתוך 11 דגמים'] : null,
-    ['התאמה', 'נבנה למידות הקיר שלכם'],
+    (m.category === 'bed' || m.category === 'mattress') ? ['התאמה', 'לפי מידת המזרן שבחרתם'] : ['התאמה', 'נבנה למידות הקיר שלכם'],
   ].filter(Boolean).map(([k, v]) => `<div class="row"><b>${k}</b><span>${v}</span></div>`).join('');
 
   // ידיות: 11 דגמים, כולן באותו מחיר. בחירת מפרט בלבד.
@@ -745,6 +747,20 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
   }
 
   /* ארונות עם שולחן: בוחרים באיזה צד השולחן. מפרט בלבד, בלי מחיר. */
+  /* בחירות מפרט מהקטלוג (בד, סוג הפרדה וכדומה). בלי מחיר. m.choices = [{id,label,note,options:[...]}] */
+  (m.choices || []).forEach(ch => {
+    const box = document.createElement('div'); box.className = 'opt'; box.id = 'ch-' + ch.id;
+    box.innerHTML = `<h2>${ch.label}<em id="chv-${ch.id}">${ch.options[0]}</em></h2>
+      <div class="chips">${ch.options.map((o, i) => `<button class="chip" type="button" data-ch="${ch.id}" data-v="${o}" aria-pressed="${!i}">${o}</button>`).join('')}</div>
+      ${ch.note ? `<div class="hnote">${ch.note}</div>` : ''}`;
+    $('#choices').appendChild(box);
+    box.addEventListener('click', e => {
+      const b = e.target.closest('.chip[data-ch]'); if (!b) return;
+      box.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+      $('#chv-' + ch.id).textContent = b.dataset.v;
+    });
+  });
+
   if (m.side_choice) {
     $('#side-wrap').style.display = '';
     $('#side').addEventListener('click', e => {
@@ -929,6 +945,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     if (visible('#size-wrap'))   L.push(`מידה: ${$('#szname').textContent}`);
     if (visible('#constr-wrap')) L.push(`סוג הארון: ${$('#cname').textContent}`);
     if (visible('#side-wrap'))   L.push(`צד השולחן: ${$('#sname').textContent}`);
+    (m.choices || []).forEach(ch => L.push(`${ch.label}: ${$('#chv-' + ch.id).textContent}`));
     if (visible('#wid-wrap'))    L.push(`רוחב: ${$('#wval').textContent}`);
     if (visible('#hgt-wrap'))    L.push(`גובה: ${$('#hval').textContent}`);
     const lay = document.querySelector('.lay[aria-pressed="true"] b');

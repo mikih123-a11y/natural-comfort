@@ -770,6 +770,18 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
     });
   }
 
+  /* תוספת שעוקבת אחרי מידת המיטה (למשל מזרן): המחיר = בסיס + תוספת המידה שנבחרה, בלי בחירה כפולה */
+  const syncFollow = z => {
+    document.querySelectorAll('.ax-toggle[data-follow]').forEach(t => {
+      const o = (m.addons || []).find(a => a.id === t.dataset.id); if (!o) return;
+      const mult = o.per_unit || 1;
+      const p = (o.price + (z && z.add ? z.add : 0)) * mult;
+      t.dataset.price = p;
+      t.querySelector('.ax-price').textContent = '+₪' + p.toLocaleString('he-IL');
+      t.querySelector('.ax-name').textContent = o.name + (z ? ' · ' + z.label : '');
+    });
+  };
+
   const allConstrs = (((d.constructions || {}).options) || []);
   const maxHOf = c => (typeof c.max_height === 'number' ? c.max_height : 270);
 
@@ -821,7 +833,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
       <div class="addon">
         <div class="ax-row">
           ${o.image ? `<img class="ax-img" src="${o.image}" alt="${o.name}" title="לחצו להגדלה" onerror="this.remove()">` : ''}
-          <button class="ax-toggle" data-price="${o.variants ? o.variants[0].price : o.price}" data-id="${o.id}" aria-pressed="false">
+          <button class="ax-toggle" data-price="${o.variants ? o.variants[0].price : o.price}" data-id="${o.id}"${o.follows_size ? ' data-follow="1"' : ''} aria-pressed="false">
             <span class="ax-check"></span><span class="ax-name">${o.name}</span><span class="ax-price">+₪${o.variants ? o.variants[0].price : o.price}</span>
           </button>
         </div>
@@ -831,6 +843,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
         ${o.colors ? `<div class="ax-colors" hidden>${o.colors.map((c, ci) =>
           `<button class="ax-col${ci ? '' : ' on'}" data-c="${c}" data-img="${(o.color_images || {})[c] || ''}">${c}</button>`).join('')}</div>` : ''}
       </div>`).join('');
+    if (lineSizes.length) syncFollow(lineSizes[0]);
   }
 
   // בורר גובה — משפיע על מחיר ועל רנדר הפנים
@@ -858,6 +871,7 @@ fetch('/products/catalog.json').then(r => r.json()).then(d => {
         b.setAttribute('aria-pressed', String(b === cz)));
       sizeAdd = z.add || 0;
       $('#szname').innerHTML = `<bdi dir="ltr">${z.label}</bdi>`;
+      syncFollow(z);
       renderPrice();
       return;
     }
